@@ -3,7 +3,7 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 const rootDir = path.resolve(__dirname, '..');
-const logoPath = path.join(rootDir, 'public', 'logo-rw-dark.png');
+const logoPath = path.join(rootDir, 'public', 'Icone-oficial.png');
 
 if (!fs.existsSync(logoPath)) {
   console.error('Logo file not found:', logoPath);
