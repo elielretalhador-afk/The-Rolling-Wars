@@ -1,7 +1,9 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, initializeFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
+import { getMessaging, isSupported } from 'firebase/messaging';
 import { getStorage } from 'firebase/storage';
+import { getFunctions } from 'firebase/functions';
 
 const firebaseConfig = {
   projectId: "gen-lang-client-0495354481",
@@ -13,7 +15,18 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app, "ai-studio-urbanozeiro-675f17be-1d5e-4948-8a36-ce5490765ddc");
+export const db = initializeFirestore(app, {
+  experimentalForceLongPolling: true,
+}, "ai-studio-urbanozeiro-675f17be-1d5e-4948-8a36-ce5490765ddc");
 export const auth = getAuth(app);
 export const storage = getStorage(app);
 
+
+export const functions = getFunctions(app, 'us-central1');
+
+export let messaging: any = null;
+isSupported().then(supported => {
+  if (supported) {
+    messaging = getMessaging(app);
+  }
+});

@@ -1,4 +1,8 @@
-import { auth } from './lib/firebase';
+import { TelemetryService } from './services/telemetry';
+import { EconomyService } from './services/economyService';
+import { auth, db, functions } from './lib/firebase';
+import { doc, onSnapshot, setDoc } from 'firebase/firestore';
+import { httpsCallable } from 'firebase/functions';
 import { onAuthStateChanged } from 'firebase/auth';
 import { fetchFeed } from './lib/feedService';
 import {
@@ -46,10 +50,12 @@ import { SkaterHud } from './components/SkaterHud';
 import { LiveChallengeHud } from './components/LiveChallengeHud';
 import { LiveChallengeResultModal } from './components/LiveChallengeResultModal';
 import { ZoneDetailsModal } from './components/ZoneDetailsModal';
+import { SegmentDetailsModal } from './components/SegmentDetailsModal';
 import { NearbyZonesDrawer } from './components/NearbyZonesDrawer';
 import { CreateZoneModal } from './components/CreateZoneModal';
 import { ActivitySummaryModal } from './components/ActivitySummaryModal';
 import { SessionHistoryModal } from './components/SessionHistoryModal';
+import { BetaDiagnosticsModal } from './components/BetaDiagnosticsModal';
 import { PlayerStatisticsModal } from './components/PlayerStatisticsModal';
 import { ZoneEntryPromptModal } from './components/ZoneEntryPromptModal';
 import { ZoneConqueredModal } from './components/ZoneConqueredModal';
@@ -72,6 +78,8 @@ import { ProgressionHubModal } from './components/ProgressionHubModal';
 import { AuthScreen } from "./components/AuthScreen";
 import { AuthService } from "./services/auth";
 import { SocialService } from "./services/social";
+import { NotificationService } from "./services/notificationService";
+import { ClanService } from "./services/clan";
 import { FeedService } from "./services/feed";
 import { DatabaseService } from "./services/db";
 import { get as idbGet, set as idbSet, del as idbDel } from "idb-keyval";
@@ -79,7 +87,7 @@ import { LevelUpModal } from './components/LevelUpModal';
 import { SeasonHubModal } from './components/SeasonHubModal';
 import { VirtualWalletModal } from './components/VirtualWalletModal';
 import { SecurityIntegrityModal } from './components/SecurityIntegrityModal';
-import { FeedView } from './components/FeedView';
+import { SocialHub } from './components/SocialHub';
 import { EquipmentSetupModal } from './components/EquipmentSetupModal';
 import { SearchDiscoveryModal } from './components/SearchDiscoveryModal';
 import { SettingsModal } from './components/SettingsModal';
@@ -122,7 +130,7 @@ import {
   ZoneConquestProgress,
   CaptureAttempt,
   ConquestResultModalData,
-  AppNotification,
+  AppNotification, AppNotificationType,
   PersonalAchievement,
   Clan,
   ClanCreationInput,
@@ -164,19 +172,19 @@ import {
   UserProfile,
   TutorialState,
 } from './types';
-import { Zap, CheckCircle2, Award, Shield, Users } from 'lucide-react';
+import { Zap, CheckCircle2, Award, Shield, Users , Swords, Settings} from 'lucide-react';
 
 function triggerZoneVibration() {
   try {
     // Respeita preferência do jogador de vibração se configurada
-    const rawSettings = typeof window !== 'undefined' ? (() => { try { return localStorage.getItem('urbanozeiro_player_settings'); } catch(e) { return null; } })() : null;
+    const rawSettings = typeof window !== 'undefined' ? localStorage.getItem('urbanozeiro_player_settings') : null;
     if (rawSettings) {
       try {
         const parsed = JSON.parse(rawSettings);
         if (parsed?.audioHaptics && (!parsed.audioHaptics.vibrationEnabled || !parsed.audioHaptics.vibrateOnZoneEntry)) {
           return;
         }
-      } catch (e) {
+      } catch (e: any) {
         // Safe fallback
       }
     }
@@ -184,7 +192,7 @@ function triggerZoneVibration() {
       // 2-3 discrete pulses (150ms vibra, 100ms pausa, 150ms vibra, 100ms pausa, 150ms vibra)
       navigator.vibrate([150, 100, 150, 100, 150]);
     }
-  } catch (e) {
+  } catch (e: any) {
     // Non-blocking safe fallback if vibration is not supported
   }
 }
@@ -203,13 +211,104 @@ function calculateDistanceKm(lat1: number, lon1: number, lat2: number, lon2: num
   return R * c;
 }
 
+
+const SprintOverlay: React.FC<{ attempt: any }> = ({ attempt }) => {
+  const [displayTime, setDisplayTime] = React.useState(0);
+
+  React.useEffect(() => {
+    let animationFrameId: number;
+    const updateTime = () => {
+      if (attempt.status === 'active' && attempt.startTime) {
+        setDisplayTime(performance.now() - attempt.startTime);
+        animationFrameId = requestAnimationFrame(updateTime);
+      }
+    };
+    if (attempt.status === 'active') {
+      animationFrameId = requestAnimationFrame(updateTime);
+    }
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [attempt.status, attempt.startTime]);
+
+  const isApproaching = attempt.status === 'approaching';
+  const isActive = attempt.status === 'active';
+  const isFinished = attempt.status === 'finished';
+
+  const timeToShowMs = isFinished && attempt.durationMs ? attempt.durationMs : displayTime;
+  const timeSeconds = (timeToShowMs / 1000).toFixed(2);
+
+  const directionArrow = attempt.direction === 'forward' ? 'IDA →' : '← VOLTA';
+
+  return (
+    <div className={`p-4 rounded-2xl shadow-2xl backdrop-blur-md border ${
+      isApproaching ? 'bg-amber-500/95 border-amber-400 text-amber-50' :
+      isActive ? 'bg-rose-500/95 border-rose-400 text-rose-50 shadow-[0_0_30px_rgba(244,63,94,0.3)]' :
+      'bg-indigo-500/95 border-indigo-400 text-indigo-50'
+    } flex flex-col items-center justify-center text-center animate-in fade-in slide-in-from-top-4 duration-300 pointer-events-auto w-full max-w-sm mx-auto`}>
+      <div className="flex items-center gap-2 mb-1.5">
+        <span className="text-[9px] font-black bg-black/20 text-white px-2 py-0.5 rounded uppercase font-mono-stat tracking-widest shadow-inner">
+          {directionArrow}
+        </span>
+      </div>
+      <h3 className="text-lg font-black uppercase tracking-wide mb-2 font-display leading-none">
+        {isApproaching ? '⚡ SPRINT PRÓXIMO' :
+         isActive ? 'SPRINT EM ANDAMENTO' :
+         'SPRINT CONCLUÍDO'}
+      </h3>
+      
+      {isApproaching && (
+        <div className="text-xs font-medium opacity-90 max-w-[200px] leading-snug">
+          Você está chegando ao início do segmento. Prepare-se!
+        </div>
+      )}
+
+      {isActive && (
+        <div className="flex flex-col items-center">
+          <div className="text-5xl font-black tabular-nums tracking-tighter font-mono-stat drop-shadow-md my-1">
+            {timeSeconds}<span className="text-xl opacity-80 ml-1">s</span>
+          </div>
+          <div className="text-[10px] font-black uppercase opacity-80 tracking-widest mt-1 bg-black/10 px-2 py-0.5 rounded">
+            {attempt.distanceCovered > 0 ? (attempt.distanceCovered).toFixed(0) : '0'} m
+          </div>
+        </div>
+      )}
+
+      {isFinished && attempt.durationMs && (
+        <div className="flex flex-col items-center gap-1">
+          <div className="text-4xl font-black tabular-nums tracking-tighter font-mono-stat drop-shadow-md my-1">
+            {timeSeconds}<span className="text-lg opacity-80 ml-1">s</span>
+          </div>
+          <div className="text-[10px] uppercase font-black opacity-80 tracking-widest bg-black/10 px-2 py-0.5 rounded mt-1">
+            Sincronizando...
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 export default function App() {
+  React.useEffect(() => {
+    TelemetryService.logEvent({ eventName: 'app_started', category: 'APP' });
+  }, []);
+  const [authState, setAuthState] = useState<'LOADING' | 'AUTHENTICATED' | 'UNAUTHENTICATED' | 'ERROR'>('LOADING');
+  const [minSplashTimeElapsed, setMinSplashTimeElapsed] = useState(false);
+  const [splashProgress, setSplashProgress] = useState(0);
+  useEffect(() => {
+    const pTimer = setTimeout(() => setSplashProgress(100), 100);
+    const timer = setTimeout(() => {
+      setMinSplashTimeElapsed(true);
+    }, 7000);
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(pTimer);
+    };
+  }, []);
   const [activeTab, setActiveTab] = useState<TabType>('mapa');
   const [user, setUser] = useState<UserProfile>(() => {
     try {
-      const saved = (() => { try { return localStorage.getItem('urbanozeiro_user'); } catch(e) { return null; } })();
+      const saved = localStorage.getItem('urbanozeiro_user');
       if (saved) return JSON.parse(saved);
-    } catch (e) {
+    } catch (e: any) {
       console.error('Error loading user profile', e);
     }
     return CURRENT_USER;
@@ -221,17 +320,24 @@ export default function App() {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       if (firebaseUser) {
         setUser(prev => {
-          if (prev.authId === firebaseUser.uid) return prev;
-          const updated = { ...prev, authId: firebaseUser.uid };
-          try { localStorage.setItem('urbanozeiro_user', JSON.stringify(updated)); } catch(e) {}
+          if (prev.authId === firebaseUser.uid && prev.id === firebaseUser.uid) return prev;
+          const updated = { ...prev, authId: firebaseUser.uid, id: firebaseUser.uid };
+          localStorage.setItem('urbanozeiro_user', JSON.stringify(updated));
+          TelemetryService.logEvent({ eventName: 'auth_success', category: 'AUTH', details: { uid: firebaseUser.uid } });
           return updated;
         });
+        setAuthState('AUTHENTICATED');
+        // Dispara fila de sincronização agora que temos o Firebase Auth
+        DatabaseService.processSyncQueue().catch(console.error);
+        // Atualiza as zonas no mapa
+        DatabaseService.getZonesInRegion(null).then(z => setZones(z));
       } else {
-        // If they are not in firebase but have a local token, clear it to force re-login
-        if ((() => { try { return localStorage.getItem('urbanozeiro_auth_token'); } catch(e) { return null; } })()) {
-            try { localStorage.removeItem('urbanozeiro_auth_token'); } catch(e) {}
-            setAuthState('UNAUTHENTICATED');
+        // User is logged out
+        setAuthState('UNAUTHENTICATED');
+        if (localStorage.getItem('urbanozeiro_user')) {
+            localStorage.removeItem('urbanozeiro_user');
         }
+        setUser(prev => ({ ...prev, authId: undefined, id: 'usr_me' }));
       }
     });
     return () => unsubscribe();
@@ -243,29 +349,73 @@ export default function App() {
     return () => window.removeEventListener('open-equipment-modal', handleOpenEq);
   }, []);
   useEffect(() => {
-    if (user && user.id) {
+    let unsubscribeNotifs: (() => void) | undefined;
+    
+    if (user && user.authId && authState === 'AUTHENTICATED') {
       loadSocialData();
       FeedService.seedMockActivitiesIfEmpty(user);
-      // setActivities(FeedService.getActivitiesDB()); // Removido para evitar carga total
-      loadInitialFeed(user.id);
+
+      loadInitialFeed(user.authId as string);
+      
+      // Init Push Notifications
+      NotificationService.initPushNotifications(user.authId as string);
+      NotificationService.getPreferences(user.authId as string).then(prefs => {
+        setPlayerSettings((prev: any) => ({ ...prev, notifications: { ...prev.notifications, ...prefs } }));
+      });
+
+      
+      unsubscribeNotifs = SocialService.subscribeToNotifications(user.authId || user.id, (notifs) => {
+        const mappedNotifs = notifs.map(n => ({
+          id: n.id,
+          authId: n.recipientId,
+          type: n.type as AppNotificationType,
+          title: n.title || (n.type === "friend_request" ? "Nova Solicitação" : n.type === "friend_accept" ? "Amizade Aceita" : n.type === "new_record" ? "Novo Recorde!" : n.type === "record_beaten" ? "Seu recorde foi superado!" : "Notificação"),
+          message: n.message || "",
+          timeAgo: "agora",
+          timestamp: n.createdAt ? new Date(n.createdAt?.toMillis ? n.createdAt.toMillis() : Date.now()).toISOString() : new Date().toISOString(),
+          isRead: !!n.read,
+          actionType: n.actionType || (n.type === "cla" ? "open_clan_profile" : n.type === "friend_request" ? "open_social_hub" : n.type === "friend_accept" ? "open_profile" : "open_zone"),
+          actionPayload: n.actionPayload || (n.type === "cla" ? { clanId: n.clanId } : n.type === "friend_request" ? { tab: "friends" } : n.type === "friend_accept" ? { playerId: n.senderId } : {})
+        }));
+        setNotifications(mappedNotifs);
+      });
     }
-  }, [user.id]);
+
+    return () => {
+      if (unsubscribeNotifs) unsubscribeNotifs();
+    };
+  }, [user.authId, authState]);
 
   useEffect(() => {
     userRef.current = user;
     try {
-      try { localStorage.setItem('urbanozeiro_user', JSON.stringify(user)); } catch(e) {}
-    } catch (e) {
+      localStorage.setItem('urbanozeiro_user', JSON.stringify(user));
+    } catch (e: any) {
       console.error('Error saving user profile', e);
     }
   }, [user]);
+
+    useEffect(() => {
+    if (user?.authId && authState === 'AUTHENTICATED') {
+      const unsub = EconomyService.subscribeToProfileCosmetics(user.authId, (cosmetics: any) => {
+        if (cosmetics) {
+          setUser(prev => ({ ...prev, profileCosmetics: cosmetics }));
+        }
+      });
+      return () => unsub();
+    }
+  }, [user.authId, authState]);
 
   const [userCoords, setUserCoords] = useState<[number, number] | null>(null);
   const [playerLocation, setPlayerLocation] = useState<{ latitude: number; longitude: number } | null>(null);
   
   
+
+
   // =========================================================================
   // ESTADO DE ZONAS (OTIMIZADO PARA PREVENÇÃO DE READS)
+
+
   // =========================================================================
   const [zones, setZones] = useState<Zone[]>([]);
   
@@ -280,7 +430,7 @@ export default function App() {
         const boundsMock = null; // Na vida real, Leaflet bounds
         const regionZones = await DatabaseService.getZonesInRegion(boundsMock);
         setZones(regionZones);
-      } catch (e) {
+      } catch (e: any) {
         console.error('Error loading zones via Service', e);
         setZones(INITIAL_ZONES);
       }
@@ -301,14 +451,19 @@ export default function App() {
   const [drawnShapeType, setDrawnShapeType] = useState<'circle' | 'segment' | 'zone'>('circle');
   const [pickedCoords, setPickedCoords] = useState<[number, number] | null>(null);
   const [centerTrigger, setCenterTrigger] = useState(0);
+  const [isProcessingOperation, setIsProcessingOperation] = useState(false);
   const [focusChallengeTrigger, setFocusChallengeTrigger] = useState(0);
   const [activeFilter, setActiveFilter] = useState('Todas');
   const [isNearbyZonesDrawerOpen, setIsNearbyZonesDrawerOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isGpsActive, setIsGpsActive] = useState<boolean>(false);
 
+
+
   // =========================================================================
   // ETAPA 7: SESSÃO REAL DE PATINAÇÃO (Active Skating Activity Session Engine)
+
+
   // =========================================================================
   const [sessionStatus, setSessionStatus] = useState<SessionStatus>('IDLE');
   const isSessionActive = sessionStatus === 'ACTIVE' || sessionStatus === 'PAUSED';
@@ -372,8 +527,12 @@ export default function App() {
   const [redoReferenceSession, setRedoReferenceSession] = useState<ActivitySession | null>(null);
   const [isRedoMode, setIsRedoMode] = useState<boolean>(false);
   
+
+
   // =========================================================================
   // HISTÓRICO DE SESSÕES (OTIMIZADO PARA PREVENÇÃO DE READS)
+
+
   // =========================================================================
   const [sessionHistory, setSessionHistory] = useState<ActivitySession[]>([]);
 
@@ -388,7 +547,7 @@ export default function App() {
           const res = await DatabaseService.getSessionsPaginated(user.id, 10);
           setSessionHistory(res.data);
         }
-      } catch (e) {
+      } catch (e: any) {
         console.error('Error loading sessions via Service', e);
         setSessionHistory(INITIAL_SESSION_HISTORY);
       }
@@ -398,10 +557,35 @@ export default function App() {
     }
   }, [user]);
 
+  useEffect(() => {
+    const handleSyncStatus = (e: any) => {
+      const { id, status } = e.detail;
+      setSessionHistory(prev => prev.map(s => 
+        s.id === id ? { ...s, syncStatus: status } : s
+      ));
+    };
+    const handleActivitySyncStatus = (e: any) => {
+      const { id, status } = e.detail;
+      setActivities(prev => prev.map(a => 
+        a.id === id ? { ...a, syncStatus: status } : a
+      ));
+    };
+    window.addEventListener('session-sync-status', handleSyncStatus);
+    window.addEventListener('activity-sync-status', handleActivitySyncStatus);
+    return () => {
+      window.removeEventListener('session-sync-status', handleSyncStatus);
+      window.removeEventListener('activity-sync-status', handleActivitySyncStatus);
+    };
+  }, []);
+
   // Sincronismo mantido internamente pelo db.ts.
+
+
 
   // =========================================================================
   // RECONSTRUÇÃO DE ESTADOS DA UI (PARTE 4 - REFS E FUNÇÕES DE ZONAS)
+
+
   // =========================================================================
   const activeZoneActivitiesRef = useRef<Map<string, any>>(new Map());
   const currentSessionIdRef = useRef<string | null>(null);
@@ -425,7 +609,7 @@ export default function App() {
       // For now, let's just prepend posts to initial activities
       setActivities(posts);
       setFeedHasMore(false);
-    } catch (e) {
+    } catch (e: any) {
       console.error('Error loading feed', e);
     } finally {
       setIsLoadingFeed(false);
@@ -441,19 +625,18 @@ export default function App() {
   const loadMoreActivities = async () => {};
 
 
+
+
   // =========================================================================
   // RECONSTRUÇÃO DE ESTADOS DA UI (PARTE 3)
+
+
   // =========================================================================
   const [isNotificationsModalOpen, setIsNotificationsModalOpen] = useState(false);
   const [challenges, setChallenges] = useState<any[]>([]);
   const [directChallenges, setDirectChallenges] = useState<any[]>([]);
   const [events, setEvents] = useState<any[]>([]);
-  const [authState, setAuthState] = useState<any>('LOADING');
-  useEffect(() => {
-    AuthService.getCurrentUser().then(session => {
-      setAuthState(session ? 'AUTHENTICATED' : 'UNAUTHENTICATED');
-    }).catch(() => setAuthState('UNAUTHENTICATED'));
-  }, []);
+
   const [isDbReady, setIsDbReady] = useState<boolean>(true);
   const [dbError, setDbError] = useState<any>(null);
   
@@ -466,8 +649,26 @@ export default function App() {
     return () => window.removeEventListener('online', handleOnline);
   }, []);
 
+  // FASE 2.8: Listener real de servidor para Recordes de Segmento
+  useEffect(() => {
+    const handleSegmentRecordStatus = (e: any) => {
+      const { isNewRecord, timeSeconds, averageSpeedKmH } = e.detail;
+      if (isNewRecord) {
+        showToast(`🏆 NOVO RECORDE! Você conquistou o segmento com ${timeSeconds.toFixed(2)}s e ${averageSpeedKmH.toFixed(1)} km/h.`);
+        // Force refresh local zones to update map/lists
+        DatabaseService.invalidateZonesCache();
+        DatabaseService.getZonesInRegion(null).then(z => setZones(z));
+      } else {
+        showToast(`⏱ Tempo registrado no servidor: ${timeSeconds.toFixed(2)}s`);
+      }
+    };
+    window.addEventListener('segment-record-status', handleSegmentRecordStatus);
+    return () => window.removeEventListener('segment-record-status', handleSegmentRecordStatus);
+  }, []);
+
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [activeZones, setActiveZones] = useState<any[]>([]);
+  const [activeSegmentAttemptState, setActiveSegmentAttemptState] = useState<SegmentAttempt | null>(null);
   const [conquestProgresses, setConquestProgresses] = useState<any[]>([]);
   const [missions, setMissions] = useState<any[]>([]);
   
@@ -479,7 +680,10 @@ export default function App() {
 
   const [conquestResultModalData, setConquestResultModalData] = useState<any>(null);
   const [isSummaryModalOpen, setIsSummaryModalOpen] = useState(false);
+  const [isBetaDiagnosticsOpen, setIsBetaDiagnosticsOpen] = useState(false);
 
+  const [isSeasonModalOpen, setIsSeasonModalOpen] = useState(false);
+  const [seasonModalTab, setSeasonModalTab] = useState<'visao_geral' | 'ranking' | 'recompensas' | 'historico'>('visao_geral');
   const [isSessionHistoryModalOpen, setIsSessionHistoryModalOpen] = useState(false);
   const [selectedHistoryDetailSession, setSelectedHistoryDetailSession] = useState<any>(null);
   const [notifications, setNotifications] = useState<any[]>(INITIAL_NOTIFICATIONS || []);
@@ -505,8 +709,12 @@ export default function App() {
   // Helper overrides (ignoring the duplicated function signatures below)
 
 
+
+
   // =========================================================================
   // RECONSTRUÇÃO DE ESTADOS DA UI (PARTE 2)
+
+
   // =========================================================================
   const [selectedClanProfile, setSelectedClanProfile] = useState<any>(null);
   const [isClanLeaderboardModalOpen, setIsClanLeaderboardModalOpen] = useState(false);
@@ -537,8 +745,35 @@ export default function App() {
   const setCelebrationAchievement = (ach: any) => {};
   const handleEquipTitle = (titleId: string) => { showToast('Título equipado.'); };
   
-  const handleLeaveClan = () => { showToast('Você saiu do clã.'); };
-  const handleCreateClan = (data: any) => { showToast('Clã criado com sucesso!'); setIsCreateClanModalOpen(false); };
+  const handleLeaveClan = async (clanId: string) => {
+    try {
+      if (user) {
+        await ClanService.leaveClan(clanId, user.authId || user.id);
+        showToast('Você saiu do clã.');
+        setSelectedClanProfile(null);
+        loadSocialData();
+      }
+    } catch (e: any) {
+      showToast(e.message || 'Erro ao sair do clã.');
+    }
+  };
+  const handleCreateClan = async (data: any) => {
+    if (isProcessingOperation) return;
+    setIsProcessingOperation(true);
+    try {
+      if (user) {
+        await ClanService.createClan(data.name, data.icon || '⚡', user.authId || user.id, user.name || user.nickname);
+        showToast('Clã criado com sucesso!');
+        setIsCreateClanModalOpen(false);
+        loadSocialData();
+      }
+    } catch (e: any) {
+      showToast(e.message || 'Erro ao criar clã.');
+      throw e;
+    } finally {
+      setIsProcessingOperation(false);
+    }
+  };
   const handleJoinClan = (clanId: string) => { showToast('Solicitação para entrar no clã enviada.'); setIsJoinClanModalOpen(false); };
 
   const handleBlockPlayer = (id: string) => { setBlockedPlayerIds(prev => [...prev, id]); showToast('Jogador bloqueado.'); };
@@ -560,8 +795,12 @@ export default function App() {
 
 
 
+
+
   // =========================================================================
   // RECONSTRUÇÃO DE ESTADOS DA UI (MODALS)
+
+
   // =========================================================================
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
   const [levelUpModalData, setLevelUpModalData] = useState<any>(null);
@@ -571,9 +810,17 @@ export default function App() {
   const [chatTargetUser, setChatTargetUser] = useState<any>(null);
 
   const loadSocialData = async () => {
-    if (user && user.id) {
-      const players = await SocialService.getAllPlayers(user.id);
+    if (user && user.authId && authState === 'AUTHENTICATED') {
+      const players = await SocialService.getAllPlayers(user.authId);
       setSocialPlayers(players);
+      try {
+        const allClans = await ClanService.getAllClans();
+        setClans(allClans);
+        const myClan = await ClanService.getMyClan(user.authId);
+        setUserClan(myClan);
+      } catch(e) {
+        console.error("Erro ao carregar clãs", e);
+      }
     }
   };
 
@@ -582,7 +829,7 @@ export default function App() {
   const [socialActivities, setSocialActivities] = useState<any[]>([]);
   const [socialPrivacySettings, setSocialPrivacySettings] = useState<any>({});
   const [selectedPublicPlayer, setSelectedPublicPlayer] = useState<any>(null);
-  const [activeSocialTab, setActiveSocialTab] = useState<any>('amigos');
+  const [activeSocialTab, setActiveSocialTab] = useState<any>('feed');
 
   const [isReportPlayerOpen, setIsReportPlayerOpen] = useState(false);
   const [playerToReport, setPlayerToReport] = useState<any>(null);
@@ -590,7 +837,28 @@ export default function App() {
     const [activeSeasonTab, setActiveSeasonTab] = useState<any>('temporada');
 
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
-  const [wallet, setWallet] = useState<any>({ coins: 0, history: [] });
+
+  const [wallet, setWallet] = useState<any>({ 
+    id: 'temp', 
+    playerId: 'temp', 
+    currencyName: 'moedas', 
+    currencySymbol: '🪙', 
+    balance: 0, 
+    totalEarned: 0, 
+    totalSpent: 0, 
+    transactions: [], 
+    createdAt: '' 
+  });
+  
+  useEffect(() => {
+    if (user?.authId && authState === 'AUTHENTICATED') {
+       const unsub = EconomyService.subscribeToWallet(user.authId, (w) => {
+           if (w) setWallet(w);
+       });
+       return () => unsub();
+    }
+  }, [user?.authId, authState]);
+
 
   const [isSecurityModalOpen, setIsSecurityModalOpen] = useState(false);
   const [accountStatus, setAccountStatus] = useState<any>({ isBanned: false, trustScore: 100 });
@@ -602,7 +870,35 @@ export default function App() {
   const [isEquipmentModalOpen, setIsEquipmentModalOpen] = useState(false);
   const [playerSettings, setPlayerSettings] = useState<any>(DEFAULT_PLAYER_SETTINGS);
 
-  const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
+  const [isOnboardingOpen, setIsOnboardingOpen] = useState(() => {
+    return localStorage.getItem('urbanozeiro_onboardingCompleted') !== 'true';
+  });
+
+  useEffect(() => {
+    const handleNotificationAction = (e: any) => {
+      const data = e.detail;
+      if (!data) return;
+      
+      // Deep Linking based on payload
+      if (data.type === 'zone_lost') {
+        setActiveTab('mapa');
+        if (data.entityId) {
+          // Focus zone on map if needed
+          const event = new CustomEvent('focus-zone', { detail: data.entityId });
+          window.dispatchEvent(event);
+        }
+      } else if (data.type === 'clan_invite') {
+        setActiveTab('perfil');
+        // Might need a sub-tab
+      } else if (data.type === 'season_finished') {
+        setActiveTab('desafios'); // Or rankings
+      }
+    };
+
+    window.addEventListener('app_notification_action', handleNotificationAction);
+    return () => window.removeEventListener('app_notification_action', handleNotificationAction);
+  }, []);
+
   const [tutorialState, setTutorialState] = useState<any>({ currentStep: 0, isCompleted: false, isSkipped: false });
 
   const [isHelpSupportModalOpen, setIsHelpSupportModalOpen] = useState(false);
@@ -618,7 +914,7 @@ export default function App() {
   const handleSendFriendRequest = async (id: string) => {
     try {
       if (user) {
-        await SocialService.sendFriendRequest(user.id, id);
+        await SocialService.sendFriendRequest(user.authId as string, id);
         showToast('Pedido de amizade enviado com sucesso.');
         loadSocialData(); // Refresh UI
       }
@@ -629,7 +925,7 @@ export default function App() {
   const handleAcceptFriendRequest = async (id: string) => {
     try {
       if (user) {
-        await SocialService.acceptFriendRequest(id, user.id);
+        await SocialService.acceptFriendRequest(id, user.authId as string);
         showToast('Solicitação aceita!');
         loadSocialData();
       }
@@ -640,7 +936,7 @@ export default function App() {
   const handleDeclineFriendRequest = async (id: string) => { 
     try {
       if (user) {
-        await SocialService.rejectFriendRequest(id, user.id);
+        await SocialService.rejectFriendRequest(id, user.authId as string);
         showToast('Solicitação recusada!');
         loadSocialData();
       }
@@ -649,7 +945,7 @@ export default function App() {
   const handleCancelFriendRequest = async (id: string) => { 
     try {
       if (user) {
-        await SocialService.rejectFriendRequest(user.id, id);
+        await SocialService.rejectFriendRequest(user.authId as string, id);
         showToast('Solicitação cancelada.');
         loadSocialData();
       }
@@ -664,7 +960,7 @@ export default function App() {
       if (user) {
         await SocialService.toggleFollow(user.id, id);
       }
-    } catch (e) {
+    } catch (e: any) {
       console.warn("Could not sync follow state to mock db", e);
     }
 
@@ -698,20 +994,42 @@ export default function App() {
   };
   const handleSubmitPlayerReport = (report: any) => { showToast('Denúncia enviada com sucesso!'); setIsReportPlayerOpen(false); };
   
-  const handleEarnCoins = (amount: number, source: any, desc: string, relatedId?: string) => { setWallet((prev: any) => ({...prev, coins: prev.coins + amount})); };
-  const handleSpendCoins = (amount: number, source: any, desc: string, relatedId?: string) => { 
-    if (wallet.coins >= amount) { setWallet((prev: any) => ({...prev, coins: prev.coins - amount})); return true; } 
-    return false; 
-  };
+  const handleEarnCoins = async (amount: number, source: any, desc: string, relatedId?: string) => { /* Disabled: Server Authoritative */ };
+  const handleSpendCoins = (amount: number, source: any, desc: string, relatedId?: string) => { /* Disabled: Server Authoritative */ return false; };
   const handleSimulateAdReward = () => { handleEarnCoins(50, 'AD_REWARD', 'Anúncio Assistido'); showToast('Recompensa recebida!'); };
   
   const handleSimulateGpsAnomaly = () => { showToast('Anomalia de GPS detectada.'); };
   const handleSimulateDuplicateRewardCheck = () => { showToast('Verificação de recompensa duplicada.'); };
   const handleReportPlayer = (id: string) => { setIsReportPlayerOpen(true); setPlayerToReport({ id }); };
   
-  const handleUpdatePlayerSettings = (settings: any) => { setPlayerSettings(settings); showToast('Configurações atualizadas!'); };
-  const handleOpenSocialHub = (tab: any) => { setActiveSocialTab(tab); setIsSocialHubOpen(true); };
-  const handleUpdateTutorial = (state: any) => { setTutorialState(state); };
+  const handleUpdatePlayerSettings = (settings: any) => { 
+    setPlayerSettings(settings); 
+    showToast('Configurações atualizadas!'); 
+    if (user && user.id && settings.notifications) {
+      NotificationService.updatePreferences(user.id, settings.notifications);
+    }
+  };
+  const handleOpenSocialHub = (tab: any) => { 
+    setActiveSocialTab(tab === 'amigos' ? 'friends' : tab); 
+    setActiveTab('feed'); 
+  };
+  const handleUpdateTutorial = (state: any) => { 
+    setTutorialState(state);
+    if (state.isSkipped || state.isCompleted) {
+      localStorage.setItem('urbanozeiro_onboardingCompleted', 'true');
+    }
+  };
+  
+  const handleOnboardingAction = (action: 'explore_map' | 'start_activity' | 'go_hub') => {
+    if (action === 'explore_map') {
+      setActiveTab('mapa');
+    } else if (action === 'start_activity') {
+      setActiveTab('mapa');
+      handleStartSession();
+    } else if (action === 'go_hub') {
+      setActiveTab('perfil');
+    }
+  };
 
 
 
@@ -768,12 +1086,12 @@ export default function App() {
              const ds = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
              if (Capacitor.isNativePlatform()) ForegroundService.updateForegroundService({
                 id: 111,
-                title: 'Urbanozeiro',
-                body: `⏱ ${ds} | 📏 ${sessionDistanceRef.current.toFixed(1)}km | ⚡ ${(lastTrackPointRef.current?.speed || 0).toFixed(1)}km/h | 🔥 ${sessionMaxSpeedRef.current.toFixed(1)}km/h`,
+                title: 'THE ROLLING WARS',
+                body: `Patinação em andamento\nTempo: ${ds}\nDistância: ${sessionDistanceRef.current.toFixed(2)} km`,
                 smallIcon: 'ic_stat_name',
                 buttons: [
                   { id: 1, title: 'PAUSAR' },
-                  { id: 2, title: 'PARAR' }
+                  { id: 2, title: 'FINALIZAR' }
                 ]
              }).catch(()=>{});
           }
@@ -818,6 +1136,7 @@ export default function App() {
       }
 
       try {
+        TelemetryService.logEvent({ eventName: 'gps_permission_granted', category: 'GPS' });
         watchIdStr = await Geolocation.watchPosition(
           { enableHighAccuracy: true, timeout: 15000, maximumAge: 5000 },
           (pos, err) => {
@@ -1062,8 +1381,11 @@ export default function App() {
                           nickname: currentUserProfile.nickname,
                           avatar: currentUserProfile.avatar,
                           level: currentUserProfile.level,
-                          clan: currentUserProfile.crew || 'Sem Clã',
+                          clan: userClan?.name || currentUserProfile.crew || 'Sem Clã',
                           crew: currentUserProfile.crew || 'Sem Clã',
+                          clanId: userClan?.id || undefined,
+                          clanName: userClan?.name || undefined,
+                          clanIcon: userClan?.icon || userClan?.symbol || undefined,
                         };
 
                         const zoneOperation = {
@@ -1109,6 +1431,34 @@ export default function App() {
                           console.error("Falha ao salvar conquista na Outbox:", e);
                         });
 
+                        let clanPointsAwarded = 0;
+                        let clanResultStr = '';
+                        if (userClan) {
+                          if (z.status === 'free') {
+                            clanPointsAwarded = 100;
+                            clanResultStr = 'CAPTURED';
+                          } else if (z.controller?.clanId === userClan.id) {
+                            clanPointsAwarded = 25;
+                            clanResultStr = 'DEFENDED';
+                          } else {
+                            clanPointsAwarded = 150;
+                            clanResultStr = 'CAPTURED';
+                          }
+                        }
+
+
+                        // Submit to Season
+                        try {
+                          const processEvent = httpsCallable(functions, 'processSeasonEvent');
+                          processEvent({
+                            type: 'ZONE_CONQUEST',
+                            sourceEventId: zoneOperation.operationId,
+                            zoneId: z.id
+                          }).catch((e: any) => console.error("Falha na Season:", e));
+                        } catch (e: any) {
+                          console.error(e);
+                        }
+
                         setConquestResultModalData({
                           zone: conqueredZone,
                           zoneName: z.name,
@@ -1119,6 +1469,11 @@ export default function App() {
                           xpEarned,
                           player: currentUserProfile,
                           trackPoints: attempt.trackPoints,
+                          clanWar: userClan ? {
+                            points: clanPointsAwarded,
+                            result: clanResultStr,
+                            clanName: userClan.name,
+                          } : undefined
                         });
 
                         setUser((prev) => ({
@@ -1180,6 +1535,7 @@ export default function App() {
                     };
                     segmentOffPathCountRef.current = 0;
                     console.log(`[SEGMENT_ENGINE] Approaching segment ${seg.id} (${endpoint})`);
+                    setActiveSegmentAttemptState({ ...segmentAttemptRef.current } as any);
                     break;
                   }
                 }
@@ -1210,6 +1566,7 @@ export default function App() {
                       attempt.status = 'aborted';
                       console.log(`[SEGMENT_ENGINE] Aborted segment ${attempt.segmentId}: exited path`);
                       segmentAttemptRef.current = null;
+                      setActiveSegmentAttemptState(null);
                     }
                   } else {
                     segmentOffPathCountRef.current = 0;
@@ -1222,6 +1579,7 @@ export default function App() {
                       if (startPtDist !== null && startPtDist > 5) {
                         attempt.status = 'active';
                         attempt.startTime = performance.now();
+                        setActiveSegmentAttemptState({ ...attempt });
                         console.log(`[SEGMENT_ENGINE] Active on segment ${attempt.segmentId}`);
                       }
                     } else if (attempt.status === 'active') {
@@ -1245,8 +1603,10 @@ export default function App() {
                           durationMs,
                           distanceCovered: attempt.distanceCovered
                         });
-
+                        attempt.durationMs = durationMs;
                         lastFinishedSegmentAttemptRef.current = attempt;
+                        setActiveSegmentAttemptState({ ...attempt });
+                        setTimeout(() => setActiveSegmentAttemptState(null), 5000);
 
                         // Fase 2.3: Persistência Offline-First
                         const timeSeconds = durationMs / 1000;
@@ -1271,10 +1631,14 @@ export default function App() {
                           direction: attempt.direction,
                           trackPoints: [...attempt.trackPoints],
                           retryCount: 0,
-                          syncStatus: 'pending'
+                          syncStatus: 'pending',
+                          validationStatus: 'pending_validation'
                         };
 
                         DatabaseService.queueSegmentOperation(operation).catch(console.error);
+
+                        // FASE 2.8: Notificação neutra, a confirmação real do recorde vem via evento 'segment-record-status'
+                        showToast(`🏁 Sprint concluído! Tempo: ${(timeSeconds).toFixed(2)}s. Sincronizando...`);
 
                         segmentAttemptRef.current = null;
                       }
@@ -1312,6 +1676,8 @@ export default function App() {
 
   // Start Skating Activity Session
   const handleStartSession = () => {
+    if (sessionStatusRef.current === 'ACTIVE' || sessionStatusRef.current === 'PAUSED') return;
+    TelemetryService.logEvent({ eventName: 'activity_started', category: 'ACTIVITY' });
     const now = Date.now();
     const sessionId = `session_${now}`;
     currentSessionIdRef.current = sessionId;
@@ -1354,13 +1720,13 @@ export default function App() {
           if (perm.display !== 'granted') await ForegroundService.requestPermissions();
           await ForegroundService.startForegroundService({
             id: 111,
-            title: 'Urbanozeiro',
-            body: `⏱ 00:00 | 📏 0.0km | ⚡ ${(user.currentSpeedKmH || 0).toFixed(1)}km/h | 🔥 ${(user.currentSpeedKmH || 0).toFixed(1)}km/h`,
+            title: 'THE ROLLING WARS',
+            body: `Patinação em andamento\nTempo: 00:00\nDistância: 0.00 km`,
             smallIcon: 'ic_stat_name',
             serviceType: 8, // Location
             buttons: [
               { id: 1, title: 'PAUSAR' },
-              { id: 2, title: 'PARAR' }
+              { id: 2, title: 'FINALIZAR' }
             ]
           });
         } catch(e) {}
@@ -1453,18 +1819,19 @@ export default function App() {
   const handlePauseSession = () => {
     if (sessionStatusRef.current !== 'ACTIVE') return;
     setSessionStatus('PAUSED');
+    TelemetryService.logEvent({ eventName: 'activity_paused', category: 'ACTIVITY' });
     isSessionPausedRef.current = true;
     showToast('⏸️ Sessão de patinação PAUSADA. Cronômetro e rastro suspensos.');
     
     try {
       if (Capacitor.isNativePlatform()) ForegroundService.updateForegroundService({
          id: 111,
-         title: 'Urbanozeiro',
-         body: `⏸ Pausada | 📏 ${sessionDistanceRef.current.toFixed(1)}km | ⚡ ${(lastTrackPointRef.current?.speed || 0).toFixed(1)}km/h | 🔥 ${sessionMaxSpeedRef.current.toFixed(1)}km/h`,
+         title: 'THE ROLLING WARS',
+         body: `Sessão pausada\nDistância: ${sessionDistanceRef.current.toFixed(2)} km`,
          smallIcon: 'ic_stat_name',
          buttons: [
            { id: 3, title: 'CONTINUAR' },
-           { id: 2, title: 'PARAR' }
+           { id: 2, title: 'FINALIZAR' }
          ]
       }).catch(()=>{});
     } catch(e) {}
@@ -1480,12 +1847,12 @@ export default function App() {
     try {
       if (Capacitor.isNativePlatform()) ForegroundService.updateForegroundService({
          id: 111,
-         title: 'Urbanozeiro',
-         body: `▶️ Retomando... | 📏 ${sessionDistanceRef.current.toFixed(1)}km | ⚡ ${(lastTrackPointRef.current?.speed || 0).toFixed(1)}km/h`,
+         title: 'THE ROLLING WARS',
+         body: `Patinação em andamento\nDistância: ${sessionDistanceRef.current.toFixed(2)} km`,
          smallIcon: 'ic_stat_name',
          buttons: [
            { id: 1, title: 'PAUSAR' },
-           { id: 2, title: 'PARAR' }
+           { id: 2, title: 'FINALIZAR' }
          ]
       }).catch(()=>{});
     } catch(e) {}
@@ -1496,6 +1863,7 @@ export default function App() {
     if (sessionStatusRef.current === 'IDLE' || sessionStatusRef.current === 'COMPLETED') return;
 
     setSessionStatus('COMPLETED');
+    TelemetryService.logEvent({ eventName: 'activity_finished', category: 'ACTIVITY', details: { distance: sessionDistanceKm } });
     isSessionActiveRef.current = false;
     isSessionPausedRef.current = false;
     setPendingZonePrompt(null);
@@ -1588,7 +1956,7 @@ export default function App() {
     // Sincronizar as estatísticas do jogador com a sessão concluída para garantir consistência
     setUser((prev) => ({
       ...prev,
-      totalKm: Number((prev.totalKm + distance).toFixed(1)),
+      totalKm: Number(((prev.totalKm || 0) + distance).toFixed(1)),
       // Opcional: Se existir outras métricas no perfil, atualizar aqui.
     }));
 
@@ -1677,13 +2045,13 @@ export default function App() {
           if (perm.display !== 'granted') await ForegroundService.requestPermissions();
           await ForegroundService.startForegroundService({
             id: 111,
-            title: 'Urbanozeiro',
-            body: `⏱ 00:00 | 📏 0.0km | ⚡ ${(user.currentSpeedKmH || 0).toFixed(1)}km/h | 🔥 ${(user.currentSpeedKmH || 0).toFixed(1)}km/h`,
+            title: 'THE ROLLING WARS',
+            body: `Patinação em andamento\nTempo: 00:00\nDistância: 0.00 km`,
             smallIcon: 'ic_stat_name',
             serviceType: 8, // Location
             buttons: [
               { id: 1, title: 'PAUSAR' },
-              { id: 2, title: 'PARAR' }
+              { id: 2, title: 'FINALIZAR' }
             ]
           });
         } catch(e) {}
@@ -2054,8 +2422,11 @@ export default function App() {
         nickname: currentUserProfile.nickname,
         avatar: currentUserProfile.avatar,
         level: currentUserProfile.level,
-        clan: currentUserProfile.crew || 'Sem Clã',
+        clan: userClan?.name || currentUserProfile.crew || 'Sem Clã',
         crew: currentUserProfile.crew || 'Sem Clã',
+        clanId: userClan?.id || undefined,
+        clanName: userClan?.name || undefined,
+        clanIcon: userClan?.icon || userClan?.symbol || undefined,
       };
 
       const zoneOperation = {
@@ -2099,6 +2470,21 @@ export default function App() {
         console.error("Falha ao salvar conquista simulada na Outbox:", e);
       });
 
+      let clanPointsAwarded = 0;
+      let clanResultStr = '';
+      if (userClan) {
+        if (z.status === 'free') {
+          clanPointsAwarded = 100;
+          clanResultStr = 'CAPTURED';
+        } else if (z.controller?.clanId === userClan.id) {
+          clanPointsAwarded = 25;
+          clanResultStr = 'DEFENDED';
+        } else {
+          clanPointsAwarded = 150;
+          clanResultStr = 'CAPTURED';
+        }
+      }
+
       setConquestResultModalData({
         zone: conqueredZone,
         zoneName: z.name,
@@ -2109,6 +2495,11 @@ export default function App() {
         xpEarned,
         player: currentUserProfile,
         trackPoints: attempt.trackPoints,
+        clanWar: userClan ? {
+          points: clanPointsAwarded,
+          result: clanResultStr,
+          clanName: userClan.name,
+        } : undefined
       });
 
       setUser((prev) => ({
@@ -2279,6 +2670,32 @@ export default function App() {
     setNotifications((prev) => [newNotif, ...prev]);
   };
 
+  
+  useEffect(() => {
+    const handleMissionCompleted = (e: any) => {
+      const { title, xp, clanId } = e.detail;
+      // We could check if it's our clan, but if we triggered it, it likely is.
+      const notifData = {
+        type: 'system' as const,
+        title: '🏆 MISSÃO CONCLUÍDA',
+        message: `Seu Clã concluiu "${title}" e recebeu +${xp} XP.`,
+      };
+      
+      const newNotif = {
+        ...notifData,
+        id: `notif_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+        timeAgo: 'Agora mesmo',
+        isRead: false,
+        timestamp: new Date().toISOString(),
+      };
+      setNotifications((prev) => [newNotif, ...prev]);
+      showToast(`🏆 MISSÃO DO CLÃ: ${title} CONCLUÍDA! +${xp} XP`);
+    };
+
+    window.addEventListener('clan-mission-completed', handleMissionCompleted);
+    return () => window.removeEventListener('clan-mission-completed', handleMissionCompleted);
+  }, []);
+
   const handleNotificationAction = (notification: AppNotification) => {
     setIsNotificationsModalOpen(false);
     if (!notification.actionType) return;
@@ -2310,7 +2727,19 @@ export default function App() {
         setActiveTab('desafios');
       }
     } else if (notification.actionType === 'open_profile') {
-      setActiveTab('perfil');
+      if (notification.actionPayload?.playerId) {
+        setSelectedPublicPlayer({ id: notification.actionPayload.playerId });
+      } else {
+        setActiveTab('perfil');
+      }
+    } else if (notification.actionType === 'open_clan_profile') {
+      const cId = notification.actionPayload?.clanId;
+      if (cId) {
+        const clan = clans.find(c => c.id === cId);
+        if (clan) setSelectedClanProfile(clan);
+        else ClanService.getClan(cId).then((fetchedClan: any) => { if(fetchedClan) setSelectedClanProfile(fetchedClan); });
+      }
+    } else if (notification.actionType === 'open_social_hub') {
     } else if (notification.actionType === 'open_routes') {
       setActiveTab('feed');
     } else if (notification.actionType === 'open_direct_challenge') {
@@ -2359,25 +2788,40 @@ export default function App() {
 
   if (authState === 'LOADING') {
     return (
-      <div className="flex justify-center w-full h-full bg-black">
-        <main className="relative flex flex-col items-center justify-center w-full h-full max-w-md md:max-w-lg bg-[#000000] border-x border-neutral-900/40 p-6 overflow-hidden">
-          <div className="absolute inset-0 bg-[#fce803] opacity-[0.02] bg-[radial-gradient(#fce803_1px,transparent_1px)] [background-size:24px_24px]"></div>
-          
-          <div className="relative z-10 flex flex-col items-center">
-            <img src="/logo.png" alt="The Rolling Wars" className="w-32 h-32 rounded-3xl mb-6 shadow-[0_0_50px_rgba(255,215,0,0.4)] animate-pulse" />
-            
-            <h1 className="text-3xl font-black text-white font-display tracking-tight uppercase text-center mb-1">
-              The Rolling <span className="text-yellow-400">Wars</span>
-            </h1>
-            
-            <p className="text-xs font-bold text-neutral-400 tracking-widest uppercase font-mono-stat mb-12">
-              Iniciando Sistema...
-            </p>
+      <div className="flex justify-center w-full h-full bg-black relative overflow-hidden">
+        <div className="sparks-container">
+          {Array.from({ length: 25 }).map((_, i) => (
+            <div key={i} className="spark" style={{
+              left: `${Math.random() * 100}%`,
+              top: `${50 + Math.random() * 50}%`,
+              animationDuration: `${2 + Math.random() * 4}s`,
+              animationDelay: `${Math.random() * 3}s`
+            }} />
+          ))}
+        </div>
+        <main className="relative z-10 flex flex-col items-center justify-center w-full h-full max-w-md md:max-w-lg bg-transparent border-x border-slate-800/40 p-6">
+          <div className="relative w-40 h-40 mx-auto mb-8 flex items-center justify-center">
+            {/* NOVO: Engrenagens no fundo */}
+            <div className="absolute inset-0 flex items-center justify-between px-1" style={{ zIndex: 0, opacity: 0.15 }}>
+              <Settings className="w-14 h-14 text-white -scale-x-100 transform rotate-12 animate-spin" strokeWidth={1.5} style={{ animationDuration: '8s' }} />
+              <Settings className="w-14 h-14 text-white transform -rotate-12 animate-spin" strokeWidth={1.5} style={{ animationDuration: '6s', animationDirection: 'reverse' }} />
+            </div>
 
-            <div className="w-48 h-1 bg-neutral-900 rounded-full overflow-hidden relative">
-               <div className="absolute inset-0 bg-yellow-400 w-1/2 animate-[bounce_1.5s_infinite]"></div>
+            {/* NOVO: Raio pulsando */}
+            <div className="absolute inset-0 flex items-center justify-center animate-pulse" style={{ zIndex: 1 }}>
+              <Zap className="w-28 h-28 text-white opacity-25" strokeWidth={1.5} />
+            </div>
+
+            <div className="absolute inset-0 bg-neutral-800 rounded-full blur-[60px] opacity-20 animate-pulse" style={{ transform: 'scale(1.2)' }}></div>
+            <div className="absolute inset-0 bg-[#fce803] rounded-full blur-[40px] opacity-20 animate-pulse"></div>
+            <img src="/logo-rw-dark.png" alt="The Rolling Wars" className="relative z-10 w-full h-full object-contain drop-shadow-[0_0_15px_rgba(252,232,3,0.4)]" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+            <div className="absolute inset-0 flex items-center justify-center border-2 border-[#fce803]/30 rounded-full" style={{ zIndex: 0 }}>
+              <span className="text-[#fce803] font-black text-3xl tracking-widest opacity-50">RW</span>
             </div>
           </div>
+          <div className="w-16 h-16 rounded-full border-4 border-[#fce803]/20 border-t-[#fce803] animate-spin mb-4" />
+          <h2 className="text-xl font-black text-white font-display uppercase tracking-wider mb-2">Autenticando</h2>
+          <p className="text-sm text-slate-400 font-medium">Verificando identidade...</p>
         </main>
       </div>
     );
@@ -2401,7 +2845,7 @@ export default function App() {
             } else {
               setAuthState('UNAUTHENTICATED');
             }
-          } catch (e) {
+          } catch (e: any) {
             setAuthState('ERROR');
           }
         }} 
@@ -2409,13 +2853,39 @@ export default function App() {
     );
   }
 
-  if (!isDbReady) {
+  if (!isDbReady || !minSplashTimeElapsed) {
     return (
-      <div className="flex justify-center w-full h-full bg-[#05070a]">
-        <main className="relative flex flex-col items-center justify-center w-full h-full max-w-md md:max-w-lg bg-[#000000] border-x border-neutral-900/40">
-          <div className="w-16 h-16 rounded-full border-4 border-yellow-400/20 border-t-emerald-400 animate-spin mb-4" />
-          <h2 className="text-xl font-black text-white font-display uppercase tracking-wider mb-2">Sincronizando</h2>
-          <p className="text-sm text-neutral-400 font-medium">Carregando dados do jogador...</p>
+      <div className="flex justify-center w-full h-full bg-black">
+        <main 
+          className="relative flex flex-col items-center justify-end w-full h-full max-w-md md:max-w-lg bg-black border-x border-slate-800/40 overflow-hidden bg-cover bg-center"
+          style={{ backgroundImage: "url('/splash-bg.png')" }}
+        >
+          {/* Bottom Bar Section (Solid bottom gradient to hide the baked-in fake bar from the image) */}
+          <div className="relative z-10 w-full px-6 pb-10 flex flex-col items-center bg-gradient-to-t from-black via-black/95 to-transparent pt-32 mt-auto animate-in fade-in duration-1000">
+            
+            {/* Main Loading Pill (Fully opaque to match image visibility) */}
+            <div className="w-full max-w-[320px] h-12 rounded-full border-2 border-yellow-500 bg-[#0a0a0a] shadow-[0_0_20px_rgba(234,179,8,0.5)] flex items-center px-1.5 relative overflow-hidden mb-4">
+              {/* Progress Fill */}
+              <div 
+                className="h-[34px] bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 rounded-full shadow-[0_0_10px_rgba(253,224,71,0.8)] transition-all ease-linear"
+                style={{ width: `${Math.max(5, splashProgress * 0.55)}%`, transitionDuration: '6900ms' }}
+              ></div>
+
+              {/* Text & Spinner */}
+              <div className="absolute right-4 flex items-center gap-3">
+                <span className="text-white text-[10px] font-bold tracking-widest uppercase animate-pulse">Carregando...</span>
+                <div className="w-4 h-4 rounded-full border-2 border-yellow-500 border-t-transparent animate-spin"></div>
+              </div>
+            </div>
+
+            {/* Footer Text */}
+            <div className="flex items-center gap-3 opacity-80 animate-pulse">
+              <span className="text-yellow-500 text-sm">⚡</span>
+              <span className="text-white text-[11px] font-bold tracking-[0.3em] uppercase">The Rolling Wars</span>
+              <span className="text-yellow-500 text-sm">⚡</span>
+            </div>
+            
+          </div>
         </main>
       </div>
     );
@@ -2423,13 +2893,13 @@ export default function App() {
 
   if (dbError || authState === 'ERROR') {
     return (
-      <div className="flex justify-center w-full h-full bg-[#05070a]">
-        <main className="relative flex flex-col items-center justify-center w-full h-full max-w-md md:max-w-lg bg-[#000000] border-x border-neutral-900/40 p-6 text-center">
+      <div className="flex justify-center w-full h-full bg-black">
+        <main className="relative flex flex-col items-center justify-center w-full h-full max-w-md md:max-w-lg bg-black border-x border-slate-800/40 p-6 text-center">
           <div className="w-16 h-16 rounded-full bg-rose-500/10 flex items-center justify-center mb-4 border border-rose-500/30">
             <span className="text-rose-500 text-2xl font-black">!</span>
           </div>
           <h2 className="text-xl font-black text-white font-display uppercase tracking-wider mb-2">Erro de Conexão</h2>
-          <p className="text-sm text-neutral-400 font-medium mb-6">{dbError}</p>
+          <p className="text-sm text-slate-400 font-medium mb-6">{dbError}</p>
           <button 
             onClick={() => window.location.reload()}
             className="px-6 py-3 rounded-xl bg-yellow-500 text-black font-black font-display uppercase tracking-wider"
@@ -2442,9 +2912,9 @@ export default function App() {
   }
 
   return (
-    <div className="flex justify-center w-full h-full bg-[#05070a]">
+    <div className="flex justify-center w-full h-full bg-black">
       {/* Mobile-first main frame */}
-      <main className="relative flex flex-col w-full h-full max-w-md md:max-w-lg bg-[#000000] border-x border-neutral-900/40 shadow-2xl overflow-hidden">
+      <main className="relative flex flex-col w-full h-full max-w-md md:max-w-lg bg-black border-x border-slate-800/40 shadow-2xl overflow-hidden">
         {/* App Top Header */}
         <Header
           user={user}
@@ -2486,6 +2956,7 @@ export default function App() {
               selectedRoute={selectedRoute}
               selectedChallenge={selectedChallenge}
               liveChallenge={activeLiveChallenge}
+              activeSegmentAttempt={activeSegmentAttemptState}
               centerTrigger={centerTrigger}
               focusChallengeTrigger={focusChallengeTrigger}
               onPickCoordinateForNewZone={(coords) => {
@@ -2502,14 +2973,14 @@ export default function App() {
             
             {/* Drawing Zone Overlay */}
             {isDrawingZone && (
-              <div className="absolute top-20 inset-x-4 z-40 flex flex-col gap-2 bg-[#0d141d]/95 p-3 rounded-2xl border border-yellow-500 shadow-[0_0_20px_rgba(0,255,102,0.3)] ">
+              <div className="absolute top-20 inset-x-4 z-40 flex flex-col gap-2 bg-[#000000]/95 p-3 rounded-2xl border border-yellow-500 shadow-[0_0_20px_rgba(252,232,3,0.3)] ">
                 <div className="flex justify-between items-center">
                   <span className="text-yellow-400 text-xs font-bold font-mono-stat uppercase">Modo de Desenho</span>
-                  <span className="text-neutral-300 text-xs font-mono-stat">{drawnPath.length} pontos</span>
+                  <span className="text-slate-300 text-xs font-mono-stat">{drawnPath.length} pontos</span>
                 </div>
                 <div className="flex gap-2 mt-1">
                   <button onClick={() => { setIsDrawingZone(false); setDrawnPath([]); }} className="flex-1 bg-red-500/20 text-red-400 border border-red-500/50 py-2 rounded-xl text-xs font-bold uppercase tracking-wider">Cancelar</button>
-                  <button onClick={handleFinishDrawing} disabled={drawnPath.length < 2} className="flex-1 bg-yellow-500 text-black py-2 rounded-xl text-xs font-black uppercase tracking-wider disabled:opacity-50 disabled:bg-slate-700 disabled:text-neutral-400">Confirmar</button>
+                  <button onClick={handleFinishDrawing} disabled={drawnPath.length < 2} className="flex-1 bg-yellow-500 text-black py-2 rounded-xl text-xs font-black uppercase tracking-wider disabled:opacity-50 disabled:bg-slate-700 disabled:text-slate-400">Confirmar</button>
                 </div>
               </div>
             )}
@@ -2566,19 +3037,31 @@ export default function App() {
               onStartRedoRoute={handleStartRedoRoute}
               onExitRedoMode={handleCloseViewedTrack}
               onOpenNearbyZones={() => setIsNearbyZonesDrawerOpen(true)}
-              onOpenRotas={() => setActiveTab('feed')}
+              onOpenRotas={() => setActiveTab('rotas')}
               onOpenDesafios={() => setActiveTab('desafios')}
             />
 
-            {/* Bottom Sheet Details for selected circular zone */}
-            <ZoneDetailsModal
-              zone={selectedZone}
-              currentUser={user}
-              userLocation={playerLocation}
-              isSessionActive={isSessionActive}
-              onClose={() => setSelectedZone(null)}
-              onChallengeZone={handleChallengeZone}
-            />
+            {/* Bottom Sheet Details for selected circular zone or segment */}
+            {selectedZone?.shape === 'segment' ? (
+              <SegmentDetailsModal
+                segmentId={selectedZone.id}
+                segmentData={selectedZone}
+                onClose={() => setSelectedZone(null)}
+                onChallenge={() => {
+                  setSelectedZone(null);
+                  showToast('🏁 Dirija-se ao início do segmento. O motor de velocidade o detectará automaticamente.');
+                }}
+              />
+            ) : (
+              <ZoneDetailsModal
+                zone={selectedZone}
+                currentUser={user}
+                userLocation={playerLocation}
+                isSessionActive={isSessionActive}
+                onClose={() => setSelectedZone(null)}
+                onChallengeZone={handleChallengeZone}
+              />
+            )}
 
             {/* Nearby Zones & Urban Discovery Exploration Drawer */}
             <NearbyZonesDrawer
@@ -2602,7 +3085,7 @@ export default function App() {
           </div>
 
           {/* Tab 2: ROTAS */}
-          {activeTab === 'feed' && (
+          {activeTab === 'rotas' as any && (
             <RotasView
               routes={routes}
               onSelectRouteOnMap={handleSelectRouteOnMap}
@@ -2617,8 +3100,11 @@ export default function App() {
               currentUser={user}
               onSelectClan={(clan) => setSelectedClanProfile(clan)}
               onSelectPlayer={(player) => setSelectedPublicPlayer(player)}
+              onOpenSeasonHub={(tab) => {
+                setSeasonModalTab(tab || 'visao_geral');
+                setIsSeasonModalOpen(true);
+              }}
               onSendChallenge={handleOpenCreateDirectChallenge}
-              onOpenSeasonHub={handleOpenSeasonHub}
             />
           )}
 
@@ -2644,7 +3130,11 @@ export default function App() {
                   setSelectedRoute(null);
                   setSelectedChallenge(null);
                   setActiveTab('mapa');
-                  showToast(`📍 Zona selecionada: ${found.name}`);
+                  if (found.shape === 'segment') {
+                    showToast(`⚡ Dirija-se ao início do Sprint: ${found.name}. O GPS detectará automaticamente.`);
+                  } else {
+                    showToast(`📍 Zona selecionada: ${found.name}`);
+                  }
                 }
               }}
             />
@@ -2665,7 +3155,6 @@ export default function App() {
               titlesCount={(titles || []).filter((t) => t.unlocked).length}
               progression={progression}
               onOpenProgressionHub={handleOpenProgressionHub}
-              onOpenSeasonHub={handleOpenSeasonHub}
               wallet={wallet}
               onOpenWallet={() => setIsWalletModalOpen(true)}
               onOpenSecurity={() => setIsSecurityModalOpen(true)}
@@ -2678,7 +3167,7 @@ export default function App() {
               userClan={userClan}
               onOpenClanProfile={(clan) => setSelectedClanProfile(clan)}
               onOpenCreateClan={() => setIsCreateClanModalOpen(true)}
-              onOpenJoinClan={() => setIsJoinClanModalOpen(true)}
+              onOpenJoinClan={() => setIsClanLeaderboardModalOpen(true)}
               onOpenClanLeaderboard={() => setIsClanLeaderboardModalOpen(true)}
               friendsCount={(socialPlayers || []).filter((p) => p.isFriend).length}
               followersCount={128}
@@ -2696,7 +3185,7 @@ export default function App() {
 
           {/* Interactive Toast Notification */}
           {toastMessage && (
-            <div className="absolute top-24 inset-x-4 z-50 flex items-center gap-2.5 px-4 py-3 bg-[#0a0f15]/95 border-2 border-yellow-400 text-white text-xs font-bold rounded-2xl shadow-[0_10px_35px_rgba(0,255,102,0.4)]  animate-in slide-in-from-top duration-200 font-mono-stat uppercase tracking-wide">
+            <div className="absolute top-24 inset-x-4 z-50 flex items-center gap-2.5 px-4 py-3 bg-[#000000]/95 border-2 border-yellow-400 text-white text-xs font-bold rounded-2xl shadow-[0_10px_35px_rgba(252,232,3,0.4)]  animate-in slide-in-from-top duration-200 font-mono-stat uppercase tracking-wide">
               <Zap className="w-4 h-4 text-yellow-400 shrink-0 stroke-[2.5]" />
               <span>{toastMessage}</span>
             </div>
@@ -2741,6 +3230,13 @@ export default function App() {
           onNewSession={handleStartSession}
         />
 
+        {/* BETA DIAGNOSTICS BUTTON AND MODAL */}
+        <BetaDiagnosticsModal
+          isOpen={isBetaDiagnosticsOpen}
+          onClose={() => setIsBetaDiagnosticsOpen(false)}
+          userCoords={playerLocation}
+        />
+
         {/* Modal: Histórico de Patinações & Detalhes de Sessão */}
         <SessionHistoryModal
           isOpen={isSessionHistoryModalOpen}
@@ -2770,7 +3266,7 @@ export default function App() {
           isOtherPlayer={false}
         />
 
-        {/* Modal: Esqueleto de Busca e Descoberta Global (Urbanozeiro) */}
+        {/* Modal: Esqueleto de Busca e Descoberta Global (THE ROLLING WARS) */}
         <SearchDiscoveryModal
           isOpen={isSearchModalOpen}
           onClose={() => setIsSearchModalOpen(false)}
@@ -2860,7 +3356,7 @@ export default function App() {
         />
 
         {/* Modal: Entrar em um Clã */}
-        <JoinClanModal
+        {/* <JoinClanModal
           isOpen={isJoinClanModalOpen}
           onClose={() => setIsJoinClanModalOpen(false)}
           clans={clans}
@@ -2871,7 +3367,7 @@ export default function App() {
             setSelectedClanProfile(clan);
           }}
           onCreateClanClick={() => setIsCreateClanModalOpen(true)}
-        />
+        /> */}
 
         {/* Modal: Perfil Público de Jogador (quando clicado de um membro de clã, ranking ou social) */}
         <PublicProfileModal
@@ -3019,44 +3515,13 @@ export default function App() {
 
         
 
-        {/* Modal: Central Social de Jogadores (Urbanozeiro Social Hub) */}
-        <SocialHubModal
-          isOpen={isSocialHubOpen}
-          onClose={() => setIsSocialHubOpen(false)}
-          currentUser={user}
-          players={socialPlayers}
-          relationships={socialRelationships}
-          publicActivities={socialActivities}
-          privacySettings={socialPrivacySettings}
-          onUpdatePrivacySettings={(newSettings) => {
-            setSocialPrivacySettings(newSettings);
-            showToast('Configurações de privacidade salvas!');
-          }}
-          onSelectPlayer={(player) => setSelectedPublicPlayer(player)}
-          onSendChallenge={(player) => handleOpenCreateDirectChallenge(player)}
-          onSendFriendRequest={handleSendFriendRequest}
-          onAcceptFriendRequest={handleAcceptFriendRequest}
-          onDeclineFriendRequest={handleDeclineFriendRequest}
-          onCancelFriendRequest={handleCancelFriendRequest}
-          onRemoveFriend={handleRemoveFriend}
-          onToggleFollow={handleToggleFollow}
-          onOpenActivityFeed={() => {
-            setIsSocialHubOpen(false);
-            
-          }}
-          initialTab={activeSocialTab}
-        />
-
-        {/* Modal: Central de Atividades & Feed Urbanozeiro */}
+        {/* Modal: Central Social THE ROLLING WARS */}
         {activeTab === 'feed' && (
-        <FeedView
+        <SocialHub
+          initialTab={activeSocialTab as any}
           onClose={() => setActiveTab('mapa')}
           currentUser={user}
-          activities={activities}
-          hasMore={feedHasMore}
-          onLoadMore={loadMoreActivities}
-          isLoading={isLoadingFeed}
-          onRedoRoute={(activityId, metadata) => {
+          onRedoRoute={(activityId, metadata) => { 
              if (metadata?.trackPreview && metadata.trackPreview.length > 0) {
                 // Future: Prepare a route from trackPreview and start
                 showToast("Rota carregada no mapa para iniciar futura sessão.");
@@ -3070,61 +3535,6 @@ export default function App() {
                 }
              }
           }}
-          friendIds={(socialPlayers || []).filter((p) => p.isFriend).map((p) => p.id)}
-          followingIds={(socialPlayers || []).filter((p) => p.isFollowing).map((p) => p.id)}
-          blockedIds={socialRelationships
-            .filter((r) => r.type === 'BLOCK' && r.fromPlayerId === user.id)
-            .map((r) => r.toPlayerId)}
-          onToggleLike={handleToggleActivityLike}
-          onSelectPlayer={(playerId: string) => {
-            const foundPlayer = socialPlayers.find((p) => p.id === playerId);
-            if (foundPlayer) {
-              setSelectedPublicPlayer(foundPlayer);
-            }
-          }}
-          onOpenZone={(zoneId?: string) => {
-            if (!zoneId) return;
-            const foundZone = zones.find((z) => z.id === zoneId);
-            if (foundZone) {
-              setSelectedZone(foundZone);
-              setSelectedRoute(null);
-              setSelectedChallenge(null);
-              
-              setActiveTab('mapa');
-              showToast(`📍 Zona focada no mapa: ${foundZone.name}`);
-            }
-          }}
-          onOpenChallenge={(challengeId?: string) => {
-            if (!challengeId) return;
-            const foundChallenge = challenges.find((c) => c.id === challengeId);
-            if (foundChallenge) {
-              setSelectedChallenge(foundChallenge);
-              setSelectedRoute(null);
-              setSelectedZone(null);
-              
-              setActiveTab('mapa');
-              showToast(`⚔️ Desafio selecionado: ${foundChallenge.title}`);
-            }
-          }}
-          onOpenEvent={(eventId?: string) => {
-            if (!eventId) return;
-            const foundEvent = events.find((e) => e.id === eventId);
-            if (foundEvent) {
-              setSelectedEvent(foundEvent);
-              
-            }
-          }}
-          onOpenAchievements={() => {
-            setActiveHonorsTab('conquistas');
-            setIsAchievementsModalOpen(true);
-          }}
-
-          onNewPost={(newPost) => {
-             setActivities(prev => [newPost, ...prev]);
-             showToast("Publicação realizada com sucesso!");
-          }}
-          initialFilter={activityFeedInitialFilter}
-
         />
         )}
 
@@ -3164,6 +3574,20 @@ export default function App() {
           user={user}
           settings={playerSettings}
           onUpdateSettings={handleUpdatePlayerSettings}
+          onUpdateUser={async (updated) => {
+            setUser(prev => ({ ...prev, ...updated }));
+            if (updated.nickname && user.id) {
+               try {
+                 await setDoc(doc(db, 'users', user.id), { username: updated.nickname }, { merge: true });
+                 const savedSession = localStorage.getItem('urbanozeiro_auth_token');
+                 if (savedSession) {
+                    const session = JSON.parse(savedSession);
+                    session.username = updated.nickname;
+                    localStorage.setItem('urbanozeiro_auth_token', JSON.stringify(session));
+                 }
+               } catch (e) { console.error('Failed to update firestore user', e); }
+            }
+          }}
           blockedPlayersCount={(socialRelationships || []).filter((r) => r.type === 'BLOCK' && r.fromPlayerId === user.id).length}
           onOpenReportModal={() => {
             setIsSettingsModalOpen(false);
@@ -3174,6 +3598,10 @@ export default function App() {
             handleOpenSocialHub('amigos');
           }}
           onOpenHelpSupport={() => setIsHelpSupportModalOpen(true)}
+          onOpenBetaDiagnostics={() => {
+            setIsSettingsModalOpen(false);
+            setIsBetaDiagnosticsOpen(true);
+          }}
         />
 
         {/* Modal: Tutorial e Onboarding */}
@@ -3182,6 +3610,7 @@ export default function App() {
           onClose={() => setIsOnboardingOpen(false)}
           tutorialState={tutorialState}
           onUpdateTutorial={handleUpdateTutorial}
+          onAction={handleOnboardingAction}
         />
 
         {/* Modal: Central de Ajuda e Suporte */}
@@ -3206,8 +3635,30 @@ export default function App() {
             targetUser={chatTargetUser}
           />
         )}
+                {/* Segment UI Overlay */}
+        {activeSegmentAttemptState && (
+          <div className="absolute top-24 left-1/2 -translate-x-1/2 z-[2000] pointer-events-none w-11/12 max-w-sm flex justify-center">
+             <SprintOverlay attempt={activeSegmentAttemptState} />
+          </div>
+        )}
+        
+        {/* Modal: Virtual Wallet / Economy Hub */}
+        <VirtualWalletModal
+          isOpen={isWalletModalOpen}
+          onClose={() => setIsWalletModalOpen(false)}
+          wallet={wallet}
+        />
+
         {/* Bottom Fixed Navigation Bar */}
         <BottomNav activeTab={activeTab} onChangeTab={setActiveTab} />
+
+        {pendingZonePrompt && (
+          <ZoneEntryPromptModal
+            zone={pendingZonePrompt}
+            onAccept={handleAcceptZoneConquest}
+            onDecline={(z) => setPendingZonePrompt(null)}
+          />
+        )}
       </main>
     </div>
   );

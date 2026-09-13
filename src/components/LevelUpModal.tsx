@@ -27,7 +27,7 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
       id="modal-level-up"
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85  animate-in fade-in zoom-in-95 duration-200"
     >
-      <div className="w-full max-w-sm rounded-3xl bg-gradient-to-b from-[#101e28] to-[#070c12] border-2 border-yellow-400/90 shadow-[0_0_70px_rgba(0,255,102,0.4)] p-6 relative overflow-hidden text-center">
+      <div className="w-full max-w-sm rounded-3xl bg-gradient-to-b from-[#101e28] to-[#070c12] border-2 border-yellow-400/90 shadow-[0_0_70px_rgba(252,232,3,0.4)] p-6 relative overflow-hidden text-center">
         {/* Glow effects */}
         <div className="absolute -top-20 -left-20 w-48 h-48 bg-yellow-500/25 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-20 -right-20 w-48 h-48 bg-cyan-500/25 rounded-full blur-3xl pointer-events-none" />
@@ -36,21 +36,21 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 p-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-white transition-colors cursor-pointer"
+          className="absolute top-4 right-4 p-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-colors cursor-pointer"
         >
           <X className="w-4 h-4" />
         </button>
 
         {/* Badge Header */}
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-yellow-500/20 border border-yellow-400/50 text-[10px] font-black text-emerald-300 font-mono-stat uppercase tracking-widest mb-3">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-yellow-500/20 border border-yellow-400/50 text-[10px] font-black text-yellow-300 font-mono-stat uppercase tracking-widest mb-3">
           <Sparkles className="w-3 h-3 text-yellow-400 animate-spin" />
           <span>LEVEL UP • SUBIDA DE NÍVEL</span>
         </div>
 
         {/* Level Number Showcase */}
         <div className="relative my-3">
-          <div className="w-24 h-24 mx-auto rounded-3xl bg-gradient-to-b from-yellow-500/20 to-emerald-950/40 border-2 border-yellow-400 flex flex-col items-center justify-center shadow-[0_0_35px_rgba(0,255,102,0.5)]">
-            <span className="text-[10px] font-black text-emerald-300 font-mono-stat tracking-wider">NÍVEL</span>
+          <div className="w-24 h-24 mx-auto rounded-3xl bg-gradient-to-b from-yellow-500/20 to-blue-950/40 border-2 border-yellow-400 flex flex-col items-center justify-center shadow-[0_0_35px_rgba(252,232,3,0.5)]">
+            <span className="text-[10px] font-black text-yellow-300 font-mono-stat tracking-wider">NÍVEL</span>
             <span className="text-4xl font-black text-white font-display tracking-tight mt-[-4px]">
               {newLevel}
             </span>
@@ -60,14 +60,14 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
         <h3 className="text-xl font-black text-white font-display uppercase tracking-tight">
           PARABÉNS, PATINADOR!
         </h3>
-        <p className="text-xs text-neutral-300 mt-1 max-w-[260px] mx-auto leading-relaxed">
+        <p className="text-xs text-slate-300 mt-1 max-w-[260px] mx-auto leading-relaxed">
           Você acumulou XP suficiente e alcançou o patamar de <strong className="text-yellow-400">{levelDefinition?.title || `Nível ${newLevel}`}</strong>!
         </p>
 
         {/* Unlocked Rewards List */}
         {rewards.length > 0 && (
           <div className="mt-4 p-3 rounded-2xl bg-black/50 border border-yellow-500/30 text-left space-y-2">
-            <div className="text-[10px] font-bold text-neutral-400 uppercase font-mono-stat flex items-center gap-1">
+            <div className="text-[10px] font-bold text-slate-400 uppercase font-mono-stat flex items-center gap-1">
               <Zap className="w-3 h-3 text-yellow-400" />
               <span>RECOMPENSAS DESBLOQUEADAS ({rewards.length})</span>
             </div>
@@ -86,7 +86,7 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
                         <div className="text-xs font-black text-white font-display truncate">
                           {reward.name}
                         </div>
-                        <div className="text-[9px] text-neutral-300 truncate">
+                        <div className="text-[9px] text-slate-300 truncate">
                           {reward.description}
                         </div>
                       </div>
@@ -112,7 +112,7 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
                 onClose();
                 onOpenInventory();
               }}
-              className="w-full py-3 px-4 rounded-2xl bg-yellow-400 hover:bg-emerald-300 text-black font-black text-xs font-mono-stat uppercase tracking-wider shadow-[0_0_20px_rgba(0,255,102,0.35)] active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-3 px-4 rounded-2xl bg-yellow-400 hover:bg-yellow-300 text-black font-black text-xs font-mono-stat uppercase tracking-wider shadow-[0_0_20px_rgba(252,232,3,0.35)] active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
               <span>VER NO INVENTÁRIO</span>
               <ArrowRight className="w-4 h-4" />
@@ -122,7 +122,7 @@ export const LevelUpModal: React.FC<LevelUpModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="w-full py-2.5 px-4 rounded-2xl bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-white font-bold text-xs font-mono-stat uppercase tracking-wider border border-white/10 active:scale-95 transition-all cursor-pointer"
+            className="w-full py-2.5 px-4 rounded-2xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white font-bold text-xs font-mono-stat uppercase tracking-wider border border-white/10 active:scale-95 transition-all cursor-pointer"
           >
             CONTINUAR PATINANDO
           </button>

@@ -67,9 +67,9 @@ function formatDistanceLabel(meters: number): string {
 }
 
 /**
- * Executa busca consolidada de Jogadores, Zonas e Rotas do Urbanozeiro
+ * Executa busca consolidada de Jogadores, Zonas e Rotas do THE ROLLING WARS
  */
-export function performUrbanozeiroSearch({
+export function performSearch({
   query,
   filter = 'TODOS',
   currentUser,
@@ -192,7 +192,7 @@ export function performUrbanozeiroSearch({
           category: z.category || (z.type === 'speed' ? 'Speed' : z.type === 'street' ? 'Street' : z.type === 'slalom' ? 'Slalom' : 'Freeskate'),
           zoneType: z.type,
           status: z.status,
-          color: z.color || '#00ff66',
+          color: z.color || '#fce803',
           controllerName: z.controller?.name || z.controllerName,
           controllerNickname: z.controller?.nickname || z.controllerNickname,
           controllerAvatar: z.controller?.avatar || z.controllerAvatar,
@@ -246,7 +246,7 @@ export function performUrbanozeiroSearch({
           asphaltQuality: r.asphaltQuality,
           tags: r.tags || [],
           points: r.points || 250,
-          creatorName: 'Comunidade Urbanozeiro',
+          creatorName: 'Comunidade THE ROLLING WARS',
           bestRecordFormatted: undefined,
           isCircuit: r.isCircuit,
           rawRoute: r,
@@ -294,7 +294,7 @@ export function performUrbanozeiroSearch({
       category: z.category || (z.type === 'speed' ? 'Speed' : z.type === 'street' ? 'Street' : z.type === 'slalom' ? 'Slalom' : 'Freeskate'),
       zoneType: z.type,
       status: z.status,
-      color: z.color || '#00ff66',
+      color: z.color || '#fce803',
       controllerName: z.controller?.name || z.controllerName,
       controllerNickname: z.controller?.nickname || z.controllerNickname,
       controllerAvatar: z.controller?.avatar || z.controllerAvatar,
@@ -321,7 +321,7 @@ export function performUrbanozeiroSearch({
     asphaltQuality: r.asphaltQuality,
     tags: r.tags || [],
     points: r.points || 250,
-    creatorName: 'Comunidade Urbanozeiro',
+    creatorName: 'Comunidade THE ROLLING WARS',
     bestRecordFormatted: undefined,
     isCircuit: r.isCircuit,
     rawRoute: r,

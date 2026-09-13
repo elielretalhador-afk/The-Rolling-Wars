@@ -22,7 +22,7 @@ export const RotasView: React.FC<RotasViewProps> = ({ routes, onSelectRouteOnMap
   };
 
   return (
-    <div className="h-full w-full overflow-y-auto overscroll-contain px-4 py-4 pb-36 bg-[#080b0e]">
+    <div className="h-full w-full overflow-y-auto overscroll-contain px-4 py-4 pb-36 bg-[#050505]">
       {/* Header */}
       <div className="mb-4">
         <div className="flex items-center gap-2 text-yellow-400 text-xs font-bold uppercase tracking-wider font-mono-stat">
@@ -32,7 +32,7 @@ export const RotasView: React.FC<RotasViewProps> = ({ routes, onSelectRouteOnMap
         <h2 className="text-xl sm:text-2xl font-black text-white font-display uppercase tracking-tight mt-0.5">
           EXPLORAR PISTAS & LINHAS
         </h2>
-        <p className="text-xs text-neutral-400 mt-1 font-medium">
+        <p className="text-xs text-slate-400 mt-1 font-medium">
           Linhas mapeadas pela comunidade com percursos detalhados e avaliação de asfalto.
         </p>
       </div>
@@ -43,7 +43,7 @@ export const RotasView: React.FC<RotasViewProps> = ({ routes, onSelectRouteOnMap
           <div
             key={route.id}
             id={`route-card-${route.id}`}
-            className="p-4 rounded-2xl bg-[#0d141d] border-2 border-white/10 hover:border-yellow-500/50 transition-all shadow-md group cursor-pointer active:scale-[0.99]"
+            className="p-4 rounded-2xl bg-[#000000] border-2 border-white/10 hover:border-yellow-500/50 transition-all shadow-md group cursor-pointer active:scale-[0.99]"
             onClick={() => onSelectRouteOnMap(route)}
           >
             <div className="flex items-start justify-between gap-2">
@@ -52,7 +52,7 @@ export const RotasView: React.FC<RotasViewProps> = ({ routes, onSelectRouteOnMap
                   <span className={`px-2 py-0.5 text-[9px] font-bold uppercase rounded font-mono-stat ${getDifficultyBadge(route.difficulty)}`}>
                     {route.difficulty}
                   </span>
-                  <span className="text-[9px] font-bold text-neutral-300 bg-white/10 px-2 py-0.5 rounded font-mono-stat uppercase">
+                  <span className="text-[9px] font-bold text-slate-300 bg-white/10 px-2 py-0.5 rounded font-mono-stat uppercase">
                     ASFALTO {route.asphaltQuality}
                   </span>
                 </div>
@@ -69,17 +69,17 @@ export const RotasView: React.FC<RotasViewProps> = ({ routes, onSelectRouteOnMap
               </div>
             </div>
 
-            <div className="flex items-center gap-1.5 text-xs text-neutral-300 font-medium mt-2">
+            <div className="flex items-center gap-1.5 text-xs text-slate-300 font-medium mt-2">
               <MapPin className="w-3.5 h-3.5 text-yellow-400 shrink-0" />
               <span className="truncate">{route.location}</span>
             </div>
 
-            <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/10 text-xs text-neutral-300">
+            <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/10 text-xs text-slate-300">
               <div className="flex items-center gap-4">
                 <span className="font-bold text-yellow-400 font-mono-stat">
                   {route.distanceKm} KM
                 </span>
-                <span className="flex items-center gap-1 text-neutral-400 font-medium font-mono-stat">
+                <span className="flex items-center gap-1 text-slate-400 font-medium font-mono-stat">
                   <Clock className="w-3.5 h-3.5" /> ~{route.estimatedTimeMin} MIN
                 </span>
               </div>

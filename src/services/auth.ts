@@ -32,7 +32,7 @@ const AUTH_TOKEN_KEY = 'urbanozeiro_auth_token';
 export const AuthService = {
   async getCurrentUser(): Promise<AuthUser | null> {
     try {
-      const savedSession = (() => { try { return localStorage.getItem(AUTH_TOKEN_KEY); } catch(e) { return null; } })();
+      const savedSession = localStorage.getItem(AUTH_TOKEN_KEY);
       if (!savedSession) return null;
       
       const session = JSON.parse(savedSession) as AuthUser;
@@ -67,7 +67,7 @@ export const AuthService = {
       authProvider: 'local'
     };
     
-    try { localStorage.setItem(AUTH_TOKEN_KEY, JSON.stringify(sessionUser)); } catch(e) {}
+    localStorage.setItem(AUTH_TOKEN_KEY, JSON.stringify(sessionUser));
     return sessionUser;
   },
 
@@ -140,12 +140,12 @@ export const AuthService = {
       authProvider: 'local'
     };
     
-    try { localStorage.setItem(AUTH_TOKEN_KEY, JSON.stringify(sessionUser)); } catch(e) {}
+    localStorage.setItem(AUTH_TOKEN_KEY, JSON.stringify(sessionUser));
     return sessionUser;
   },
 
   async logout(): Promise<void> {
-    try { localStorage.removeItem(AUTH_TOKEN_KEY); } catch(e) {}
+    localStorage.removeItem(AUTH_TOKEN_KEY);
     try { await signOut(auth); } catch(e) {}
     try { await FirebaseAuthentication.signOut(); } catch(e) {}
   },
@@ -192,7 +192,7 @@ export const AuthService = {
       authProvider: 'google'
     };
         
-    try { localStorage.setItem(AUTH_TOKEN_KEY, JSON.stringify(sessionUser)); } catch(e) {}
+    localStorage.setItem(AUTH_TOKEN_KEY, JSON.stringify(sessionUser));
     return sessionUser;
   },
 

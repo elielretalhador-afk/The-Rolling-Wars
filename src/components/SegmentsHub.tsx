@@ -12,7 +12,7 @@ export const SegmentsHub: React.FC<{
 
   useEffect(() => {
     async function fetch() {
-      const segs: any[] = []; //();
+      const segs = await DatabaseService.getAllSegmentsWithRecords();
       setSegments(segs);
       setLoading(false);
     }
@@ -26,9 +26,9 @@ export const SegmentsHub: React.FC<{
       </div>
       
       {loading ? (
-         <div className="text-center text-neutral-400 py-8 font-mono-stat text-xs">Buscando segmentos...</div>
+         <div className="text-center text-slate-400 py-8 font-mono-stat text-xs">Buscando segmentos...</div>
       ) : segments.length === 0 ? (
-         <div className="text-center text-neutral-400 py-8 font-mono-stat text-xs uppercase">Nenhum segmento encontrado.</div>
+         <div className="text-center text-slate-400 py-8 font-mono-stat text-xs uppercase">Nenhum segmento encontrado.</div>
       ) : (
          <div className="space-y-3">
            {segments.map(seg => (
@@ -36,7 +36,7 @@ export const SegmentsHub: React.FC<{
                  <div className="flex justify-between items-start">
                    <div>
                      <h4 className="text-sm font-black text-white uppercase">{seg.name}</h4>
-                     <p className="text-[10px] text-neutral-400 font-mono-stat flex items-center gap-1 mt-1">
+                     <p className="text-[10px] text-slate-400 font-mono-stat flex items-center gap-1 mt-1">
                        <Route className="w-3 h-3" /> {(seg.length || 0).toFixed(0)}m • ↔ Bidirecional
                      </p>
                    </div>

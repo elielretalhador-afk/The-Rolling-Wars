@@ -1,5 +1,5 @@
-import React from 'react';
-import { Trophy, Clock, Zap, Gauge, MapPin, Check, Play, X, Flag, Sparkles } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Trophy, Clock, Zap, Gauge, MapPin, Check, Play, X, Flag, Sparkles, Cloud, CloudOff, AlertCircle } from 'lucide-react';
 import { ActivitySession } from '../types';
 
 interface ActivitySummaryModalProps {
@@ -17,6 +17,24 @@ export const ActivitySummaryModal: React.FC<ActivitySummaryModalProps> = ({
   onDismiss,
   onNewSession,
 }) => {
+  const [localSyncStatus, setLocalSyncStatus] = useState<'pending' | 'synced' | 'error'>(session?.syncStatus || 'pending');
+
+  useEffect(() => {
+    if (session) {
+      setLocalSyncStatus(session.syncStatus || 'pending');
+    }
+  }, [session]);
+
+  useEffect(() => {
+    const handleSyncStatus = (e: any) => {
+      if (session && e.detail.id === session.id) {
+        setLocalSyncStatus(e.detail.status);
+      }
+    };
+    window.addEventListener('session-sync-status', handleSyncStatus);
+    return () => window.removeEventListener('session-sync-status', handleSyncStatus);
+  }, [session]);
+
   if (!isOpen || !session) return null;
 
   const formatDuration = (totalSec: number) => {
@@ -47,20 +65,20 @@ export const ActivitySummaryModal: React.FC<ActivitySummaryModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80  animate-in fade-in duration-200">
       <div
         id="activity-summary-card"
-        className="relative w-full max-w-sm rounded-3xl bg-[#090d12] border-2 border-[#00ff66] shadow-[0_0_50px_rgba(0,255,102,0.35)] p-6 overflow-hidden text-white max-h-[90vh] overflow-y-auto"
+        className="relative w-full max-w-sm rounded-3xl bg-[#090d12] border-2 border-[#fce803] shadow-[0_0_50px_rgba(252,232,3,0.35)] p-6 overflow-hidden text-white max-h-[90vh] overflow-y-auto"
       >
         {/* Neon decorative background glow */}
-        <div className="absolute -top-20 -right-20 w-40 h-40 bg-[#00ff66]/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-[#00ff66]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -top-20 -right-20 w-40 h-40 bg-[#fce803]/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-[#fce803]/10 rounded-full blur-3xl pointer-events-none" />
 
         {/* Header Badge, Title & X Close Button */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2 min-w-0">
-            <div className="p-2 rounded-xl bg-[#00ff66]/20 border border-[#00ff66]/50 text-[#00ff66] shrink-0">
+            <div className="p-2 rounded-xl bg-[#fce803]/20 border border-[#fce803]/50 text-[#fce803] shrink-0">
               <Trophy className="w-5 h-5" />
             </div>
             <div className="min-w-0">
-              <span className="text-[10px] font-black text-[#00ff66] uppercase tracking-widest font-mono-stat block">
+              <span className="text-[10px] font-black text-[#fce803] uppercase tracking-widest font-mono-stat block">
                 SESSÃO CONCLUÍDA
               </span>
               <h2 className="text-lg font-black text-white uppercase font-display leading-tight truncate">
@@ -74,7 +92,7 @@ export const ActivitySummaryModal: React.FC<ActivitySummaryModalProps> = ({
             type="button"
             id="btn-dismiss-activity-summary"
             onClick={onDismiss}
-            className="p-1.5 rounded-xl bg-white/5 hover:bg-white/15 text-neutral-400 hover:text-white border border-white/10 active:scale-95 transition-all shrink-0 ml-2"
+            className="p-1.5 rounded-xl bg-white/5 hover:bg-white/15 text-slate-400 hover:text-white border border-white/10 active:scale-95 transition-all shrink-0 ml-2"
             title="Fechar resumo e ocultar rastro"
             aria-label="Fechar resumo"
           >
@@ -82,12 +100,45 @@ export const ActivitySummaryModal: React.FC<ActivitySummaryModalProps> = ({
           </button>
         </div>
 
+        {/* Status Banner: Sync and Validation */}
+        {localSyncStatus === 'synced' ? (
+          <div className="flex flex-col gap-1 p-3 rounded-xl bg-green-500/10 border border-green-500/30 mb-4">
+            <div className="flex items-center gap-2 text-green-400 font-bold text-xs uppercase tracking-wide">
+              <Cloud className="w-4 h-4" />
+              Atividade enviada
+            </div>
+            <div className="text-[11px] text-green-300/80 leading-snug">
+              Seu rolê foi sincronizado com sucesso. O servidor está verificando a atividade antes de registrar o resultado competitivo.
+            </div>
+          </div>
+        ) : localSyncStatus === 'error' ? (
+          <div className="flex flex-col gap-1 p-3 rounded-xl bg-red-500/10 border border-red-500/30 mb-4">
+            <div className="flex items-center gap-2 text-red-400 font-bold text-xs uppercase tracking-wide">
+              <AlertCircle className="w-4 h-4" />
+              Sincronização falhou
+            </div>
+            <div className="text-[11px] text-red-300/80 leading-snug">
+              Não foi possível enviar sua atividade. Seus dados estão seguros e serão reenviados automaticamente quando houver conexão.
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-1 p-3 rounded-xl bg-blue-500/10 border border-blue-500/30 mb-4 animate-pulse">
+            <div className="flex items-center gap-2 text-blue-400 font-bold text-xs uppercase tracking-wide">
+              <CloudOff className="w-4 h-4 animate-bounce" />
+              Sincronizando...
+            </div>
+            <div className="text-[11px] text-blue-300/80 leading-snug">
+              Aguarde enquanto enviamos sua atividade para os servidores.
+            </div>
+          </div>
+        )}
+
         {/* Hero Metric: Distância */}
         <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10 text-center mb-3 relative overflow-hidden">
-          <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest font-mono-stat block">
+          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono-stat block">
             DISTÂNCIA TOTAL PERCORRIDA
           </span>
-          <div className="text-4xl font-black text-[#00ff66] font-mono-stat tracking-tight mt-1 drop-shadow-[0_0_15px_rgba(0,255,102,0.5)]">
+          <div className="text-4xl font-black text-[#fce803] font-mono-stat tracking-tight mt-1 drop-shadow-[0_0_15px_rgba(252,232,3,0.5)]">
             {formattedDistance}
           </div>
         </div>
@@ -119,7 +170,7 @@ export const ActivitySummaryModal: React.FC<ActivitySummaryModalProps> = ({
         <div className="grid grid-cols-2 gap-2.5 mb-4 font-mono-stat">
           {/* Tempo */}
           <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10">
-            <div className="flex items-center gap-1.5 text-[10px] text-neutral-400 font-bold uppercase mb-1">
+            <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-bold uppercase mb-1">
               <Clock className="w-3.5 h-3.5 text-amber-400" />
               <span>TEMPO</span>
             </div>
@@ -130,43 +181,43 @@ export const ActivitySummaryModal: React.FC<ActivitySummaryModalProps> = ({
 
           {/* Velocidade Máxima */}
           <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10">
-            <div className="flex items-center gap-1.5 text-[10px] text-neutral-400 font-bold uppercase mb-1">
-              <Zap className="w-3.5 h-3.5 text-[#00ff66]" />
+            <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-bold uppercase mb-1">
+              <Zap className="w-3.5 h-3.5 text-[#fce803]" />
               <span>VEL. MÁXIMA</span>
             </div>
-            <div className="text-lg font-black text-[#00ff66]">
+            <div className="text-lg font-black text-[#fce803]">
               {maxSpeedVal.toFixed(1)}{' '}
-              <span className="text-[10px] text-neutral-400 font-bold">KM/H</span>
+              <span className="text-[10px] text-slate-400 font-bold">KM/H</span>
             </div>
           </div>
 
           {/* Velocidade Média */}
           <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10">
-            <div className="flex items-center gap-1.5 text-[10px] text-neutral-400 font-bold uppercase mb-1">
+            <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-bold uppercase mb-1">
               <Gauge className="w-3.5 h-3.5 text-cyan-400" />
               <span>VEL. MÉDIA</span>
             </div>
             <div className="text-lg font-black text-cyan-300">
               {avgSpeedVal.toFixed(1)}{' '}
-              <span className="text-[10px] text-neutral-400 font-bold">KM/H</span>
+              <span className="text-[10px] text-slate-400 font-bold">KM/H</span>
             </div>
           </div>
 
           {/* Pontos GPS */}
           <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10">
-            <div className="flex items-center gap-1.5 text-[10px] text-neutral-400 font-bold uppercase mb-1">
+            <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-bold uppercase mb-1">
               <MapPin className="w-3.5 h-3.5 text-yellow-400" />
               <span>PONTOS GPS</span>
             </div>
             <div className="text-lg font-black text-white">
               {pointsCount}{' '}
-              <span className="text-[10px] text-neutral-400 font-bold">PTS</span>
+              <span className="text-[10px] text-slate-400 font-bold">PTS</span>
             </div>
           </div>
         </div>
 
         {/* Info Notice */}
-        <div className="p-2.5 rounded-xl bg-[#00ff66]/10 border border-[#00ff66]/30 text-neutral-300 text-[11px] font-medium text-center mb-4">
+        <div className="p-2.5 rounded-xl bg-[#fce803]/10 border border-[#fce803]/30 text-slate-300 text-[11px] font-medium text-center mb-4">
           Percurso registrado na sessão. O rastro continua desenhado no mapa!
         </div>
 
@@ -176,7 +227,7 @@ export const ActivitySummaryModal: React.FC<ActivitySummaryModalProps> = ({
             type="button"
             id="btn-close-activity-summary"
             onClick={onClose}
-            className="w-full py-3 px-4 rounded-xl bg-[#00ff66] hover:bg-[#00e55b] text-black font-black text-xs uppercase font-mono-stat tracking-wider flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(0,255,102,0.4)] active:scale-95 transition-all cursor-pointer"
+            className="w-full py-3 px-4 rounded-xl bg-[#fce803] hover:bg-[#00e55b] text-black font-black text-xs uppercase font-mono-stat tracking-wider flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(252,232,3,0.4)] active:scale-95 transition-all cursor-pointer"
           >
             <Check className="w-4 h-4 stroke-[3]" />
             VER RASTRO NO MAPA
@@ -192,7 +243,7 @@ export const ActivitySummaryModal: React.FC<ActivitySummaryModalProps> = ({
               }}
               className="w-full py-2.5 px-4 rounded-xl bg-white/10 hover:bg-white/15 text-white font-bold text-xs uppercase font-mono-stat border border-white/10 active:scale-95 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
             >
-              <Play className="w-3.5 h-3.5 text-[#00ff66]" />
+              <Play className="w-3.5 h-3.5 text-[#fce803]" />
               INICIAR NOVA PATINAÇÃO
             </button>
           )}

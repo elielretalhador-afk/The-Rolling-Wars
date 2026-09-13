@@ -5,7 +5,7 @@ import { UserProfile, Zone, ZoneType } from '../types';
 interface CreateZoneModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onCreateZone: (newZone: Zone) => void;
+  onCreateZone: (newZone: Zone) => Promise<void> | void;
   currentUser: UserProfile;
   userCoords?: [number, number] | null;
   pickedCoords: [number, number] | null;
@@ -35,6 +35,7 @@ export const CreateZoneModal: React.FC<CreateZoneModalProps> = ({
 
   // Validation / Error tracking state
   const [submitted, setSubmitted] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
   const [errors, setErrors] = useState<{
     name?: string;
     type?: string;
@@ -118,14 +119,17 @@ export const CreateZoneModal: React.FC<CreateZoneModalProps> = ({
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isProcessing) return;
     setSubmitted(true);
 
     const isValid = validateForm();
     if (!isValid) {
       return;
     }
+    
+    setIsProcessing(true);
 
     // Precise coordinates: use picked point if chosen on map, otherwise exact player GPS coords
     const safeBaseLat =
@@ -186,15 +190,21 @@ export const CreateZoneModal: React.FC<CreateZoneModalProps> = ({
       lastConquered: '',
     };
 
-    onCreateZone(newZone);
-    onClose();
+try {
+      await onCreateZone(newZone);
+      onClose();
+    } catch (e) {
+      // Error handled by parent
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   const hasErrors = submitted && Object.keys(errors).length > 0;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85  animate-in fade-in duration-200">
-      <div className="w-full max-w-lg bg-[#0a0f15] border-2 border-yellow-500/50 rounded-3xl p-5 shadow-[0_25px_60px_rgba(0,0,0,0.95)] max-h-[90vh] overflow-y-auto no-scrollbar">
+      <div className="w-full max-w-lg bg-[#000000] border-2 border-yellow-500/50 rounded-3xl p-5 shadow-[0_25px_60px_rgba(0,0,0,0.95)] max-h-[90vh] overflow-y-auto no-scrollbar">
         {/* Modal Header */}
         <div className="flex items-center justify-between pb-3 border-b-2 border-white/10">
           <div className="flex items-center gap-2.5">
@@ -215,7 +225,7 @@ export const CreateZoneModal: React.FC<CreateZoneModalProps> = ({
             type="button"
             onClick={onClose}
             aria-label="Fechar formulário de criação de zona"
-            className="w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 active:bg-white/30 text-neutral-300 hover:text-white border border-white/10 flex items-center justify-center transition-all cursor-pointer shrink-0"
+            className="w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 active:bg-white/30 text-slate-300 hover:text-white border border-white/10 flex items-center justify-center transition-all cursor-pointer shrink-0"
           >
             <X className="w-5 h-5 stroke-[2.5]" />
           </button>
@@ -257,7 +267,7 @@ export const CreateZoneModal: React.FC<CreateZoneModalProps> = ({
                 if (errors.name) setErrors((prev) => ({ ...prev, name: undefined }));
               }}
               placeholder="Ex: Pista Marquise Skate Park"
-              className={`w-full px-3.5 py-2.5 bg-[#0f1722] border-2 rounded-xl text-white text-sm font-bold placeholder-slate-500 focus:outline-none transition-colors ${
+              className={`w-full px-3.5 py-2.5 bg-[#0a0a0a] border-2 rounded-xl text-white text-sm font-bold placeholder-slate-500 focus:outline-none transition-colors ${
                 submitted && errors.name
                   ? 'border-rose-500 bg-rose-950/20 focus:border-rose-400'
                   : 'border-white/10 focus:border-yellow-400'
@@ -288,8 +298,8 @@ export const CreateZoneModal: React.FC<CreateZoneModalProps> = ({
                   }}
                   className={`py-2 px-1 text-[11px] font-black uppercase tracking-wider rounded-xl transition-all font-mono-stat cursor-pointer flex items-center justify-center gap-1 ${
                     type === opt.id
-                      ? 'bg-yellow-400 text-black shadow-[0_0_15px_rgba(0,255,102,0.5)] border-2 border-yellow-400 scale-[1.02]'
-                      : 'bg-[#0f1722] text-neutral-400 border-2 border-white/10 hover:border-white/20'
+                      ? 'bg-yellow-400 text-black shadow-[0_0_15px_rgba(252,232,3,0.5)] border-2 border-yellow-400 scale-[1.02]'
+                      : 'bg-[#0a0a0a] text-slate-400 border-2 border-white/10 hover:border-white/20'
                   }`}
                 >
                   {type === opt.id && <Check className="w-3 h-3 stroke-[3]" />}
@@ -322,7 +332,7 @@ export const CreateZoneModal: React.FC<CreateZoneModalProps> = ({
                   className={`py-1.5 px-0.5 text-[10px] font-black rounded-lg transition-all font-mono-stat cursor-pointer text-center ${
                     radius === r
                       ? 'bg-yellow-400 text-black border-2 border-yellow-400'
-                      : 'bg-[#0f1722] text-neutral-400 border border-white/10 hover:border-white/25'
+                      : 'bg-[#0a0a0a] text-slate-400 border border-white/10 hover:border-white/25'
                   }`}
                 >
                   {r}m
@@ -339,7 +349,7 @@ export const CreateZoneModal: React.FC<CreateZoneModalProps> = ({
                 setRadius(Number(e.target.value));
                 if (errors.radius) setErrors((prev) => ({ ...prev, radius: undefined }));
               }}
-              className="w-full accent-emerald-400 bg-slate-800 h-2.5 rounded-lg cursor-pointer"
+              className="w-full accent-yellow-400 bg-slate-800 h-2.5 rounded-lg cursor-pointer"
             />
           </div>
           )}
@@ -396,7 +406,7 @@ export const CreateZoneModal: React.FC<CreateZoneModalProps> = ({
                 if (errors.description) setErrors((prev) => ({ ...prev, description: undefined }));
               }}
               placeholder="Ex: Área urbana com escadarias, corrimãos e transições de concreto..."
-              className={`w-full px-3.5 py-2 bg-[#0f1722] border-2 rounded-xl text-white text-xs font-semibold placeholder-slate-500 focus:outline-none transition-colors ${
+              className={`w-full px-3.5 py-2 bg-[#0a0a0a] border-2 rounded-xl text-white text-xs font-semibold placeholder-slate-500 focus:outline-none transition-colors ${
                 submitted && errors.description
                   ? 'border-rose-500 bg-rose-950/20 focus:border-rose-400'
                   : 'border-white/10 focus:border-yellow-400'
@@ -424,7 +434,7 @@ export const CreateZoneModal: React.FC<CreateZoneModalProps> = ({
                 if (errors.rules) setErrors((prev) => ({ ...prev, rules: undefined }));
               }}
               placeholder="Ex: Conquista baseada em manobras e percurso realizado dentro da zona..."
-              className={`w-full px-3.5 py-2 bg-[#0f1722] border-2 rounded-xl text-white text-xs font-semibold placeholder-slate-500 focus:outline-none transition-colors ${
+              className={`w-full px-3.5 py-2 bg-[#0a0a0a] border-2 rounded-xl text-white text-xs font-semibold placeholder-slate-500 focus:outline-none transition-colors ${
                 submitted && errors.rules
                   ? 'border-rose-500 bg-rose-950/20 focus:border-rose-400'
                   : 'border-white/10 focus:border-yellow-400'
@@ -452,7 +462,7 @@ export const CreateZoneModal: React.FC<CreateZoneModalProps> = ({
                 if (errors.surface) setErrors((prev) => ({ ...prev, surface: undefined }));
               }}
               placeholder="Ex: Perfeito / Asfalto liso sem buracos"
-              className={`w-full px-3.5 py-2 bg-[#0f1722] border-2 rounded-xl text-white text-xs font-semibold placeholder-slate-500 focus:outline-none transition-colors ${
+              className={`w-full px-3.5 py-2 bg-[#0a0a0a] border-2 rounded-xl text-white text-xs font-semibold placeholder-slate-500 focus:outline-none transition-colors ${
                 submitted && errors.surface
                   ? 'border-rose-500 bg-rose-950/20 focus:border-rose-400'
                   : 'border-white/10 focus:border-yellow-400'
@@ -467,7 +477,7 @@ export const CreateZoneModal: React.FC<CreateZoneModalProps> = ({
                     setSurface(s);
                     if (errors.surface) setErrors((prev) => ({ ...prev, surface: undefined }));
                   }}
-                  className="px-2 py-0.5 text-[10px] font-bold rounded-lg bg-white/5 hover:bg-white/15 text-neutral-300 border border-white/10 whitespace-nowrap font-mono-stat cursor-pointer"
+                  className="px-2 py-0.5 text-[10px] font-bold rounded-lg bg-white/5 hover:bg-white/15 text-slate-300 border border-white/10 whitespace-nowrap font-mono-stat cursor-pointer"
                 >
                   {s}
                 </button>
@@ -495,7 +505,7 @@ export const CreateZoneModal: React.FC<CreateZoneModalProps> = ({
                 if (errors.referencePoint) setErrors((prev) => ({ ...prev, referencePoint: undefined }));
               }}
               placeholder="Ex: Praça central / Ao lado da pista de skate"
-              className={`w-full px-3.5 py-2 bg-[#0f1722] border-2 rounded-xl text-white text-xs font-semibold placeholder-slate-500 focus:outline-none transition-colors ${
+              className={`w-full px-3.5 py-2 bg-[#0a0a0a] border-2 rounded-xl text-white text-xs font-semibold placeholder-slate-500 focus:outline-none transition-colors ${
                 submitted && errors.referencePoint
                   ? 'border-rose-500 bg-rose-950/20 focus:border-rose-400'
                   : 'border-white/10 focus:border-yellow-400'
@@ -504,7 +514,7 @@ export const CreateZoneModal: React.FC<CreateZoneModalProps> = ({
           </div>
 
           {/* Status info note */}
-          <div className="p-2.5 rounded-xl bg-emerald-950/40 border border-yellow-500/30 text-[11px] text-emerald-300 font-mono-stat flex items-center gap-2">
+          <div className="p-2.5 rounded-xl bg-neutral-900/40 border border-yellow-500/30 text-[11px] text-yellow-300 font-mono-stat flex items-center gap-2">
             <Flag className="w-4 h-4 text-yellow-400 shrink-0" />
             <span>A zona será registrada no mapa como <strong>LIVRE (0% domínio)</strong> com os dados exatos informados.</span>
           </div>
@@ -513,10 +523,11 @@ export const CreateZoneModal: React.FC<CreateZoneModalProps> = ({
           <div className="pt-2">
             <button
               type="submit"
-              className="w-full py-3.5 bg-yellow-400 hover:bg-emerald-300 text-black font-black text-xs uppercase tracking-wider rounded-xl shadow-[0_0_25px_rgba(0,255,102,0.5)] transition-all flex items-center justify-center gap-2 font-mono-stat cursor-pointer active:scale-98"
+              disabled={isProcessing}
+              className="w-full disabled:opacity-50 disabled:cursor-not-allowed  py-3.5 bg-yellow-400 hover:bg-yellow-300 text-black font-black text-xs uppercase tracking-wider rounded-xl shadow-[0_0_25px_rgba(252,232,3,0.5)] transition-all flex items-center justify-center gap-2 font-mono-stat cursor-pointer active:scale-98"
             >
               <Sparkles className="w-4 h-4 stroke-[3]" />
-              CRIAR E REGISTRAR ZONA NO MAPA
+              {isProcessing ? "PROCESSANDO..." : "CRIAR E REGISTRAR ZONA NO MAPA"}
             </button>
           </div>
         </form>

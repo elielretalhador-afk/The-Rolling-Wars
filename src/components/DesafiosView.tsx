@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Target, Swords, Trophy } from 'lucide-react';
+import { Target, Swords, Trophy, Route } from 'lucide-react';
 import { Challenge, DirectChallenge, Mission, UrbanozeiroEvent, UserProfile } from '../types';
 import { DirectChallengesHub } from './DirectChallengesHub';
 import { EventsHub } from './EventsHub';
+import { SegmentsHub } from './SegmentsHub';
 import { MissionsHub } from './MissionsHub';
 
 interface DesafiosViewProps {
@@ -38,7 +39,7 @@ export const DesafiosView: React.FC<DesafiosViewProps> = ({
   onSelectZoneOnMap,
   initialTab = 'diretos',
 }) => {
-  const [activeMainTab, setActiveMainTab] = useState<'urbanos' | 'diretos' | 'eventos'>(initialTab);
+  const [activeMainTab, setActiveMainTab] = useState<'urbanos' | 'diretos' | 'eventos' | 'segmentos'>(initialTab);
 
   const pendingReceivedCount = currentUser
     ? directChallenges.filter(
@@ -55,7 +56,7 @@ export const DesafiosView: React.FC<DesafiosViewProps> = ({
   const completedMissionsCount = missions.filter((m) => m.status === 'COMPLETED').length;
 
   return (
-    <div className="h-full w-full overflow-y-auto overscroll-contain px-4 py-4 pb-36 bg-[#080b0e]">
+    <div className="h-full w-full overflow-y-auto overscroll-contain px-4 py-4 pb-36 bg-[#050505]">
       {/* Header */}
       <div className="mb-4">
         <div className="flex items-center gap-2 text-yellow-400 text-xs font-bold uppercase tracking-wider font-mono-stat">
@@ -65,14 +66,28 @@ export const DesafiosView: React.FC<DesafiosViewProps> = ({
         <h2 className="text-xl sm:text-2xl font-black text-white font-display uppercase tracking-tight mt-0.5">
           MISSÕES & DESAFIOS
         </h2>
-        <p className="text-xs text-neutral-400 mt-1 font-medium">
+        <p className="text-xs text-slate-400 mt-1 font-medium">
           Cumpra missões solo, dispute duelos X1 ou participe de eventos e torneios com chaveamento oficial.
         </p>
       </div>
 
       {/* Main Mode Toggle: MISSÕES URBANAS | DESAFIOS X1 | EVENTOS */}
-      <div className="grid grid-cols-2 p-1 bg-[#0c1420] border border-white/10 rounded-2xl mb-4 gap-1">
+      <div className="grid grid-cols-3 p-1 bg-[#0c1420] border border-white/10 rounded-2xl mb-4 gap-1">
         
+
+                <button
+          id="tab-toggle-desafios-segmentos"
+          type="button"
+          onClick={() => setActiveMainTab('segmentos')}
+          className={`py-2.5 px-2 rounded-xl text-xs font-bold uppercase font-mono-stat tracking-wider transition-all flex items-center justify-center gap-1.5 relative cursor-pointer ${
+            activeMainTab === 'segmentos'
+              ? 'bg-indigo-400 text-black font-black shadow-[0_0_15px_rgba(99,102,241,0.4)]'
+              : 'text-slate-400 hover:text-white'
+          }`}
+        >
+          <Route className="w-3.5 h-3.5" />
+          <span className="truncate">SPRINTS</span>
+        </button>
 
         <button
           id="tab-toggle-desafios-diretos"
@@ -80,8 +95,8 @@ export const DesafiosView: React.FC<DesafiosViewProps> = ({
           onClick={() => setActiveMainTab('diretos')}
           className={`py-2.5 px-2 rounded-xl text-xs font-bold uppercase font-mono-stat tracking-wider transition-all flex items-center justify-center gap-1.5 relative cursor-pointer ${
             activeMainTab === 'diretos'
-              ? 'bg-yellow-400 text-black font-black shadow-[0_0_15px_rgba(0,255,102,0.4)]'
-              : 'text-neutral-400 hover:text-white'
+              ? 'bg-yellow-400 text-black font-black shadow-[0_0_15px_rgba(252,232,3,0.4)]'
+              : 'text-slate-400 hover:text-white'
           }`}
         >
           <Swords className="w-3.5 h-3.5" />
@@ -106,7 +121,7 @@ export const DesafiosView: React.FC<DesafiosViewProps> = ({
           className={`py-2.5 px-2 rounded-xl text-xs font-bold uppercase font-mono-stat tracking-wider transition-all flex items-center justify-center gap-1.5 relative cursor-pointer ${
             activeMainTab === 'eventos'
               ? 'bg-amber-400 text-black font-black shadow-[0_0_15px_rgba(251,191,36,0.4)]'
-              : 'text-neutral-400 hover:text-white'
+              : 'text-slate-400 hover:text-white'
           }`}
         >
           <Trophy className="w-3.5 h-3.5 text-amber-400" />
@@ -135,6 +150,11 @@ export const DesafiosView: React.FC<DesafiosViewProps> = ({
         />
       )}
 
+            {/* VIEW: SEGMENTOS */}
+      {activeMainTab === 'segmentos' && (
+        <SegmentsHub onSelectSegmentOnMap={onSelectZoneOnMap || (() => {})} />
+      )}
+
       {/* VIEW: DIRECT CHALLENGES (X1) */}
       {activeMainTab === 'diretos' && (
         <div className="space-y-4">
@@ -147,7 +167,7 @@ export const DesafiosView: React.FC<DesafiosViewProps> = ({
               onStartLiveChallenge={onStartLiveChallenge}
             />
           ) : (
-            <div className="p-6 text-center text-neutral-400 font-mono-stat text-xs">
+            <div className="p-6 text-center text-slate-400 font-mono-stat text-xs">
               Carregando desafios diretos...
             </div>
           )}

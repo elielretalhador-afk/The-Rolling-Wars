@@ -2136,8 +2136,8 @@ export default function App() {
 
   if (authState === 'LOADING') {
     return (
-      <div className="flex justify-center w-full h-full bg-[#000000]">
-        <main className="relative flex flex-col items-center justify-center w-full h-full max-w-md md:max-w-lg bg-[#000000] border-x border-slate-800/40">
+      <div className="flex justify-center w-full h-full bg-[#05070a]">
+        <main className="relative flex flex-col items-center justify-center w-full h-full max-w-md md:max-w-lg bg-[#080B0E] border-x border-slate-800/40">
           <div className="w-16 h-16 rounded-full border-4 border-emerald-400/20 border-t-emerald-400 animate-spin mb-4" />
           <h2 className="text-xl font-black text-white font-display uppercase tracking-wider mb-2">Autenticando</h2>
           <p className="text-sm text-slate-400 font-medium">Verificando identidade...</p>
@@ -2174,8 +2174,8 @@ export default function App() {
 
   if (!isDbReady) {
     return (
-      <div className="flex justify-center w-full h-full bg-[#000000]">
-        <main className="relative flex flex-col items-center justify-center w-full h-full max-w-md md:max-w-lg bg-[#000000] border-x border-slate-800/40">
+      <div className="flex justify-center w-full h-full bg-[#05070a]">
+        <main className="relative flex flex-col items-center justify-center w-full h-full max-w-md md:max-w-lg bg-[#080B0E] border-x border-slate-800/40">
           <div className="w-16 h-16 rounded-full border-4 border-emerald-400/20 border-t-emerald-400 animate-spin mb-4" />
           <h2 className="text-xl font-black text-white font-display uppercase tracking-wider mb-2">Sincronizando</h2>
           <p className="text-sm text-slate-400 font-medium">Carregando dados do jogador...</p>
@@ -2186,8 +2186,8 @@ export default function App() {
 
   if (dbError || authState === 'ERROR') {
     return (
-      <div className="flex justify-center w-full h-full bg-[#000000]">
-        <main className="relative flex flex-col items-center justify-center w-full h-full max-w-md md:max-w-lg bg-[#000000] border-x border-slate-800/40 p-6 text-center">
+      <div className="flex justify-center w-full h-full bg-[#05070a]">
+        <main className="relative flex flex-col items-center justify-center w-full h-full max-w-md md:max-w-lg bg-[#080B0E] border-x border-slate-800/40 p-6 text-center">
           <div className="w-16 h-16 rounded-full bg-rose-500/10 flex items-center justify-center mb-4 border border-rose-500/30">
             <span className="text-rose-500 text-2xl font-black">!</span>
           </div>
@@ -2205,9 +2205,9 @@ export default function App() {
   }
 
   return (
-    <div className="flex justify-center w-full h-full bg-[#000000]">
+    <div className="flex justify-center w-full h-full bg-[#05070a]">
       {/* Mobile-first main frame */}
-      <main className="relative flex flex-col w-full h-full max-w-md md:max-w-lg bg-[#000000] border-x border-slate-800/40 shadow-2xl overflow-hidden">
+      <main className="relative flex flex-col w-full h-full max-w-md md:max-w-lg bg-[#080B0E] border-x border-slate-800/40 shadow-2xl overflow-hidden">
         {/* App Top Header */}
         <Header
           user={user}
@@ -2265,7 +2265,7 @@ export default function App() {
             
             {/* Drawing Zone Overlay */}
             {isDrawingZone && (
-              <div className="absolute top-20 inset-x-4 z-40 flex flex-col gap-2 bg-[#050505]/95 p-3 rounded-2xl border border-emerald-500 shadow-[0_0_20px_rgba(0,255,102,0.3)] backdrop-blur-md">
+              <div className="absolute top-20 inset-x-4 z-40 flex flex-col gap-2 bg-[#0d141d]/95 p-3 rounded-2xl border border-emerald-500 shadow-[0_0_20px_rgba(0,255,102,0.3)] backdrop-blur-md">
                 <div className="flex justify-between items-center">
                   <span className="text-emerald-400 text-xs font-bold font-mono-stat uppercase">Modo de Desenho</span>
                   <span className="text-slate-300 text-xs font-mono-stat">{drawnPath.length} pontos</span>
@@ -2459,7 +2459,7 @@ export default function App() {
 
           {/* Interactive Toast Notification */}
           {toastMessage && (
-            <div className="absolute top-24 inset-x-4 z-50 flex items-center gap-2.5 px-4 py-3 bg-[#050505]/95 border-2 border-emerald-400 text-white text-xs font-bold rounded-2xl shadow-[0_10px_35px_rgba(0,255,102,0.4)] backdrop-blur-md animate-in slide-in-from-top duration-200 font-mono-stat uppercase tracking-wide">
+            <div className="absolute top-24 inset-x-4 z-50 flex items-center gap-2.5 px-4 py-3 bg-[#0a0f15]/95 border-2 border-emerald-400 text-white text-xs font-bold rounded-2xl shadow-[0_10px_35px_rgba(0,255,102,0.4)] backdrop-blur-md animate-in slide-in-from-top duration-200 font-mono-stat uppercase tracking-wide">
               <Zap className="w-4 h-4 text-emerald-400 shrink-0 stroke-[2.5]" />
               <span>{toastMessage}</span>
             </div>

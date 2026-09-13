@@ -1,4 +1,4 @@
-import { db } from '../lib/firebase';
+import { db, auth } from '../lib/firebase';
 import { 
   collection, 
   doc, 
@@ -26,6 +26,7 @@ export const SocialService = {
   },
 
   async getAllPlayers(currentUserId: string): Promise<SocialPlayer[]> {
+    if (!auth.currentUser) return [];
     const usersRef = collection(db, 'users');
     const snapshot = await getDocs(usersRef);
     const results: SocialPlayer[] = [];
@@ -82,10 +83,19 @@ export const SocialService = {
     return results;
   },
 
-  async getPublicProfile(userId: string): Promise<SocialPlayer | null> {
+  async getPublicProfile(userId: string, currentUserId?: string): Promise<SocialPlayer | null> {
     const userDoc = await getDoc(doc(db, 'users', userId));
     if (!userDoc.exists()) return null;
-    return this.formatUserToSocialPlayer(userDoc.data());
+    const p = this.formatUserToSocialPlayer(userDoc.data());
+    if (currentUserId) {
+      p.isFollowing = await this.checkIsFollowing(currentUserId, userId);
+      const friendStatus = await this.checkFriendshipStatus(currentUserId, userId);
+      p.isFriend = friendStatus === 'friends';
+      if (friendStatus === 'request_sent') p.friendRequestStatus = 'PENDING_SENT';
+      else if (friendStatus === 'request_received') p.friendRequestStatus = 'PENDING_RECEIVED';
+      else p.friendRequestStatus = 'NONE';
+    }
+    return p;
   },
 
   formatUserToSocialPlayer(data: any): SocialPlayer {
@@ -225,6 +235,51 @@ export const SocialService = {
     return results;
   },
 
+  async getFriends(userId: string, currentUserId: string): Promise<SocialPlayer[]> {
+    const friendsQ = query(collection(db, 'friends'), where('participants', 'array-contains', userId));
+    const snapshot = await getDocs(friendsQ);
+    const friendIds = snapshot.docs.map(doc => doc.data().participants.find((p: string) => p !== userId) || "");
+    
+    const results: SocialPlayer[] = [];
+    for (const fid of friendIds) {
+      if (!fid) continue;
+      const uDoc = await getDoc(doc(db, 'users', fid));
+      if (uDoc.exists()) {
+        const p = this.formatUserToSocialPlayer(uDoc.data());
+        p.isFollowing = await this.checkIsFollowing(currentUserId, fid);
+        const friendStatus = await this.checkFriendshipStatus(currentUserId, fid);
+        p.isFriend = friendStatus === 'friends';
+        if (friendStatus === 'request_sent') p.friendRequestStatus = 'PENDING_SENT';
+        else if (friendStatus === 'request_received') p.friendRequestStatus = 'PENDING_RECEIVED';
+        else p.friendRequestStatus = 'NONE';
+        results.push(p);
+      }
+    }
+    return results;
+  },
+
+  async getFriendRequests(userId: string): Promise<SocialPlayer[]> {
+    const q = query(collection(db, 'friendRequests'), where('receiverId', '==', userId), where('status', '==', 'pending'));
+    const snapshot = await getDocs(q);
+    const senderIds = snapshot.docs.map(doc => doc.data().senderId);
+    
+    const results: SocialPlayer[] = [];
+    for (const sid of senderIds) {
+      const uDoc = await getDoc(doc(db, 'users', sid));
+      if (uDoc.exists()) {
+        const p = this.formatUserToSocialPlayer(uDoc.data());
+        p.friendRequestStatus = 'PENDING_RECEIVED';
+        results.push(p);
+      }
+    }
+    return results;
+  },
+
+  async removeFriend(currentUserId: string, targetUserId: string) {
+    const friendshipId = this.getFriendshipId(currentUserId, targetUserId);
+    await deleteDoc(doc(db, 'friends', friendshipId));
+  },
+
   async getFollowing(userId: string, currentUserId: string): Promise<SocialPlayer[]> {
     const followsQ = query(collection(db, 'followers'), where('followerId', '==', userId));
     const snapshot = await getDocs(followsQ);
@@ -247,12 +302,14 @@ export const SocialService = {
     return results;
   },
 
-  async sendNotification(recipientId: string, senderId: string, type: string, message: string) {
+  async sendNotification(recipientId: string, senderId: string, type: string, message: string, actionType?: string, actionPayload?: any) {
     await addDoc(collection(db, 'notifications'), {
       recipientId,
       senderId,
       type,
       message,
+      actionType: actionType || null,
+      actionPayload: actionPayload || null,
       read: false,
       createdAt: serverTimestamp()
     });

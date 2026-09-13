@@ -163,7 +163,7 @@ export const INITIAL_MISSIONS: Mission[] = [
   {
     id: 'mis_event_01',
     title: 'Participe de 1 Evento Oficial',
-    description: 'Inscreva-se e participe de qualquer torneio ou rolê noturno oficial do Urbanozeiro.',
+    description: 'Inscreva-se e participe de qualquer torneio ou rolê noturno oficial do THE ROLLING WARS.',
     type: 'EVENT',
     category: 'SPECIAL',
     status: 'ACTIVE',

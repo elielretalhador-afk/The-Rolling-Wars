@@ -152,7 +152,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
         <div className="flex items-center justify-between pointer-events-auto gap-2">
           {/* GPS Radar indicator & Active Session REC Tag */}
           <div className="flex items-center gap-1.5 flex-wrap">
-            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-[#0a0f15]/95 border-2 border-yellow-500/50 rounded-xl shadow-lg  shrink-0">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-[#000000]/95 border-2 border-yellow-500/50 rounded-xl shadow-lg  shrink-0">
               <span className="relative flex h-2 w-2">
                 <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${isGpsActive ? 'bg-yellow-400' : 'bg-amber-400'} opacity-75`}></span>
                 <span className={`relative inline-flex rounded-full h-2 w-2 ${isGpsActive ? 'bg-yellow-400' : 'bg-amber-400'}`}></span>
@@ -203,7 +203,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
               {onClearChallenge && (
                 <button
                   onClick={onClearChallenge}
-                  className="p-0.5 ml-1 text-neutral-400 hover:text-white rounded bg-white/10 shrink-0"
+                  className="p-0.5 ml-1 text-slate-400 hover:text-white rounded bg-white/10 shrink-0"
                   title="Fechar visualização de desafio"
                 >
                   <X className="w-3 h-3" />
@@ -222,7 +222,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
               {onClearRoute && (
                 <button
                   onClick={onClearRoute}
-                  className="p-0.5 ml-1 text-neutral-400 hover:text-white rounded bg-white/10 shrink-0"
+                  className="p-0.5 ml-1 text-slate-400 hover:text-white rounded bg-white/10 shrink-0"
                   title="Fechar visualização de rota"
                 >
                   <X className="w-3 h-3" />
@@ -233,15 +233,15 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
 
           {/* Viewed Historical Session Status Badge */}
           {viewedHistoricalSession && !isSessionActive && (
-            <div className="flex items-center gap-1.5 px-3 py-1 bg-[#090d12]/95 border-2 border-[#00ff66] rounded-xl shadow-[0_0_15px_rgba(0,255,102,0.4)]  animate-in fade-in min-w-0">
-              <History className="w-3.5 h-3.5 text-[#00ff66] shrink-0" />
-              <span className="text-[10px] font-bold text-[#00ff66] truncate max-w-[130px] font-mono-stat uppercase">
+            <div className="flex items-center gap-1.5 px-3 py-1 bg-[#090d12]/95 border-2 border-[#fce803] rounded-xl shadow-[0_0_15px_rgba(252,232,3,0.4)]  animate-in fade-in min-w-0">
+              <History className="w-3.5 h-3.5 text-[#fce803] shrink-0" />
+              <span className="text-[10px] font-bold text-[#fce803] truncate max-w-[130px] font-mono-stat uppercase">
                 {viewedHistoricalSession.title || `PATINAÇÃO #${viewedHistoricalSession.sessionNumber || 1}`}
               </span>
               {onCloseViewedTrack && (
                 <button
                   onClick={onCloseViewedTrack}
-                  className="p-0.5 ml-1 text-neutral-400 hover:text-white rounded bg-white/10 shrink-0"
+                  className="p-0.5 ml-1 text-slate-400 hover:text-white rounded bg-white/10 shrink-0"
                   title="Fechar rastro histórico"
                 >
                   <X className="w-3 h-3" />
@@ -262,8 +262,8 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
                 onClick={() => onSelectFilter(category)}
                 className={`px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-xl whitespace-nowrap transition-all duration-200 shadow-md ${
                   isActive
-                    ? 'bg-yellow-400 text-black shadow-[0_0_15px_rgba(0,255,102,0.4)] scale-105 border-2 border-yellow-400'
-                    : 'bg-[#0d141c]/90 text-neutral-300 border-2 border-white/10 hover:border-yellow-500/50 hover:text-white '
+                    ? 'bg-yellow-400 text-black shadow-[0_0_15px_rgba(252,232,3,0.4)] scale-105 border-2 border-yellow-400'
+                    : 'bg-[#050505]/90 text-slate-300 border-2 border-white/10 hover:border-yellow-500/50 hover:text-white '
                 }`}
               >
                 {category}
@@ -281,7 +281,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
                 <div
                   key={az.id}
                   id={`active-zone-pill-${az.id}`}
-                  className="flex items-center justify-between gap-2.5 px-3 py-2 rounded-2xl bg-[#0a0f15]/95 border-2 shadow-[0_4px_25px_rgba(0,0,0,0.8)] "
+                  className="flex items-center justify-between gap-2.5 px-3 py-2 rounded-2xl bg-[#000000]/95 border-2 shadow-[0_4px_25px_rgba(0,0,0,0.8)] "
                   style={{ borderColor: azColor }}
                 >
                   <div className="flex items-center gap-2.5 min-w-0">
@@ -303,7 +303,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
                         >
                           <Flag className="w-3 h-3" /> ZONA ATIVA
                         </span>
-                        <span className="text-[8px] font-bold text-neutral-400 font-mono-stat">
+                        <span className="text-[8px] font-bold text-slate-400 font-mono-stat">
                           • Você entrou nesta zona
                         </span>
                       </div>
@@ -337,9 +337,9 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
                 <div
                   key={cp.zoneId}
                   id={`conquest-card-${cp.zoneId}`}
-                  className={`p-3 rounded-2xl bg-[#0a0f15]/98 border-2 shadow-[0_10px_35px_rgba(0,0,0,0.9)]  transition-all duration-300 ${
+                  className={`p-3 rounded-2xl bg-[#000000]/98 border-2 shadow-[0_10px_35px_rgba(0,0,0,0.9)]  transition-all duration-300 ${
                     isConquered
-                      ? 'border-yellow-400 shadow-[0_0_30px_rgba(0,255,102,0.4)]'
+                      ? 'border-yellow-400 shadow-[0_0_30px_rgba(252,232,3,0.4)]'
                       : 'border-amber-400/90 shadow-[0_0_25px_rgba(251,191,36,0.25)]'
                   }`}
                 >
@@ -369,7 +369,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
                           </>
                         ) : (
                           <>
-                            <Swords className="w-3 h-3 text-amber-400 animate-pulse" /> EM DISPUTA
+                            <Swords className="w-3 h-3 text-white animate-pulse" /> EM DISPUTA
                           </>
                         )}
                       </span>
@@ -378,7 +378,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
                     <span
                       className={`text-[8px] font-black uppercase px-2 py-0.5 rounded font-mono-stat shrink-0 ${
                         isConquered
-                          ? 'bg-yellow-400/20 text-emerald-300 border border-yellow-400/40'
+                          ? 'bg-yellow-400/20 text-yellow-300 border border-yellow-400/40'
                           : 'bg-amber-400/20 text-amber-300 border border-amber-400/40'
                       }`}
                     >
@@ -394,7 +394,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
                   {/* Metric & Progress Bar */}
                   <div className="space-y-1.5">
                     <div className="flex items-center justify-between text-xs font-mono-stat">
-                      <span className="text-neutral-300 font-bold">
+                      <span className="text-slate-300 font-bold">
                         {displayMeters} / {cp.minDistanceMeters} m
                       </span>
                       <span className={`font-black ${isConquered ? 'text-yellow-400' : 'text-amber-400'}`}>
@@ -407,7 +407,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
                       <div
                         className={`h-full rounded-full transition-all duration-300 ${
                           isConquered
-                            ? 'bg-yellow-400 shadow-[0_0_12px_#00ff66]'
+                            ? 'bg-yellow-400 shadow-[0_0_12px_#fce803]'
                             : 'bg-gradient-to-r from-amber-500 to-amber-300 shadow-[0_0_10px_rgba(251,191,36,0.5)]'
                         }`}
                         style={{ width: `${percent}%` }}
@@ -418,13 +418,13 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
                   {/* Test Mode Simulator Button */}
                   {onSimulateTestStep && !isConquered && (
                     <div className="mt-2.5 pt-2 border-t border-white/10 flex items-center justify-between gap-2">
-                      <span className="text-[9px] text-neutral-400 font-mono-stat font-medium">
+                      <span className="text-[9px] text-slate-400 font-mono-stat font-medium">
                         Modo de teste:
                       </span>
                       <button
                         type="button"
                         onClick={() => onSimulateTestStep(cp.zoneId)}
-                        className="px-2.5 py-1 rounded-lg bg-yellow-500/20 hover:bg-yellow-500/30 text-emerald-300 border border-yellow-500/50 text-[9px] font-black uppercase font-mono-stat active:scale-95 transition-all cursor-pointer flex items-center gap-1"
+                        className="px-2.5 py-1 rounded-lg bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-300 border border-yellow-500/50 text-[9px] font-black uppercase font-mono-stat active:scale-95 transition-all cursor-pointer flex items-center gap-1"
                         title="Adicionar 25m dentro da zona no modo de teste"
                       >
                         <Zap className="w-2.5 h-2.5 text-yellow-400" />
@@ -441,11 +441,11 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
         {/* Viewed Historical Session Floating Info Card / Redo Route */}
         {viewedHistoricalSession && !isSessionActive && (
           <div className="pointer-events-auto mt-1">
-            <div className="p-3.5 rounded-2xl bg-[#090d12]/95 border-2 border-[#00ff66] shadow-[0_0_30px_rgba(0,255,102,0.35)]  flex flex-col gap-2.5 animate-in fade-in slide-in-from-top-2">
+            <div className="p-3.5 rounded-2xl bg-[#090d12]/95 border-2 border-[#fce803] shadow-[0_0_30px_rgba(252,232,3,0.35)]  flex flex-col gap-2.5 animate-in fade-in slide-in-from-top-2">
               {/* Header Info */}
               <div className="flex items-start justify-between gap-2">
                 <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="p-2 rounded-xl bg-[#00ff66]/20 text-[#00ff66] border border-[#00ff66]/40 shrink-0">
+                  <div className="p-2 rounded-xl bg-[#fce803]/20 text-[#fce803] border border-[#fce803]/40 shrink-0">
                     {isRedoMode ? <RotateCcw className="w-4 h-4" /> : <History className="w-4 h-4" />}
                   </div>
                   <div className="min-w-0">
@@ -455,14 +455,14 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
                           ? `REFAZER: ${viewedHistoricalSession.title || `PATINAÇÃO #${viewedHistoricalSession.sessionNumber || 1}`}`
                           : (viewedHistoricalSession.title || `PATINAÇÃO #${viewedHistoricalSession.sessionNumber || 1}`)}
                       </span>
-                      <span className="text-[8px] font-black text-[#00ff66] font-mono-stat px-1.5 py-0.5 rounded bg-[#00ff66]/10 border border-[#00ff66]/30 shrink-0">
+                      <span className="text-[8px] font-black text-[#fce803] font-mono-stat px-1.5 py-0.5 rounded bg-[#fce803]/10 border border-[#fce803]/30 shrink-0">
                         {isRedoMode ? 'MODO REPETIÇÃO' : 'HISTÓRICO'}
                       </span>
                     </div>
-                    <p className="text-[11px] text-neutral-300 font-mono-stat font-medium mt-0.5 truncate">
-                      {viewedHistoricalSession.distanceKm < 1.0
-                        ? `${Math.round(viewedHistoricalSession.distanceKm * 1000)} m`
-                        : `${viewedHistoricalSession.distanceKm.toFixed(2)} km`} • {formatDuration(viewedHistoricalSession.durationSeconds)} • Máx {viewedHistoricalSession.maxSpeedKmH.toFixed(1)} km/h
+                    <p className="text-[11px] text-slate-300 font-mono-stat font-medium mt-0.5 truncate">
+                      {(viewedHistoricalSession.distance ?? viewedHistoricalSession.distanceKm ?? 0) < 1.0
+                        ? `${Math.round((viewedHistoricalSession.distance ?? viewedHistoricalSession.distanceKm ?? 0) * 1000)} m`
+                        : `${(viewedHistoricalSession.distance ?? viewedHistoricalSession.distanceKm ?? 0).toFixed(2)} km`} • {formatDuration(viewedHistoricalSession.duration ?? viewedHistoricalSession.durationSeconds ?? 0)} • Máx {(viewedHistoricalSession.maxSpeed ?? viewedHistoricalSession.maxSpeedKmH ?? 0).toFixed(1)} km/h
                     </p>
                   </div>
                 </div>
@@ -472,7 +472,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
                     type="button"
                     id="btn-close-viewed-track"
                     onClick={onCloseViewedTrack}
-                    className="p-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-neutral-300 hover:text-white border border-white/20 active:scale-95 transition-all shrink-0 cursor-pointer"
+                    className="p-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white border border-white/20 active:scale-95 transition-all shrink-0 cursor-pointer"
                     title={isRedoMode ? 'Sair do modo refazer rota e voltar ao mapa' : 'Ocultar rastro e voltar ao mapa normal'}
                   >
                     <X className="w-4 h-4" />
@@ -484,16 +484,16 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
               <div className="flex items-center justify-between gap-2 pt-2 border-t border-white/10">
                 {!isRedoMode ? (
                   <>
-                    <span className="text-[10px] text-neutral-400 font-mono-stat flex items-center gap-1">
-                      <MapPin className="w-3 h-3 text-[#00ff66]" />
-                      {viewedHistoricalSession.track?.length || 0} pts no percurso
+                    <span className="text-[10px] text-slate-400 font-mono-stat flex items-center gap-1">
+                      <MapPin className="w-3 h-3 text-[#fce803]" />
+                      {(viewedHistoricalSession.gpsPoints?.length ?? viewedHistoricalSession.track?.length ?? 0)} pts no percurso
                     </span>
                     {onStartRedoRoute && (
                       <button
                         type="button"
                         id="btn-start-redo-route"
                         onClick={() => onStartRedoRoute(viewedHistoricalSession)}
-                        className="px-3.5 py-1.5 rounded-xl bg-[#00ff66] hover:bg-[#00ff66]/90 text-black font-black text-xs font-mono-stat border border-[#00ff66] shadow-[0_0_15px_rgba(0,255,102,0.4)] active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer"
+                        className="px-3.5 py-1.5 rounded-xl bg-[#fce803] hover:bg-[#fce803]/90 text-black font-black text-xs font-mono-stat border border-[#fce803] shadow-[0_0_15px_rgba(252,232,3,0.4)] active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer"
                         title="Entrar no modo de repetição deste percurso"
                       >
                         <RotateCcw className="w-3.5 h-3.5" />
@@ -503,7 +503,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
                   </>
                 ) : (
                   <div className="w-full flex items-center justify-between gap-2">
-                    <span className="text-[10px] text-[#00ff66] font-mono-stat font-semibold flex items-center gap-1">
+                    <span className="text-[10px] text-[#fce803] font-mono-stat font-semibold flex items-center gap-1">
                       <Navigation className="w-3 h-3 animate-pulse" />
                       Visualizando percurso para repetição
                     </span>
@@ -540,10 +540,10 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
             id="btn-explore-zones"
             onClick={onOpenNearbyZones}
             title="Explorar e Ver Lista de Zonas"
-            className="group relative flex items-center justify-center w-11 h-11 rounded-2xl bg-[#0a0f16]/95 border border-white/15 text-yellow-400 shadow-[0_6px_20px_rgba(0,0,0,0.8)]  transition-all duration-150 hover:border-yellow-400 hover:scale-105 active:scale-95 cursor-pointer"
+            className="group relative flex items-center justify-center w-11 h-11 rounded-2xl bg-[#000000]/95 border border-white/15 text-white shadow-[0_6px_20px_rgba(0,0,0,0.8)] transition-all duration-150 hover:border-yellow-400 hover:text-yellow-400 hover:scale-105 active:scale-95 cursor-pointer"
           >
             <Compass className="w-5 h-5 transition-transform group-hover:rotate-45" />
-            <span className="absolute -top-1 -right-1 px-1.5 py-0.2 rounded-md text-[8px] font-black bg-emerald-950 text-emerald-300 border border-yellow-500/40 font-mono-stat">
+            <span className="absolute -top-1 -right-1 px-1.5 py-0.2 rounded-md text-[8px] font-black bg-neutral-900 text-yellow-300 border border-yellow-500/40 font-mono-stat">
               {zones.length}
             </span>
             <span className="sr-only">Explorar Zonas</span>
@@ -555,7 +555,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
           id="btn-center-user"
           onClick={onCenterUser}
           title="Centralizar no Patinador"
-          className="group relative flex items-center justify-center w-11 h-11 rounded-2xl bg-[#0a0f16]/95 border border-white/15 text-yellow-400 shadow-[0_6px_20px_rgba(0,0,0,0.8)]  transition-all duration-150 hover:border-yellow-400 hover:scale-105 active:scale-95 cursor-pointer"
+          className="group relative flex items-center justify-center w-11 h-11 rounded-2xl bg-[#000000]/95 border border-white/15 text-white shadow-[0_6px_20px_rgba(0,0,0,0.8)] transition-all duration-150 hover:border-yellow-400 hover:text-yellow-400 hover:scale-105 active:scale-95 cursor-pointer"
         >
           <Crosshair className="w-5 h-5 transition-transform group-hover:rotate-45" />
           <span className="sr-only">Centralizar no Usuário</span>
@@ -566,7 +566,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
           id="btn-create-zone"
           onClick={onOpenCreateZone}
           title="Reivindicar ou Criar Nova Zona"
-          className="group relative flex items-center justify-center w-11 h-11 rounded-2xl bg-gradient-to-b from-emerald-300 to-emerald-500 text-black shadow-[0_4px_16px_rgba(0,255,102,0.5)] font-black transition-all duration-150 hover:scale-105 active:scale-95 border border-emerald-200 cursor-pointer"
+          className="group relative flex items-center justify-center w-11 h-11 rounded-2xl bg-gradient-to-b from-yellow-300 to-yellow-500 text-black shadow-[0_4px_16px_rgba(252,232,3,0.5)] font-black transition-all duration-150 hover:scale-105 active:scale-95 border border-yellow-200 cursor-pointer"
         >
           <Plus className="w-6 h-6 stroke-[3] transition-transform group-hover:rotate-90 duration-200" />
           <span className="absolute -top-1 -right-1 px-1 py-0.2 rounded-md text-[7px] font-black bg-black text-yellow-400 border border-yellow-400 font-mono-stat leading-none">
@@ -582,7 +582,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
         <div className="absolute bottom-4 inset-x-3 z-30 pointer-events-auto max-w-md mx-auto">
           <div
             id="active-challenge-hud-panel"
-            className="p-4 rounded-2xl bg-[#0a0f16]/98 border-2 border-amber-400/90 shadow-[0_15px_40px_rgba(251,191,36,0.35)]  animate-in slide-in-from-bottom duration-300"
+            className="p-4 rounded-2xl bg-[#000000]/98 border-2 border-amber-400/90 shadow-[0_15px_40px_rgba(251,191,36,0.35)]  animate-in slide-in-from-bottom duration-300"
           >
             <div className="flex items-start justify-between gap-2 mb-2">
               <div className="flex items-center gap-2 flex-wrap">
@@ -592,8 +592,8 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
                 <span className="px-2 py-0.5 rounded bg-amber-400/20 border border-amber-400/40 text-amber-400 font-bold text-[9px] uppercase font-mono-stat">
                   {selectedChallenge.category}
                 </span>
-                <span className="flex items-center gap-1 text-[10px] text-neutral-400 font-mono-stat">
-                  <Clock className="w-3 h-3 text-neutral-400" /> {selectedChallenge.expiresIn}
+                <span className="flex items-center gap-1 text-[10px] text-slate-400 font-mono-stat">
+                  <Clock className="w-3 h-3 text-slate-400" /> {selectedChallenge.expiresIn}
                 </span>
               </div>
 
@@ -631,7 +631,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
                   <span className="text-[10px] font-bold text-cyan-300 uppercase font-mono-stat block">
                     📋 INSTRUÇÕES:
                   </span>
-                  <p className="text-neutral-300 text-[11px] leading-relaxed">
+                  <p className="text-slate-300 text-[11px] leading-relaxed">
                     {selectedChallenge.instructions}
                   </p>
                 </div>
@@ -639,7 +639,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
 
               {selectedChallenge.mainRequirement && (
                 <div className="pt-1.5 border-t border-white/10 flex items-center justify-between font-mono-stat text-[11px]">
-                  <span className="text-neutral-400 uppercase font-bold">REQUISITO PRINCIPAL:</span>
+                  <span className="text-slate-400 uppercase font-bold">REQUISITO PRINCIPAL:</span>
                   <span className="text-yellow-400 font-black">{selectedChallenge.mainRequirement}</span>
                 </div>
               )}
@@ -651,7 +651,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
                 type="button"
                 id="btn-focus-challenge-target"
                 onClick={handleFocusClick}
-                className="flex-1 py-2 px-3 rounded-xl bg-yellow-400 hover:bg-emerald-300 text-black font-black text-xs uppercase font-mono-stat tracking-wider flex items-center justify-center gap-1.5 shadow-[0_0_15px_rgba(0,255,102,0.4)] active:scale-95 transition-all"
+                className="flex-1 py-2 px-3 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-black font-black text-xs uppercase font-mono-stat tracking-wider flex items-center justify-center gap-1.5 shadow-[0_0_15px_rgba(252,232,3,0.4)] active:scale-95 transition-all"
               >
                 <MapPin className="w-3.5 h-3.5" />
                 FOCAR NO ALVO
@@ -661,9 +661,9 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
                 <button
                   type="button"
                   onClick={onClearChallenge}
-                  className="py-2 px-3 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-neutral-300 hover:text-white font-bold text-xs uppercase font-mono-stat border border-white/10 active:scale-95 transition-all flex items-center gap-1"
+                  className="py-2 px-3 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs uppercase font-mono-stat border border-white/10 active:scale-95 transition-all flex items-center gap-1"
                 >
-                  <CheckCircle2 className="w-3.5 h-3.5 text-neutral-400" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-slate-400" />
                   FECHAR
                 </button>
               )}
@@ -675,7 +675,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
       {/* ACTIVE CHALLENGE MINIMIZED PILL (When user clicked "Focar no alvo") */}
       {selectedChallenge && isChallengeBannerMinimized && (
         <div className="absolute bottom-20 inset-x-3 z-30 pointer-events-auto max-w-sm mx-auto animate-in slide-in-from-bottom-2 duration-200">
-          <div className="flex items-center justify-between gap-2 p-2.5 rounded-2xl bg-[#0a0f16]/95 border-2 border-yellow-400 shadow-[0_8px_30px_rgba(0,255,102,0.3)] ">
+          <div className="flex items-center justify-between gap-2 p-2.5 rounded-2xl bg-[#000000]/95 border-2 border-yellow-400 shadow-[0_8px_30px_rgba(252,232,3,0.3)] ">
             <div className="flex items-center gap-2 min-w-0">
               <div className="p-1.5 rounded-lg bg-yellow-400 text-black font-black">
                 <Target className="w-4 h-4" />
@@ -694,14 +694,14 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
             <div className="flex items-center gap-1.5 shrink-0">
               <button
                 onClick={() => setIsChallengeBannerMinimized(false)}
-                className="px-2.5 py-1 rounded-xl bg-yellow-400/20 hover:bg-yellow-400/30 text-emerald-300 font-black text-[10px] uppercase font-mono-stat border border-yellow-400/50 active:scale-95"
+                className="px-2.5 py-1 rounded-xl bg-yellow-400/20 hover:bg-yellow-400/30 text-yellow-300 font-black text-[10px] uppercase font-mono-stat border border-yellow-400/50 active:scale-95"
               >
                 VER GUIA
               </button>
               {onClearChallenge && (
                 <button
                   onClick={onClearChallenge}
-                  className="p-1 rounded-xl bg-white/10 hover:bg-white/20 text-neutral-300 active:scale-95"
+                  className="p-1 rounded-xl bg-white/10 hover:bg-white/20 text-slate-300 active:scale-95"
                   title="Fechar desafio"
                 >
                   <X className="w-3.5 h-3.5" />
@@ -717,7 +717,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
         <div className="absolute bottom-4 inset-x-3 z-30 pointer-events-auto max-w-md mx-auto">
           <div
             id="active-route-hud-panel"
-            className="p-4 rounded-2xl bg-[#0a0f16]/98 border-2 border-yellow-400/90 shadow-[0_15px_40px_rgba(0,255,102,0.35)]  animate-in slide-in-from-bottom duration-300"
+            className="p-4 rounded-2xl bg-[#000000]/98 border-2 border-yellow-400/90 shadow-[0_15px_40px_rgba(252,232,3,0.35)]  animate-in slide-in-from-bottom duration-300"
           >
             <div className="flex items-start justify-between gap-2 mb-1.5">
               <div className="flex items-center gap-2 flex-wrap">
@@ -739,7 +739,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
               {selectedRoute.name}
             </h3>
 
-            <div className="flex items-center gap-1.5 text-xs text-neutral-300 mt-1 font-medium">
+            <div className="flex items-center gap-1.5 text-xs text-slate-300 mt-1 font-medium">
               <Compass className="w-3.5 h-3.5 text-yellow-400 shrink-0" />
               <span className="truncate">{selectedRoute.location}</span>
             </div>
@@ -747,26 +747,26 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
             {/* Quick Metrics strip */}
             <div className="grid grid-cols-3 gap-2 mt-2.5 p-2 rounded-xl bg-white/[0.04] border border-white/10 text-center font-mono-stat">
               <div>
-                <div className="text-[9px] text-neutral-400 uppercase font-bold">DISTÂNCIA</div>
+                <div className="text-[9px] text-slate-400 uppercase font-bold">DISTÂNCIA</div>
                 <div className="text-sm font-black text-yellow-400">{selectedRoute.distanceKm} KM</div>
               </div>
               <div className="border-x border-white/10">
-                <div className="text-[9px] text-neutral-400 uppercase font-bold">TEMPO EST.</div>
+                <div className="text-[9px] text-slate-400 uppercase font-bold">TEMPO EST.</div>
                 <div className="text-sm font-black text-amber-400">~{selectedRoute.estimatedTimeMin} MIN</div>
               </div>
               <div>
-                <div className="text-[9px] text-neutral-400 uppercase font-bold">ASFALTO</div>
+                <div className="text-[9px] text-slate-400 uppercase font-bold">ASFALTO</div>
                 <div className="text-xs font-bold text-cyan-300 mt-0.5">{selectedRoute.asphaltQuality}</div>
               </div>
             </div>
 
             {/* Route itinerary endpoints */}
-            <div className="mt-2 text-[11px] text-neutral-300 flex items-center justify-between font-mono-stat">
-              <span className="truncate text-neutral-400">
+            <div className="mt-2 text-[11px] text-slate-300 flex items-center justify-between font-mono-stat">
+              <span className="truncate text-slate-400">
                 {selectedRoute.startPointName ? `🚩 ${selectedRoute.startPointName}` : 'Ponto Inicial'}
               </span>
               <span className="text-yellow-400 px-1 font-bold">➔</span>
-              <span className="truncate text-neutral-400">
+              <span className="truncate text-slate-400">
                 {selectedRoute.endPointName ? `🎯 ${selectedRoute.endPointName}` : 'Ponto Final'}
               </span>
             </div>
@@ -779,7 +779,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
                   onClick={onClearRoute}
                   className="w-full py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs uppercase font-mono-stat border border-white/10 active:scale-95 transition-all flex items-center justify-center gap-1.5"
                 >
-                  <X className="w-3.5 h-3.5 text-neutral-400" />
+                  <X className="w-3.5 h-3.5 text-slate-400" />
                   FECHAR ROTA
                 </button>
               )}
@@ -794,10 +794,10 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
       {isSessionActive && !selectedZone && (!selectedChallenge || isChallengeBannerMinimized) && !selectedRoute && (
         <div className="absolute bottom-4 inset-x-3 z-20 pointer-events-none">
           <div
-            className={`pointer-events-auto max-w-md mx-auto flex flex-col gap-2 p-3 bg-[#0a0f15]/98 border-2 rounded-2xl  animate-in slide-in-from-bottom duration-300 ${
+            className={`pointer-events-auto max-w-md mx-auto flex flex-col gap-2 p-3 bg-[#000000]/98 border-2 rounded-2xl  animate-in slide-in-from-bottom duration-300 ${
               isSessionPaused || sessionStatus === 'PAUSED'
                 ? 'border-amber-400 shadow-[0_0_40px_rgba(251,191,36,0.3)]'
-                : 'border-[#00ff66] shadow-[0_0_40px_rgba(0,255,102,0.35)]'
+                : 'border-[#fce803] shadow-[0_0_40px_rgba(252,232,3,0.35)]'
             }`}
           >
             {/* Live Status Bar + Pause / Resume / End Controls */}
@@ -815,10 +815,10 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
                 ) : (
                   <>
                     <span className="flex h-2.5 w-2.5 relative shrink-0">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00ff66] opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#00ff66]"></span>
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#fce803] opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#fce803]"></span>
                     </span>
-                    <span className="text-[10px] font-black text-[#00ff66] tracking-wider font-mono-stat uppercase truncate">
+                    <span className="text-[10px] font-black text-[#fce803] tracking-wider font-mono-stat uppercase truncate">
                       {redoReferenceSession
                         ? `REFAZENDO: ${redoReferenceSession.title || `PATINAÇÃO #${redoReferenceSession.sessionNumber || 1}`}`
                         : 'SESSÃO ATIVA EM CURSO'}
@@ -835,7 +835,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
                       type="button"
                       id="btn-resume-skate-session"
                       onClick={onResumeSession}
-                      className="px-2.5 py-1.5 rounded-xl bg-[#00ff66] hover:bg-[#00e55b] text-black font-mono-stat font-black text-[11px] uppercase tracking-wider flex items-center gap-1 shadow-[0_0_15px_rgba(0,255,102,0.4)] active:scale-95 transition-all cursor-pointer"
+                      className="px-2.5 py-1.5 rounded-xl bg-[#fce803] hover:bg-[#00e55b] text-black font-mono-stat font-black text-[11px] uppercase tracking-wider flex items-center gap-1 shadow-[0_0_15px_rgba(252,232,3,0.4)] active:scale-95 transition-all cursor-pointer"
                       title="Retomar a contagem e gravação da sessão"
                     >
                       <Play className="w-3.5 h-3.5 fill-current" />
@@ -876,38 +876,38 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
             <div className="grid grid-cols-4 gap-2 text-center font-mono-stat">
               {/* 1. Velocidade Atual */}
               <div className="p-2 rounded-xl bg-white/[0.04] border border-white/10">
-                <div className="text-[8px] text-neutral-400 uppercase font-bold tracking-wider">VELOCIDADE</div>
+                <div className="text-[8px] text-slate-400 uppercase font-bold tracking-wider">VELOCIDADE</div>
                 <div className="text-base font-black text-white leading-none mt-1">
                   {sessionCurrentSpeedKmH.toFixed(1)}
                 </div>
-                <div className="text-[8px] text-[#00ff66] font-bold mt-0.5">KM/H</div>
+                <div className="text-[8px] text-[#fce803] font-bold mt-0.5">KM/H</div>
               </div>
 
               {/* 2. Distância */}
               <div className="p-2 rounded-xl bg-white/[0.04] border border-white/10">
-                <div className="text-[8px] text-neutral-400 uppercase font-bold tracking-wider">DISTÂNCIA</div>
-                <div className="text-base font-black text-[#00ff66] leading-none mt-1">
+                <div className="text-[8px] text-slate-400 uppercase font-bold tracking-wider">DISTÂNCIA</div>
+                <div className="text-base font-black text-[#fce803] leading-none mt-1">
                   {formattedDistance}
                 </div>
-                <div className="text-[8px] text-neutral-400 font-bold mt-0.5">TOTAL</div>
+                <div className="text-[8px] text-slate-400 font-bold mt-0.5">TOTAL</div>
               </div>
 
               {/* 3. Tempo */}
               <div className="p-2 rounded-xl bg-white/[0.04] border border-white/10">
-                <div className="text-[8px] text-neutral-400 uppercase font-bold tracking-wider">TEMPO</div>
+                <div className="text-[8px] text-slate-400 uppercase font-bold tracking-wider">TEMPO</div>
                 <div className="text-base font-black text-amber-400 leading-none mt-1">
                   {formatDuration(sessionDuration)}
                 </div>
-                <div className="text-[8px] text-neutral-400 font-bold mt-0.5">CRONÔM.</div>
+                <div className="text-[8px] text-slate-400 font-bold mt-0.5">CRONÔM.</div>
               </div>
 
               {/* 4. Velocidade Máxima */}
               <div className="p-2 rounded-xl bg-white/[0.04] border border-white/10">
-                <div className="text-[8px] text-neutral-400 uppercase font-bold tracking-wider">MÁXIMA</div>
+                <div className="text-[8px] text-slate-400 uppercase font-bold tracking-wider">MÁXIMA</div>
                 <div className="text-base font-black text-cyan-300 leading-none mt-1">
                   {sessionMaxSpeedKmH.toFixed(1)}
                 </div>
-                <div className="text-[8px] text-neutral-400 font-bold mt-0.5">KM/H</div>
+                <div className="text-[8px] text-slate-400 font-bold mt-0.5">KM/H</div>
               </div>
             </div>
           </div>
@@ -915,39 +915,37 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
       )}
 
       {/* ========================================================================= */}
-      {/* DEFAULT HUD BAR & PRIMARY ACTION BUTTON (INICIAR PATINAÇÃO) */}
+      {/* DEFAULT HUD BAR & PRIMARY ACTION BUTTON (INICIAR) */}
       {/* ========================================================================= */}
       {!isSessionActive && !selectedZone && (!selectedChallenge || isChallengeBannerMinimized) && !selectedRoute && (
         <div className="absolute bottom-3 inset-x-3 z-20 pointer-events-none">
-          <div className="pointer-events-auto max-w-md mx-auto flex items-center justify-between gap-3 p-3 rounded-[32px] bg-[#090e15]/95 border border-white/10 shadow-[0_16px_40px_rgba(0,0,0,0.9)] ">
+          <div className="pointer-events-auto max-w-md mx-auto flex items-center justify-between gap-3 p-2.5 rounded-[32px] bg-[#000000]/95 border-2 border-[#fce803] shadow-[0_0_20px_rgba(252,232,3,0.3)] ">
             
             {/* LEFT: ROTA */}
             {onOpenRotas && (
               <button
                 type="button"
                 onClick={onOpenRotas}
-                className="flex flex-col items-center justify-center p-2 rounded-2xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 hover:border-yellow-400/30 transition-all active:scale-95 shrink-0 min-w-[70px] cursor-pointer"
+                className="flex flex-col items-center justify-center p-2 rounded-2xl bg-[#ea580c]/30 hover:bg-[#ea580c]/50 border border-[#ea580c]/60 hover:border-[#ea580c] transition-all active:scale-95 shrink-0 min-w-[70px] cursor-pointer"
               >
-                <Navigation className="w-5 h-5 text-yellow-400 mb-1" />
-                <span className="text-[10px] font-black text-neutral-300 uppercase font-mono-stat tracking-wider">Rota</span>
+                <Navigation className="w-5 h-5 text-white mb-1" />
+                <span className="text-[10px] font-black text-slate-100 uppercase font-mono-stat tracking-wider">Rota</span>
               </button>
             )}
 
-            {/* CENTER: INICIAR PATINAÇÃO */}
+            {/* CENTER: INICIAR */}
             {onStartSession && (
               <button
                 type="button"
                 id="btn-start-skate-session"
                 onClick={onStartSession}
-                className="btn-game-primary flex-1 py-3 px-4 rounded-2xl text-black font-black text-sm uppercase font-display tracking-wider flex flex-col items-center justify-center gap-0.5 cursor-pointer select-none active:scale-95 shadow-[0_0_20px_rgba(0,255,102,0.3)]"
+                className="flex-1 py-3 px-4 rounded-2xl bg-[#fce803] text-black font-black text-lg uppercase font-display tracking-widest flex items-center justify-center cursor-pointer select-none active:scale-95 shadow-[0_0_20px_rgba(252,232,3,0.4)] transition-all"
+                style={{ borderBottom: '4px solid #c4b502' }}
               >
-                <div className="flex items-center gap-1.5">
-                  <Play className="w-4 h-4 fill-current stroke-[2.5]" />
-                  <span className="text-sm tracking-wide">INICIAR PATINAÇÃO</span>
+                <div className="flex items-center gap-2">
+                  <Play className="w-5 h-5 fill-current stroke-[3]" />
+                  <span className="mt-0.5">INICIAR</span>
                 </div>
-                <span className="px-1.5 py-0.5 mt-0.5 rounded text-emerald-950 bg-yellow-400/40 text-[9px] font-mono-stat font-black tracking-tight leading-none border border-black/20">
-                  GPS LIVE
-                </span>
               </button>
             )}
 
@@ -956,10 +954,10 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
               <button
                 type="button"
                 onClick={onOpenDesafios}
-                className="flex flex-col items-center justify-center p-2 rounded-2xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 hover:border-amber-400/30 transition-all active:scale-95 shrink-0 min-w-[70px] cursor-pointer"
+                className="flex flex-col items-center justify-center p-2 rounded-2xl bg-[#ea580c]/30 hover:bg-[#ea580c]/50 border border-[#ea580c]/60 hover:border-[#ea580c] transition-all active:scale-95 shrink-0 min-w-[70px] cursor-pointer"
               >
-                <Swords className="w-5 h-5 text-amber-400 mb-1" />
-                <span className="text-[10px] font-black text-neutral-300 uppercase font-mono-stat tracking-wider">Desafio</span>
+                <Swords className="w-5 h-5 text-white mb-1" />
+                <span className="text-[10px] font-black text-slate-100 uppercase font-mono-stat tracking-wider">Desafio</span>
               </button>
             )}
 

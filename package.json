@@ -4,7 +4,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "node scripts/generate_icons.cjs && tsc && vite build",
+    "postinstall": "node scripts/generate_icons.cjs",
+    "lint": "tsc --noEmit",
     "preview": "vite preview"
   },
   "dependencies": {

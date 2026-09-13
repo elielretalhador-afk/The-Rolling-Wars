@@ -91,7 +91,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
     >
       <div
         id="player-statistics-modal-container"
-        className="w-full max-w-2xl max-h-[92vh] flex flex-col rounded-3xl bg-[#090d14] border-2 border-yellow-500/40 shadow-[0_0_50px_rgba(0,255,102,0.15)] overflow-hidden"
+        className="w-full max-w-2xl max-h-[92vh] flex flex-col rounded-3xl bg-[#090d14] border-2 border-yellow-500/40 shadow-[0_0_50px_rgba(252,232,3,0.15)] overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header Gamer */}
@@ -99,7 +99,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
           <div className="absolute top-0 right-0 w-48 h-24 bg-yellow-500/10 rounded-full blur-2xl pointer-events-none" />
 
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-yellow-400/20 text-yellow-400 border border-yellow-400/40 flex items-center justify-center text-lg shrink-0 shadow-[0_0_15px_rgba(0,255,102,0.3)]">
+            <div className="w-10 h-10 rounded-2xl bg-yellow-400/20 text-yellow-400 border border-yellow-400/40 flex items-center justify-center text-lg shrink-0 shadow-[0_0_15px_rgba(252,232,3,0.3)]">
               📊
             </div>
             <div>
@@ -109,11 +109,11 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                     ? `ESTATÍSTICAS • ${targetPlayerName || user.nickname}`
                     : 'ESTATÍSTICAS DO JOGADOR'}
                 </h2>
-                <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase font-mono-stat bg-yellow-400/20 text-emerald-300 border border-yellow-400/40">
+                <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase font-mono-stat bg-yellow-400/20 text-yellow-300 border border-yellow-400/40">
                   LVL.{stats.progression.level}
                 </span>
               </div>
-              <p className="text-[11px] text-neutral-400 font-mono-stat">
+              <p className="text-[11px] text-slate-400 font-mono-stat">
                 {isOtherPlayer
                   ? 'Estatísticas públicas de desempenho e histórico'
                   : 'Histórico consolidado de performance, recordes e conquistas'}
@@ -125,7 +125,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
             type="button"
             id="btn-close-statistics-modal"
             onClick={onClose}
-            className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-neutral-300 hover:text-white flex items-center justify-center transition-colors cursor-pointer shrink-0"
+            className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white flex items-center justify-center transition-colors cursor-pointer shrink-0"
           >
             <X className="w-4 h-4" />
           </button>
@@ -134,7 +134,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
         {/* Period Selector (TOTAL como padrão) */}
         <div className="px-4 py-2.5 bg-[#0b1018] border-b border-white/5 shrink-0 overflow-x-auto no-scrollbar">
           <div className="flex items-center gap-1.5 min-w-max">
-            <span className="text-[10px] font-bold text-neutral-400 font-mono-stat uppercase mr-1">
+            <span className="text-[10px] font-bold text-slate-400 font-mono-stat uppercase mr-1">
               PERÍODO:
             </span>
             {periods.map((p) => {
@@ -146,8 +146,8 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                   onClick={() => setSelectedPeriod(p.id)}
                   className={`px-3 py-1.5 rounded-xl text-[10px] font-black font-mono-stat uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap ${
                     isSelected
-                      ? 'bg-yellow-400 text-black border border-emerald-300 shadow-[0_0_12px_rgba(0,255,102,0.35)]'
-                      : 'bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-slate-200 border border-white/5'
+                      ? 'bg-yellow-400 text-black border border-yellow-300 shadow-[0_0_12px_rgba(252,232,3,0.35)]'
+                      : 'bg-white/5 hover:bg-white/10 text-slate-400 hover:text-slate-200 border border-white/5'
                   }`}
                 >
                   {p.label}
@@ -171,7 +171,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
               <h3 className="text-sm font-bold text-white font-display">
                 Perfil com Estatísticas Privadas
               </h3>
-              <p className="text-xs text-neutral-400 mt-1 max-w-sm mx-auto">
+              <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
                 Este jogador optou por manter suas estatísticas detalhadas visíveis apenas para amigos próximos.
               </p>
             </div>
@@ -195,7 +195,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                       <h3 className="text-xs font-black text-amber-400 uppercase tracking-wider font-mono-stat">
                         MEUS RECORDES
                       </h3>
-                      <p className="text-[10px] text-neutral-400 font-mono-stat">
+                      <p className="text-[10px] text-slate-400 font-mono-stat">
                         Melhores marcas e marcas históricas registradas
                       </p>
                     </div>
@@ -208,7 +208,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-1">
                   {/* Recorde: Maior Distância */}
                   <div className="p-3 rounded-2xl bg-black/40 border border-amber-400/30 text-center">
-                    <div className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat flex items-center justify-center gap-1">
+                    <div className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat flex items-center justify-center gap-1">
                       <Compass className="w-3 h-3 text-amber-400" />
                       MAIOR DISTÂNCIA
                     </div>
@@ -217,14 +217,14 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                         ? `${stats.records.maxDistanceKm.toFixed(1)} km`
                         : 'Sem dados'}
                     </div>
-                    <span className="text-[9px] text-neutral-400 block truncate">
+                    <span className="text-[9px] text-slate-400 block truncate">
                       Em uma única sessão
                     </span>
                   </div>
 
                   {/* Recorde: Maior Velocidade */}
                   <div className="p-3 rounded-2xl bg-black/40 border border-amber-400/30 text-center">
-                    <div className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat flex items-center justify-center gap-1">
+                    <div className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat flex items-center justify-center gap-1">
                       <Zap className="w-3 h-3 text-amber-400" />
                       MAIOR VELOCIDADE
                     </div>
@@ -233,42 +233,42 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                         ? `${stats.records.maxSpeedKmH.toFixed(1)} km/h`
                         : 'Sem dados'}
                     </div>
-                    <span className="text-[9px] text-neutral-400 block truncate">
+                    <span className="text-[9px] text-slate-400 block truncate">
                       Pico de satélite aferido
                     </span>
                   </div>
 
                   {/* Recorde: Melhor Tempo em Rota */}
                   <div className="p-3 rounded-2xl bg-black/40 border border-amber-400/30 text-center">
-                    <div className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat flex items-center justify-center gap-1">
+                    <div className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat flex items-center justify-center gap-1">
                       <Clock className="w-3 h-3 text-amber-400" />
                       MELHOR TEMPO ROTA
                     </div>
                     <div className="text-lg font-black text-amber-300 font-mono-stat mt-1">
                       {stats.records.bestRouteTimeFormatted || 'Sem dados ainda'}
                     </div>
-                    <span className="text-[9px] text-neutral-400 block truncate">
+                    <span className="text-[9px] text-slate-400 block truncate">
                       Circuito Paulista Aberta
                     </span>
                   </div>
 
                   {/* Recorde: Melhor Tempo de Conquista */}
                   <div className="p-3 rounded-2xl bg-black/40 border border-amber-400/30 text-center">
-                    <div className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat flex items-center justify-center gap-1">
+                    <div className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat flex items-center justify-center gap-1">
                       <MapPin className="w-3 h-3 text-amber-400" />
                       TEMPO CONQUISTA
                     </div>
                     <div className="text-lg font-black text-amber-300 font-mono-stat mt-1">
                       {stats.records.bestCaptureTimeFormatted || 'Sem dados ainda'}
                     </div>
-                    <span className="text-[9px] text-neutral-400 block truncate">
+                    <span className="text-[9px] text-slate-400 block truncate">
                       Pátio Berrini Street
                     </span>
                   </div>
 
                   {/* Recorde: Maior Streak de Dias */}
                   <div className="p-3 rounded-2xl bg-black/40 border border-amber-400/30 text-center col-span-2 sm:col-span-2">
-                    <div className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat flex items-center justify-center gap-1">
+                    <div className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat flex items-center justify-center gap-1">
                       <Flame className="w-3 h-3 text-amber-400" />
                       MAIOR STREAK (DIAS CONSECUTIVOS)
                     </div>
@@ -276,7 +276,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                       <span>{stats.records.maxStreakDays} Dias</span>
                       <span className="text-xs text-yellow-400 font-bold">🔥 Ativo</span>
                     </div>
-                    <span className="text-[9px] text-neutral-400 block truncate">
+                    <span className="text-[9px] text-slate-400 block truncate">
                       Sequência diária de presença no asfalto
                     </span>
                   </div>
@@ -288,7 +288,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                  ========================================== */}
               <div
                 id="stat-section-general"
-                className="p-4 rounded-3xl bg-[#0d141d] border-2 border-white/10"
+                className="p-4 rounded-3xl bg-[#000000] border-2 border-white/10"
               >
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
@@ -299,19 +299,19 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                       <h3 className="text-xs font-black text-white uppercase tracking-wider font-mono-stat">
                         ESTATÍSTICAS GERAIS
                       </h3>
-                      <p className="text-[10px] text-neutral-400 font-mono-stat">
+                      <p className="text-[10px] text-slate-400 font-mono-stat">
                         Resumo numérico de todas as atividades
                       </p>
                     </div>
                   </div>
-                  <span className="text-[10px] text-neutral-400 font-mono-stat uppercase font-bold">
+                  <span className="text-[10px] text-slate-400 font-mono-stat uppercase font-bold">
                     {selectedPeriod}
                   </span>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   <div className="p-3 rounded-2xl bg-black/30 border border-white/5">
-                    <span className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat block">
+                    <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
                       DISTÂNCIA TOTAL
                     </span>
                     <span className="text-base font-black text-yellow-400 font-mono-stat block mt-0.5">
@@ -322,7 +322,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                   </div>
 
                   <div className="p-3 rounded-2xl bg-black/30 border border-white/5">
-                    <span className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat block">
+                    <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
                       TEMPO PATINANDO
                     </span>
                     <span className="text-base font-black text-cyan-400 font-mono-stat block mt-0.5">
@@ -331,7 +331,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                   </div>
 
                   <div className="p-3 rounded-2xl bg-black/30 border border-white/5">
-                    <span className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat block">
+                    <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
                       SESSÕES
                     </span>
                     <span className="text-base font-black text-white font-mono-stat block mt-0.5">
@@ -340,18 +340,18 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                   </div>
 
                   <div className="p-3 rounded-2xl bg-black/30 border border-white/5">
-                    <span className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat block">
+                    <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
                       VEL. MÉDIA GERAL
                     </span>
                     <span className="text-base font-black text-cyan-300 font-mono-stat block mt-0.5">
-                      {stats.general.avgSpeedKmH !== null
+                      {stats.general.avgSpeedKmH != null
                         ? `${stats.general.avgSpeedKmH.toFixed(1)} km/h`
                         : 'Sem dados ainda'}
                     </span>
                   </div>
 
                   <div className="p-3 rounded-2xl bg-black/30 border border-white/5">
-                    <span className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat block">
+                    <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
                       ROTAS REALIZADAS
                     </span>
                     <span className="text-base font-black text-white font-mono-stat block mt-0.5">
@@ -360,7 +360,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                   </div>
 
                   <div className="p-3 rounded-2xl bg-black/30 border border-white/5">
-                    <span className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat block">
+                    <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
                       ZONAS CONQUISTADAS
                     </span>
                     <span className="text-base font-black text-purple-400 font-mono-stat block mt-0.5">
@@ -369,7 +369,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                   </div>
 
                   <div className="p-3 rounded-2xl bg-black/30 border border-white/5">
-                    <span className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat block">
+                    <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
                       DISPUTAS & VITÓRIAS
                     </span>
                     <span className="text-base font-black text-amber-400 font-mono-stat block mt-0.5">
@@ -378,10 +378,10 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                   </div>
 
                   <div className="p-3 rounded-2xl bg-black/30 border border-white/5">
-                    <span className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat block">
+                    <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
                       EVENTOS & PROVAS
                     </span>
-                    <span className="text-base font-black text-emerald-300 font-mono-stat block mt-0.5">
+                    <span className="text-base font-black text-yellow-300 font-mono-stat block mt-0.5">
                       {stats.general.eventsCompletedCount}
                     </span>
                   </div>
@@ -393,7 +393,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                  ========================================== */}
               <div
                 id="stat-section-skating"
-                className="p-4 rounded-3xl bg-gradient-to-b from-[#0e1924] to-[#090f16] border-2 border-cyan-500/30"
+                className="p-4 rounded-3xl bg-gradient-to-b from-[#0e1924] to-[#050505] border-2 border-cyan-500/30"
               >
                 <div className="flex items-center gap-2 mb-3">
                   <div className="w-7 h-7 rounded-xl bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 flex items-center justify-center text-xs">
@@ -403,7 +403,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                     <h3 className="text-xs font-black text-cyan-400 uppercase tracking-wider font-mono-stat">
                       ESTATÍSTICAS DE PATINAÇÃO
                     </h3>
-                    <p className="text-[10px] text-neutral-400 font-mono-stat">
+                    <p className="text-[10px] text-slate-400 font-mono-stat">
                       Métricas de rodagem, tempo e picos de sessão
                     </p>
                   </div>
@@ -411,63 +411,63 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   <div className="p-3 rounded-2xl bg-black/40 border border-white/5">
-                    <span className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat block">
+                    <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
                       DISTÂNCIA TOTAL
                     </span>
                     <span className="text-base font-black text-yellow-400 font-mono-stat block mt-0.5">
                       {stats.skating.totalDistanceKm.toFixed(1)} km
                     </span>
-                    <span className="text-[9px] text-neutral-400">Rodagem acumulada</span>
+                    <span className="text-[9px] text-slate-400">Rodagem acumulada</span>
                   </div>
 
                   <div className="p-3 rounded-2xl bg-black/40 border border-white/5">
-                    <span className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat block">
+                    <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
                       TEMPO EM MOVIMENTO
                     </span>
                     <span className="text-base font-black text-cyan-400 font-mono-stat block mt-0.5">
                       {formatStatDuration(stats.skating.totalDurationSeconds)}
                     </span>
-                    <span className="text-[9px] text-neutral-400">Tempo ativo no asfalto</span>
+                    <span className="text-[9px] text-slate-400">Tempo ativo no asfalto</span>
                   </div>
 
                   <div className="p-3 rounded-2xl bg-black/40 border border-white/5">
-                    <span className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat block">
+                    <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
                       MAIOR DISTÂNCIA (SESSÃO)
                     </span>
                     <span className="text-base font-black text-white font-mono-stat block mt-0.5">
                       {stats.skating.maxSessionDistanceKm.toFixed(1)} km
                     </span>
-                    <span className="text-[9px] text-neutral-400">Melhor sessão única</span>
+                    <span className="text-[9px] text-slate-400">Melhor sessão única</span>
                   </div>
 
                   <div className="p-3 rounded-2xl bg-black/40 border border-white/5">
-                    <span className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat block">
+                    <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
                       VELOCIDADE MÁXIMA
                     </span>
                     <span className="text-base font-black text-amber-300 font-mono-stat block mt-0.5">
                       {stats.skating.maxSessionSpeedKmH.toFixed(1)} km/h
                     </span>
-                    <span className="text-[9px] text-neutral-400">Pico instantâneo</span>
+                    <span className="text-[9px] text-slate-400">Pico instantâneo</span>
                   </div>
 
                   <div className="p-3 rounded-2xl bg-black/40 border border-white/5">
-                    <span className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat block">
+                    <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
                       MAIOR DURAÇÃO (SESSÃO)
                     </span>
                     <span className="text-base font-black text-white font-mono-stat block mt-0.5">
                       {formatStatDuration(stats.skating.maxSessionDurationSeconds)}
                     </span>
-                    <span className="text-[9px] text-neutral-400">Maior tempo contínuo</span>
+                    <span className="text-[9px] text-slate-400">Maior tempo contínuo</span>
                   </div>
 
                   <div className="p-3 rounded-2xl bg-black/40 border border-white/5">
-                    <span className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat block">
+                    <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
                       TOTAL DE SESSÕES
                     </span>
-                    <span className="text-base font-black text-emerald-300 font-mono-stat block mt-0.5">
+                    <span className="text-base font-black text-yellow-300 font-mono-stat block mt-0.5">
                       {stats.skating.sessionsCount} sessões
                     </span>
-                    <span className="text-[9px] text-neutral-400">Rolês concluídos</span>
+                    <span className="text-[9px] text-slate-400">Rolês concluídos</span>
                   </div>
                 </div>
               </div>
@@ -487,7 +487,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                     <h3 className="text-xs font-black text-purple-400 uppercase tracking-wider font-mono-stat">
                       ESTATÍSTICAS DE ZONAS
                     </h3>
-                    <p className="text-[10px] text-neutral-400 font-mono-stat">
+                    <p className="text-[10px] text-slate-400 font-mono-stat">
                       Territórios urbanos, disputas e tempos de captura
                     </p>
                   </div>
@@ -495,47 +495,47 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                   <div className="p-3 rounded-2xl bg-black/40 border border-purple-500/20">
-                    <span className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat block">
+                    <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
                       ZONAS CONQUISTADAS
                     </span>
                     <span className="text-base font-black text-purple-300 font-mono-stat block mt-0.5">
                       {stats.zones.zonesConquered}
                     </span>
-                    <span className="text-[9px] text-neutral-400">Territórios dominados</span>
+                    <span className="text-[9px] text-slate-400">Territórios dominados</span>
                   </div>
 
                   <div className="p-3 rounded-2xl bg-black/40 border border-purple-500/20">
-                    <span className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat block">
+                    <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
                       ZONAS PERDIDAS
                     </span>
-                    <span className="text-base font-black text-neutral-300 font-mono-stat block mt-0.5">
+                    <span className="text-base font-black text-slate-300 font-mono-stat block mt-0.5">
                       {stats.zones.zonesLost === 0 ? '0' : stats.zones.zonesLost}
                     </span>
-                    <span className="text-[9px] text-neutral-400">Retomadas por rivais</span>
+                    <span className="text-[9px] text-slate-400">Retomadas por rivais</span>
                   </div>
 
                   <div className="p-3 rounded-2xl bg-black/40 border border-purple-500/20">
-                    <span className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat block">
+                    <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
                       DISPUTAS VENCIDAS
                     </span>
                     <span className="text-base font-black text-yellow-400 font-mono-stat block mt-0.5">
                       {stats.zones.disputesWon}
                     </span>
-                    <span className="text-[9px] text-neutral-400">Defesas e ataques</span>
+                    <span className="text-[9px] text-slate-400">Defesas e ataques</span>
                   </div>
 
                   <div className="p-3 rounded-2xl bg-black/40 border border-purple-500/20">
-                    <span className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat block">
+                    <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
                       MELHOR TEMPO CONQUISTA
                     </span>
                     <span className="text-base font-black text-amber-300 font-mono-stat block mt-0.5">
                       {stats.zones.bestCaptureTimeFormatted || 'Sem dados ainda'}
                     </span>
-                    <span className="text-[9px] text-neutral-400">Menor tempo para 100%</span>
+                    <span className="text-[9px] text-slate-400">Menor tempo para 100%</span>
                   </div>
 
                   <div className="p-3 rounded-2xl bg-black/40 border border-purple-500/20 col-span-2 sm:col-span-2">
-                    <span className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat block">
+                    <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
                       CONQUISTAS CONSECUTIVAS
                     </span>
                     <span className="text-base font-black text-white font-mono-stat block mt-0.5">
@@ -543,7 +543,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                         ? `${stats.zones.consecutiveConquests} Zonas seguidas`
                         : 'Sem dados ainda'}
                     </span>
-                    <span className="text-[9px] text-neutral-400">
+                    <span className="text-[9px] text-slate-400">
                       Sequência contínua sem perder territórios
                     </span>
                   </div>
@@ -566,7 +566,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                       <h3 className="text-xs font-black text-amber-400 uppercase tracking-wider font-mono-stat">
                         ESTATÍSTICAS DE DESAFIOS
                       </h3>
-                      <p className="text-[10px] text-neutral-400 font-mono-stat">
+                      <p className="text-[10px] text-slate-400 font-mono-stat">
                         Duelos diretos, X1, X2 e disputas comunitárias
                       </p>
                     </div>
@@ -574,7 +574,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
 
                   {stats.challenges.winRatePct !== null && (
                     <div className="text-right">
-                      <span className="text-[9px] font-bold text-neutral-400 font-mono-stat uppercase block">
+                      <span className="text-[9px] font-bold text-slate-400 font-mono-stat uppercase block">
                         TAXA DE VITÓRIA
                       </span>
                       <span className="text-sm font-black text-yellow-400 font-mono-stat">
@@ -597,7 +597,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                         style={{ width: `${100 - stats.challenges.winRatePct}%` }}
                       />
                     </div>
-                    <div className="flex justify-between text-[9px] text-neutral-400 font-mono-stat mt-1">
+                    <div className="flex justify-between text-[9px] text-slate-400 font-mono-stat mt-1">
                       <span className="text-yellow-400 font-bold">
                         {stats.challenges.wins} Vitórias ({stats.challenges.winRatePct}%)
                       </span>
@@ -610,7 +610,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   <div className="p-3 rounded-2xl bg-black/40 border border-white/5">
-                    <span className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat block">
+                    <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
                       DESAFIOS TOTAIS
                     </span>
                     <span className="text-base font-black text-white font-mono-stat block mt-0.5">
@@ -619,7 +619,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                   </div>
 
                   <div className="p-3 rounded-2xl bg-black/40 border border-white/5">
-                    <span className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat block">
+                    <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
                       VITÓRIAS
                     </span>
                     <span className="text-base font-black text-yellow-400 font-mono-stat block mt-0.5">
@@ -628,7 +628,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                   </div>
 
                   <div className="p-3 rounded-2xl bg-black/40 border border-white/5">
-                    <span className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat block">
+                    <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
                       DERROTAS
                     </span>
                     <span className="text-base font-black text-rose-400 font-mono-stat block mt-0.5">
@@ -637,10 +637,10 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                   </div>
 
                   <div className="p-3 rounded-2xl bg-black/40 border border-white/5">
-                    <span className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat block">
+                    <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
                       EMPATES
                     </span>
-                    <span className="text-base font-black text-neutral-400 font-mono-stat block mt-0.5">
+                    <span className="text-base font-black text-slate-400 font-mono-stat block mt-0.5">
                       {stats.challenges.draws}
                     </span>
                   </div>
@@ -663,12 +663,12 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                       <h3 className="text-xs font-black text-yellow-400 uppercase tracking-wider font-mono-stat">
                         PROGRESSÃO & HONRA
                       </h3>
-                      <p className="text-[10px] text-neutral-400 font-mono-stat">
+                      <p className="text-[10px] text-slate-400 font-mono-stat">
                         Nível, acúmulo de XP e desbloqueios
                       </p>
                     </div>
                   </div>
-                  <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase font-mono-stat bg-yellow-400/20 text-emerald-300 border border-yellow-400/30">
+                  <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase font-mono-stat bg-yellow-400/20 text-yellow-300 border border-yellow-400/30">
                     NÍVEL {stats.progression.level}
                   </span>
                 </div>
@@ -676,7 +676,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                 {/* Barra de XP */}
                 <div className="p-3 rounded-2xl bg-black/40 border border-yellow-500/20 mb-3">
                   <div className="flex justify-between items-center text-[10px] font-mono-stat mb-1.5">
-                    <span className="text-neutral-300 font-bold">
+                    <span className="text-slate-300 font-bold">
                       Progresso para Nível {stats.progression.level + 1}
                     </span>
                     <span className="text-yellow-400 font-bold">
@@ -689,7 +689,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                       style={{ width: `${stats.progression.progressPct}%` }}
                     />
                   </div>
-                  <div className="flex justify-between text-[9px] text-neutral-400 font-mono-stat mt-1">
+                  <div className="flex justify-between text-[9px] text-slate-400 font-mono-stat mt-1">
                     <span>Faltam {stats.progression.xpRemaining.toLocaleString()} XP</span>
                     <span>Total acumulado: {stats.progression.totalXpAccumulated.toLocaleString()} XP</span>
                   </div>
@@ -697,33 +697,33 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
 
                 <div className="grid grid-cols-3 gap-2">
                   <div className="p-3 rounded-2xl bg-black/40 border border-white/5 text-center">
-                    <div className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat">
+                    <div className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat">
                       CONQUISTAS
                     </div>
                     <div className="text-base font-black text-yellow-400 font-mono-stat mt-0.5">
                       {stats.progression.unlockedAchievementsCount} / {stats.progression.totalAchievementsCount}
                     </div>
-                    <span className="text-[8px] text-neutral-400">Desbloqueadas</span>
+                    <span className="text-[8px] text-slate-400">Desbloqueadas</span>
                   </div>
 
                   <div className="p-3 rounded-2xl bg-black/40 border border-white/5 text-center">
-                    <div className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat">
+                    <div className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat">
                       TÍTULOS
                     </div>
                     <div className="text-base font-black text-amber-400 font-mono-stat mt-0.5">
                       {stats.progression.unlockedTitlesCount}
                     </div>
-                    <span className="text-[8px] text-neutral-400">Títulos de honra</span>
+                    <span className="text-[8px] text-slate-400">Títulos de honra</span>
                   </div>
 
                   <div className="p-3 rounded-2xl bg-black/40 border border-white/5 text-center">
-                    <div className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat">
+                    <div className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat">
                       RECOMPENSAS
                     </div>
                     <div className="text-base font-black text-purple-400 font-mono-stat mt-0.5">
                       {stats.progression.unlockedRewardsCount}
                     </div>
-                    <span className="text-[8px] text-neutral-400">Itens liberados</span>
+                    <span className="text-[8px] text-slate-400">Itens liberados</span>
                   </div>
                 </div>
               </div>
@@ -733,7 +733,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
 
         {/* Footer */}
         <div className="p-3 sm:p-4 border-t border-white/10 bg-[#070a0f] flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-1.5 text-[10px] text-neutral-400 font-mono-stat">
+          <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-mono-stat">
             <span className="w-2 h-2 rounded-full bg-yellow-400 animate-pulse" />
             <span>Dados sincronizados em tempo real</span>
           </div>
@@ -741,7 +741,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="px-5 py-2 rounded-xl bg-yellow-400 hover:bg-emerald-300 text-black text-xs font-black font-mono-stat uppercase tracking-wider transition-all shadow-[0_0_15px_rgba(0,255,102,0.3)] active:scale-95 cursor-pointer"
+            className="px-5 py-2 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-black text-xs font-black font-mono-stat uppercase tracking-wider transition-all shadow-[0_0_15px_rgba(252,232,3,0.3)] active:scale-95 cursor-pointer"
           >
             FECHAR
           </button>

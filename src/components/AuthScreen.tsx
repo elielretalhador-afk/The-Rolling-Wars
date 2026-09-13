@@ -1,3 +1,4 @@
+import { Swords, Settings, Zap } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import { AuthService } from '../services/auth';
 
@@ -80,15 +81,29 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
   };
 
   return (
-    <div className="flex justify-center w-full h-full bg-[#05070a]">
-      <main className="relative flex flex-col items-center justify-center w-full h-full max-w-md md:max-w-lg bg-[#000000] border-x border-neutral-900/40 p-6 overflow-y-auto">
+    <div className="flex justify-center w-full h-full bg-black relative overflow-hidden">
+      <div className="sparks-container">
+        {Array.from({ length: 25 }).map((_, i) => (
+          <div key={i} className="spark" style={{
+            left: `${Math.random() * 100}%`,
+            top: `${50 + Math.random() * 50}%`,
+            animationDuration: `${2 + Math.random() * 4}s`,
+            animationDelay: `${Math.random() * 3}s`
+          }} />
+        ))}
+      </div>
+      <main className="relative z-10 flex flex-col items-center justify-center w-full h-full max-w-md md:max-w-lg bg-transparent border-x border-slate-800/40 p-6 overflow-y-auto">
         {/* LOGO */}
-        <div className="mb-8 text-center shrink-0 flex flex-col items-center">
-          <img src="/logo.png" alt="The Rolling Wars" className="w-24 h-24 rounded-2xl mb-4 shadow-[0_0_30px_rgba(255,215,0,0.3)]" />
-          <h1 className="text-2xl font-black text-white font-display tracking-tight uppercase">
-            The Rolling <span className="text-yellow-400">Wars</span>
+        <div className="mb-8 text-center shrink-0 relative z-10 w-full">
+          <div className="relative w-36 h-36 mx-auto mb-2 flex items-center justify-center">
+            <div className="absolute inset-0 bg-[#fce803] rounded-full blur-[40px] opacity-20 animate-pulse"></div>
+            <img src="/logo-rw-dark.png" alt="The Rolling Wars" className="relative z-10 w-full h-full object-contain" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+          </div>
+          <h1 className="text-2xl font-black font-display tracking-wider uppercase mt-4">
+            <span className="text-white">THE ROLLING </span>
+            <span className="text-[#fce803]">WARS</span>
           </h1>
-          <p className="text-xs font-medium text-neutral-400 mt-1 tracking-wide uppercase font-mono-stat">
+          <p className="text-[10px] font-bold text-slate-400 mt-1 tracking-widest uppercase font-mono-stat">
             Identidade de Jogador
           </p>
         </div>
@@ -102,63 +117,63 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
           )}
           
           {successMsg && (
-            <div className="p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 text-xs font-bold text-center">
+            <div className="p-3 rounded-xl bg-[#fce803]/10 border border-[#fce803]/30 text-[#fce803] text-xs font-bold text-center">
               {successMsg}
             </div>
           )}
 
           {(mode === 'login' || mode === 'register') && (
             <div className="flex flex-col gap-1.5">
-              <label className="text-[10px] font-black text-neutral-400 uppercase tracking-wider ml-1">Nome de Usuário</label>
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider ml-1">NOME DE USUÁRIO</label>
               <input
                 type="text"
                 required
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="seu_apelido"
-                className="w-full bg-[#0a0a0a] border border-neutral-800/50 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-yellow-500 transition-colors"
+                className="w-full bg-[#0a0a0a] border border-neutral-800 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-[#fce803]/50 transition-colors"
               />
             </div>
           )}
 
           {(mode === 'register' || mode === 'forgot') && (
             <div className="flex flex-col gap-1.5">
-              <label className="text-[10px] font-black text-neutral-400 uppercase tracking-wider ml-1">E-mail</label>
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider ml-1">E-MAIL</label>
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="email@exemplo.com"
-                className="w-full bg-[#0a0a0a] border border-neutral-800/50 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-yellow-500 transition-colors"
+                className="w-full bg-[#0a0a0a] border border-neutral-800 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-[#fce803]/50 transition-colors"
               />
             </div>
           )}
 
           {(mode === 'login' || mode === 'register') && (
             <div className="flex flex-col gap-1.5">
-              <label className="text-[10px] font-black text-neutral-400 uppercase tracking-wider ml-1">Senha</label>
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider ml-1">SENHA</label>
               <input
                 type="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full bg-[#0a0a0a] border border-neutral-800/50 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-yellow-500 transition-colors"
+                className="w-full bg-[#0a0a0a] border border-neutral-800 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-[#fce803]/50 transition-colors"
               />
             </div>
           )}
 
           {mode === 'register' && (
             <div className="flex flex-col gap-1.5">
-              <label className="text-[10px] font-black text-neutral-400 uppercase tracking-wider ml-1">Confirmar Senha</label>
+              <label className="text-[10px] font-black text-slate-400 uppercase tracking-wider ml-1">CONFIRMAR SENHA</label>
               <input
                 type="password"
                 required
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full bg-[#0a0a0a] border border-neutral-800/50 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-yellow-500 transition-colors"
+                className="w-full bg-[#0a0a0a] border border-neutral-800 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-[#fce803]/50 transition-colors"
               />
             </div>
           )}
@@ -166,7 +181,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full mt-2 bg-gradient-to-r from-yellow-500 to-yellow-400 text-black font-black font-display uppercase tracking-wider text-sm py-3.5 rounded-xl hover:brightness-110 active:scale-95 transition-all shadow-[0_4px_16px_rgba(255,215,0,0.4)] disabled:opacity-50 flex items-center justify-center"
+            className="w-full mt-4 bg-gradient-to-r from-[#fce803] to-[#eab308] text-black font-black font-display uppercase tracking-widest text-sm py-4 rounded-xl hover:brightness-110 active:scale-95 transition-all shadow-[0_0_20px_rgba(252,232,3,0.15)] disabled:opacity-50 flex items-center justify-center"
           >
             {isLoading ? (
               <div className="w-5 h-5 rounded-full border-2 border-black/20 border-t-black animate-spin" />
@@ -181,9 +196,9 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
         {(mode === 'login' || mode === 'register') && (
           <div className="w-full max-w-sm mt-4">
             <div className="relative flex items-center py-2">
-              <div className="flex-grow border-t border-neutral-900"></div>
+              <div className="flex-grow border-t border-slate-800"></div>
               <span className="shrink-0 px-3 text-[10px] font-bold text-slate-500 uppercase tracking-wider">OU</span>
-              <div className="flex-grow border-t border-neutral-900"></div>
+              <div className="flex-grow border-t border-slate-800"></div>
             </div>
             
             <button
@@ -208,7 +223,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
             <button
               type="button"
               onClick={() => { setMode('login'); setError(''); setSuccessMsg(''); }}
-              className="text-xs font-medium text-neutral-400 hover:text-yellow-400 transition-colors underline underline-offset-4"
+              className="text-xs font-medium text-slate-400 hover:text-[#fce803] transition-colors underline underline-offset-4"
             >
               Voltar para o Login
             </button>
@@ -219,7 +234,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
               <button
                 type="button"
                 onClick={() => { setMode('forgot'); setError(''); setSuccessMsg(''); }}
-                className="text-[10px] font-bold text-slate-500 hover:text-yellow-400 transition-colors"
+                className="text-[10px] font-bold text-slate-500 hover:text-[#fce803] transition-colors"
               >
                 ESQUECI MINHA SENHA
               </button>
@@ -227,7 +242,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
               <button
                 type="button"
                 onClick={() => { setMode('register'); setError(''); setSuccessMsg(''); }}
-                className="text-xs font-medium text-neutral-400 hover:text-yellow-400 transition-colors underline underline-offset-4 mt-2"
+                className="text-xs font-medium text-slate-400 hover:text-[#fce803] transition-colors underline underline-offset-4 mt-2"
               >
                 Ainda não possui uma conta? Criar nova conta
               </button>

@@ -134,7 +134,14 @@ export const ClanService = {
     });
 
     // Enviar notificação usando a infraestrutura existente
-    // Notification sent
+    await SocialService.sendNotification(
+      targetUserId, 
+      inviterId, 
+      'cla',
+      `convidou você para o clã ${clanName}`,
+      'open_clan_profile',
+      { clanId }
+    );
   },
 
   async getMyInvites(userId: string) {

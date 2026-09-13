@@ -17,10 +17,10 @@ export const SegmentDetailsModal: React.FC<{
   useEffect(() => {
     async function load() {
       if (!data) {
-        const seg = null; //(segmentId);
+        const seg = await DatabaseService.getSegmentData(segmentId);
         setData(seg);
       }
-      const attempts: any[] = []; //(segmentId, 10);
+      const attempts = await DatabaseService.getSegmentAttempts(segmentId, 10);
       setTop10(attempts);
       
       const user = await AuthService.getCurrentUser();
@@ -42,20 +42,20 @@ export const SegmentDetailsModal: React.FC<{
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm pointer-events-auto" onClick={onClose} />
       <div className="w-full sm:w-full sm:max-w-md bg-[#090d14] rounded-t-3xl sm:rounded-3xl border-t sm:border border-white/10 flex flex-col relative pointer-events-auto max-h-[85vh] sm:max-h-[90vh]">
         <div className="absolute top-3 left-1/2 -translate-x-1/2 w-12 h-1.5 bg-white/20 rounded-full sm:hidden" />
-        <button onClick={onClose} className="absolute top-4 right-4 p-2 bg-black/40 rounded-full text-neutral-400 hover:text-white transition-colors z-10 border border-white/5">
+        <button onClick={onClose} className="absolute top-4 right-4 p-2 bg-black/40 rounded-full text-slate-400 hover:text-white transition-colors z-10 border border-white/5">
           <X className="w-5 h-5" />
         </button>
 
         <div className="p-6 pb-4 border-b border-white/5 shrink-0 overflow-y-auto custom-scrollbar">
            {loading && !data ? (
-              <div className="py-12 text-center text-neutral-400 font-mono-stat text-xs uppercase">Carregando segmento...</div>
+              <div className="py-12 text-center text-slate-400 font-mono-stat text-xs uppercase">Carregando segmento...</div>
            ) : (
               <>
                  <div className="flex items-center gap-2 mb-2 mt-4 sm:mt-0">
                    <div className="px-2 py-0.5 bg-indigo-500/20 border border-indigo-500/30 text-indigo-400 text-[9px] font-black rounded uppercase font-mono-stat tracking-wider">
                      Sprint
                    </div>
-                   <div className="text-[10px] text-neutral-400 font-mono-stat flex items-center gap-1">
+                   <div className="text-[10px] text-slate-400 font-mono-stat flex items-center gap-1">
                      <Route className="w-3 h-3" /> {(data.length || 0).toFixed(0)}m
                    </div>
                  </div>
@@ -97,19 +97,19 @@ export const SegmentDetailsModal: React.FC<{
                  ) : top10.length === 0 ? (
                     <div className="text-center p-6 bg-[#0a0a0a] rounded-xl border border-white/5 border-dashed">
                       <div className="text-yellow-400 font-black uppercase text-xs mb-1">Ninguém dominou este segmento</div>
-                      <div className="text-[10px] text-neutral-400 font-mono-stat">Seja o primeiro a registrar um tempo.</div>
+                      <div className="text-[10px] text-slate-400 font-mono-stat">Seja o primeiro a registrar um tempo.</div>
                     </div>
                  ) : (
                     <div className="space-y-2">
                        {top10.map((attempt, idx) => (
                           <div key={attempt.id} className="flex items-center justify-between p-3 bg-[#0a0a0a] rounded-xl border border-white/5">
                              <div className="flex items-center gap-3">
-                                <div className={`w-6 h-6 rounded-md flex items-center justify-center text-[10px] font-black font-mono-stat ${idx === 0 ? 'bg-amber-400 text-black shadow-[0_0_10px_rgba(251,191,36,0.3)]' : idx === 1 ? 'bg-slate-300 text-black' : idx === 2 ? 'bg-orange-400 text-black' : 'bg-white/10 text-neutral-400'}`}>
+                                <div className={`w-6 h-6 rounded-md flex items-center justify-center text-[10px] font-black font-mono-stat ${idx === 0 ? 'bg-amber-400 text-black shadow-[0_0_10px_rgba(251,191,36,0.3)]' : idx === 1 ? 'bg-slate-300 text-black' : idx === 2 ? 'bg-orange-400 text-black' : 'bg-white/10 text-slate-400'}`}>
                                   {idx + 1}
                                 </div>
                                 <div>
                                   <div className="text-xs font-bold text-white uppercase truncate max-w-[120px]">{attempt.playerName || 'Anônimo'}</div>
-                                  <div className="text-[9px] text-neutral-400 font-mono-stat flex items-center gap-1 mt-0.5">
+                                  <div className="text-[9px] text-slate-400 font-mono-stat flex items-center gap-1 mt-0.5">
                                     <Clock className="w-2.5 h-2.5" /> {(attempt.timeSeconds || 0).toFixed(2)}s
                                   </div>
                                 </div>

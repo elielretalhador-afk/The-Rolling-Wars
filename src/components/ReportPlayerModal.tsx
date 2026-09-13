@@ -85,7 +85,7 @@ export const ReportPlayerModal: React.FC<ReportPlayerModalProps> = ({
               <h3 className="text-sm font-black text-white uppercase font-display tracking-tight">
                 DENUNCIAR JOGADOR
               </h3>
-              <p className="text-[10px] text-neutral-400 font-mono-stat">
+              <p className="text-[10px] text-slate-400 font-mono-stat">
                 {player.nickname} {player.tag ? `(${player.tag})` : ''}
               </p>
             </div>
@@ -94,7 +94,7 @@ export const ReportPlayerModal: React.FC<ReportPlayerModalProps> = ({
           <button
             id="btn-close-report-modal"
             onClick={onClose}
-            className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-neutral-300 hover:text-white transition-all cursor-pointer"
+            className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white transition-all cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -103,14 +103,14 @@ export const ReportPlayerModal: React.FC<ReportPlayerModalProps> = ({
         {/* Content */}
         {isSubmitted ? (
           <div className="p-6 text-center space-y-3">
-            <div className="w-12 h-12 rounded-full bg-yellow-500/20 text-yellow-400 border border-yellow-400/40 flex items-center justify-center mx-auto shadow-[0_0_20px_rgba(0,255,102,0.3)]">
+            <div className="w-12 h-12 rounded-full bg-yellow-500/20 text-yellow-400 border border-yellow-400/40 flex items-center justify-center mx-auto shadow-[0_0_20px_rgba(252,232,3,0.3)]">
               <CheckCircle2 className="w-6 h-6" />
             </div>
             <h4 className="text-base font-black text-white uppercase font-display">
               DENÚNCIA REGISTRADA
             </h4>
-            <p className="text-xs text-neutral-300">
-              Obrigado por manter o asfalto do Urbanozeiro seguro e justo. Nossa moderação irá analisar o histórico.
+            <p className="text-xs text-slate-300">
+              Obrigado por manter o asfalto do THE ROLLING WARS seguro e justo. Nossa moderação irá analisar o histórico.
             </p>
           </div>
         ) : (
@@ -124,7 +124,7 @@ export const ReportPlayerModal: React.FC<ReportPlayerModalProps> = ({
 
             {/* Motivo */}
             <div>
-              <label className="text-[10px] font-bold text-neutral-400 uppercase font-mono-stat block mb-2">
+              <label className="text-[10px] font-bold text-slate-400 uppercase font-mono-stat block mb-2">
                 Selecione o Motivo:
               </label>
               <div className="space-y-1.5">
@@ -137,7 +137,7 @@ export const ReportPlayerModal: React.FC<ReportPlayerModalProps> = ({
                       className={`p-2.5 rounded-xl border transition-all cursor-pointer flex items-start gap-2.5 ${
                         isSelected
                           ? 'bg-red-500/15 border-red-400/80 text-white shadow-[0_0_12px_rgba(239,68,68,0.2)]'
-                          : 'bg-[#0d141e] border-white/10 text-neutral-300 hover:border-white/20'
+                          : 'bg-[#0a0a0a] border-white/10 text-slate-300 hover:border-white/20'
                       }`}
                     >
                       <div
@@ -151,7 +151,7 @@ export const ReportPlayerModal: React.FC<ReportPlayerModalProps> = ({
                       </div>
                       <div>
                         <div className="text-xs font-bold font-mono-stat uppercase">{r.label}</div>
-                        <div className="text-[10px] text-neutral-400 leading-tight mt-0.5">
+                        <div className="text-[10px] text-slate-400 leading-tight mt-0.5">
                           {r.description}
                         </div>
                       </div>
@@ -163,7 +163,7 @@ export const ReportPlayerModal: React.FC<ReportPlayerModalProps> = ({
 
             {/* Detalhes Adicionais */}
             <div>
-              <label className="text-[10px] font-bold text-neutral-400 uppercase font-mono-stat block mb-1.5">
+              <label className="text-[10px] font-bold text-slate-400 uppercase font-mono-stat block mb-1.5">
                 Detalhes Adicionais (Opcional):
               </label>
               <textarea
@@ -171,7 +171,7 @@ export const ReportPlayerModal: React.FC<ReportPlayerModalProps> = ({
                 onChange={(e) => setDetails(e.target.value)}
                 placeholder="Descreva o que aconteceu ou aponte a zona/horário do ocorrido..."
                 rows={3}
-                className="w-full p-2.5 rounded-xl bg-[#0d141e] border border-white/10 text-xs text-white placeholder:text-slate-600 focus:outline-none focus:border-red-400 transition-all resize-none"
+                className="w-full p-2.5 rounded-xl bg-[#0a0a0a] border border-white/10 text-xs text-white placeholder:text-slate-600 focus:outline-none focus:border-red-400 transition-all resize-none"
               />
             </div>
 

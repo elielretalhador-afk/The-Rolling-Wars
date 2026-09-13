@@ -2,7 +2,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.urbanozeiro.app',
-  appName: 'The Rolling Wars',  
+  appName: 'THE ROLLING WARS',  
   webDir: 'dist',
   plugins: {
     FirebaseAuthentication: {

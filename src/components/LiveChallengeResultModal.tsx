@@ -42,7 +42,7 @@ export const LiveChallengeResultModal: React.FC<LiveChallengeResultModalProps> =
       id="modal-live-challenge-result"
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85  animate-fade-in"
     >
-      <div className="relative w-full max-w-md bg-[#0a0f16] border-2 border-yellow-400/80 rounded-3xl p-5 sm:p-6 shadow-[0_0_50px_rgba(0,255,102,0.35)] overflow-hidden">
+      <div className="relative w-full max-w-md bg-[#000000] border-2 border-yellow-400/80 rounded-3xl p-5 sm:p-6 shadow-[0_0_50px_rgba(252,232,3,0.35)] overflow-hidden">
         {/* Glow de fundo */}
         <div className="absolute -top-24 -right-24 w-48 h-48 bg-yellow-500/20 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-amber-500/15 rounded-full blur-3xl pointer-events-none" />
@@ -51,7 +51,7 @@ export const LiveChallengeResultModal: React.FC<LiveChallengeResultModalProps> =
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-white transition-all cursor-pointer z-10"
+          className="absolute top-4 right-4 p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all cursor-pointer z-10"
         >
           <X className="w-4 h-4" />
         </button>
@@ -70,7 +70,7 @@ export const LiveChallengeResultModal: React.FC<LiveChallengeResultModalProps> =
             <h2 className="text-xl sm:text-2xl font-black text-white font-display uppercase tracking-tight mt-0.5">
               RESULTADO DO CONFRONTO
             </h2>
-            <p className="text-xs text-neutral-400 font-mono-stat mt-0.5">
+            <p className="text-xs text-slate-400 font-mono-stat mt-0.5">
               {challenge.routeName}
             </p>
           </div>
@@ -80,7 +80,7 @@ export const LiveChallengeResultModal: React.FC<LiveChallengeResultModalProps> =
         <div
           className={`p-3 rounded-2xl border text-center mb-4 ${
             isCurrentUserWinner
-              ? 'bg-emerald-950/40 border-yellow-400/60 shadow-[0_0_20px_rgba(0,255,102,0.2)]'
+              ? 'bg-neutral-900/40 border-yellow-400/60 shadow-[0_0_20px_rgba(252,232,3,0.2)]'
               : 'bg-[#101722] border-white/10'
           }`}
         >
@@ -88,7 +88,7 @@ export const LiveChallengeResultModal: React.FC<LiveChallengeResultModalProps> =
             {isCurrentUserWinner ? '🏆 VOCÊ VENCEU A DISPUTA!' : `🥇 ${winner?.nickname || 'Vencedor'} LEVOU A VITÓRIA!`}
           </p>
           {challenge.xpReward && (
-            <p className="text-[11px] font-bold text-emerald-300 font-mono-stat mt-0.5">
+            <p className="text-[11px] font-bold text-yellow-300 font-mono-stat mt-0.5">
               +{challenge.xpReward} XP de Bônus de Confronto adicionados ao perfil
             </p>
           )}
@@ -98,7 +98,7 @@ export const LiveChallengeResultModal: React.FC<LiveChallengeResultModalProps> =
         <div className="space-y-2.5 mb-5">
           {/* 1º LUGAR */}
           {winner && (
-            <div className="p-3 rounded-2xl bg-gradient-to-r from-amber-950/30 to-[#0e1622] border-2 border-amber-400/70 shadow-[0_0_15px_rgba(251,191,36,0.2)]">
+            <div className="p-3 rounded-2xl bg-gradient-to-r from-amber-950/30 to-[#050505] border-2 border-amber-400/70 shadow-[0_0_15px_rgba(251,191,36,0.2)]">
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2.5 min-w-0">
                   <div className="w-7 h-7 rounded-xl bg-amber-400/20 border border-amber-400 flex items-center justify-center text-amber-300 font-black text-xs font-mono-stat shrink-0">
@@ -132,7 +132,7 @@ export const LiveChallengeResultModal: React.FC<LiveChallengeResultModalProps> =
                   <div className="text-xs font-black text-yellow-400 font-mono-stat">
                     {formatSeconds(winner.elapsedTime)}
                   </div>
-                  <div className="text-[10px] text-neutral-400 font-mono-stat">
+                  <div className="text-[10px] text-slate-400 font-mono-stat">
                     {winner.averageSpeed.toFixed(1)} km/h
                   </div>
                 </div>
@@ -166,17 +166,17 @@ export const LiveChallengeResultModal: React.FC<LiveChallengeResultModalProps> =
                         </span>
                       )}
                     </div>
-                    <span className="text-[10px] text-neutral-400 font-mono-stat font-bold">
+                    <span className="text-[10px] text-slate-400 font-mono-stat font-bold">
                       🥈 Segundo Colocado ({Math.round(secondPlace.progress)}%)
                     </span>
                   </div>
                 </div>
 
                 <div className="text-right shrink-0">
-                  <div className="text-xs font-black text-neutral-300 font-mono-stat">
+                  <div className="text-xs font-black text-slate-300 font-mono-stat">
                     {formatSeconds(secondPlace.elapsedTime)}
                   </div>
-                  <div className="text-[10px] text-neutral-400 font-mono-stat">
+                  <div className="text-[10px] text-slate-400 font-mono-stat">
                     {secondPlace.averageSpeed.toFixed(1)} km/h
                   </div>
                 </div>
@@ -192,7 +192,7 @@ export const LiveChallengeResultModal: React.FC<LiveChallengeResultModalProps> =
               id="btn-challenge-rematch"
               type="button"
               onClick={onRematch}
-              className="w-full py-3 px-4 rounded-xl bg-yellow-400 hover:bg-emerald-300 text-black font-black text-xs uppercase font-mono-stat tracking-wider shadow-[0_0_20px_rgba(0,255,102,0.4)] flex items-center justify-center gap-2 transition-all cursor-pointer active:scale-[0.98]"
+              className="w-full py-3 px-4 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-black font-black text-xs uppercase font-mono-stat tracking-wider shadow-[0_0_20px_rgba(252,232,3,0.4)] flex items-center justify-center gap-2 transition-all cursor-pointer active:scale-[0.98]"
             >
               <Swords className="w-4 h-4 stroke-[2.5]" />
               <span>REVANCHE / NOVA DISPUTA</span>
@@ -215,7 +215,7 @@ export const LiveChallengeResultModal: React.FC<LiveChallengeResultModalProps> =
             id="btn-close-challenge-result"
             type="button"
             onClick={onClose}
-            className="w-full py-2.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-white font-bold text-xs uppercase font-mono-stat transition-all cursor-pointer"
+            className="w-full py-2.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white font-bold text-xs uppercase font-mono-stat transition-all cursor-pointer"
           >
             Fechar Confronto
           </button>

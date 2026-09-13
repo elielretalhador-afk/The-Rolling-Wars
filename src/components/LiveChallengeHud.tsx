@@ -55,7 +55,7 @@ export const LiveChallengeHud: React.FC<LiveChallengeHudProps> = ({
       );
     }
     return (
-      <span className="px-1.5 py-0.5 rounded bg-white/10 border border-white/20 text-neutral-300 font-mono-stat font-bold text-[9px]">
+      <span className="px-1.5 py-0.5 rounded bg-white/10 border border-white/20 text-slate-300 font-mono-stat font-bold text-[9px]">
         {index + 1}º
       </span>
     );
@@ -66,9 +66,9 @@ export const LiveChallengeHud: React.FC<LiveChallengeHudProps> = ({
       id="live-challenge-hud"
       className="absolute top-3 left-3 right-3 sm:left-auto sm:right-4 sm:w-96 z-20 pointer-events-auto select-none"
     >
-      <div className="bg-[#090d14]/95 border-2 border-yellow-400/60 rounded-2xl shadow-[0_0_30px_rgba(0,255,102,0.25)]  overflow-hidden transition-all duration-300">
+      <div className="bg-[#090d14]/95 border-2 border-yellow-400/60 rounded-2xl shadow-[0_0_30px_rgba(252,232,3,0.25)]  overflow-hidden transition-all duration-300">
         {/* Header Compacto */}
-        <div className="px-3.5 py-2.5 bg-gradient-to-r from-emerald-950/80 via-[#0b131e] to-black border-b border-yellow-400/30 flex items-center justify-between">
+        <div className="px-3.5 py-2.5 bg-gradient-to-r from-neutral-900/80 via-[#0b131e] to-black border-b border-yellow-400/30 flex items-center justify-between">
           <div className="flex items-center gap-2 min-w-0">
             <span className="w-2.5 h-2.5 rounded-full bg-yellow-400 animate-ping shrink-0" />
             <div className="flex items-center gap-1.5 min-w-0">
@@ -88,7 +88,7 @@ export const LiveChallengeHud: React.FC<LiveChallengeHudProps> = ({
             <button
               type="button"
               onClick={() => setIsMinimized(!isMinimized)}
-              className="p-1 rounded-lg hover:bg-white/10 text-neutral-400 hover:text-white transition-all cursor-pointer"
+              className="p-1 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-all cursor-pointer"
               title={isMinimized ? 'Expandir painel' : 'Minimizar painel'}
             >
               {isMinimized ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
@@ -97,7 +97,7 @@ export const LiveChallengeHud: React.FC<LiveChallengeHudProps> = ({
               <button
                 type="button"
                 onClick={onCancelChallenge}
-                className="p-1 rounded-lg hover:bg-red-500/20 text-neutral-400 hover:text-red-400 transition-all cursor-pointer"
+                className="p-1 rounded-lg hover:bg-red-500/20 text-slate-400 hover:text-red-400 transition-all cursor-pointer"
                 title="Cancelar Disputa"
               >
                 <X className="w-4 h-4" />
@@ -107,8 +107,8 @@ export const LiveChallengeHud: React.FC<LiveChallengeHudProps> = ({
         </div>
 
         {/* Informações da Rota */}
-        <div className="px-3.5 py-1.5 bg-black/40 border-b border-white/5 flex items-center justify-between text-[10px] text-neutral-300 font-mono-stat">
-          <span className="truncate text-neutral-300 font-bold">
+        <div className="px-3.5 py-1.5 bg-black/40 border-b border-white/5 flex items-center justify-between text-[10px] text-slate-300 font-mono-stat">
+          <span className="truncate text-slate-300 font-bold">
             📍 {challenge.routeName}
           </span>
           <span className="text-yellow-400 font-bold shrink-0 ml-2">
@@ -182,16 +182,16 @@ export const LiveChallengeHud: React.FC<LiveChallengeHudProps> = ({
                   </div>
 
                   {/* Telemetria: Distância • Tempo • Velocidade */}
-                  <div className="grid grid-cols-3 gap-1 pt-1 border-t border-white/5 text-[10px] font-mono-stat text-neutral-300">
+                  <div className="grid grid-cols-3 gap-1 pt-1 border-t border-white/5 text-[10px] font-mono-stat text-slate-300">
                     <div className="flex items-center gap-1">
-                      <Navigation className="w-3 h-3 text-neutral-400 shrink-0" />
+                      <Navigation className="w-3 h-3 text-slate-400 shrink-0" />
                       <span className="font-bold text-white">
                         {p.distance >= 1000 ? `${(p.distance / 1000).toFixed(2)} km` : `${Math.round(p.distance)} m`}
                       </span>
                     </div>
 
                     <div className="flex items-center justify-center gap-1">
-                      <Clock className="w-3 h-3 text-neutral-400 shrink-0" />
+                      <Clock className="w-3 h-3 text-slate-400 shrink-0" />
                       <span className="font-bold text-white">{formatSeconds(p.elapsedTime)}</span>
                     </div>
 
@@ -222,7 +222,7 @@ export const LiveChallengeHud: React.FC<LiveChallengeHudProps> = ({
                 <button
                   type="button"
                   onClick={onFinishChallenge}
-                  className="flex-1 py-1.5 px-2.5 rounded-xl bg-yellow-400 hover:bg-emerald-300 text-black font-black text-[11px] uppercase font-mono-stat tracking-wider shadow-[0_0_15px_rgba(0,255,102,0.4)] flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+                  className="flex-1 py-1.5 px-2.5 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-black font-black text-[11px] uppercase font-mono-stat tracking-wider shadow-[0_0_15px_rgba(252,232,3,0.4)] flex items-center justify-center gap-1.5 transition-all cursor-pointer"
                 >
                   <Trophy className="w-3.5 h-3.5" />
                   <span>FINALIZAR</span>

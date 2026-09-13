@@ -59,26 +59,8 @@ service cloud.firestore {
 
     match /zones/{zoneId} {
       allow read: if true;
-      allow create, delete: if false;
-      allow update: if request.auth != null
-        && request.resource.data.get('type', null) == resource.data.get('type', null)
-        && request.resource.data.get('creator', null) == resource.data.get('creator', null)
-        && (
-          request.resource.data.get('controller', null) == resource.data.get('controller', null) || 
-          (
-            request.resource.data.get('controller', null) != null &&
-            request.resource.data.controller.id == request.auth.uid &&
-            request.resource.data.get('status', '') == 'controlled'
-          )
-        )
-        && (
-          request.resource.data.get('conqueredAtUnix', 0) == resource.data.get('conqueredAtUnix', 0) ||
-          request.resource.data.get('conqueredAtUnix', 0) <= request.time.toMillis() + 300000
-        )
-        && (
-          request.resource.data.get('conquestHistory', []).size() >= resource.data.get('conquestHistory', []).size()
-        );
-
+      allow write: if false; // Server-authoritative only
+      
       match /history/{operationId} {
         allow read: if request.auth != null;
         allow create: if request.auth != null
@@ -140,6 +122,21 @@ service cloud.firestore {
       allow write: if false; // Server-authoritative
     }
 
+    match /seasons/{seasonId} {
+      allow read: if true;
+      allow write: if false; // Server-authoritative
+    }
+
+    match /seasonScores/{scoreId} {
+      allow read: if true;
+      allow write: if false; // Server-authoritative
+    }
+
+    match /seasonClanScores/{scoreId} {
+      allow read: if true;
+      allow write: if false; // Server-authoritative
+    }
+
     match /officialTitles/{titleId} {
       allow read: if request.auth != null;
       allow write: if false; // Server-authoritative
@@ -147,7 +144,28 @@ service cloud.firestore {
 
     match /users/{userId} {
       allow read: if true;
-      allow write: if request.auth != null && request.auth.uid == userId;
+      allow create: if request.auth != null && request.auth.uid == userId
+        && !('xp' in request.resource.data)
+        && !('level' in request.resource.data)
+        && !('globalRank' in request.resource.data)
+        && !('weeklyRank' in request.resource.data)
+        && !('monthlyRank' in request.resource.data)
+        && !('wins' in request.resource.data)
+        && !('victories' in request.resource.data)
+        && !('losses' in request.resource.data)
+        && !('seasonPoints' in request.resource.data)
+        && !('coins' in request.resource.data)
+        && !('gems' in request.resource.data)
+        && !('rewards' in request.resource.data)
+        && !('totalXP' in request.resource.data)
+        && !('achievementsCount' in request.resource.data);
+        
+      allow update: if request.auth != null && request.auth.uid == userId
+        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny([
+          'xp', 'level', 'nextLevelXp', 'globalRank', 'weeklyRank', 'monthlyRank',
+          'wins', 'victories', 'losses', 'seasonPoints', 'coins', 'gems', 'rewards',
+          'totalXP', 'achievementsCount', 'weeklyXp', 'monthlyXp', 'weeklyKm', 'monthlyKm'
+        ]));
 
       match /devices/{deviceId} {
         allow read: if request.auth != null && request.auth.uid == userId;

@@ -55,18 +55,18 @@ export const FollowListModal: React.FC<FollowListModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85  animate-in fade-in duration-200">
-      <div className="w-full max-w-sm h-[85vh] max-h-[600px] rounded-3xl bg-[#090e15] border-2 border-yellow-500/40 shadow-[0_0_50px_rgba(0,255,102,0.25)] flex flex-col relative overflow-hidden text-left">
+      <div className="w-full max-w-sm h-[85vh] max-h-[600px] rounded-3xl bg-[#090e15] border-2 border-yellow-500/40 shadow-[0_0_50px_rgba(252,232,3,0.25)] flex flex-col relative overflow-hidden text-left">
         {/* Glow */}
         <div className="absolute -top-16 -left-16 w-44 h-44 rounded-full bg-yellow-500/15 blur-3xl pointer-events-none" />
         
         {/* Header */}
-        <div className="p-4 border-b border-white/10 flex items-center justify-between shrink-0 bg-[#0c121a]">
+        <div className="p-4 border-b border-white/10 flex items-center justify-between shrink-0 bg-[#050505]">
           <h2 className="text-base font-black text-white font-display uppercase tracking-wide">
             {title}
           </h2>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-white transition-colors"
+            className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -75,18 +75,18 @@ export const FollowListModal: React.FC<FollowListModalProps> = ({
         {/* List */}
         <div className="flex-1 overflow-y-auto p-4 space-y-3">
           {loading ? (
-            <div className="text-center text-neutral-400 font-medium py-10">
+            <div className="text-center text-slate-400 font-medium py-10">
               Carregando...
             </div>
           ) : players.length === 0 ? (
-            <div className="text-center text-neutral-400 font-medium py-10">
+            <div className="text-center text-slate-400 font-medium py-10">
               Nenhum jogador encontrado.
             </div>
           ) : (
             players.map(player => (
               <div
                 key={player.id}
-                className="flex items-center gap-3 p-3 rounded-2xl bg-[#0c121a] border border-white/5 cursor-pointer hover:border-white/10 transition-colors"
+                className="flex items-center gap-3 p-3 rounded-2xl bg-[#050505] border border-white/5 cursor-pointer hover:border-white/10 transition-colors"
                 onClick={() => onSelectPlayer(player)}
               >
                 <img
@@ -96,7 +96,7 @@ export const FollowListModal: React.FC<FollowListModalProps> = ({
                 />
                 <div className="flex-1 min-w-0">
                   <div className="font-bold text-white text-sm truncate">{player.name}</div>
-                  <div className="text-xs text-neutral-400 font-mono-stat">{player.nickname}</div>
+                  <div className="text-xs text-slate-400 font-mono-stat">{player.nickname}</div>
                 </div>
                 {player.id !== currentUserId && (
                   <button

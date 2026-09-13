@@ -103,6 +103,7 @@ try {
 }
 
 interface MapViewProps {
+  userClanId?: string;
   user: UserProfile;
   userCoords?: [number, number] | null;
   playerLocation?: { latitude: number; longitude: number } | null;
@@ -116,6 +117,7 @@ interface MapViewProps {
   selectedRoute?: SkateRoute | null;
   selectedChallenge?: Challenge | null;
   liveChallenge?: LiveChallenge | null;
+  activeSegmentAttempt?: any;
   isCreatingZone?: boolean;
   drawnPath?: [number, number][];
   onPickCoordinateForNewZone?: (coords: [number, number]) => void;
@@ -125,6 +127,7 @@ interface MapViewProps {
 
 export const MapView: React.FC<MapViewProps> = ({
   user,
+  userClanId,
   userCoords,
   playerLocation,
   activityTrack = [],
@@ -137,6 +140,7 @@ export const MapView: React.FC<MapViewProps> = ({
   selectedRoute,
   selectedChallenge,
   liveChallenge = null,
+  activeSegmentAttempt,
   isCreatingZone,
   drawnPath = [],
   onPickCoordinateForNewZone,
@@ -147,7 +151,7 @@ export const MapView: React.FC<MapViewProps> = ({
   const mapInstanceRef = useRef<L.Map | null>(null);
   const userMarkerRef = useRef<L.Marker | null>(null);
   const hasInitiallyCenteredRef = useRef<boolean>(false);
-  const zoneLayersRef = useRef<{ [id: string]: { layer: L.Layer; marker: L.Marker } }>({});
+  const zoneLayersRef = useRef<{ [id: string]: { layer: L.Layer; marker: L.Marker; glowLayer?: L.Layer } }>({});
   const drawingLayerRef = useRef<L.Layer | null>(null);
   const routeLayersRef = useRef<{
     polyline?: L.Polyline;
@@ -213,14 +217,14 @@ export const MapView: React.FC<MapViewProps> = ({
       html: `
         <div class="relative flex items-center justify-center w-14 h-14 pointer-events-none select-none">
           <!-- Level 3 Fallback Base & Pulsing Radar Wave (Always active) -->
-          <div class="absolute inset-0 m-auto w-12 h-12 rounded-full bg-[#00ff66]/25 animate-neon-ping pointer-events-none"></div>
-          <div class="absolute inset-0 m-auto w-10 h-10 rounded-full border-2 border-[#00ff66]/80 skater-radar-pulse pointer-events-none"></div>
-          <div class="absolute inset-0 m-auto w-4 h-4 rounded-full bg-[#00ff66] shadow-[0_0_12px_#00ff66] pointer-events-none"></div>
+          <div class="absolute inset-0 m-auto w-12 h-12 rounded-full bg-[#fce803]/25 animate-neon-ping pointer-events-none"></div>
+          <div class="absolute inset-0 m-auto w-10 h-10 rounded-full border-2 border-[#fce803]/80 skater-radar-pulse pointer-events-none"></div>
+          <div class="absolute inset-0 m-auto w-4 h-4 rounded-full bg-[#fce803] shadow-[0_0_12px_#fce803] pointer-events-none"></div>
 
           <!-- Circular Player Avatar with Cyberpunk Neon Border -->
-          <div class="relative z-10 w-9 h-9 rounded-full overflow-hidden border-2 border-[#00ff66] shadow-[0_0_20px_rgba(0,255,102,0.95)] bg-[#090d12] flex items-center justify-center">
+          <div class="relative z-10 w-9 h-9 rounded-full overflow-hidden border-2 border-[#fce803] shadow-[0_0_20px_rgba(252,232,3,0.95)] bg-[#090d12] flex items-center justify-center">
             <!-- Level 2 Fallback: Skater Emoji / Icon -->
-            <div class="absolute inset-0 flex items-center justify-center text-sm font-bold text-[#00ff66] bg-[#090d12]">
+            <div class="absolute inset-0 flex items-center justify-center text-sm font-bold text-[#fce803] bg-[#090d12]">
               🛼
             </div>
             <!-- Level 1: Player Avatar Image (Hides on error to reveal Level 2) -->
@@ -232,7 +236,7 @@ export const MapView: React.FC<MapViewProps> = ({
           </div>
 
           <!-- "VOCÊ" Pill Badge -->
-          <div class="absolute -bottom-1 z-20 px-2 py-0.5 rounded-full bg-[#090d12] border border-[#00ff66] text-[8px] font-black text-[#00ff66] tracking-widest font-mono-stat shadow-lg uppercase whitespace-nowrap">
+          <div class="absolute -bottom-1 z-20 px-2 py-0.5 rounded-full bg-[#090d12] border border-[#fce803] text-[8px] font-black text-[#fce803] tracking-widest font-mono-stat shadow-lg uppercase whitespace-nowrap">
             VOCÊ
           </div>
         </div>
@@ -246,12 +250,12 @@ export const MapView: React.FC<MapViewProps> = ({
   const getPlayerPopupContent = () => `
     <div class="p-2 text-left min-w-[140px]">
       <div class="flex items-center gap-1.5 mb-1">
-        <span class="inline-block w-2 h-2 rounded-full bg-[#00ff66] animate-pulse"></span>
-        <span class="text-[10px] font-bold text-[#00ff66] uppercase tracking-widest font-mono-stat">SUA POSIÇÃO GPS</span>
+        <span class="inline-block w-2 h-2 rounded-full bg-[#fce803] animate-pulse"></span>
+        <span class="text-[10px] font-bold text-[#fce803] uppercase tracking-widest font-mono-stat">SUA POSIÇÃO GPS</span>
       </div>
       <p class="text-sm font-bold text-white uppercase font-display">${user.nickname}</p>
-      <div class="flex items-center justify-between text-[11px] text-neutral-300 mt-1 pt-1.5 border-t border-white/10 gap-3 font-mono-stat font-bold">
-        <span>VEL: <b class="text-[#00ff66] font-bold">${user.currentSpeedKmH} KM/H</b></span>
+      <div class="flex items-center justify-between text-[11px] text-slate-300 mt-1 pt-1.5 border-t border-white/10 gap-3 font-mono-stat font-bold">
+        <span>VEL: <b class="text-[#fce803] font-bold">${user.currentSpeedKmH} KM/H</b></span>
         <span>STREAK: <b class="text-amber-400 font-bold">${user.streakDays}D</b></span>
       </div>
     </div>
@@ -392,9 +396,10 @@ export const MapView: React.FC<MapViewProps> = ({
     // Remove old layers no longer in zones list
     Object.keys(zoneLayersRef.current).forEach((id) => {
       if (!zones.find((z) => z.id === id)) {
-        const { layer, marker } = zoneLayersRef.current[id];
+        const { layer, marker, glowLayer } = zoneLayersRef.current[id];
         if (layer) map.removeLayer(layer);
         if (marker) map.removeLayer(marker);
+        if (glowLayer) map.removeLayer(glowLayer);
         delete zoneLayersRef.current[id];
       }
     });
@@ -406,7 +411,7 @@ export const MapView: React.FC<MapViewProps> = ({
       if (!centerTuple) return;
 
       const isSelected = selectedZone?.id === zone.id;
-      const zoneColor = zone.color || zone.accentColor || '#00FF66';
+      const zoneColor = zone.color || zone.accentColor || '#fce803';
       const isContested = zone.status === 'contested' || zone.contested;
       const isFree = zone.status === 'free' || !zone.controller;
       const dominanceValue = zone.dominance !== undefined ? zone.dominance : (zone.dominancePercent ?? 0);
@@ -415,14 +420,38 @@ export const MapView: React.FC<MapViewProps> = ({
       const controllerNick = controllerData?.nickname || controllerData?.name || zone.controllerNickname || '';
 
       // Center Zone Pin Marker Icon
-      const effectiveBorderColor = isContested ? '#f59e0b' : isFree ? '#00FF66' : zoneColor;
+      let effectiveBorderColor = zoneColor;
+      if (isContested) {
+        effectiveBorderColor = '#f59e0b';
+      } else if (isFree) {
+        effectiveBorderColor = '#e5e7eb'; // Neutral light gray for neutral
+      } else {
+        const isAllied = controllerData?.clanId && userClanId && controllerData.clanId === userClanId;
+        const isEnemy = controllerData?.clanId && (!userClanId || controllerData.clanId !== userClanId);
+        if (isAllied) {
+          effectiveBorderColor = '#2563eb'; // Royal Blue
+        } else if (isEnemy) {
+          effectiveBorderColor = '#475569'; // Slate for enemy (not red, neutral contrast)
+        }
+      }
       const rawActivity = (zone.activityLevel || (zone.skatersCount && zone.skatersCount >= 15 ? 'HIGH' : zone.skatersCount && zone.skatersCount >= 6 ? 'MEDIUM' : 'LOW')).toUpperCase();
       const isHighActivity = rawActivity === 'HIGH' || rawActivity === 'ALTA';
       const isMediumActivity = rawActivity === 'MEDIUM' || rawActivity === 'MEDIA';
 
+      const isSegment = zone.shape === 'segment';
+      const isActiveSegment = isSegment && activeSegmentAttempt?.segmentId === zone.id;
+      
       const zoneIcon = L.divIcon({
         className: 'custom-zone-marker',
-        html: `
+        html: isSegment ? `
+          <div class="group relative flex flex-col items-center cursor-pointer transform transition-transform hover:scale-110 select-none ${isActiveSegment ? 'animate-pulse' : 'opacity-80 hover:opacity-100'}">
+             <div class="px-2 py-0.5 mb-1 rounded-md bg-[#090d14]/95 border shadow-lg flex items-center gap-1.5"
+                 style="border-color: ${effectiveBorderColor}90;">
+                 <span class="text-[9px] font-black text-white whitespace-nowrap font-display uppercase tracking-widest">⚡ SPRINT</span>
+             </div>
+             <div class="w-1.5 h-1.5 rounded-full" style="background-color: ${effectiveBorderColor};"></div>
+          </div>
+        ` : `
           <div class="group relative flex flex-col items-center cursor-pointer transform transition-transform hover:scale-110 select-none">
             <!-- Zone Name & Status Tag Pill -->
             <div class="px-2 py-0.5 mb-1 rounded-md bg-[#090d14]/95 border shadow-lg flex items-center gap-1.5"
@@ -438,7 +467,7 @@ export const MapView: React.FC<MapViewProps> = ({
               <span class="text-[10px] font-black text-white whitespace-nowrap font-display uppercase tracking-tight">${zone.name.split(' ')[0]}</span>
               
               ${isFree ? `
-                <span class="px-1 py-0.2 text-[8px] font-black bg-yellow-500/20 text-emerald-300 border border-yellow-400/30 rounded font-mono-stat uppercase">LIVRE</span>
+                <span class="px-1 py-0.2 text-[8px] font-black bg-yellow-500/20 text-yellow-300 border border-yellow-400/30 rounded font-mono-stat uppercase">LIVRE</span>
               ` : isContested ? `
                 <span class="px-1 py-0.2 text-[8px] font-black bg-amber-500/30 text-amber-300 border border-amber-400/50 rounded font-mono-stat uppercase animate-pulse">DISPUTA</span>
               ` : `
@@ -451,7 +480,7 @@ export const MapView: React.FC<MapViewProps> = ({
             </div>
 
             <!-- Emblem / Controller Avatar Pin -->
-            <div class="relative flex items-center justify-center w-8 h-8 rounded-xl bg-[#0a0f16] border-2 shadow-xl"
+            <div class="relative flex items-center justify-center w-8 h-8 rounded-xl bg-[#000000] border-2 shadow-xl"
                  style="border-color: ${effectiveBorderColor}; box-shadow: 0 0 14px ${effectiveBorderColor}66;">
               ${isContested ? `
                 <div class="w-6 h-6 rounded-lg bg-amber-950/80 flex items-center justify-center text-xs">
@@ -466,10 +495,10 @@ export const MapView: React.FC<MapViewProps> = ({
                   ${dominanceValue}%
                 </div>
               ` : `
-                <div class="w-6 h-6 rounded-lg bg-emerald-950/80 flex items-center justify-center text-xs">
+                <div class="w-6 h-6 rounded-lg bg-neutral-900/80 flex items-center justify-center text-xs">
                   🏳️
                 </div>
-                <div class="absolute -bottom-1 -right-1 px-1 rounded text-[8px] font-black bg-emerald-950 text-emerald-300 border border-yellow-500/30 font-mono-stat">
+                <div class="absolute -bottom-1 -right-1 px-1 rounded text-[8px] font-black bg-neutral-900 text-yellow-300 border border-yellow-500/30 font-mono-stat">
                   LIVRE
                 </div>
               `}
@@ -486,12 +515,25 @@ export const MapView: React.FC<MapViewProps> = ({
         if (!zoneLayersRef.current[zone.id]) {
           let layer: L.Layer;
              
+          let glowLayer: L.Layer | undefined = undefined;
           if (zone.shape === 'segment' && zone.path && zone.path.length > 1) {
+            const isActiveSegment = activeSegmentAttempt?.segmentId === zone.id;
+            const segmentColor = isActiveSegment ? (activeSegmentAttempt.status === 'approaching' ? '#f59e0b' : '#f43f5e') : effectiveBorderColor;
+            
+            if (isActiveSegment || isSelected) {
+               glowLayer = L.polyline(zone.path as L.LatLngExpression[], {
+                 color: segmentColor,
+                 weight: isActiveSegment ? 14 : 8,
+                 opacity: isActiveSegment ? 0.4 : 0.2,
+                 className: 'transition-all duration-300',
+               }).addTo(map);
+            }
+
             layer = L.polyline(zone.path as L.LatLngExpression[], {
-              color: effectiveBorderColor,
-              weight: isSelected ? 4 : 3,
-              opacity: 0.9,
-              dashArray: isContested ? '8, 8' : isFree ? '6, 6' : undefined,
+              color: segmentColor,
+              weight: isActiveSegment ? 5 : (isSelected ? 3.5 : 2.5),
+              opacity: isActiveSegment ? 1 : (isSelected ? 1 : 0.6),
+              dashArray: isActiveSegment ? undefined : '5, 5',
               className: 'transition-all duration-300',
             }).addTo(map);
           } else if (zone.shape === 'zone' && zone.path && zone.path.length > 2) {
@@ -527,12 +569,32 @@ export const MapView: React.FC<MapViewProps> = ({
             onSelectZone(zone);
           });
 
-          zoneLayersRef.current[zone.id] = { layer, marker };
+          zoneLayersRef.current[zone.id] = { layer, marker, glowLayer };
         } else {
           // Update existing layer styling and icon
-          const { layer, marker } = zoneLayersRef.current[zone.id];
+          const { layer, marker, glowLayer } = zoneLayersRef.current[zone.id];
           if (layer) {
-            if (layer instanceof L.Circle || layer instanceof L.Polygon || layer instanceof L.Polyline) {
+            if (layer instanceof L.Polyline && zone.shape === 'segment') {
+              const isActiveSegment = activeSegmentAttempt?.segmentId === zone.id;
+              const segmentColor = isActiveSegment ? (activeSegmentAttempt.status === 'approaching' ? '#f59e0b' : '#f43f5e') : effectiveBorderColor;
+              (layer as L.Polyline).setStyle({
+                color: segmentColor,
+                weight: isActiveSegment ? 5 : (isSelected ? 3.5 : 2.5),
+                opacity: isActiveSegment ? 1 : (isSelected ? 1 : 0.6),
+                dashArray: isActiveSegment ? undefined : '5, 5',
+              });
+              if (glowLayer && glowLayer instanceof L.Polyline) {
+                 if (isActiveSegment || isSelected) {
+                    glowLayer.setStyle({
+                       color: segmentColor,
+                       weight: isActiveSegment ? 14 : 8,
+                       opacity: isActiveSegment ? 0.4 : 0.2,
+                    });
+                 } else {
+                    glowLayer.setStyle({ opacity: 0 });
+                 }
+              }
+            } else if (layer instanceof L.Circle || layer instanceof L.Polygon || layer instanceof L.Polyline) {
               (layer as L.Path).setStyle({
                 color: effectiveBorderColor,
                 weight: isSelected ? 3.5 : isContested ? 2.5 : 2,
@@ -558,7 +620,7 @@ export const MapView: React.FC<MapViewProps> = ({
         console.warn('Error updating zone layer:', err);
       }
     });
-  }, [zones, selectedZone, user.nickname, onSelectZone]);
+  }, [zones, selectedZone, user.nickname, onSelectZone, activeSegmentAttempt]);
 
   // Render & Highlight Selected Route on Map based on full GPS Track sequence
   useEffect(() => {
@@ -620,7 +682,7 @@ export const MapView: React.FC<MapViewProps> = ({
 
       // Background glowing polyline (translucent neon aura)
       const glowPolyline = L.polyline(leafletCoords, {
-        color: '#00FF66',
+        color: '#fce803',
         weight: 8,
         opacity: 0.20,
         lineCap: 'round',
@@ -629,7 +691,7 @@ export const MapView: React.FC<MapViewProps> = ({
 
       // Foreground neon polyline (semi-translucent to see street names and details beneath)
       const polyline = L.polyline(leafletCoords, {
-        color: '#00FF66',
+        color: '#fce803',
         weight: 4,
         opacity: 0.65,
         dashArray: '8, 5',
@@ -643,8 +705,8 @@ export const MapView: React.FC<MapViewProps> = ({
         if (idx > 0 && idx < pathCoords.length - 1) {
           const dot = L.circleMarker(pt, {
             radius: 3,
-            color: '#00FF66',
-            fillColor: '#080b0e',
+            color: '#fce803',
+            fillColor: '#050505',
             fillOpacity: 0.8,
             opacity: 0.65,
             weight: 1.5,
@@ -662,10 +724,10 @@ export const MapView: React.FC<MapViewProps> = ({
           className: 'route-circuit-pin',
           html: `
             <div class="relative flex flex-col items-center">
-              <div class="flex items-center justify-center w-8 h-8 rounded-full bg-[#0a0f15] border-2 border-yellow-400 shadow-[0_0_15px_#00ff66] text-white font-black text-xs font-mono-stat">
+              <div class="flex items-center justify-center w-8 h-8 rounded-full bg-[#000000] border-2 border-yellow-400 shadow-[0_0_15px_#fce803] text-white font-black text-xs font-mono-stat">
                 🏁
               </div>
-              <div class="mt-1 px-2 py-0.5 rounded-md bg-[#0a0f15]/90 border border-yellow-400 text-[8px] font-black text-yellow-400 font-mono-stat uppercase shadow-md whitespace-nowrap">
+              <div class="mt-1 px-2 py-0.5 rounded-md bg-[#000000]/90 border border-yellow-400 text-[8px] font-black text-yellow-400 font-mono-stat uppercase shadow-md whitespace-nowrap">
                 LARGADA & CHEGADA (CIRCUITO)
               </div>
             </div>
@@ -682,10 +744,10 @@ export const MapView: React.FC<MapViewProps> = ({
           className: 'route-start-pin',
           html: `
             <div class="relative flex flex-col items-center">
-              <div class="flex items-center justify-center w-7 h-7 rounded-full bg-[#0a0f15] border-2 border-yellow-400 shadow-[0_0_14px_#00ff66] text-yellow-400 font-black text-xs font-mono-stat">
+              <div class="flex items-center justify-center w-7 h-7 rounded-full bg-[#000000] border-2 border-yellow-400 shadow-[0_0_14px_#fce803] text-yellow-400 font-black text-xs font-mono-stat">
                 A
               </div>
-              <div class="mt-0.5 px-1.5 py-0.2 rounded bg-[#0a0f15]/90 border border-yellow-400 text-[8px] font-black text-yellow-400 font-mono-stat uppercase whitespace-nowrap">
+              <div class="mt-0.5 px-1.5 py-0.2 rounded bg-[#000000]/90 border border-yellow-400 text-[8px] font-black text-yellow-400 font-mono-stat uppercase whitespace-nowrap">
                 LARGADA
               </div>
             </div>
@@ -702,10 +764,10 @@ export const MapView: React.FC<MapViewProps> = ({
           className: 'route-end-pin',
           html: `
             <div class="relative flex flex-col items-center">
-              <div class="flex items-center justify-center w-7 h-7 rounded-full bg-[#0a0f15] border-2 border-cyan-400 shadow-[0_0_14px_#00e5ff] text-cyan-300 font-black text-xs font-mono-stat">
+              <div class="flex items-center justify-center w-7 h-7 rounded-full bg-[#000000] border-2 border-cyan-400 shadow-[0_0_14px_#00e5ff] text-cyan-300 font-black text-xs font-mono-stat">
                 B
               </div>
-              <div class="mt-0.5 px-1.5 py-0.2 rounded bg-[#0a0f15]/90 border border-cyan-400 text-[8px] font-black text-cyan-300 font-mono-stat uppercase whitespace-nowrap">
+              <div class="mt-0.5 px-1.5 py-0.2 rounded bg-[#000000]/90 border border-cyan-400 text-[8px] font-black text-cyan-300 font-mono-stat uppercase whitespace-nowrap">
                 CHEGADA
               </div>
             </div>
@@ -778,16 +840,16 @@ export const MapView: React.FC<MapViewProps> = ({
 
     if (isClosed) {
       drawingLayerRef.current = L.polygon(drawnPath as L.LatLngExpression[], {
-        color: '#00ff66',
+        color: '#fce803',
         weight: 3,
         opacity: 0.9,
-        fillColor: '#00ff66',
+        fillColor: '#fce803',
         fillOpacity: 0.3,
         dashArray: '10, 10'
       }).addTo(map);
     } else {
       drawingLayerRef.current = L.polyline(drawnPath as L.LatLngExpression[], {
-        color: '#00ff66',
+        color: '#fce803',
         weight: 4,
         opacity: 0.9,
         dashArray: '10, 10'
@@ -829,7 +891,7 @@ export const MapView: React.FC<MapViewProps> = ({
       if (!activityLayersRef.current.startMarker && rawCoords.length >= 1 && toValidLatLngTuple(rawCoords[0])) {
         const startMarker = L.circleMarker(rawCoords[0], {
           radius: 6,
-          color: '#00FF66',
+          color: '#fce803',
           weight: 2,
           fillColor: '#090d12',
           fillOpacity: 1,
@@ -849,7 +911,7 @@ export const MapView: React.FC<MapViewProps> = ({
           activityLayersRef.current.polyline.setLatLngs(leafletCoords);
         } else {
           const glowPolyline = L.polyline(leafletCoords, {
-            color: '#00FF66',
+            color: '#fce803',
             weight: 8,
             opacity: 0.35,
             lineCap: 'round',
@@ -857,7 +919,7 @@ export const MapView: React.FC<MapViewProps> = ({
           }).addTo(map);
 
           const polyline = L.polyline(leafletCoords, {
-            color: '#00FF66',
+            color: '#fce803',
             weight: 4,
             opacity: 0.95,
             lineCap: 'round',
@@ -1098,11 +1160,11 @@ export const MapView: React.FC<MapViewProps> = ({
       // 1. Glowing target territory circle (semi-translucent neon overlay)
       const circle = L.circle(targetCoords, {
         radius: 260,
-        color: '#00FF66',
+        color: '#fce803',
         weight: 2.5,
         opacity: 0.75,
         dashArray: '6, 6',
-        fillColor: '#00FF66',
+        fillColor: '#fce803',
         fillOpacity: 0.16,
       }).addTo(map);
 
@@ -1115,11 +1177,11 @@ export const MapView: React.FC<MapViewProps> = ({
             <div class="absolute inset-0 m-auto w-12 h-12 rounded-full border-2 border-yellow-400/80 animate-ping pointer-events-none" style="animation-duration: 2.5s;"></div>
             <div class="absolute inset-0 m-auto w-14 h-14 rounded-full bg-yellow-400/20 pointer-events-none"></div>
             <!-- Objective Beacon Core Icon -->
-            <div class="relative z-10 flex items-center justify-center w-10 h-10 rounded-full bg-[#090d12] border-2 border-[#00ff66] shadow-[0_0_22px_#00ff66]">
+            <div class="relative z-10 flex items-center justify-center w-10 h-10 rounded-full bg-[#090d12] border-2 border-[#fce803] shadow-[0_0_22px_#fce803]">
               <span class="text-base select-none">🎯</span>
             </div>
             <!-- Objective Pill Label -->
-            <div class="absolute -bottom-2.5 z-20 px-2 py-0.5 rounded-full bg-[#090d12] border border-[#00ff66] text-[8px] font-black text-[#00ff66] font-mono-stat whitespace-nowrap shadow-xl uppercase tracking-wider">
+            <div class="absolute -bottom-2.5 z-20 px-2 py-0.5 rounded-full bg-[#090d12] border border-[#fce803] text-[8px] font-black text-[#fce803] font-mono-stat whitespace-nowrap shadow-xl uppercase tracking-wider">
               OBJETIVO: ${selectedChallenge.title}
             </div>
           </div>
@@ -1137,7 +1199,7 @@ export const MapView: React.FC<MapViewProps> = ({
             <span class="text-[10px] font-bold text-yellow-400 uppercase tracking-widest font-mono-stat">ALVO DO DESAFIO</span>
           </div>
           <p class="text-sm font-bold text-white uppercase font-display">${selectedChallenge.title}</p>
-          <p class="text-xs text-neutral-300 mt-1 font-medium">${selectedChallenge.objective || selectedChallenge.description}</p>
+          <p class="text-xs text-slate-300 mt-1 font-medium">${selectedChallenge.objective || selectedChallenge.description}</p>
           ${selectedChallenge.mainRequirement ? `<div class="mt-1.5 pt-1.5 border-t border-white/10 text-[10px] text-yellow-400 font-mono-stat font-bold">REQUISITO: ${selectedChallenge.mainRequirement}</div>` : ''}
         </div>
       `, { closeButton: false, autoPan: false });
@@ -1159,7 +1221,7 @@ export const MapView: React.FC<MapViewProps> = ({
 
         // Glow layer
         glowPolyline = L.polyline(leafletCoords, {
-          color: '#00FF66',
+          color: '#fce803',
           weight: 8,
           opacity: 0.22,
           lineCap: 'round',
@@ -1168,7 +1230,7 @@ export const MapView: React.FC<MapViewProps> = ({
 
         // Semi-translucent foreground line
         polyline = L.polyline(leafletCoords, {
-          color: '#00FF66',
+          color: '#fce803',
           weight: 4.5,
           opacity: 0.70,
           dashArray: '8, 5',
@@ -1181,8 +1243,8 @@ export const MapView: React.FC<MapViewProps> = ({
           if (idx > 0 && idx < routeCoords.length - 1) {
             const dot = L.circleMarker(pt, {
               radius: 3,
-              color: '#00FF66',
-              fillColor: '#080b0e',
+              color: '#fce803',
+              fillColor: '#050505',
               fillOpacity: 0.8,
               opacity: 0.65,
               weight: 1.5,
@@ -1196,10 +1258,10 @@ export const MapView: React.FC<MapViewProps> = ({
           className: 'challenge-start-pin',
           html: `
             <div class="relative flex flex-col items-center">
-              <div class="flex items-center justify-center w-7 h-7 rounded-full bg-[#0a0f15] border-2 border-yellow-400 shadow-[0_0_14px_#00ff66] text-yellow-400 font-black text-xs font-mono-stat">
+              <div class="flex items-center justify-center w-7 h-7 rounded-full bg-[#000000] border-2 border-yellow-400 shadow-[0_0_14px_#fce803] text-yellow-400 font-black text-xs font-mono-stat">
                 🚩
               </div>
-              <div class="mt-0.5 px-1.5 py-0.2 rounded bg-[#0a0f15]/95 border border-yellow-400 text-[8px] font-black text-yellow-400 font-mono-stat uppercase whitespace-nowrap shadow-md">
+              <div class="mt-0.5 px-1.5 py-0.2 rounded bg-[#000000]/95 border border-yellow-400 text-[8px] font-black text-yellow-400 font-mono-stat uppercase whitespace-nowrap shadow-md">
                 ${selectedChallenge.startPointName ? selectedChallenge.startPointName.split(' - ')[0] : 'INÍCIO'}
               </div>
             </div>
@@ -1217,10 +1279,10 @@ export const MapView: React.FC<MapViewProps> = ({
             className: 'challenge-end-pin',
             html: `
               <div class="relative flex flex-col items-center">
-                <div class="flex items-center justify-center w-7 h-7 rounded-full bg-[#0a0f15] border-2 border-cyan-400 shadow-[0_0_14px_#00e5ff] text-cyan-300 font-black text-xs font-mono-stat">
+                <div class="flex items-center justify-center w-7 h-7 rounded-full bg-[#000000] border-2 border-cyan-400 shadow-[0_0_14px_#00e5ff] text-cyan-300 font-black text-xs font-mono-stat">
                   🏁
                 </div>
-                <div class="mt-0.5 px-1.5 py-0.2 rounded bg-[#0a0f15]/95 border border-cyan-400 text-[8px] font-black text-cyan-300 font-mono-stat uppercase whitespace-nowrap shadow-md">
+                <div class="mt-0.5 px-1.5 py-0.2 rounded bg-[#000000]/95 border border-cyan-400 text-[8px] font-black text-cyan-300 font-mono-stat uppercase whitespace-nowrap shadow-md">
                   ${selectedChallenge.endPointName.split(' - ')[0]}
                 </div>
               </div>
@@ -1404,10 +1466,10 @@ export const MapView: React.FC<MapViewProps> = ({
           className: 'live-challenge-start-pin',
           html: `
             <div class="relative flex flex-col items-center select-none pointer-events-none">
-              <div class="w-6 h-6 rounded-full bg-[#0a0f16] border-2 border-yellow-400 flex items-center justify-center text-yellow-400 text-[10px] shadow-[0_0_10px_rgba(0,255,102,0.6)]">
+              <div class="w-6 h-6 rounded-full bg-[#000000] border-2 border-yellow-400 flex items-center justify-center text-yellow-400 text-[10px] shadow-[0_0_10px_rgba(252,232,3,0.6)]">
                 🚩
               </div>
-              <div class="mt-0.5 px-1.5 py-0.2 rounded bg-[#0a0f16]/90 border border-yellow-400 text-[7px] font-black text-yellow-400 font-mono-stat uppercase whitespace-nowrap">
+              <div class="mt-0.5 px-1.5 py-0.2 rounded bg-[#000000]/90 border border-yellow-400 text-[7px] font-black text-yellow-400 font-mono-stat uppercase whitespace-nowrap">
                 LARGADA
               </div>
             </div>
@@ -1422,10 +1484,10 @@ export const MapView: React.FC<MapViewProps> = ({
           className: 'live-challenge-end-pin',
           html: `
             <div class="relative flex flex-col items-center select-none pointer-events-none">
-              <div class="w-6 h-6 rounded-full bg-[#0a0f16] border-2 border-cyan-400 flex items-center justify-center text-cyan-300 text-[10px] shadow-[0_0_10px_rgba(6,182,212,0.6)]">
+              <div class="w-6 h-6 rounded-full bg-[#000000] border-2 border-cyan-400 flex items-center justify-center text-cyan-300 text-[10px] shadow-[0_0_10px_rgba(6,182,212,0.6)]">
                 🏁
               </div>
-              <div class="mt-0.5 px-1.5 py-0.2 rounded bg-[#0a0f16]/90 border border-cyan-400 text-[7px] font-black text-cyan-300 font-mono-stat uppercase whitespace-nowrap">
+              <div class="mt-0.5 px-1.5 py-0.2 rounded bg-[#000000]/90 border border-cyan-400 text-[7px] font-black text-cyan-300 font-mono-stat uppercase whitespace-nowrap">
                 CHEGADA
               </div>
             </div>
@@ -1479,7 +1541,7 @@ export const MapView: React.FC<MapViewProps> = ({
       const coords = toValidLatLngTuple(p.position);
       if (!coords) return;
 
-      const accentColor = p.color || (idx === 0 ? '#00FF66' : '#F59E0B');
+      const accentColor = p.color || (idx === 0 ? '#fce803' : '#F59E0B');
       const rankEmoji = p.rankPosition === 1 ? '🥇' : p.rankPosition === 2 ? '🥈' : `${idx + 1}º`;
 
       const createParticipantIcon = () => {
@@ -1521,7 +1583,7 @@ export const MapView: React.FC<MapViewProps> = ({
             <span class="text-[9px] font-black uppercase tracking-widest" style="color: ${accentColor};">DISPUTA AO VIVO</span>
           </div>
           <p class="text-xs font-black text-white uppercase font-display">${p.nickname} ${p.isCurrentUser ? '(VOCÊ)' : ''}</p>
-          <div class="mt-1 pt-1.5 border-t border-white/10 text-[10px] space-y-0.5 text-neutral-300">
+          <div class="mt-1 pt-1.5 border-t border-white/10 text-[10px] space-y-0.5 text-slate-300">
             <div class="flex justify-between">
               <span>Progresso:</span>
               <b style="color: ${accentColor};">${Math.round(p.progress)}%</b>
@@ -1563,9 +1625,9 @@ export const MapView: React.FC<MapViewProps> = ({
       
       {/* Zone creation map overlay hint */}
       {isCreatingZone && (
-        <div className="absolute top-4 left-1/2 -translate-x-1/2 z-20 px-4 py-2 bg-[#0d141d]/95 border border-yellow-400 rounded-full shadow-[0_0_20px_rgba(0,255,102,0.4)] flex items-center gap-2 animate-bounce">
+        <div className="absolute top-4 left-1/2 -translate-x-1/2 z-20 px-4 py-2 bg-[#000000]/95 border border-yellow-400 rounded-full shadow-[0_0_20px_rgba(252,232,3,0.4)] flex items-center gap-2 animate-bounce">
           <span className="w-2.5 h-2.5 rounded-full bg-yellow-400 animate-ping" />
-          <p className="text-xs font-bold text-emerald-300">
+          <p className="text-xs font-bold text-yellow-300">
             Toque no mapa para posicionar a nova zona
           </p>
         </div>

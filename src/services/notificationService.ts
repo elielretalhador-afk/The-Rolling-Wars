@@ -1,6 +1,6 @@
-import { db } from '../lib/firebase';
+import { db, messaging } from '../lib/firebase';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
-
+import { getToken, onMessage } from 'firebase/messaging';
 import { PushNotifications } from '@capacitor/push-notifications';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { Device } from '@capacitor/device';
@@ -40,17 +40,25 @@ export class NotificationService {
       });
     } else {
       // PWA FCM
-      if (false && 'serviceWorker' in navigator) {
+      if (messaging && 'serviceWorker' in navigator) {
         try {
           const permission = await Notification.requestPermission();
           if (permission === 'granted') {
             const swRegistration = await navigator.serviceWorker.ready;
-            const token = '';
+            const token = await getToken(messaging, { 
+              serviceWorkerRegistration: swRegistration,
+              vapidKey: 'YOUR_PUBLIC_VAPID_KEY_HERE' // This might be required, but usually we can omit if configured in Firebase Console, but let's just get the token.
+            });
             if (token) {
               await this.registerDevice(userId, token, 'web');
             }
             
-            
+            onMessage(messaging, (payload) => {
+              console.log('Message received. ', payload);
+              // Podemo exibir Local Notification no PWA? Sim, mas o PWA pode apenas usar a UI in-app (Toasts)
+              const event = new CustomEvent('app_push_received', { detail: payload });
+              window.dispatchEvent(event);
+            });
           }
         } catch (e) {
           console.log('PWA Push Error:', e);

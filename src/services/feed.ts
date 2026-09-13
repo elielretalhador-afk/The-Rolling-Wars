@@ -5,7 +5,7 @@ const ACTIVITIES_DB_KEY = 'urbanozeiro_activities';
 export const FeedService = {
   getActivitiesDB(): Activity[] {
     try {
-      const data = (() => { try { return localStorage.getItem(ACTIVITIES_DB_KEY); } catch(e) { return null; } })();
+      const data = localStorage.getItem(ACTIVITIES_DB_KEY);
       return data ? JSON.parse(data) : [];
     } catch (e) {
       return [];
@@ -13,7 +13,7 @@ export const FeedService = {
   },
 
   saveActivitiesDB(db: Activity[]) {
-    try { localStorage.setItem(ACTIVITIES_DB_KEY, JSON.stringify(db)); } catch(e) {}
+    localStorage.setItem(ACTIVITIES_DB_KEY, JSON.stringify(db));
   },
 
   createActivity(activity: Omit<Activity, 'id' | 'createdAt' | 'likesCount' | 'commentsCount'>): Activity {

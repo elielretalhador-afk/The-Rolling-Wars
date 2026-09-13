@@ -22,11 +22,11 @@ export const EquipmentSetupModal: React.FC<EquipmentSetupModalProps> = ({ isOpen
   };
 
   return (
-    <div className="absolute inset-0 z-50 flex flex-col bg-[#000000] text-white">
-      <div className="p-4 bg-gradient-to-r from-[#0d141e] via-[#091119] to-[#0d141e] border-b border-white/10 flex items-center justify-between">
+    <div className="absolute inset-0 z-50 flex flex-col bg-[#050505] text-white">
+      <div className="p-4 bg-gradient-to-r from-[#0a0a0a] via-[#091119] to-[#0a0a0a] border-b border-white/10 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <button onClick={onClose} className="p-1.5 -ml-1.5 mr-1 rounded-xl bg-white/5 hover:bg-white/10">
-            <X className="w-6 h-6 text-neutral-300" />
+            <X className="w-6 h-6 text-slate-300" />
           </button>
           <h3 className="text-base font-black text-white font-display uppercase tracking-wider">
             SETUP DE EQUIPAMENTO
@@ -40,12 +40,12 @@ export const EquipmentSetupModal: React.FC<EquipmentSetupModalProps> = ({ isOpen
       <div className="flex-1 overflow-y-auto p-4 space-y-6">
         {/* BOTA */}
         <div className="space-y-3">
-          <label className="text-xs font-bold text-neutral-400 uppercase font-mono-stat">Bota / Modelo</label>
-          <input type="text" value={model} onChange={e => setModel(e.target.value)} placeholder="Ex: Rollerblade Twister Edge" className="w-full bg-[#0d141e] border border-white/10 rounded-xl px-4 py-3 text-sm text-white" />
+          <label className="text-xs font-bold text-slate-400 uppercase font-mono-stat">Bota / Modelo</label>
+          <input type="text" value={model} onChange={e => setModel(e.target.value)} placeholder="Ex: Rollerblade Twister Edge" className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-sm text-white" />
         </div>
 
         {/* RODAS */}
-        <div className="space-y-3 p-4 bg-[#0d141e] rounded-2xl border border-white/10">
+        <div className="space-y-3 p-4 bg-[#0a0a0a] rounded-2xl border border-white/10">
           <div className="flex items-center gap-2 text-yellow-400 font-bold uppercase text-xs font-mono-stat">
             <Disc className="w-4 h-4" /> Rodas
           </div>
@@ -79,7 +79,7 @@ export const EquipmentSetupModal: React.FC<EquipmentSetupModalProps> = ({ isOpen
         </div>
 
         {/* ROLAMENTOS */}
-        <div className="space-y-3 p-4 bg-[#0d141e] rounded-2xl border border-white/10">
+        <div className="space-y-3 p-4 bg-[#0a0a0a] rounded-2xl border border-white/10">
           <div className="flex items-center gap-2 text-cyan-400 font-bold uppercase text-xs font-mono-stat">
             <Disc className="w-4 h-4" /> Rolamentos
           </div>

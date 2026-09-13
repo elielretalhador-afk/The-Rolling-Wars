@@ -33,7 +33,7 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
   onSelectZoneOnMap,
 }) => {
   return (
-    <div className="flex-1 overflow-y-auto custom-scrollbar p-3 pb-24 bg-[#05070a] flex flex-col items-center justify-center">
+    <div className="flex-1 overflow-y-auto custom-scrollbar p-3 pb-24 bg-[#000000] flex flex-col items-center justify-center">
       <div className="text-center p-8 bg-[#0b131e] border border-white/5 rounded-2xl w-full max-w-sm shadow-xl mt-12">
         <div className="w-16 h-16 rounded-2xl bg-amber-500/10 text-amber-400 border border-amber-500/30 flex items-center justify-center text-3xl mx-auto mb-4">
           🚧
@@ -41,7 +41,7 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
         <h2 className="text-xl font-black text-white font-display uppercase tracking-tight mb-2">
           Missões
         </h2>
-        <p className="text-sm font-medium text-neutral-400">
+        <p className="text-sm font-medium text-slate-400">
           Em breve.
         </p>
       </div>
@@ -71,7 +71,7 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
     switch (difficulty) {
       case 'EASY':
         return (
-          <span className="px-2 py-0.5 rounded text-[9px] font-black uppercase font-mono-stat bg-emerald-950/80 text-yellow-400 border border-yellow-500/40">
+          <span className="px-2 py-0.5 rounded text-[9px] font-black uppercase font-mono-stat bg-neutral-900/80 text-yellow-400 border border-yellow-500/40">
             Fácil
           </span>
         );
@@ -167,7 +167,7 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
       {completedUnclaimedCount > 0 && (
         <div
           id="banner-unclaimed-missions"
-          className="p-3.5 rounded-2xl bg-gradient-to-r from-emerald-950/80 via-emerald-900/40 to-[#0c1420] border-2 border-yellow-400/50 shadow-[0_0_20px_rgba(0,255,102,0.2)] flex items-center justify-between gap-3"
+          className="p-3.5 rounded-2xl bg-gradient-to-r from-neutral-900/80 via-blue-900/40 to-[#0c1420] border-2 border-yellow-400/50 shadow-[0_0_20px_rgba(252,232,3,0.2)] flex items-center justify-between gap-3"
         >
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-yellow-400 text-black flex items-center justify-center font-black shrink-0 animate-bounce">
@@ -185,7 +185,7 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
           <button
             type="button"
             onClick={() => setActiveFilter('COMPLETED')}
-            className="px-3 py-1.5 rounded-xl bg-yellow-400 text-black text-xs font-black uppercase font-mono-stat hover:bg-emerald-300 transition-colors shrink-0 cursor-pointer"
+            className="px-3 py-1.5 rounded-xl bg-yellow-400 text-black text-xs font-black uppercase font-mono-stat hover:bg-yellow-300 transition-colors shrink-0 cursor-pointer"
           >
             Ver
           </button>
@@ -200,8 +200,8 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
           onClick={() => setActiveFilter('ALL')}
           className={`px-3 py-2 rounded-xl text-xs font-bold font-mono-stat uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer ${
             activeFilter === 'ALL'
-              ? 'bg-yellow-400 text-black font-black shadow-[0_0_12px_rgba(0,255,102,0.3)]'
-              : 'bg-[#0d141d] text-neutral-400 border border-white/10 hover:text-white'
+              ? 'bg-yellow-400 text-black font-black shadow-[0_0_12px_rgba(252,232,3,0.3)]'
+              : 'bg-[#000000] text-slate-400 border border-white/10 hover:text-white'
           }`}
         >
           Todas ({missions.length})
@@ -213,8 +213,8 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
           onClick={() => setActiveFilter('DAILY')}
           className={`px-3 py-2 rounded-xl text-xs font-bold font-mono-stat uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer ${
             activeFilter === 'DAILY'
-              ? 'bg-yellow-400 text-black font-black shadow-[0_0_12px_rgba(0,255,102,0.3)]'
-              : 'bg-[#0d141d] text-neutral-400 border border-white/10 hover:text-white'
+              ? 'bg-yellow-400 text-black font-black shadow-[0_0_12px_rgba(252,232,3,0.3)]'
+              : 'bg-[#000000] text-slate-400 border border-white/10 hover:text-white'
           }`}
         >
           Diárias ({dailyCount})
@@ -226,8 +226,8 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
           onClick={() => setActiveFilter('WEEKLY')}
           className={`px-3 py-2 rounded-xl text-xs font-bold font-mono-stat uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer ${
             activeFilter === 'WEEKLY'
-              ? 'bg-yellow-400 text-black font-black shadow-[0_0_12px_rgba(0,255,102,0.3)]'
-              : 'bg-[#0d141d] text-neutral-400 border border-white/10 hover:text-white'
+              ? 'bg-yellow-400 text-black font-black shadow-[0_0_12px_rgba(252,232,3,0.3)]'
+              : 'bg-[#000000] text-slate-400 border border-white/10 hover:text-white'
           }`}
         >
           Semanais ({weeklyCount})
@@ -239,8 +239,8 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
           onClick={() => setActiveFilter('LONG_TERM')}
           className={`px-3 py-2 rounded-xl text-xs font-bold font-mono-stat uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer ${
             activeFilter === 'LONG_TERM'
-              ? 'bg-yellow-400 text-black font-black shadow-[0_0_12px_rgba(0,255,102,0.3)]'
-              : 'bg-[#0d141d] text-neutral-400 border border-white/10 hover:text-white'
+              ? 'bg-yellow-400 text-black font-black shadow-[0_0_12px_rgba(252,232,3,0.3)]'
+              : 'bg-[#000000] text-slate-400 border border-white/10 hover:text-white'
           }`}
         >
           Longa Duração ({longTermCount})
@@ -252,8 +252,8 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
           onClick={() => setActiveFilter('TIMED')}
           className={`px-3 py-2 rounded-xl text-xs font-bold font-mono-stat uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer ${
             activeFilter === 'TIMED'
-              ? 'bg-yellow-400 text-black font-black shadow-[0_0_12px_rgba(0,255,102,0.3)]'
-              : 'bg-[#0d141d] text-neutral-400 border border-white/10 hover:text-white'
+              ? 'bg-yellow-400 text-black font-black shadow-[0_0_12px_rgba(252,232,3,0.3)]'
+              : 'bg-[#000000] text-slate-400 border border-white/10 hover:text-white'
           }`}
         >
           Temporárias ({timedCount})
@@ -265,8 +265,8 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
           onClick={() => setActiveFilter('COMPLETED')}
           className={`px-3 py-2 rounded-xl text-xs font-bold font-mono-stat uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer ${
             activeFilter === 'COMPLETED'
-              ? 'bg-yellow-400 text-black font-black shadow-[0_0_12px_rgba(0,255,102,0.3)]'
-              : 'bg-[#0d141d] text-neutral-400 border border-white/10 hover:text-white'
+              ? 'bg-yellow-400 text-black font-black shadow-[0_0_12px_rgba(252,232,3,0.3)]'
+              : 'bg-[#000000] text-slate-400 border border-white/10 hover:text-white'
           }`}
         >
           Concluídas {completedUnclaimedCount > 0 && `(${completedUnclaimedCount})`}
@@ -276,7 +276,7 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
       {/* Lista de Missões */}
       <div className="space-y-3">
         {filteredMissions.length === 0 ? (
-          <div className="p-8 rounded-2xl bg-[#0d141d] border border-white/10 text-center text-neutral-400 font-mono-stat text-xs">
+          <div className="p-8 rounded-2xl bg-[#000000] border border-white/10 text-center text-slate-400 font-mono-stat text-xs">
             Nenhuma missão encontrada nesta categoria.
           </div>
         ) : (
@@ -293,11 +293,11 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
               <div
                 key={mission.id}
                 id={`mission-card-${mission.id}`}
-                className={`p-4 rounded-2xl bg-[#0d141d] border transition-all flex flex-col justify-between relative overflow-hidden ${
+                className={`p-4 rounded-2xl bg-[#000000] border transition-all flex flex-col justify-between relative overflow-hidden ${
                   isCompleted
-                    ? 'border-yellow-400/70 shadow-[0_0_20px_rgba(0,255,102,0.15)] bg-gradient-to-br from-[#0d141d] to-emerald-950/20'
+                    ? 'border-yellow-400/70 shadow-[0_0_20px_rgba(252,232,3,0.15)] bg-gradient-to-br from-[#000000] to-blue-950/20'
                     : isClaimed
-                    ? 'border-white/5 opacity-70 bg-[#0a0f16]'
+                    ? 'border-white/5 opacity-70 bg-[#000000]'
                     : isLocked
                     ? 'border-white/5 opacity-75 bg-[#090e14]'
                     : isExpired
@@ -307,7 +307,7 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
               >
                 {/* Faixa decorativa superior para missões concluídas */}
                 {isCompleted && (
-                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-400 via-emerald-200 to-yellow-400" />
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-yellow-400 via-yellow-200 to-yellow-400" />
                 )}
 
                 <div>
@@ -321,14 +321,14 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
                       {getDifficultyBadge(mission.difficulty)}
 
                       {/* Tipo */}
-                      <span className="px-1.5 py-0.5 rounded bg-white/5 text-neutral-300 text-[9px] font-mono-stat uppercase">
+                      <span className="px-1.5 py-0.5 rounded bg-white/5 text-slate-300 text-[9px] font-mono-stat uppercase">
                         {getTypeText(mission.type)}
                       </span>
 
                       {/* Janela de Horário */}
                       {isTimedWindow && (
                         isWindowActive && !isExpired ? (
-                          <span className="flex items-center gap-1 px-1.5 py-0.5 rounded bg-emerald-950/80 border border-yellow-400/40 text-[9px] font-black text-yellow-400 font-mono-stat uppercase">
+                          <span className="flex items-center gap-1 px-1.5 py-0.5 rounded bg-neutral-900/80 border border-yellow-400/40 text-[9px] font-black text-yellow-400 font-mono-stat uppercase">
                             <span className="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-pulse" />
                             Janela Ativa ({mission.timeWindow?.label})
                           </span>
@@ -342,8 +342,8 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
 
                       {/* Prazo de Expiração */}
                       {mission.expiresInLabel && (
-                        <span className="flex items-center gap-1 text-[10px] text-neutral-400 font-medium uppercase font-mono-stat">
-                          <Clock className="w-3 h-3 text-neutral-400 shrink-0" />
+                        <span className="flex items-center gap-1 text-[10px] text-slate-400 font-medium uppercase font-mono-stat">
+                          <Clock className="w-3 h-3 text-slate-400 shrink-0" />
                           {mission.expiresInLabel}
                         </span>
                       )}
@@ -358,10 +358,10 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
 
                   {/* Título & Descrição */}
                   <h3 className="text-base font-bold text-white leading-snug uppercase font-display flex items-center gap-2">
-                    {isLocked && <Lock className="w-4 h-4 text-neutral-400 shrink-0" />}
+                    {isLocked && <Lock className="w-4 h-4 text-slate-400 shrink-0" />}
                     {mission.title}
                   </h3>
-                  <p className="text-xs text-neutral-300 mt-1 font-normal leading-relaxed">
+                  <p className="text-xs text-slate-300 mt-1 font-normal leading-relaxed">
                     {mission.description}
                   </p>
 
@@ -398,7 +398,7 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
                   {/* Recompensas Adicionais (Título / Cosmético / Medalha) */}
                   {(mission.reward.titleReward || mission.reward.cosmeticName || mission.reward.medalReward || mission.reward.badgeReward) && (
                     <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
-                      <span className="text-[10px] text-neutral-400 font-mono-stat uppercase">Recompensa:</span>
+                      <span className="text-[10px] text-slate-400 font-mono-stat uppercase">Recompensa:</span>
                       {mission.reward.titleReward && (
                         <span className="px-2 py-0.5 rounded bg-amber-500/10 border border-amber-400/30 text-amber-300 text-[10px] font-bold font-mono-stat flex items-center gap-1">
                           <Award className="w-2.5 h-2.5" /> Título: "{mission.reward.titleReward}"
@@ -415,7 +415,7 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
                         </span>
                       )}
                       {mission.reward.badgeReward && (
-                        <span className="px-2 py-0.5 rounded bg-yellow-500/10 border border-yellow-400/30 text-emerald-300 text-[10px] font-bold font-mono-stat flex items-center gap-1">
+                        <span className="px-2 py-0.5 rounded bg-yellow-500/10 border border-yellow-400/30 text-yellow-300 text-[10px] font-bold font-mono-stat flex items-center gap-1">
                           <CheckCircle2 className="w-2.5 h-2.5" /> Emblema: {mission.reward.badgeReward}
                         </span>
                       )}
@@ -425,7 +425,7 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
                   {/* Barra de Progresso */}
                   <div className="mt-3">
                     <div className="flex justify-between text-[11px] font-mono-stat mb-1">
-                      <span className="text-neutral-400">Progresso</span>
+                      <span className="text-slate-400">Progresso</span>
                       <span
                         className={`font-black ${
                           isCompleted || isClaimed
@@ -443,10 +443,10 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
                       <div
                         className={`h-full rounded-full transition-all duration-500 ${
                           isCompleted || isClaimed
-                            ? 'bg-yellow-400 shadow-[0_0_10px_rgba(0,255,102,0.8)]'
+                            ? 'bg-yellow-400 shadow-[0_0_10px_rgba(252,232,3,0.8)]'
                             : isExpired
                             ? 'bg-red-500'
-                            : 'bg-gradient-to-r from-emerald-600 to-yellow-400'
+                            : 'bg-gradient-to-r from-yellow-600 to-yellow-400'
                         }`}
                         style={{ width: `${percent}%` }}
                       />
@@ -461,7 +461,7 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
                       id={`btn-claim-mission-${mission.id}`}
                       type="button"
                       onClick={() => onClaimReward(mission)}
-                      className="w-full py-2.5 px-4 rounded-xl bg-yellow-400 text-black text-xs font-black uppercase font-mono-stat hover:bg-emerald-300 transition-all shadow-[0_0_15px_rgba(0,255,102,0.4)] flex items-center justify-center gap-2 cursor-pointer animate-pulse"
+                      className="w-full py-2.5 px-4 rounded-xl bg-yellow-400 text-black text-xs font-black uppercase font-mono-stat hover:bg-yellow-300 transition-all shadow-[0_0_15px_rgba(252,232,3,0.4)] flex items-center justify-center gap-2 cursor-pointer animate-pulse"
                     >
                       <Gift className="w-4 h-4" />
                       RESGATAR RECOMPENSA (+{mission.reward.xpReward} XP)
@@ -487,13 +487,13 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
                         <button
                           type="button"
                           onClick={() => onSelectZoneOnMap(mission.targetZoneId!)}
-                          className="py-2 px-3 rounded-xl bg-[#0c1420] border border-white/10 hover:border-yellow-500/50 text-neutral-300 hover:text-white text-xs font-bold font-mono-stat flex items-center gap-1.5 transition-colors cursor-pointer"
+                          className="py-2 px-3 rounded-xl bg-[#0c1420] border border-white/10 hover:border-yellow-500/50 text-slate-300 hover:text-white text-xs font-bold font-mono-stat flex items-center gap-1.5 transition-colors cursor-pointer"
                         >
                           <MapPin className="w-3.5 h-3.5 text-yellow-400" />
                           <span>Ver no Mapa</span>
                         </button>
                       ) : (
-                        <div className="text-[11px] text-neutral-400 font-mono-stat flex items-center gap-1">
+                        <div className="text-[11px] text-slate-400 font-mono-stat flex items-center gap-1">
                           <span className="w-2 h-2 rounded-full bg-yellow-400 animate-pulse" />
                           <span>Em andamento</span>
                         </div>

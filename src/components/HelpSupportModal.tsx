@@ -26,7 +26,7 @@ const FAQ_ITEMS = [
   },
   {
     q: 'O que é XP?',
-    a: 'XP (Pontos de Experiência) mede sua progressão no Urbanozeiro. Ganhe XP patinando e completando objetivos para subir de nível.'
+    a: 'XP (Pontos de Experiência) mede sua progressão no THE ROLLING WARS. Ganhe XP patinando e completando objetivos para subir de nível.'
   },
   {
     q: 'Como ganho recompensas?',
@@ -61,9 +61,9 @@ export const HelpSupportModal: React.FC<HelpSupportModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-[#080d14]/90 " onClick={onClose} />
+      <div className="absolute inset-0 bg-[#000000]/90 " onClick={onClose} />
       
-      <div className="relative w-full max-w-2xl h-[85vh] bg-[#0d141d] rounded-3xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col">
+      <div className="relative w-full max-w-2xl h-[85vh] bg-[#000000] rounded-3xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-[#121a24]">
           <div className="flex items-center gap-3">
@@ -72,17 +72,17 @@ export const HelpSupportModal: React.FC<HelpSupportModalProps> = ({
             </div>
             <h2 className="text-lg font-black text-white font-display uppercase tracking-tight">Ajuda & Suporte</h2>
           </div>
-          <button onClick={onClose} className="p-2 rounded-xl hover:bg-white/5 text-neutral-400 hover:text-white transition-colors">
+          <button onClick={onClose} className="p-2 rounded-xl hover:bg-white/5 text-slate-400 hover:text-white transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Tabs */}
-        <div className="flex px-4 border-b border-white/5 bg-[#0a0f16]">
+        <div className="flex px-4 border-b border-white/5 bg-[#000000]">
           <button
             onClick={() => setActiveTab('help')}
             className={`flex-1 py-4 text-sm font-bold uppercase tracking-wider border-b-2 transition-colors ${
-              activeTab === 'help' ? 'border-yellow-400 text-yellow-400' : 'border-transparent text-neutral-400 hover:text-neutral-300'
+              activeTab === 'help' ? 'border-yellow-400 text-yellow-400' : 'border-transparent text-slate-400 hover:text-slate-300'
             }`}
           >
             Guia
@@ -90,7 +90,7 @@ export const HelpSupportModal: React.FC<HelpSupportModalProps> = ({
           <button
             onClick={() => setActiveTab('faq')}
             className={`flex-1 py-4 text-sm font-bold uppercase tracking-wider border-b-2 transition-colors ${
-              activeTab === 'faq' ? 'border-yellow-400 text-yellow-400' : 'border-transparent text-neutral-400 hover:text-neutral-300'
+              activeTab === 'faq' ? 'border-yellow-400 text-yellow-400' : 'border-transparent text-slate-400 hover:text-slate-300'
             }`}
           >
             FAQ
@@ -98,7 +98,7 @@ export const HelpSupportModal: React.FC<HelpSupportModalProps> = ({
           <button
             onClick={() => setActiveTab('support')}
             className={`flex-1 py-4 text-sm font-bold uppercase tracking-wider border-b-2 transition-colors ${
-              activeTab === 'support' ? 'border-yellow-400 text-yellow-400' : 'border-transparent text-neutral-400 hover:text-neutral-300'
+              activeTab === 'support' ? 'border-yellow-400 text-yellow-400' : 'border-transparent text-slate-400 hover:text-slate-300'
             }`}
           >
             Suporte
@@ -116,7 +116,7 @@ export const HelpSupportModal: React.FC<HelpSupportModalProps> = ({
                 </div>
                 <div className="flex-1 text-center sm:text-left">
                   <h3 className="text-white font-bold font-display uppercase">Tutorial Interativo</h3>
-                  <p className="text-sm text-neutral-400 mt-1">Refaça o passo a passo inicial para entender os fundamentos do Urbanozeiro.</p>
+                  <p className="text-sm text-slate-400 mt-1">Refaça o passo a passo inicial para entender os fundamentos do THE ROLLING WARS.</p>
                 </div>
                 <button
                   onClick={() => {
@@ -137,7 +137,7 @@ export const HelpSupportModal: React.FC<HelpSupportModalProps> = ({
                     return (
                       <button key={i} className="flex items-center justify-between p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-white/10 hover:bg-white/10 transition-all text-left">
                         <div className="flex items-center gap-3">
-                          <Icon className="w-5 h-5 text-neutral-400" />
+                          <Icon className="w-5 h-5 text-slate-400" />
                           <span className="text-slate-200 font-bold">{cat.label}</span>
                         </div>
                         <ChevronRight className="w-4 h-4 text-slate-500" />
@@ -154,7 +154,7 @@ export const HelpSupportModal: React.FC<HelpSupportModalProps> = ({
               {FAQ_ITEMS.map((item, i) => (
                 <div key={i} className="p-5 rounded-2xl bg-[#121a24] border border-white/5">
                   <h4 className="text-white font-bold text-lg mb-2">{item.q}</h4>
-                  <p className="text-neutral-400 leading-relaxed text-sm">{item.a}</p>
+                  <p className="text-slate-400 leading-relaxed text-sm">{item.a}</p>
                 </div>
               ))}
             </div>
@@ -167,7 +167,7 @@ export const HelpSupportModal: React.FC<HelpSupportModalProps> = ({
                   <MessageSquare className="w-8 h-8" />
                 </div>
                 <h3 className="text-2xl font-black text-white font-display uppercase tracking-tight">Fale com a Equipe</h3>
-                <p className="text-neutral-400 mt-2 max-w-md mx-auto">
+                <p className="text-slate-400 mt-2 max-w-md mx-auto">
                   Precisa de assistência técnica, quer enviar uma sugestão ou relatar um problema?
                 </p>
               </div>
@@ -176,7 +176,7 @@ export const HelpSupportModal: React.FC<HelpSupportModalProps> = ({
                 <button className="w-full flex items-center justify-between p-5 rounded-2xl bg-[#121a24] border border-white/5 hover:border-indigo-400/50 hover:bg-indigo-500/5 transition-all text-left group">
                   <div className="flex items-center gap-4">
                     <div className="p-3 bg-white/5 rounded-xl group-hover:bg-indigo-500/20 group-hover:text-indigo-400 transition-colors">
-                      <AlertTriangle className="w-6 h-6 text-neutral-400 group-hover:text-indigo-400" />
+                      <AlertTriangle className="w-6 h-6 text-slate-400 group-hover:text-indigo-400" />
                     </div>
                     <div>
                       <div className="text-white font-bold">Relatar Erro (Bug)</div>
@@ -189,7 +189,7 @@ export const HelpSupportModal: React.FC<HelpSupportModalProps> = ({
                 <button className="w-full flex items-center justify-between p-5 rounded-2xl bg-[#121a24] border border-white/5 hover:border-yellow-400/50 hover:bg-yellow-500/5 transition-all text-left group">
                   <div className="flex items-center gap-4">
                     <div className="p-3 bg-white/5 rounded-xl group-hover:bg-yellow-500/20 group-hover:text-yellow-400 transition-colors">
-                      <MessageSquare className="w-6 h-6 text-neutral-400 group-hover:text-yellow-400" />
+                      <MessageSquare className="w-6 h-6 text-slate-400 group-hover:text-yellow-400" />
                     </div>
                     <div>
                       <div className="text-white font-bold">Enviar Feedback</div>
@@ -214,7 +214,7 @@ export const HelpSupportModal: React.FC<HelpSupportModalProps> = ({
               </div>
 
               <div className="p-4 rounded-2xl bg-white/5 text-center text-xs text-slate-500">
-                A equipe do Urbanozeiro pode levar até 48 horas para responder. Esta é uma estrutura de suporte preparada para atendimento futuro.
+                A equipe do THE ROLLING WARS pode levar até 48 horas para responder. Esta é uma estrutura de suporte preparada para atendimento futuro.
               </div>
             </div>
           )}

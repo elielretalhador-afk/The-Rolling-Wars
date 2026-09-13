@@ -1,4 +1,4 @@
-const CACHE_NAME = 'rolling-wars-v6';
+const CACHE_NAME = 'rolling-wars-v1';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
