@@ -332,7 +332,7 @@ export const RewardsHubSection: React.FC<RewardsHubSectionProps> = ({
                         )}
                       </button>
                     ) : (
-                      <div className="px-2.5 py-1 rounded-xl bg-slate-900 border border-slate-800 text-[9px] font-black text-slate-500 uppercase font-mono-stat flex items-center gap-1">
+                      <div className="px-2.5 py-1 rounded-xl bg-[#0a0a0a] border border-slate-800 text-[9px] font-black text-slate-500 uppercase font-mono-stat flex items-center gap-1">
                         <Lock className="w-3 h-3" />
                         <span>BLOQUEADO</span>
                       </div>

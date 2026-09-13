@@ -383,7 +383,7 @@ export const AchievementsModal: React.FC<AchievementsModalProps> = ({
                               ? 'bg-yellow-500/15 border-yellow-400/60 shadow-[0_0_15px_rgba(252,232,3,0.3)]'
                               : achievement.isSecret
                               ? 'bg-purple-950/30 border-purple-500/40 text-purple-400'
-                              : 'bg-slate-900 border-white/10 text-slate-500'
+                              : 'bg-[#0a0a0a] border-white/10 text-slate-500'
                           }`}
                         >
                           {achievement.isSecret && !isUnlocked ? '🔒' : (achievement.icon || achievement.iconEmoji || '🏆')}

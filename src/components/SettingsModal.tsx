@@ -667,7 +667,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     onClick={() => updateSetting('map', 'mapTheme', 'DARK', 'Mapa definido para Modo Escuro')}
                     className={`p-3 rounded-2xl flex flex-col items-center gap-1.5 border transition-all cursor-pointer ${
                       settings.map.mapTheme === 'DARK'
-                        ? 'bg-slate-900 border-yellow-400 text-white shadow-[0_0_12px_rgba(252,232,3,0.3)]'
+                        ? 'bg-[#0a0a0a] border-yellow-400 text-white shadow-[0_0_12px_rgba(252,232,3,0.3)]'
                         : 'bg-black/40 border-white/5 text-slate-400 hover:text-white'
                     }`}
                   >
@@ -693,7 +693,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     onClick={() => updateSetting('map', 'mapTheme', 'AUTO', 'Mapa definido para Modo Automático')}
                     className={`p-3 rounded-2xl flex flex-col items-center gap-1.5 border transition-all cursor-pointer ${
                       settings.map.mapTheme === 'AUTO'
-                        ? 'bg-slate-900 border-yellow-400 text-white shadow-[0_0_12px_rgba(252,232,3,0.3)]'
+                        ? 'bg-[#0a0a0a] border-yellow-400 text-white shadow-[0_0_12px_rgba(252,232,3,0.3)]'
                         : 'bg-black/40 border-white/5 text-slate-400 hover:text-white'
                     }`}
                   >
@@ -781,7 +781,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     onClick={() => updateSetting('appearance', 'appTheme', 'DARK', 'Tema Escuro selecionado')}
                     className={`p-3 rounded-2xl flex flex-col items-center gap-1.5 border transition-all cursor-pointer ${
                       settings.appearance.appTheme === 'DARK'
-                        ? 'bg-slate-900 border-yellow-400 text-white shadow-[0_0_12px_rgba(252,232,3,0.3)]'
+                        ? 'bg-[#0a0a0a] border-yellow-400 text-white shadow-[0_0_12px_rgba(252,232,3,0.3)]'
                         : 'bg-black/40 border-white/5 text-slate-400 hover:text-white'
                     }`}
                   >
@@ -807,7 +807,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     onClick={() => updateSetting('appearance', 'appTheme', 'SYSTEM', 'Tema do Sistema selecionado')}
                     className={`p-3 rounded-2xl flex flex-col items-center gap-1.5 border transition-all cursor-pointer ${
                       settings.appearance.appTheme === 'SYSTEM'
-                        ? 'bg-slate-900 border-yellow-400 text-white shadow-[0_0_12px_rgba(252,232,3,0.3)]'
+                        ? 'bg-[#0a0a0a] border-yellow-400 text-white shadow-[0_0_12px_rgba(252,232,3,0.3)]'
                         : 'bg-black/40 border-white/5 text-slate-400 hover:text-white'
                     }`}
                   >

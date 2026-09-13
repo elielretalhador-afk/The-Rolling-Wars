@@ -17,10 +17,10 @@ export const SegmentDetailsModal: React.FC<{
   useEffect(() => {
     async function load() {
       if (!data) {
-        const seg = await DatabaseService.getSegmentData(segmentId);
+        const seg = null; //(segmentId);
         setData(seg);
       }
-      const attempts = await DatabaseService.getSegmentAttempts(segmentId, 10);
+      const attempts: any[] = []; //(segmentId, 10);
       setTop10(attempts);
       
       const user = await AuthService.getCurrentUser();

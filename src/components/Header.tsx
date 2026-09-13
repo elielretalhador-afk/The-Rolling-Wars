@@ -93,7 +93,7 @@ export const Header: React.FC<HeaderProps> = ({
             type="button"
             id="btn-open-search-header"
             onClick={onOpenSearch}
-            className="relative p-2 rounded-xl bg-[#111822] hover:bg-[#182330] border border-white/10 hover:border-yellow-400/50 text-slate-300 hover:text-yellow-400 shadow-[0_2px_8px_rgba(0,0,0,0.5)] active:scale-95 transition-all cursor-pointer"
+            className="relative p-2 rounded-xl bg-[#050505] hover:bg-[#182330] border border-white/10 hover:border-yellow-400/50 text-slate-300 hover:text-yellow-400 shadow-[0_2px_8px_rgba(0,0,0,0.5)] active:scale-95 transition-all cursor-pointer"
             title="Busca e Descoberta Global"
             aria-label="Buscar Jogadores, Zonas e Rotas"
           >
@@ -124,7 +124,7 @@ export const Header: React.FC<HeaderProps> = ({
             type="button"
             id="btn-open-activity-feed-header"
             onClick={onOpenActivityFeed}
-            className="relative p-2 rounded-xl bg-[#111822] hover:bg-[#182330] border border-white/10 hover:border-cyan-400/50 text-slate-300 hover:text-cyan-400 shadow-[0_2px_8px_rgba(0,0,0,0.5)] active:scale-95 transition-all cursor-pointer"
+            className="relative p-2 rounded-xl bg-[#050505] hover:bg-[#182330] border border-white/10 hover:border-cyan-400/50 text-slate-300 hover:text-cyan-400 shadow-[0_2px_8px_rgba(0,0,0,0.5)] active:scale-95 transition-all cursor-pointer"
             title="Feed & Central de Atividades"
             aria-label="Abrir Feed de Atividades"
           >
@@ -137,7 +137,7 @@ export const Header: React.FC<HeaderProps> = ({
           type="button"
           id="btn-open-notifications"
           onClick={onOpenNotifications}
-          className="relative p-2 rounded-xl bg-[#111822] hover:bg-[#182330] border border-white/10 hover:border-yellow-400/50 text-slate-300 hover:text-white shadow-[0_2px_8px_rgba(0,0,0,0.5)] active:scale-95 transition-all cursor-pointer"
+          className="relative p-2 rounded-xl bg-[#050505] hover:bg-[#182330] border border-white/10 hover:border-yellow-400/50 text-slate-300 hover:text-white shadow-[0_2px_8px_rgba(0,0,0,0.5)] active:scale-95 transition-all cursor-pointer"
           title="Central de Notificações"
           aria-label="Abrir Notificações"
         >
@@ -155,7 +155,7 @@ export const Header: React.FC<HeaderProps> = ({
             type="button"
             id="btn-open-settings-header"
             onClick={onOpenSettings}
-            className="relative p-2 rounded-xl bg-[#111822] hover:bg-[#182330] border border-white/10 hover:border-yellow-400/50 text-slate-300 hover:text-yellow-400 shadow-[0_2px_8px_rgba(0,0,0,0.5)] active:scale-95 transition-all cursor-pointer"
+            className="relative p-2 rounded-xl bg-[#050505] hover:bg-[#182330] border border-white/10 hover:border-yellow-400/50 text-slate-300 hover:text-yellow-400 shadow-[0_2px_8px_rgba(0,0,0,0.5)] active:scale-95 transition-all cursor-pointer"
             title="Configurações & Preferências"
             aria-label="Abrir Configurações"
           >

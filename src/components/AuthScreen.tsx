@@ -1,3 +1,4 @@
+import { Swords, Settings, Zap } from 'lucide-react';
 import React, { useState, useEffect } from 'react';
 import { AuthService } from '../services/auth';
 
@@ -80,28 +81,50 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
   };
 
   return (
-    <div className="flex justify-center w-full h-full bg-[#000000]">
-      <main className="relative flex flex-col items-center justify-center w-full h-full max-w-md md:max-w-lg bg-[#000000] border-x border-slate-800/40 p-6 overflow-y-auto">
+    <div className="flex justify-center w-full h-full bg-black relative overflow-hidden">
+      <div className="sparks-container">
+        {Array.from({ length: 25 }).map((_, i) => (
+          <div key={i} className="spark" style={{
+            left: `${Math.random() * 100}%`,
+            top: `${50 + Math.random() * 50}%`,
+            animationDuration: `${2 + Math.random() * 4}s`,
+            animationDelay: `${Math.random() * 3}s`
+          }} />
+        ))}
+      
+      <main className="relative z-10 flex flex-col items-center justify-center w-full h-full max-w-md md:max-w-lg bg-transparent border-x border-slate-800/40 p-6 overflow-y-auto">
         {/* LOGO */}
-        <div className="mb-10 text-center flex flex-col items-center justify-center">
-          <div className="relative w-56 h-56 mx-auto mb-2 flex items-center justify-center">
-            {/* Raio e pulsing removidos conforme solicitado */}
+        <div className="mb-8 text-center shrink-0 relative z-10 w-full">
+          <div className="relative w-40 h-40 mx-auto mb-2 flex items-center justify-center">
+            
+            {/* NOVO: Engrenagens no fundo */}
+            <div className="absolute inset-0 flex items-center justify-between px-1" style={{ zIndex: 0, opacity: 0.15 }}>
+              <Settings className="w-14 h-14 text-white -scale-x-100 transform rotate-12 animate-spin" strokeWidth={1.5} style={{ animationDuration: '8s' }} />
+              <Settings className="w-14 h-14 text-white transform -rotate-12 animate-spin" strokeWidth={1.5} style={{ animationDuration: '6s', animationDirection: 'reverse' }} />
+            
+
+            {/* Raio removido */}
+            <div className="absolute inset-0 bg-neutral-800 rounded-full blur-[60px] opacity-20 animate-pulse" style={{ transform: 'scale(1.2)' }}></div>
+            <div className="absolute inset-0 bg-[#fce803] rounded-full blur-[40px] opacity-20 animate-pulse"></div>
             <img src="/logo.png" alt="The Rolling Wars" className="relative z-10 w-full h-full object-contain drop-shadow-[0_0_15px_rgba(252,232,3,0.4)]" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
-          </div>
-        </div>
+            <div className="absolute inset-0 flex items-center justify-center border-2 border-[#fce803]/30 rounded-full" style={{ zIndex: 0 }}>
+              <span className="text-[#fce803] font-black text-3xl tracking-widest opacity-50">RW</span></div></div></div>
+            
+          
+        
 
         {/* FORMS */}
         <form onSubmit={handleAuth} className="w-full max-w-sm flex flex-col gap-4">
           {error && (
             <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-500 text-xs font-bold text-center">
               {error}
-            </div>
+            
           )}
           
           {successMsg && (
-            <div className="p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 text-xs font-bold text-center">
+            <div className="p-3 rounded-xl bg-[#fce803]/10 border border-[#fce803]/30 text-[#fce803] text-xs font-bold text-center">
               {successMsg}
-            </div>
+            
           )}
 
           {(mode === 'login' || mode === 'register') && (
@@ -113,9 +136,9 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="seu_apelido"
-                className="w-full bg-[#050505] border border-slate-700/50 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-yellow-500 transition-colors"
+                className="w-full bg-[#050505] border border-slate-700/50 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-[#fce803] transition-colors"
               />
-            </div>
+            
           )}
 
           {(mode === 'register' || mode === 'forgot') && (
@@ -127,9 +150,9 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="email@exemplo.com"
-                className="w-full bg-[#050505] border border-slate-700/50 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-yellow-500 transition-colors"
+                className="w-full bg-[#050505] border border-slate-700/50 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-[#fce803] transition-colors"
               />
-            </div>
+            
           )}
 
           {(mode === 'login' || mode === 'register') && (
@@ -141,9 +164,9 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full bg-[#050505] border border-slate-700/50 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-yellow-500 transition-colors"
+                className="w-full bg-[#050505] border border-slate-700/50 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-[#fce803] transition-colors"
               />
-            </div>
+            
           )}
 
           {mode === 'register' && (
@@ -155,15 +178,15 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full bg-[#050505] border border-slate-700/50 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-yellow-500 transition-colors"
+                className="w-full bg-[#050505] border border-slate-700/50 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-[#fce803] transition-colors"
               />
-            </div>
+            
           )}
 
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full mt-2 bg-gradient-to-r from-yellow-500 to-yellow-400 text-black font-black font-display uppercase tracking-wider text-sm py-3.5 rounded-xl hover:brightness-110 active:scale-95 transition-all shadow-[0_4px_16px_rgba(0,255,102,0.3)] disabled:opacity-50 flex items-center justify-center"
+            className="w-full mt-2 bg-gradient-to-r from-[#fce803] to-[#eab308] text-black font-black font-display uppercase tracking-wider text-sm py-3.5 rounded-xl hover:brightness-110 active:scale-95 transition-all shadow-[0_4px_16px_rgba(252,232,3,0.3)] disabled:opacity-50 flex items-center justify-center"
           >
             {isLoading ? (
               <div className="w-5 h-5 rounded-full border-2 border-black/20 border-t-black animate-spin" />
@@ -178,10 +201,10 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
         {(mode === 'login' || mode === 'register') && (
           <div className="w-full max-w-sm mt-4">
             <div className="relative flex items-center py-2">
-              <div className="flex-grow border-t border-slate-800"></div>
+              <div className="flex-grow border-t border-slate-800">
               <span className="shrink-0 px-3 text-[10px] font-bold text-slate-500 uppercase tracking-wider">OU</span>
-              <div className="flex-grow border-t border-slate-800"></div>
-            </div>
+              <div className="flex-grow border-t border-slate-800">
+            
             
             <button
               type="button"
@@ -197,7 +220,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
                </svg>
               <span>Continuar com Google</span>
             </button>
-          </div>
+          
         )}
 
         <div className="mt-6 flex flex-col items-center gap-3">
@@ -205,7 +228,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
             <button
               type="button"
               onClick={() => { setMode('login'); setError(''); setSuccessMsg(''); }}
-              className="text-xs font-medium text-slate-400 hover:text-yellow-400 transition-colors underline underline-offset-4"
+              className="text-xs font-medium text-slate-400 hover:text-[#fce803] transition-colors underline underline-offset-4"
             >
               Voltar para o Login
             </button>
@@ -216,7 +239,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
               <button
                 type="button"
                 onClick={() => { setMode('forgot'); setError(''); setSuccessMsg(''); }}
-                className="text-[10px] font-bold text-slate-500 hover:text-yellow-400 transition-colors"
+                className="text-[10px] font-bold text-slate-500 hover:text-[#fce803] transition-colors"
               >
                 ESQUECI MINHA SENHA
               </button>
@@ -224,14 +247,14 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
               <button
                 type="button"
                 onClick={() => { setMode('register'); setError(''); setSuccessMsg(''); }}
-                className="text-xs font-medium text-slate-400 hover:text-yellow-400 transition-colors underline underline-offset-4 mt-2"
+                className="text-xs font-medium text-slate-400 hover:text-[#fce803] transition-colors underline underline-offset-4 mt-2"
               >
                 Ainda não possui uma conta? Criar nova conta
               </button>
             </>
           )}
-        </div>
+        
       </main>
-    </div>
+    
   );
 };

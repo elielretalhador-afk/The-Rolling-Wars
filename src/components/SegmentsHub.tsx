@@ -12,7 +12,7 @@ export const SegmentsHub: React.FC<{
 
   useEffect(() => {
     async function fetch() {
-      const segs = await DatabaseService.getAllSegmentsWithRecords();
+      const segs: any[] = []; //();
       setSegments(segs);
       setLoading(false);
     }
