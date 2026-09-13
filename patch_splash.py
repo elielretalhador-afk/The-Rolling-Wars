@@ -3,61 +3,49 @@ import re
 with open('src/App.tsx', 'r') as f:
     content = f.read()
 
-# Let's check if there is a 'splashProgress' state
-if 'const [splashProgress' not in content:
-    # We need to add splash state
-    content = content.replace("const [authState, setAuthState] = useState<'LOADING' | 'UNAUTHENTICATED' | 'AUTHENTICATED' | 'ERROR'>('LOADING');", 
-                              "const [authState, setAuthState] = useState<'LOADING' | 'UNAUTHENTICATED' | 'AUTHENTICATED' | 'ERROR'>('LOADING');\n  const [splashProgress, setSplashProgress] = useState(0);")
-    
-    # We need to animate the progress when loading
-    progress_effect = """  useEffect(() => {
-    if (authState === 'LOADING') {
-      const interval = setInterval(() => {
-        setSplashProgress(p => {
-          if (p >= 100) {
-            clearInterval(interval);
-            return 100;
-          }
-          return p + 2;
-        });
-      }, 140); // ~7 seconds to reach 100%
-      return () => clearInterval(interval);
-    }
-  }, [authState]);
-  
-  // =========================================="""
-    content = content.replace("// ==========================================\n  // RENDERIZAÇÃO CONDICIONAL DA ARQUITETURA", progress_effect + "\n  // RENDERIZAÇÃO CONDICIONAL DA ARQUITETURA")
-
-# Replace the Loading state UI with the requested splash bar
-loading_pattern = re.compile(r"if \(authState === 'LOADING'\) \{.*?return \(\s*<div className=\"flex justify-center w-full h-full bg-\[\#000000\] relative overflow-hidden\">\s*<main.*?<\/main>\s*<\/div>\s*\);\s*\}", re.DOTALL)
-
-replacement = '''if (authState === 'LOADING') {
+old_splash = """  if (authState === 'LOADING') {
     return (
-      <div className="flex justify-center w-full h-full bg-[#000000] relative overflow-hidden">
-        <main className="relative z-10 flex flex-col items-center justify-center w-full h-full max-w-md md:max-w-lg bg-transparent border-x border-slate-800/40 p-6">
-          <div className="relative w-48 h-48 mx-auto mb-16 flex items-center justify-center animate-pulse" style={{ animationDuration: '3s' }}>
-            <img src="/logo.png" alt="The Rolling Wars" className="relative z-10 w-full h-full object-contain drop-shadow-[0_0_15px_rgba(252,232,3,0.4)]" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
-          </div>
+      <div className="flex justify-center w-full h-full bg-[#05070a]">
+        <main className="relative flex flex-col items-center justify-center w-full h-full max-w-md md:max-w-lg bg-[#000000] border-x border-neutral-900/40">
+          <div className="w-16 h-16 rounded-full border-4 border-yellow-400/20 border-t-emerald-400 animate-spin mb-4" />
+          <h2 className="text-xl font-black text-white font-display uppercase tracking-wider mb-2">Autenticando</h2>
+          <p className="text-sm text-neutral-400 font-medium">Verificando identidade...</p>
+        </main>
+      </div>
+    );
+  }"""
+
+new_splash = """  if (authState === 'LOADING') {
+    return (
+      <div className="flex justify-center w-full h-full bg-black">
+        <main className="relative flex flex-col items-center justify-center w-full h-full max-w-md md:max-w-lg bg-[#000000] border-x border-neutral-900/40 p-6 overflow-hidden">
+          <div className="absolute inset-0 bg-[#fce803] opacity-[0.02] bg-[radial-gradient(#fce803_1px,transparent_1px)] [background-size:24px_24px]"></div>
           
-          <div className="w-full max-w-xs mt-8">
-            <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden relative">
-              <div 
-                className="absolute top-0 left-0 h-full bg-gradient-to-r from-[#ea580c] to-[#fce803] transition-all ease-linear"
-                style={{ width: `${Math.max(5, splashProgress)}%`, transitionDuration: '150ms' }}
-              ></div>
-            </div>
+          <div className="relative z-10 flex flex-col items-center">
+            <img src="/logo.png" alt="The Rolling Wars" className="w-32 h-32 rounded-3xl mb-6 shadow-[0_0_50px_rgba(255,215,0,0.4)] animate-pulse" />
             
-            <div className="flex justify-between items-center mt-3 opacity-80">
-              <span className="text-white text-[10px] font-bold tracking-widest uppercase animate-pulse">Iniciando sistema...</span>
-              <span className="text-[#fce803] text-[10px] font-black font-mono-stat">{Math.floor(splashProgress)}%</span>
+            <h1 className="text-3xl font-black text-white font-display tracking-tight uppercase text-center mb-1">
+              The Rolling <span className="text-yellow-400">Wars</span>
+            </h1>
+            
+            <p className="text-xs font-bold text-neutral-400 tracking-widest uppercase font-mono-stat mb-12">
+              Iniciando Sistema...
+            </p>
+
+            <div className="w-48 h-1 bg-neutral-900 rounded-full overflow-hidden relative">
+               <div className="absolute inset-0 bg-yellow-400 w-1/2 animate-[bounce_1.5s_infinite]"></div>
             </div>
           </div>
         </main>
       </div>
     );
-  }'''
+  }"""
 
-new_content = loading_pattern.sub(replacement, content)
+if old_splash in content:
+    content = content.replace(old_splash, new_splash)
+else:
+    print("Could not find old splash exact block")
 
 with open('src/App.tsx', 'w') as f:
-    f.write(new_content)
+    f.write(content)
+

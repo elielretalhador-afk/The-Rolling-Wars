@@ -83,12 +83,10 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
     <div className="flex justify-center w-full h-full bg-[#05070a]">
       <main className="relative flex flex-col items-center justify-center w-full h-full max-w-md md:max-w-lg bg-[#000000] border-x border-neutral-900/40 p-6 overflow-y-auto">
         {/* LOGO */}
-        <div className="mb-8 text-center shrink-0">
-          <div className="w-16 h-16 bg-gradient-to-tr from-yellow-500 to-cyan-400 rounded-2xl mx-auto mb-3 flex items-center justify-center shadow-[0_0_30px_rgba(0,255,102,0.3)] transform rotate-3">
-            <span className="text-3xl font-black text-black tracking-tighter">U</span>
-          </div>
+        <div className="mb-8 text-center shrink-0 flex flex-col items-center">
+          <img src="/logo.png" alt="The Rolling Wars" className="w-24 h-24 rounded-2xl mb-4 shadow-[0_0_30px_rgba(255,215,0,0.3)]" />
           <h1 className="text-2xl font-black text-white font-display tracking-tight uppercase">
-            Urbano<span className="text-yellow-400">zeiro</span>
+            The Rolling <span className="text-yellow-400">Wars</span>
           </h1>
           <p className="text-xs font-medium text-neutral-400 mt-1 tracking-wide uppercase font-mono-stat">
             Identidade de Jogador
@@ -168,7 +166,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full mt-2 bg-gradient-to-r from-yellow-500 to-yellow-400 text-black font-black font-display uppercase tracking-wider text-sm py-3.5 rounded-xl hover:brightness-110 active:scale-95 transition-all shadow-[0_4px_16px_rgba(0,255,102,0.3)] disabled:opacity-50 flex items-center justify-center"
+            className="w-full mt-2 bg-gradient-to-r from-yellow-500 to-yellow-400 text-black font-black font-display uppercase tracking-wider text-sm py-3.5 rounded-xl hover:brightness-110 active:scale-95 transition-all shadow-[0_4px_16px_rgba(255,215,0,0.4)] disabled:opacity-50 flex items-center justify-center"
           >
             {isLoading ? (
               <div className="w-5 h-5 rounded-full border-2 border-black/20 border-t-black animate-spin" />
