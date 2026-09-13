@@ -480,7 +480,7 @@ export const MapView: React.FC<MapViewProps> = ({
             </div>
 
             <!-- Emblem / Controller Avatar Pin -->
-            <div class="relative flex items-center justify-center w-8 h-8 rounded-xl bg-[#1d4ed8] border-2 shadow-xl"
+            <div class="relative flex items-center justify-center w-8 h-8 rounded-xl bg-[#000000] border-2 shadow-xl"
                  style="border-color: ${effectiveBorderColor}; box-shadow: 0 0 14px ${effectiveBorderColor}66;">
               ${isContested ? `
                 <div class="w-6 h-6 rounded-lg bg-amber-950/80 flex items-center justify-center text-xs">
@@ -495,10 +495,10 @@ export const MapView: React.FC<MapViewProps> = ({
                   ${dominanceValue}%
                 </div>
               ` : `
-                <div class="w-6 h-6 rounded-lg bg-blue-950/80 flex items-center justify-center text-xs">
+                <div class="w-6 h-6 rounded-lg bg-neutral-900/80 flex items-center justify-center text-xs">
                   🏳️
                 </div>
-                <div class="absolute -bottom-1 -right-1 px-1 rounded text-[8px] font-black bg-blue-950 text-yellow-300 border border-yellow-500/30 font-mono-stat">
+                <div class="absolute -bottom-1 -right-1 px-1 rounded text-[8px] font-black bg-neutral-900 text-yellow-300 border border-yellow-500/30 font-mono-stat">
                   LIVRE
                 </div>
               `}
@@ -706,7 +706,7 @@ export const MapView: React.FC<MapViewProps> = ({
           const dot = L.circleMarker(pt, {
             radius: 3,
             color: '#fce803',
-            fillColor: '#080b0e',
+            fillColor: '#050505',
             fillOpacity: 0.8,
             opacity: 0.65,
             weight: 1.5,
@@ -724,10 +724,10 @@ export const MapView: React.FC<MapViewProps> = ({
           className: 'route-circuit-pin',
           html: `
             <div class="relative flex flex-col items-center">
-              <div class="flex items-center justify-center w-8 h-8 rounded-full bg-[#1d4ed8] border-2 border-yellow-400 shadow-[0_0_15px_#fce803] text-white font-black text-xs font-mono-stat">
+              <div class="flex items-center justify-center w-8 h-8 rounded-full bg-[#000000] border-2 border-yellow-400 shadow-[0_0_15px_#fce803] text-white font-black text-xs font-mono-stat">
                 🏁
               </div>
-              <div class="mt-1 px-2 py-0.5 rounded-md bg-[#1d4ed8]/90 border border-yellow-400 text-[8px] font-black text-yellow-400 font-mono-stat uppercase shadow-md whitespace-nowrap">
+              <div class="mt-1 px-2 py-0.5 rounded-md bg-[#000000]/90 border border-yellow-400 text-[8px] font-black text-yellow-400 font-mono-stat uppercase shadow-md whitespace-nowrap">
                 LARGADA & CHEGADA (CIRCUITO)
               </div>
             </div>
@@ -744,10 +744,10 @@ export const MapView: React.FC<MapViewProps> = ({
           className: 'route-start-pin',
           html: `
             <div class="relative flex flex-col items-center">
-              <div class="flex items-center justify-center w-7 h-7 rounded-full bg-[#1d4ed8] border-2 border-yellow-400 shadow-[0_0_14px_#fce803] text-yellow-400 font-black text-xs font-mono-stat">
+              <div class="flex items-center justify-center w-7 h-7 rounded-full bg-[#000000] border-2 border-yellow-400 shadow-[0_0_14px_#fce803] text-yellow-400 font-black text-xs font-mono-stat">
                 A
               </div>
-              <div class="mt-0.5 px-1.5 py-0.2 rounded bg-[#1d4ed8]/90 border border-yellow-400 text-[8px] font-black text-yellow-400 font-mono-stat uppercase whitespace-nowrap">
+              <div class="mt-0.5 px-1.5 py-0.2 rounded bg-[#000000]/90 border border-yellow-400 text-[8px] font-black text-yellow-400 font-mono-stat uppercase whitespace-nowrap">
                 LARGADA
               </div>
             </div>
@@ -764,10 +764,10 @@ export const MapView: React.FC<MapViewProps> = ({
           className: 'route-end-pin',
           html: `
             <div class="relative flex flex-col items-center">
-              <div class="flex items-center justify-center w-7 h-7 rounded-full bg-[#1d4ed8] border-2 border-cyan-400 shadow-[0_0_14px_#00e5ff] text-cyan-300 font-black text-xs font-mono-stat">
+              <div class="flex items-center justify-center w-7 h-7 rounded-full bg-[#000000] border-2 border-cyan-400 shadow-[0_0_14px_#00e5ff] text-cyan-300 font-black text-xs font-mono-stat">
                 B
               </div>
-              <div class="mt-0.5 px-1.5 py-0.2 rounded bg-[#1d4ed8]/90 border border-cyan-400 text-[8px] font-black text-cyan-300 font-mono-stat uppercase whitespace-nowrap">
+              <div class="mt-0.5 px-1.5 py-0.2 rounded bg-[#000000]/90 border border-cyan-400 text-[8px] font-black text-cyan-300 font-mono-stat uppercase whitespace-nowrap">
                 CHEGADA
               </div>
             </div>
@@ -1244,7 +1244,7 @@ export const MapView: React.FC<MapViewProps> = ({
             const dot = L.circleMarker(pt, {
               radius: 3,
               color: '#fce803',
-              fillColor: '#080b0e',
+              fillColor: '#050505',
               fillOpacity: 0.8,
               opacity: 0.65,
               weight: 1.5,
@@ -1258,10 +1258,10 @@ export const MapView: React.FC<MapViewProps> = ({
           className: 'challenge-start-pin',
           html: `
             <div class="relative flex flex-col items-center">
-              <div class="flex items-center justify-center w-7 h-7 rounded-full bg-[#1d4ed8] border-2 border-yellow-400 shadow-[0_0_14px_#fce803] text-yellow-400 font-black text-xs font-mono-stat">
+              <div class="flex items-center justify-center w-7 h-7 rounded-full bg-[#000000] border-2 border-yellow-400 shadow-[0_0_14px_#fce803] text-yellow-400 font-black text-xs font-mono-stat">
                 🚩
               </div>
-              <div class="mt-0.5 px-1.5 py-0.2 rounded bg-[#1d4ed8]/95 border border-yellow-400 text-[8px] font-black text-yellow-400 font-mono-stat uppercase whitespace-nowrap shadow-md">
+              <div class="mt-0.5 px-1.5 py-0.2 rounded bg-[#000000]/95 border border-yellow-400 text-[8px] font-black text-yellow-400 font-mono-stat uppercase whitespace-nowrap shadow-md">
                 ${selectedChallenge.startPointName ? selectedChallenge.startPointName.split(' - ')[0] : 'INÍCIO'}
               </div>
             </div>
@@ -1279,10 +1279,10 @@ export const MapView: React.FC<MapViewProps> = ({
             className: 'challenge-end-pin',
             html: `
               <div class="relative flex flex-col items-center">
-                <div class="flex items-center justify-center w-7 h-7 rounded-full bg-[#1d4ed8] border-2 border-cyan-400 shadow-[0_0_14px_#00e5ff] text-cyan-300 font-black text-xs font-mono-stat">
+                <div class="flex items-center justify-center w-7 h-7 rounded-full bg-[#000000] border-2 border-cyan-400 shadow-[0_0_14px_#00e5ff] text-cyan-300 font-black text-xs font-mono-stat">
                   🏁
                 </div>
-                <div class="mt-0.5 px-1.5 py-0.2 rounded bg-[#1d4ed8]/95 border border-cyan-400 text-[8px] font-black text-cyan-300 font-mono-stat uppercase whitespace-nowrap shadow-md">
+                <div class="mt-0.5 px-1.5 py-0.2 rounded bg-[#000000]/95 border border-cyan-400 text-[8px] font-black text-cyan-300 font-mono-stat uppercase whitespace-nowrap shadow-md">
                   ${selectedChallenge.endPointName.split(' - ')[0]}
                 </div>
               </div>
@@ -1466,10 +1466,10 @@ export const MapView: React.FC<MapViewProps> = ({
           className: 'live-challenge-start-pin',
           html: `
             <div class="relative flex flex-col items-center select-none pointer-events-none">
-              <div class="w-6 h-6 rounded-full bg-[#1d4ed8] border-2 border-yellow-400 flex items-center justify-center text-yellow-400 text-[10px] shadow-[0_0_10px_rgba(252,232,3,0.6)]">
+              <div class="w-6 h-6 rounded-full bg-[#000000] border-2 border-yellow-400 flex items-center justify-center text-yellow-400 text-[10px] shadow-[0_0_10px_rgba(252,232,3,0.6)]">
                 🚩
               </div>
-              <div class="mt-0.5 px-1.5 py-0.2 rounded bg-[#1d4ed8]/90 border border-yellow-400 text-[7px] font-black text-yellow-400 font-mono-stat uppercase whitespace-nowrap">
+              <div class="mt-0.5 px-1.5 py-0.2 rounded bg-[#000000]/90 border border-yellow-400 text-[7px] font-black text-yellow-400 font-mono-stat uppercase whitespace-nowrap">
                 LARGADA
               </div>
             </div>
@@ -1484,10 +1484,10 @@ export const MapView: React.FC<MapViewProps> = ({
           className: 'live-challenge-end-pin',
           html: `
             <div class="relative flex flex-col items-center select-none pointer-events-none">
-              <div class="w-6 h-6 rounded-full bg-[#1d4ed8] border-2 border-cyan-400 flex items-center justify-center text-cyan-300 text-[10px] shadow-[0_0_10px_rgba(6,182,212,0.6)]">
+              <div class="w-6 h-6 rounded-full bg-[#000000] border-2 border-cyan-400 flex items-center justify-center text-cyan-300 text-[10px] shadow-[0_0_10px_rgba(6,182,212,0.6)]">
                 🏁
               </div>
-              <div class="mt-0.5 px-1.5 py-0.2 rounded bg-[#1d4ed8]/90 border border-cyan-400 text-[7px] font-black text-cyan-300 font-mono-stat uppercase whitespace-nowrap">
+              <div class="mt-0.5 px-1.5 py-0.2 rounded bg-[#000000]/90 border border-cyan-400 text-[7px] font-black text-cyan-300 font-mono-stat uppercase whitespace-nowrap">
                 CHEGADA
               </div>
             </div>
@@ -1625,7 +1625,7 @@ export const MapView: React.FC<MapViewProps> = ({
       
       {/* Zone creation map overlay hint */}
       {isCreatingZone && (
-        <div className="absolute top-4 left-1/2 -translate-x-1/2 z-20 px-4 py-2 bg-[#0d141d]/95 border border-yellow-400 rounded-full shadow-[0_0_20px_rgba(252,232,3,0.4)] flex items-center gap-2 animate-bounce">
+        <div className="absolute top-4 left-1/2 -translate-x-1/2 z-20 px-4 py-2 bg-[#000000]/95 border border-yellow-400 rounded-full shadow-[0_0_20px_rgba(252,232,3,0.4)] flex items-center gap-2 animate-bounce">
           <span className="w-2.5 h-2.5 rounded-full bg-yellow-400 animate-ping" />
           <p className="text-xs font-bold text-yellow-300">
             Toque no mapa para posicionar a nova zona

@@ -59,10 +59,10 @@ export const ChatModal: React.FC<ChatModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/80 sm:items-center">
-      <div className="w-full h-full max-h-[85vh] sm:h-auto sm:max-h-[600px] sm:max-w-md bg-[#080c12] sm:rounded-2xl border border-white/10 flex flex-col shadow-2xl overflow-hidden animate-slide-up-mobile sm:animate-zoom-in">
+      <div className="w-full h-full max-h-[85vh] sm:h-auto sm:max-h-[600px] sm:max-w-md bg-[#050505] sm:rounded-2xl border border-white/10 flex flex-col shadow-2xl overflow-hidden animate-slide-up-mobile sm:animate-zoom-in">
         
         {/* Header */}
-        <div className="flex items-center justify-between p-4 bg-[#0d141e] border-b border-white/10 shrink-0">
+        <div className="flex items-center justify-between p-4 bg-[#0a0a0a] border-b border-white/10 shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-slate-800 border border-white/20 overflow-hidden shrink-0">
               <img src={targetUser.avatar} alt={targetUser.name} className="w-full h-full object-cover" />
@@ -106,7 +106,7 @@ export const ChatModal: React.FC<ChatModalProps> = ({
         </div>
 
         {/* Input */}
-        <form onSubmit={handleSend} className="p-3 bg-[#0d141e] border-t border-white/10 flex items-center gap-2 shrink-0">
+        <form onSubmit={handleSend} className="p-3 bg-[#0a0a0a] border-t border-white/10 flex items-center gap-2 shrink-0">
           <input
             type="text"
             value={text}

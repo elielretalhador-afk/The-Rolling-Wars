@@ -127,7 +127,7 @@ export const SearchDiscoveryModal: React.FC<SearchDiscoveryModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/85  animate-in fade-in duration-200">
       <div
         id="search-discovery-modal"
-        className="w-full max-w-lg max-h-[92vh] flex flex-col rounded-3xl bg-[#080d14] border-2 border-yellow-500/40 shadow-[0_15px_60px_rgba(252,232,3,0.25)] overflow-hidden text-white font-sans relative"
+        className="w-full max-w-lg max-h-[92vh] flex flex-col rounded-3xl bg-[#000000] border-2 border-yellow-500/40 shadow-[0_15px_60px_rgba(252,232,3,0.25)] overflow-hidden text-white font-sans relative"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Glow Superior */}
@@ -339,7 +339,7 @@ export const SearchDiscoveryModal: React.FC<SearchDiscoveryModalProps> = ({
                       onSelectPlayer(player.rawPlayer);
                       onClose();
                     }}
-                    className="p-3 rounded-2xl bg-[#0d141e] hover:bg-[#121c2a] border border-white/10 hover:border-cyan-400/50 shadow-md flex items-center justify-between gap-3 transition-all active:scale-[0.99] cursor-pointer group"
+                    className="p-3 rounded-2xl bg-[#0a0a0a] hover:bg-[#121c2a] border border-white/10 hover:border-cyan-400/50 shadow-md flex items-center justify-between gap-3 transition-all active:scale-[0.99] cursor-pointer group"
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
                       <div className="relative shrink-0">
@@ -421,7 +421,7 @@ export const SearchDiscoveryModal: React.FC<SearchDiscoveryModalProps> = ({
                       onSelectZone(zone.rawZone);
                       onClose();
                     }}
-                    className="p-3 rounded-2xl bg-[#0d141e] hover:bg-[#121c2a] border border-white/10 hover:border-yellow-400/50 shadow-md transition-all active:scale-[0.99] cursor-pointer group"
+                    className="p-3 rounded-2xl bg-[#0a0a0a] hover:bg-[#121c2a] border border-white/10 hover:border-yellow-400/50 shadow-md transition-all active:scale-[0.99] cursor-pointer group"
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div className="min-w-0">
@@ -518,7 +518,7 @@ export const SearchDiscoveryModal: React.FC<SearchDiscoveryModalProps> = ({
                       onSelectRoute(route.rawRoute);
                       onClose();
                     }}
-                    className="p-3 rounded-2xl bg-[#0d141e] hover:bg-[#121c2a] border border-white/10 hover:border-amber-400/50 shadow-md transition-all active:scale-[0.99] cursor-pointer group"
+                    className="p-3 rounded-2xl bg-[#0a0a0a] hover:bg-[#121c2a] border border-white/10 hover:border-amber-400/50 shadow-md transition-all active:scale-[0.99] cursor-pointer group"
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div className="min-w-0">
@@ -581,7 +581,7 @@ export const SearchDiscoveryModal: React.FC<SearchDiscoveryModalProps> = ({
         </div>
 
         {/* FOOTER & DICA */}
-        <div className="p-3 bg-[#080d14] border-t border-white/10 flex items-center justify-between text-[10px] font-mono-stat text-slate-400 shrink-0">
+        <div className="p-3 bg-[#000000] border-t border-white/10 flex items-center justify-between text-[10px] font-mono-stat text-slate-400 shrink-0">
           <span className="flex items-center gap-1">
             <Radio className="w-3 h-3 text-yellow-400" />
             Índice Urbano de São Paulo Ativo

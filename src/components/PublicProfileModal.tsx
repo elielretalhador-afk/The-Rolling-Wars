@@ -124,7 +124,7 @@ export const PublicProfileModal: React.FC<PublicProfileModalProps> = ({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header Background */}
-        <div className="relative p-5 pb-3 bg-gradient-to-b from-blue-950/40 via-[#0a121c] to-[#090e15] border-b border-white/10">
+        <div className="relative p-5 pb-3 bg-gradient-to-b from-neutral-900/40 via-[#0a121c] to-[#090e15] border-b border-white/10">
           {/* Top Actions: Block, Report, Close */}
           <div className="absolute top-4 right-4 flex items-center gap-1.5">
             {!isOwnProfile && (
@@ -315,7 +315,7 @@ export const PublicProfileModal: React.FC<PublicProfileModalProps> = ({
           <div className="p-4 space-y-3.5 overflow-y-auto max-h-[50vh]">
             {/* Key Metric Grid */}
             <div className="grid grid-cols-3 gap-2">
-              <div className="p-2.5 rounded-2xl bg-[#0d141e] border border-white/10 text-center">
+              <div className="p-2.5 rounded-2xl bg-[#0a0a0a] border border-white/10 text-center">
                 <Activity className="w-4 h-4 text-cyan-400 mx-auto mb-1" />
                 <div className="text-[9px] text-slate-400 font-bold uppercase font-mono-stat">
                   TOTAL KM
@@ -325,7 +325,7 @@ export const PublicProfileModal: React.FC<PublicProfileModalProps> = ({
                 </div>
               </div>
 
-              <div className="p-2.5 rounded-2xl bg-[#0d141e] border border-white/10 text-center">
+              <div className="p-2.5 rounded-2xl bg-[#0a0a0a] border border-white/10 text-center">
                 <Shield className="w-4 h-4 text-yellow-400 mx-auto mb-1" />
                 <div className="text-[9px] text-slate-400 font-bold uppercase font-mono-stat">
                   ZONAS
@@ -335,7 +335,7 @@ export const PublicProfileModal: React.FC<PublicProfileModalProps> = ({
                 </div>
               </div>
 
-              <div className="p-2.5 rounded-2xl bg-[#0d141e] border border-white/10 text-center">
+              <div className="p-2.5 rounded-2xl bg-[#0a0a0a] border border-white/10 text-center">
                 <Flame className="w-4 h-4 text-amber-400 mx-auto mb-1" />
                 <div className="text-[9px] text-slate-400 font-bold uppercase font-mono-stat">
                   VITÓRIAS
@@ -347,7 +347,7 @@ export const PublicProfileModal: React.FC<PublicProfileModalProps> = ({
             </div>
 
             {/* Achievements & Medals */}
-            <div className="grid grid-cols-2 gap-2 p-3 rounded-2xl bg-[#0d141e] border border-yellow-500/30">
+            <div className="grid grid-cols-2 gap-2 p-3 rounded-2xl bg-[#0a0a0a] border border-yellow-500/30">
               <div className="flex items-center gap-2">
                 <Trophy className="w-4 h-4 text-yellow-400 shrink-0" />
                 <div>
@@ -374,7 +374,7 @@ export const PublicProfileModal: React.FC<PublicProfileModalProps> = ({
             </div>
 
             {/* Controlled Zones List */}
-            <div className="p-3 rounded-2xl bg-[#0d141e] border border-white/10">
+            <div className="p-3 rounded-2xl bg-[#0a0a0a] border border-white/10">
               <div className="flex items-center gap-1.5 mb-2">
                 <Shield className="w-3.5 h-3.5 text-yellow-400" />
                 <span className="text-[10px] font-bold text-white uppercase tracking-wider font-mono-stat">
@@ -386,7 +386,7 @@ export const PublicProfileModal: React.FC<PublicProfileModalProps> = ({
                   {(player as any).controlledZoneNames.map((zoneName: string, index: number) => (
                     <span
                       key={index}
-                      className="px-2.5 py-1 rounded-xl bg-blue-950/40 border border-yellow-500/40 text-yellow-300 text-xs font-bold font-mono-stat"
+                      className="px-2.5 py-1 rounded-xl bg-neutral-900/40 border border-yellow-500/40 text-yellow-300 text-xs font-bold font-mono-stat"
                     >
                       🚩 {zoneName}
                     </span>
@@ -401,7 +401,7 @@ export const PublicProfileModal: React.FC<PublicProfileModalProps> = ({
 
             {/* Skate Gear / Setup */}
             {player.skateSetup && (
-              <div className="p-3 rounded-2xl bg-[#0d141e] border border-white/10">
+              <div className="p-3 rounded-2xl bg-[#0a0a0a] border border-white/10">
                 <div className="flex items-center gap-1.5 mb-2">
                   <Disc className="w-3.5 h-3.5 text-cyan-400" />
                   <span className="text-[10px] font-bold text-white uppercase tracking-wider font-mono-stat">
@@ -434,7 +434,7 @@ export const PublicProfileModal: React.FC<PublicProfileModalProps> = ({
         )}
 
         {/* Footer Actions */}
-        <div className="p-3 bg-[#080c12] border-t border-white/10 space-y-2">
+        <div className="p-3 bg-[#050505] border-t border-white/10 space-y-2">
           {!isOwnProfile && !isBlocked && (
             <div className="grid grid-cols-2 gap-2">
               {/* Message Button */}
@@ -481,7 +481,7 @@ export const PublicProfileModal: React.FC<PublicProfileModalProps> = ({
                   type="button"
                   id="btn-social-remove-friend"
                   onClick={() => onRemoveFriend && onRemoveFriend(player.id || 'usr_unknown')}
-                  className="py-2 px-3 rounded-xl bg-blue-950/40 border border-yellow-500/40 text-yellow-300 text-xs font-bold font-mono-stat uppercase tracking-wider hover:bg-red-500/20 hover:text-red-300 hover:border-red-500/40 transition-all flex items-center justify-center gap-1 cursor-pointer"
+                  className="py-2 px-3 rounded-xl bg-neutral-900/40 border border-yellow-500/40 text-yellow-300 text-xs font-bold font-mono-stat uppercase tracking-wider hover:bg-red-500/20 hover:text-red-300 hover:border-red-500/40 transition-all flex items-center justify-center gap-1 cursor-pointer"
                   title="Clique para desfazer amizade"
                 >
                   <UserCheck className="w-3.5 h-3.5 text-yellow-400" />

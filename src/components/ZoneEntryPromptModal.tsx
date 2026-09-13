@@ -21,7 +21,7 @@ export const ZoneEntryPromptModal: React.FC<ZoneEntryPromptModalProps> = ({
       id="modal-zone-entry-prompt"
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in zoom-in-95 duration-200"
     >
-      <div className="w-full max-w-sm rounded-3xl bg-[#090d13] border-2 border-yellow-400/80 shadow-[0_0_50px_rgba(252,232,3,0.4)] text-center flex flex-col items-center relative overflow-hidden p-5 sm:p-6">
+      <div className="w-full max-w-sm rounded-3xl bg-[#050505] border-2 border-yellow-400/80 shadow-[0_0_50px_rgba(252,232,3,0.4)] text-center flex flex-col items-center relative overflow-hidden p-5 sm:p-6">
         {/* Glow backdrop accent */}
         <div
           className="absolute -top-16 -left-16 w-36 h-36 rounded-full opacity-20 blur-3xl pointer-events-none"

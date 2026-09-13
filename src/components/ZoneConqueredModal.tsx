@@ -28,7 +28,7 @@ export const ZoneConqueredModal: React.FC<ZoneConqueredModalProps> = ({
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-in fade-in zoom-in-95 duration-200"
     >
       <div
-        className="w-full max-w-sm rounded-3xl bg-[#090d13] border-2 shadow-[0_0_60px_rgba(252,232,3,0.4)] text-center flex flex-col items-center relative overflow-hidden p-6"
+        className="w-full max-w-sm rounded-3xl bg-[#050505] border-2 shadow-[0_0_60px_rgba(252,232,3,0.4)] text-center flex flex-col items-center relative overflow-hidden p-6"
         style={{ borderColor: zoneColor }}
       >
         {/* Ambient Glows */}

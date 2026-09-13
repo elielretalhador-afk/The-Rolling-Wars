@@ -1,0 +1,10 @@
+#!/bin/bash
+find src -type f -name "*.tsx" -o -name "*.ts" -o -name "*.css" | xargs sed -i 's/#05070a/#000000/gi'
+find src -type f -name "*.tsx" -o -name "*.ts" -o -name "*.css" | xargs sed -i 's/#080B0E/#050505/gi'
+find src -type f -name "*.tsx" -o -name "*.ts" -o -name "*.css" | xargs sed -i 's/#080c10/#000000/gi'
+find src -type f -name "*.tsx" -o -name "*.ts" -o -name "*.css" | xargs sed -i 's/#1e3a8a/#050505/gi'
+find src -type f -name "*.tsx" -o -name "*.ts" -o -name "*.css" | xargs sed -i 's/#1d4ed8/#0a0a0a/gi'
+find src -type f -name "*.tsx" -o -name "*.ts" -o -name "*.css" | xargs sed -i 's/rgba(30, 58, 138/rgba(10, 10, 10/gi'
+find src -type f -name "*.tsx" -o -name "*.ts" -o -name "*.css" | xargs sed -i 's/rgba(29, 78, 216/rgba(0, 0, 0/gi'
+find src -type f -name "*.tsx" -o -name "*.ts" -o -name "*.css" | xargs sed -i 's/rgba(17, 24, 39/rgba(10, 10, 10/gi'
+find src -type f -name "*.tsx" -o -name "*.ts" -o -name "*.css" | xargs sed -i 's/rgba(10, 15, 22/rgba(0, 0, 0/gi'

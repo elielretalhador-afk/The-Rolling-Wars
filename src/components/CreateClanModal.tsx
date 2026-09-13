@@ -25,7 +25,7 @@ export const CreateClanModal: React.FC<CreateClanModalProps> = ({ isOpen, onClos
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 animate-in fade-in duration-200">
-      <div className="bg-[#1d4ed8] p-6 rounded-2xl w-full max-w-md border-2 border-yellow-400 shadow-[0_0_30px_rgba(252,232,3,0.15)] relative">
+      <div className="bg-[#000000] p-6 rounded-2xl w-full max-w-md border-2 border-yellow-400 shadow-[0_0_30px_rgba(252,232,3,0.15)] relative">
         <button onClick={onClose} className="absolute top-4 right-4 text-white/50 hover:text-white">
           <X className="w-6 h-6" />
         </button>

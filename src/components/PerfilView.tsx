@@ -110,7 +110,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
   };
 
   return (
-    <div className="h-full w-full overflow-y-auto overscroll-contain px-4 py-4 pb-36 bg-[#080b0e]">
+    <div className="h-full w-full overflow-y-auto overscroll-contain px-4 py-4 pb-36 bg-[#050505]">
       {/* Skater Card */}
       <div className="p-4 rounded-3xl bg-gradient-to-b from-[#111923] to-[#0a0f15] border-2 border-yellow-500/40 shadow-2xl relative overflow-hidden">
         {/* Background glow */}
@@ -199,7 +199,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
         {/* CARTEIRA & LOJA */}
         <button 
           onClick={() => onOpenWallet && onOpenWallet()}
-          className="flex flex-col items-center justify-center p-3 rounded-2xl bg-[#0d141d] border border-white/10 hover:border-yellow-400/50 hover:bg-[#121b27] transition-all cursor-pointer active:scale-95 group"
+          className="flex flex-col items-center justify-center p-3 rounded-2xl bg-[#000000] border border-white/10 hover:border-yellow-400/50 hover:bg-[#121b27] transition-all cursor-pointer active:scale-95 group"
         >
           <div className="w-10 h-10 rounded-full bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(252,232,3,0.15)]">
             <Coins className="w-5 h-5 text-yellow-400" />
@@ -210,9 +210,9 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
         {/* TEMPORADA */}
         <button 
           onClick={() => onOpenSeasonHub && onOpenSeasonHub('visao_geral')}
-          className="flex flex-col items-center justify-center p-3 rounded-2xl bg-[#0d141d] border border-white/10 hover:border-blue-400/50 hover:bg-[#121b27] transition-all cursor-pointer active:scale-95 group"
+          className="flex flex-col items-center justify-center p-3 rounded-2xl bg-[#000000] border border-white/10 hover:border-blue-400/50 hover:bg-[#121b27] transition-all cursor-pointer active:scale-95 group"
         >
-          <div className="w-10 h-10 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(59,130,246,0.15)]">
+          <div className="w-10 h-10 rounded-full bg-blue-500/10 border border-neutral-700/20 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(59,130,246,0.15)]">
             <Trophy className="w-5 h-5 text-blue-400" />
           </div>
           <span className="text-[9px] font-black text-slate-300 font-mono-stat uppercase tracking-wider text-center">Ranking da<br/>Temporada</span>
@@ -221,7 +221,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
         {/* CLÃ */}
         <button 
           onClick={() => userClan ? (onOpenClanProfile && onOpenClanProfile(userClan)) : (onOpenJoinClan && onOpenJoinClan())}
-          className="flex flex-col items-center justify-center p-3 rounded-2xl bg-[#0d141d] border border-white/10 hover:border-amber-400/50 hover:bg-[#121b27] transition-all cursor-pointer active:scale-95 group"
+          className="flex flex-col items-center justify-center p-3 rounded-2xl bg-[#000000] border border-white/10 hover:border-amber-400/50 hover:bg-[#121b27] transition-all cursor-pointer active:scale-95 group"
         >
           <div className="w-10 h-10 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(245,158,11,0.15)]">
             <Shield className="w-5 h-5 text-amber-400" />
@@ -232,7 +232,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
         {/* INVENTÁRIO & COSMÉTICOS */}
         <button 
           onClick={() => onOpenWallet && onOpenWallet()} 
-          className="flex flex-col items-center justify-center p-3 rounded-2xl bg-[#0d141d] border border-white/10 hover:border-purple-400/50 hover:bg-[#121b27] transition-all cursor-pointer active:scale-95 group"
+          className="flex flex-col items-center justify-center p-3 rounded-2xl bg-[#000000] border border-white/10 hover:border-purple-400/50 hover:bg-[#121b27] transition-all cursor-pointer active:scale-95 group"
         >
           <div className="w-10 h-10 rounded-full bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(168,85,247,0.15)]">
             <Package className="w-5 h-5 text-purple-400" />
@@ -287,7 +287,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
         </div>
 
       {/* Setup de Patins / Gear Card */}
-      <div className="mt-4 p-4 rounded-2xl bg-[#0d141d] border-2 border-white/10">
+      <div className="mt-4 p-4 rounded-2xl bg-[#000000] border-2 border-white/10">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2 text-xs font-bold text-slate-200 uppercase tracking-wider font-mono-stat">
             <Disc className="w-4 h-4 text-yellow-400" />
@@ -359,7 +359,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
           <div className="space-y-3">
             <div
               onClick={() => onOpenClanProfile && onOpenClanProfile(userClan)}
-              className="p-3.5 rounded-2xl bg-[#0d141e] border border-white/10 hover:border-yellow-400/60 transition-all cursor-pointer group active:scale-[0.99]"
+              className="p-3.5 rounded-2xl bg-[#0a0a0a] border border-white/10 hover:border-yellow-400/60 transition-all cursor-pointer group active:scale-[0.99]"
             >
               <div className="flex items-start gap-3">
                 {/* Clan Crest */}
@@ -542,7 +542,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
                 className={`p-2.5 rounded-2xl border text-center transition-all cursor-pointer hover:border-yellow-400/80 active:scale-95 ${
                   ach.isUnlocked
                     ? 'bg-[#0f1a26] border-yellow-500/40 shadow-sm'
-                    : 'bg-[#090d13] border-white/10 opacity-90'
+                    : 'bg-[#050505] border-white/10 opacity-90'
                 }`}
               >
                 <div className="text-xl mb-1">{ach.iconEmoji || '🏆'}</div>
@@ -614,7 +614,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
                 return (
                   <div
                     key={act.id}
-                    className={`p-3 rounded-2xl bg-[#0d141e] border ${style.borderColor} flex items-center justify-between gap-3 shadow-md`}
+                    className={`p-3 rounded-2xl bg-[#0a0a0a] border ${style.borderColor} flex items-center justify-between gap-3 shadow-md`}
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
                       <div className="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-sm shrink-0">
@@ -649,7 +649,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
               })}
           </div>
         ) : (
-          <div className="p-3.5 rounded-2xl bg-[#0d141e] border border-white/10 text-center text-xs text-slate-400">
+          <div className="p-3.5 rounded-2xl bg-[#0a0a0a] border border-white/10 text-center text-xs text-slate-400">
             Nenhuma atividade própria recente registrada no feed ainda.
           </div>
         )}
@@ -699,7 +699,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
 
           return (
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-              <div className="p-3 rounded-2xl bg-[#0d141e] border border-white/10 flex flex-col justify-center">
+              <div className="p-3 rounded-2xl bg-[#0a0a0a] border border-white/10 flex flex-col justify-center">
                 <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">
                   <MapPin className="w-3.5 h-3.5 text-yellow-400" />
                   <span>Distância Total</span>
@@ -709,7 +709,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
                 </div>
               </div>
 
-              <div className="p-3 rounded-2xl bg-[#0d141e] border border-white/10 flex flex-col justify-center">
+              <div className="p-3 rounded-2xl bg-[#0a0a0a] border border-white/10 flex flex-col justify-center">
                 <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">
                   <Clock className="w-3.5 h-3.5 text-amber-400" />
                   <span>Tempo Total</span>
@@ -719,7 +719,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
                 </div>
               </div>
 
-              <div className="p-3 rounded-2xl bg-[#0d141e] border border-white/10 flex flex-col justify-center">
+              <div className="p-3 rounded-2xl bg-[#0a0a0a] border border-white/10 flex flex-col justify-center">
                 <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">
                   <Layers className="w-3.5 h-3.5 text-indigo-400" />
                   <span>Patinações</span>
@@ -729,7 +729,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
                 </div>
               </div>
 
-              <div className="p-3 rounded-2xl bg-[#0d141e] border border-white/10 flex flex-col justify-center">
+              <div className="p-3 rounded-2xl bg-[#0a0a0a] border border-white/10 flex flex-col justify-center">
                 <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">
                   <Zap className="w-3.5 h-3.5 text-cyan-400" />
                   <span>Vel. Máxima</span>
@@ -739,7 +739,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
                 </div>
               </div>
 
-              <div className="p-3 rounded-2xl bg-[#0d141e] border border-white/10 flex flex-col justify-center">
+              <div className="p-3 rounded-2xl bg-[#0a0a0a] border border-white/10 flex flex-col justify-center">
                 <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">
                   <Gauge className="w-3.5 h-3.5 text-cyan-500" />
                   <span>Vel. Média</span>
@@ -749,7 +749,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
                 </div>
               </div>
 
-              <div className="p-3 rounded-2xl bg-[#0d141e] border border-white/10 flex flex-col justify-center">
+              <div className="p-3 rounded-2xl bg-[#0a0a0a] border border-white/10 flex flex-col justify-center">
                 <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">
                   <Sparkles className="w-3.5 h-3.5 text-fuchsia-400" />
                   <span>Conquistas</span>
@@ -760,7 +760,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
                 </div>
               </div>
 
-              <div className="p-3 rounded-2xl bg-[#0d141e] border border-white/10 flex flex-col justify-center sm:col-span-3">
+              <div className="p-3 rounded-2xl bg-[#0a0a0a] border border-white/10 flex flex-col justify-center sm:col-span-3">
                 <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">
                   <Trophy className="w-3.5 h-3.5 text-amber-500" />
                   <span>Recordes</span>
@@ -967,7 +967,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
             })}
           </div>
         ) : (
-          <div className="p-5 rounded-2xl bg-[#0d141d] border-2 border-white/10 text-center">
+          <div className="p-5 rounded-2xl bg-[#000000] border-2 border-white/10 text-center">
             <div className="w-10 h-10 mx-auto rounded-full bg-[#fce803]/10 border border-[#fce803]/30 flex items-center justify-center text-[#fce803] mb-2.5">
               <History className="w-5 h-5" />
             </div>
@@ -997,7 +997,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
                 key={zone.id}
                 id={`user-zone-${zone.id}`}
                 onClick={() => onSelectZoneOnMap(zone)}
-                className="p-3 rounded-2xl bg-[#0d141d] border-2 border-yellow-500/40 flex items-center justify-between cursor-pointer hover:border-yellow-400 transition-all shadow-md active:scale-[0.99]"
+                className="p-3 rounded-2xl bg-[#000000] border-2 border-yellow-500/40 flex items-center justify-between cursor-pointer hover:border-yellow-400 transition-all shadow-md active:scale-[0.99]"
               >
                 <div>
                   <h4 className="text-sm font-bold text-white uppercase font-display">{zone.name}</h4>
@@ -1012,7 +1012,7 @@ export const PerfilView: React.FC<PerfilViewProps> = ({
             ))}
           </div>
         ) : (
-          <p className="text-xs text-slate-400 p-3 rounded-xl bg-[#0d141d] text-center font-medium">
+          <p className="text-xs text-slate-400 p-3 rounded-xl bg-[#000000] text-center font-medium">
             Nenhuma zona controlada ainda. Patine e conquiste seu primeiro território!
           </p>
         )}

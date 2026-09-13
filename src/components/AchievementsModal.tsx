@@ -145,13 +145,13 @@ export const AchievementsModal: React.FC<AchievementsModalProps> = ({
       id="modal-achievements-center"
       className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85  animate-in fade-in duration-200"
     >
-      <div className="w-full max-w-lg h-[92vh] max-h-[740px] rounded-3xl bg-[#1d4ed8] border-2 border-yellow-500/40 shadow-[0_0_50px_rgba(252,232,3,0.25)] flex flex-col relative overflow-hidden">
+      <div className="w-full max-w-lg h-[92vh] max-h-[740px] rounded-3xl bg-[#000000] border-2 border-yellow-500/40 shadow-[0_0_50px_rgba(252,232,3,0.25)] flex flex-col relative overflow-hidden">
         {/* Glow Decorators */}
         <div className="absolute -top-16 -left-16 w-44 h-44 rounded-full bg-yellow-500/15 blur-3xl pointer-events-none" />
         <div className="absolute -bottom-16 -right-16 w-44 h-44 rounded-full bg-cyan-500/15 blur-3xl pointer-events-none" />
 
         {/* Header */}
-        <div className="p-4 pb-3 border-b border-white/10 flex items-center justify-between gap-2 shrink-0 bg-[#0c121a]">
+        <div className="p-4 pb-3 border-b border-white/10 flex items-center justify-between gap-2 shrink-0 bg-[#050505]">
           <div className="flex items-center gap-2.5">
             <div className="w-10 h-10 rounded-2xl bg-yellow-400/15 border border-yellow-400/40 flex items-center justify-center text-xl text-yellow-400 shadow-sm">
               🏆
@@ -180,7 +180,7 @@ export const AchievementsModal: React.FC<AchievementsModalProps> = ({
         </div>
 
         {/* 3 Main Navigation Tabs */}
-        <div className="p-2 bg-[#080d13] border-b border-white/10 flex items-center gap-1.5 shrink-0">
+        <div className="p-2 bg-[#000000] border-b border-white/10 flex items-center gap-1.5 shrink-0">
           <button
             type="button"
             id="tab-conquistas-btn"
@@ -225,7 +225,7 @@ export const AchievementsModal: React.FC<AchievementsModalProps> = ({
         </div>
 
         {/* Global Progress Summary Header */}
-        <div className="px-4 py-2.5 bg-[#0d151f] border-b border-white/5 shrink-0">
+        <div className="px-4 py-2.5 bg-[#0a0a0a] border-b border-white/5 shrink-0">
           <div className="flex items-center justify-between gap-2 mb-1">
             <div className="flex items-center gap-2">
               <span className="text-xs font-black text-white font-mono-stat">
@@ -257,7 +257,7 @@ export const AchievementsModal: React.FC<AchievementsModalProps> = ({
         {activeMainTab === 'conquistas' && (
           <>
             {/* Search & Filter Controls */}
-            <div className="px-4 py-2.5 border-b border-white/5 bg-[#090d13] shrink-0 space-y-2">
+            <div className="px-4 py-2.5 border-b border-white/5 bg-[#050505] shrink-0 space-y-2">
               {/* Status Tabs */}
               <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
                 <button
@@ -369,10 +369,10 @@ export const AchievementsModal: React.FC<AchievementsModalProps> = ({
                       id={`achievement-card-${achievement.id}`}
                       className={`p-3.5 rounded-2xl border transition-all relative overflow-hidden ${
                         isUnlocked
-                          ? 'bg-[#0f1722] border-yellow-500/50 shadow-md shadow-yellow-500/5'
+                          ? 'bg-[#0a0a0a] border-yellow-500/50 shadow-md shadow-yellow-500/5'
                           : achievement.isSecret && !isUnlocked
-                          ? 'bg-[#0a0c10] border-purple-500/30 opacity-80'
-                          : 'bg-[#0c1118] border-white/10 opacity-90'
+                          ? 'bg-[#050505] border-purple-500/30 opacity-80'
+                          : 'bg-[#050505] border-white/10 opacity-90'
                       }`}
                     >
                       <div className="flex items-start gap-3">
@@ -521,7 +521,7 @@ export const AchievementsModal: React.FC<AchievementsModalProps> = ({
         {/* ========================================================================= */}
         {activeMainTab === 'medalhas' && (
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
-            <div className="p-3 rounded-2xl bg-gradient-to-r from-blue-950/30 to-[#0a121c] border border-yellow-500/30 flex items-center justify-between">
+            <div className="p-3 rounded-2xl bg-gradient-to-r from-neutral-900/30 to-[#0a121c] border border-yellow-500/30 flex items-center justify-between">
               <div>
                 <h3 className="text-xs font-black text-white font-display uppercase tracking-wider">
                   GALERIA DE MEDALHAS URBANAS
@@ -552,7 +552,7 @@ export const AchievementsModal: React.FC<AchievementsModalProps> = ({
                     className={`p-3 rounded-2xl border transition-all cursor-pointer text-center relative overflow-hidden flex flex-col items-center justify-between ${
                       medal.unlocked
                         ? 'bg-gradient-to-b from-[#111c28] to-[#0a1017] border-yellow-400/50 shadow-md hover:scale-[1.02]'
-                        : 'bg-[#090d13] border-white/5 opacity-60 hover:opacity-80'
+                        : 'bg-[#050505] border-white/5 opacity-60 hover:opacity-80'
                     } ${isSelected ? 'ring-2 ring-yellow-400' : ''}`}
                   >
                     {/* Glow on unlocked */}
@@ -602,7 +602,7 @@ export const AchievementsModal: React.FC<AchievementsModalProps> = ({
 
             {/* Selected Medal Detail Modal Card */}
             {selectedMedalDetail && (
-              <div className="p-4 rounded-2xl bg-[#0e1622] border-2 border-yellow-400/60 shadow-xl mt-4 animate-in fade-in">
+              <div className="p-4 rounded-2xl bg-[#050505] border-2 border-yellow-400/60 shadow-xl mt-4 animate-in fade-in">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
                     <div className="w-12 h-12 rounded-2xl bg-black/50 border border-yellow-400/50 flex items-center justify-center text-3xl">
@@ -675,10 +675,10 @@ export const AchievementsModal: React.FC<AchievementsModalProps> = ({
                     id={`title-card-${title.id}`}
                     className={`p-3.5 rounded-2xl border transition-all flex items-center justify-between gap-3 ${
                       isEquipped
-                        ? 'bg-gradient-to-r from-amber-950/40 via-[#131b26] to-[#0f1722] border-amber-400/80 shadow-[0_0_20px_rgba(251,191,36,0.15)]'
+                        ? 'bg-gradient-to-r from-amber-950/40 via-[#131b26] to-[#0a0a0a] border-amber-400/80 shadow-[0_0_20px_rgba(251,191,36,0.15)]'
                         : title.unlocked
-                        ? 'bg-[#0d141e] border-white/15 hover:border-yellow-400/50'
-                        : 'bg-[#080c12] border-white/5 opacity-60'
+                        ? 'bg-[#0a0a0a] border-white/15 hover:border-yellow-400/50'
+                        : 'bg-[#050505] border-white/5 opacity-60'
                     }`}
                   >
                     <div className="flex items-center gap-3 min-w-0 flex-1">
@@ -747,7 +747,7 @@ export const AchievementsModal: React.FC<AchievementsModalProps> = ({
         )}
 
         {/* Footer */}
-        <div className="p-3 bg-[#080c10] border-t border-white/5 flex items-center justify-between text-[10px] text-slate-400 font-mono-stat shrink-0">
+        <div className="p-3 bg-[#000000] border-t border-white/5 flex items-center justify-between text-[10px] text-slate-400 font-mono-stat shrink-0">
           <div className="flex items-center gap-1.5">
             <Shield className="w-3.5 h-3.5 text-yellow-400" />
             <span>Estrutura de Honra THE ROLLING WARS</span>

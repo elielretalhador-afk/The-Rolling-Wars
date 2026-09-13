@@ -33,7 +33,7 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
   onSelectZoneOnMap,
 }) => {
   return (
-    <div className="flex-1 overflow-y-auto custom-scrollbar p-3 pb-24 bg-[#05070a] flex flex-col items-center justify-center">
+    <div className="flex-1 overflow-y-auto custom-scrollbar p-3 pb-24 bg-[#000000] flex flex-col items-center justify-center">
       <div className="text-center p-8 bg-[#0b131e] border border-white/5 rounded-2xl w-full max-w-sm shadow-xl mt-12">
         <div className="w-16 h-16 rounded-2xl bg-amber-500/10 text-amber-400 border border-amber-500/30 flex items-center justify-center text-3xl mx-auto mb-4">
           🚧
@@ -71,7 +71,7 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
     switch (difficulty) {
       case 'EASY':
         return (
-          <span className="px-2 py-0.5 rounded text-[9px] font-black uppercase font-mono-stat bg-blue-950/80 text-yellow-400 border border-yellow-500/40">
+          <span className="px-2 py-0.5 rounded text-[9px] font-black uppercase font-mono-stat bg-neutral-900/80 text-yellow-400 border border-yellow-500/40">
             Fácil
           </span>
         );
@@ -167,7 +167,7 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
       {completedUnclaimedCount > 0 && (
         <div
           id="banner-unclaimed-missions"
-          className="p-3.5 rounded-2xl bg-gradient-to-r from-blue-950/80 via-blue-900/40 to-[#0c1420] border-2 border-yellow-400/50 shadow-[0_0_20px_rgba(252,232,3,0.2)] flex items-center justify-between gap-3"
+          className="p-3.5 rounded-2xl bg-gradient-to-r from-neutral-900/80 via-blue-900/40 to-[#0c1420] border-2 border-yellow-400/50 shadow-[0_0_20px_rgba(252,232,3,0.2)] flex items-center justify-between gap-3"
         >
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-yellow-400 text-black flex items-center justify-center font-black shrink-0 animate-bounce">
@@ -201,7 +201,7 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
           className={`px-3 py-2 rounded-xl text-xs font-bold font-mono-stat uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer ${
             activeFilter === 'ALL'
               ? 'bg-yellow-400 text-black font-black shadow-[0_0_12px_rgba(252,232,3,0.3)]'
-              : 'bg-[#0d141d] text-slate-400 border border-white/10 hover:text-white'
+              : 'bg-[#000000] text-slate-400 border border-white/10 hover:text-white'
           }`}
         >
           Todas ({missions.length})
@@ -214,7 +214,7 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
           className={`px-3 py-2 rounded-xl text-xs font-bold font-mono-stat uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer ${
             activeFilter === 'DAILY'
               ? 'bg-yellow-400 text-black font-black shadow-[0_0_12px_rgba(252,232,3,0.3)]'
-              : 'bg-[#0d141d] text-slate-400 border border-white/10 hover:text-white'
+              : 'bg-[#000000] text-slate-400 border border-white/10 hover:text-white'
           }`}
         >
           Diárias ({dailyCount})
@@ -227,7 +227,7 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
           className={`px-3 py-2 rounded-xl text-xs font-bold font-mono-stat uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer ${
             activeFilter === 'WEEKLY'
               ? 'bg-yellow-400 text-black font-black shadow-[0_0_12px_rgba(252,232,3,0.3)]'
-              : 'bg-[#0d141d] text-slate-400 border border-white/10 hover:text-white'
+              : 'bg-[#000000] text-slate-400 border border-white/10 hover:text-white'
           }`}
         >
           Semanais ({weeklyCount})
@@ -240,7 +240,7 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
           className={`px-3 py-2 rounded-xl text-xs font-bold font-mono-stat uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer ${
             activeFilter === 'LONG_TERM'
               ? 'bg-yellow-400 text-black font-black shadow-[0_0_12px_rgba(252,232,3,0.3)]'
-              : 'bg-[#0d141d] text-slate-400 border border-white/10 hover:text-white'
+              : 'bg-[#000000] text-slate-400 border border-white/10 hover:text-white'
           }`}
         >
           Longa Duração ({longTermCount})
@@ -253,7 +253,7 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
           className={`px-3 py-2 rounded-xl text-xs font-bold font-mono-stat uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer ${
             activeFilter === 'TIMED'
               ? 'bg-yellow-400 text-black font-black shadow-[0_0_12px_rgba(252,232,3,0.3)]'
-              : 'bg-[#0d141d] text-slate-400 border border-white/10 hover:text-white'
+              : 'bg-[#000000] text-slate-400 border border-white/10 hover:text-white'
           }`}
         >
           Temporárias ({timedCount})
@@ -266,7 +266,7 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
           className={`px-3 py-2 rounded-xl text-xs font-bold font-mono-stat uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer ${
             activeFilter === 'COMPLETED'
               ? 'bg-yellow-400 text-black font-black shadow-[0_0_12px_rgba(252,232,3,0.3)]'
-              : 'bg-[#0d141d] text-slate-400 border border-white/10 hover:text-white'
+              : 'bg-[#000000] text-slate-400 border border-white/10 hover:text-white'
           }`}
         >
           Concluídas {completedUnclaimedCount > 0 && `(${completedUnclaimedCount})`}
@@ -276,7 +276,7 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
       {/* Lista de Missões */}
       <div className="space-y-3">
         {filteredMissions.length === 0 ? (
-          <div className="p-8 rounded-2xl bg-[#0d141d] border border-white/10 text-center text-slate-400 font-mono-stat text-xs">
+          <div className="p-8 rounded-2xl bg-[#000000] border border-white/10 text-center text-slate-400 font-mono-stat text-xs">
             Nenhuma missão encontrada nesta categoria.
           </div>
         ) : (
@@ -293,11 +293,11 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
               <div
                 key={mission.id}
                 id={`mission-card-${mission.id}`}
-                className={`p-4 rounded-2xl bg-[#0d141d] border transition-all flex flex-col justify-between relative overflow-hidden ${
+                className={`p-4 rounded-2xl bg-[#000000] border transition-all flex flex-col justify-between relative overflow-hidden ${
                   isCompleted
-                    ? 'border-yellow-400/70 shadow-[0_0_20px_rgba(252,232,3,0.15)] bg-gradient-to-br from-[#0d141d] to-blue-950/20'
+                    ? 'border-yellow-400/70 shadow-[0_0_20px_rgba(252,232,3,0.15)] bg-gradient-to-br from-[#000000] to-blue-950/20'
                     : isClaimed
-                    ? 'border-white/5 opacity-70 bg-[#1d4ed8]'
+                    ? 'border-white/5 opacity-70 bg-[#000000]'
                     : isLocked
                     ? 'border-white/5 opacity-75 bg-[#090e14]'
                     : isExpired
@@ -328,7 +328,7 @@ export const MissionsHub: React.FC<MissionsHubProps> = ({
                       {/* Janela de Horário */}
                       {isTimedWindow && (
                         isWindowActive && !isExpired ? (
-                          <span className="flex items-center gap-1 px-1.5 py-0.5 rounded bg-blue-950/80 border border-yellow-400/40 text-[9px] font-black text-yellow-400 font-mono-stat uppercase">
+                          <span className="flex items-center gap-1 px-1.5 py-0.5 rounded bg-neutral-900/80 border border-yellow-400/40 text-[9px] font-black text-yellow-400 font-mono-stat uppercase">
                             <span className="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-pulse" />
                             Janela Ativa ({mission.timeWindow?.label})
                           </span>

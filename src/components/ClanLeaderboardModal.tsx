@@ -17,7 +17,7 @@ export const ClanLeaderboardModal: React.FC<ClanLeaderboardModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 animate-in fade-in duration-200">
-      <div className="bg-[#080B0E] p-1 rounded-3xl w-full max-w-md border border-yellow-500/30 shadow-[0_0_40px_rgba(252,232,3,0.1)] relative overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="bg-[#050505] p-1 rounded-3xl w-full max-w-md border border-yellow-500/30 shadow-[0_0_40px_rgba(252,232,3,0.1)] relative overflow-hidden flex flex-col max-h-[90vh]">
         
         {/* Header */}
         <div className="bg-gradient-to-br from-[#0a0e14] to-[#1a1405] p-6 pb-6 relative shrink-0">

@@ -112,7 +112,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
       <div
         id="settings-modal"
-        className="w-full max-w-lg max-h-[92vh] flex flex-col rounded-3xl bg-[#080d14] border-2 border-yellow-500/40 shadow-[0_15px_60px_rgba(252,232,3,0.25)] overflow-hidden text-white font-sans relative"
+        className="w-full max-w-lg max-h-[92vh] flex flex-col rounded-3xl bg-[#000000] border-2 border-yellow-500/40 shadow-[0_15px_60px_rgba(252,232,3,0.25)] overflow-hidden text-white font-sans relative"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Glow Superior */}
@@ -215,7 +215,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               </div>
 
               {/* Informações Básicas da Conta */}
-              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-3">
+              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-3">
                 <h4 className="text-xs font-black uppercase text-slate-300 tracking-wider font-mono-stat flex items-center gap-1.5">
                   <User className="w-3.5 h-3.5 text-yellow-400" />
                   DADOS DO CADASTRO
@@ -252,7 +252,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               </div>
 
               {/* Gerenciamento de Sessão */}
-              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-2">
+              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-2">
                 <h4 className="text-xs font-black uppercase text-slate-300 tracking-wider font-mono-stat">
                   SESSÃO & ACESSO
                 </h4>
@@ -276,7 +276,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
              ========================================== */}
           {activeCategory === 'PRIVACIDADE' && (
             <div className="space-y-4 animate-in fade-in">
-              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-3">
+              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-3">
                 <h4 className="text-xs font-black uppercase text-slate-300 tracking-wider font-mono-stat flex items-center gap-1.5">
                   <Eye className="w-3.5 h-3.5 text-cyan-400" />
                   VISIBILIDADE SOCIAL
@@ -386,7 +386,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               </div>
 
               {/* Permissão de Desafios Diretos */}
-              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-2">
+              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-2">
                 <h4 className="text-xs font-black uppercase text-slate-300 tracking-wider font-mono-stat">
                   QUEM PODE ENVIAR DESAFIOS X1/X2?
                 </h4>
@@ -421,7 +421,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
              ========================================== */}
           {activeCategory === 'NOTIFICACOES' && (
             <div className="space-y-4 animate-in fade-in">
-              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-3">
+              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-3">
                 <div className="flex items-center justify-between pb-2 border-b border-white/10">
                   <div>
                     <h4 className="text-xs font-black uppercase text-white tracking-wider font-display flex items-center gap-1.5">
@@ -543,7 +543,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
              ========================================== */}
           {activeCategory === 'JOGO' && (
             <div className="space-y-4 animate-in fade-in">
-              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-3">
+              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-3">
                 <h4 className="text-xs font-black uppercase text-slate-300 tracking-wider font-mono-stat flex items-center gap-1.5">
                   <Gamepad2 className="w-3.5 h-3.5 text-yellow-400" />
                   PREFERÊNCIAS DE PATINAÇÃO & HUD
@@ -655,7 +655,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           {activeCategory === 'MAPA' && (
             <div className="space-y-4 animate-in fade-in">
               {/* Estilo do Mapa */}
-              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-3">
+              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-3">
                 <h4 className="text-xs font-black uppercase text-slate-300 tracking-wider font-mono-stat flex items-center gap-1.5">
                   <MapPin className="w-3.5 h-3.5 text-cyan-400" />
                   TEMA DO MAPA GPS
@@ -704,7 +704,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               </div>
 
               {/* Elementos Visíveis no Mapa */}
-              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-3">
+              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-3">
                 <h4 className="text-xs font-black uppercase text-slate-300 tracking-wider font-mono-stat">
                   CAMADAS & ELEMENTOS VISÍVEIS
                 </h4>
@@ -769,7 +769,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
              ========================================== */}
           {activeCategory === 'APARENCIA' && (
             <div className="space-y-4 animate-in fade-in">
-              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-3">
+              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-3">
                 <h4 className="text-xs font-black uppercase text-slate-300 tracking-wider font-mono-stat flex items-center gap-1.5">
                   <Palette className="w-3.5 h-3.5 text-purple-400" />
                   TEMA DO APLICATIVO
@@ -818,7 +818,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               </div>
 
               {/* Modo Compacto */}
-              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-2">
+              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-2">
                 <label className="flex items-center justify-between cursor-pointer">
                   <div>
                     <div className="text-xs font-bold text-white font-display">
@@ -844,7 +844,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
              ========================================== */}
           {activeCategory === 'SOM_E_VIBRACAO' && (
             <div className="space-y-4 animate-in fade-in">
-              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-3">
+              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-3">
                 <h4 className="text-xs font-black uppercase text-slate-300 tracking-wider font-mono-stat flex items-center gap-1.5">
                   <Volume2 className="w-3.5 h-3.5 text-yellow-400" />
                   EFEITOS SONOROS
@@ -894,7 +894,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               </div>
 
               {/* Feedback Tátil / Vibração */}
-              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-3">
+              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-3">
                 <h4 className="text-xs font-black uppercase text-slate-300 tracking-wider font-mono-stat flex items-center gap-1.5">
                   <Vibrate className="w-3.5 h-3.5 text-cyan-400" />
                   FEEDBACK TÁTIL (VIBRAÇÃO)
@@ -976,7 +976,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               </div>
 
               {/* Gerenciamento de Jogadores Bloqueados */}
-              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-3">
+              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-3">
                 <div className="flex items-center justify-between">
                   <h4 className="text-xs font-black uppercase text-slate-300 tracking-wider font-mono-stat">
                     JOGADORES BLOQUEADOS
@@ -1003,7 +1003,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               </div>
 
               {/* Atalho para Moderação e Denúncias */}
-              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-2">
+              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-2">
                 <h4 className="text-xs font-black uppercase text-slate-300 tracking-wider font-mono-stat">
                   MODERAÇÃO & DENÚNCIAS
                 </h4>
@@ -1048,7 +1048,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               </div>
 
               {/* Links e Políticas */}
-              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-2">
+              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-2">
                 <h4 className="text-xs font-black uppercase text-slate-300 tracking-wider font-mono-stat mb-2">
                   INFORMAÇÕES LEGAIS & SUPORTE
                 </h4>
@@ -1107,7 +1107,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
         </div>
 
         {/* FOOTER */}
-        <div className="p-3 bg-[#080d14] border-t border-white/10 flex items-center justify-between text-[10px] font-mono-stat text-slate-400 shrink-0">
+        <div className="p-3 bg-[#000000] border-t border-white/10 flex items-center justify-between text-[10px] font-mono-stat text-slate-400 shrink-0">
           <span className="flex items-center gap-1">
             <Radio className="w-3 h-3 text-yellow-400" />
             Preferências Salvas Automaticamente

@@ -61,9 +61,9 @@ export const HelpSupportModal: React.FC<HelpSupportModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-[#080d14]/90 " onClick={onClose} />
+      <div className="absolute inset-0 bg-[#000000]/90 " onClick={onClose} />
       
-      <div className="relative w-full max-w-2xl h-[85vh] bg-[#0d141d] rounded-3xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col">
+      <div className="relative w-full max-w-2xl h-[85vh] bg-[#000000] rounded-3xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-[#121a24]">
           <div className="flex items-center gap-3">
@@ -78,7 +78,7 @@ export const HelpSupportModal: React.FC<HelpSupportModalProps> = ({
         </div>
 
         {/* Tabs */}
-        <div className="flex px-4 border-b border-white/5 bg-[#1d4ed8]">
+        <div className="flex px-4 border-b border-white/5 bg-[#000000]">
           <button
             onClick={() => setActiveTab('help')}
             className={`flex-1 py-4 text-sm font-bold uppercase tracking-wider border-b-2 transition-colors ${

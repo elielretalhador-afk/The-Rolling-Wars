@@ -82,7 +82,7 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
       case 'SPECIAL_CHALLENGE':
         return { label: 'DESAFIO ESPECIAL', icon: Swords, color: 'text-rose-400', border: 'border-rose-500/40 bg-rose-500/10' };
       default:
-        return { label: 'EVENTO', icon: Sparkles, color: 'text-blue-400', border: 'border-blue-500/40 bg-blue-500/10' };
+        return { label: 'EVENTO', icon: Sparkles, color: 'text-blue-400', border: 'border-neutral-700/40 bg-blue-500/10' };
     }
   };
 
@@ -153,7 +153,7 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
         </div>
 
         {/* Tab Navigation Menu */}
-        <div className="flex items-center gap-1 overflow-x-auto px-4 py-2 bg-[#080d14] border-b border-white/5 no-scrollbar text-xs font-mono-stat">
+        <div className="flex items-center gap-1 overflow-x-auto px-4 py-2 bg-[#000000] border-b border-white/5 no-scrollbar text-xs font-mono-stat">
           <button
             onClick={() => setActiveTab('info')}
             className={`px-3 py-1.5 rounded-xl font-bold whitespace-nowrap transition-colors cursor-pointer ${
@@ -274,7 +274,7 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
 
               {/* Zona Vinculada */}
               {associatedZone && (
-                <div className="p-4 rounded-2xl bg-blue-950/30 border border-yellow-500/30 flex items-center justify-between gap-3">
+                <div className="p-4 rounded-2xl bg-neutral-900/30 border border-yellow-500/30 flex items-center justify-between gap-3">
                   <div>
                     <span className="text-[10px] font-black uppercase text-yellow-400 font-mono-stat flex items-center gap-1">
                       <MapPin className="w-3 h-3" />
@@ -633,7 +633,7 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
                               ? 'bg-amber-500/20 text-amber-400 border border-amber-500/40'
                               : rew.rarity === 'epico'
                               ? 'bg-purple-500/20 text-purple-400 border border-purple-500/40'
-                              : 'bg-blue-500/20 text-blue-400 border border-blue-500/40'
+                              : 'bg-blue-500/20 text-blue-400 border border-neutral-700/40'
                           }`}>
                             {rew.rarity}
                           </span>
@@ -656,7 +656,7 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
         </div>
 
         {/* Footer com Ações Dinâmicas */}
-        <div className="p-4 bg-[#080d14] border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="p-4 bg-[#000000] border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="text-xs font-mono-stat text-slate-400">
             {isUserRegistered ? (
               <span className="text-yellow-400 font-bold flex items-center gap-1.5">

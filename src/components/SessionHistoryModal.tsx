@@ -253,7 +253,7 @@ export const SessionHistoryModal: React.FC<SessionHistoryModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/85  animate-in fade-in duration-200">
       <div
         id="session-history-modal-container"
-        className="relative w-full max-w-2xl max-h-[92vh] rounded-3xl bg-gradient-to-b from-[#0e1622] via-[#090d14] to-[#06090e] border-2 border-[#fce803]/50 shadow-[0_0_50px_rgba(252,232,3,0.25)] flex flex-col overflow-hidden text-white"
+        className="relative w-full max-w-2xl max-h-[92vh] rounded-3xl bg-gradient-to-b from-[#050505] via-[#090d14] to-[#06090e] border-2 border-[#fce803]/50 shadow-[0_0_50px_rgba(252,232,3,0.25)] flex flex-col overflow-hidden text-white"
       >
         {/* Neon Ambient Header Glow */}
         <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-80 h-32 bg-[#fce803]/15 rounded-full blur-3xl pointer-events-none" />
@@ -315,7 +315,7 @@ export const SessionHistoryModal: React.FC<SessionHistoryModalProps> = ({
           {selectedSession ? (
             <div className="space-y-4 animate-in fade-in duration-200">
               {/* Header Hero Card */}
-              <div className="p-4 rounded-2xl bg-gradient-to-r from-[#101b2a] via-[#0d1622] to-[#0b111a] border border-[#fce803]/30 relative overflow-hidden">
+              <div className="p-4 rounded-2xl bg-gradient-to-r from-[#101b2a] via-[#0a0a0a] to-[#0b111a] border border-[#fce803]/30 relative overflow-hidden">
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <span className="text-[10px] font-black text-[#fce803] uppercase tracking-widest font-mono-stat block">
@@ -350,7 +350,7 @@ export const SessionHistoryModal: React.FC<SessionHistoryModalProps> = ({
               </div>
 
               {/* Interactive Detail Map Container */}
-              <div className="relative rounded-2xl overflow-hidden border-2 border-white/15 bg-[#080d14] shadow-inner">
+              <div className="relative rounded-2xl overflow-hidden border-2 border-white/15 bg-[#000000] shadow-inner">
                 <div
                   ref={detailMapContainerRef}
                   id="historical-detail-leaflet-map"
@@ -550,7 +550,7 @@ export const SessionHistoryModal: React.FC<SessionHistoryModalProps> = ({
             <div className="space-y-4">
               {/* Overall Summary Stats Header */}
               {totalSessionsCount > 0 && (
-                <div className="p-4 rounded-2xl bg-gradient-to-r from-[#101b2a] via-[#0d1622] to-[#0a1018] border border-white/10 shadow-lg">
+                <div className="p-4 rounded-2xl bg-gradient-to-r from-[#101b2a] via-[#0a0a0a] to-[#0a1018] border border-white/10 shadow-lg">
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center font-mono-stat">
                     <div className="p-2 rounded-xl bg-black/40 border border-white/5">
                       <span className="text-[9px] text-slate-400 font-bold uppercase block">TOTAL DE ROLÊS</span>
@@ -727,7 +727,7 @@ export const SessionHistoryModal: React.FC<SessionHistoryModalProps> = ({
                 </div>
               ) : (
                 /* Empty State */
-                <div className="p-8 rounded-3xl bg-[#0c131d] border-2 border-white/10 text-center space-y-3 my-4">
+                <div className="p-8 rounded-3xl bg-[#050505] border-2 border-white/10 text-center space-y-3 my-4">
                   <div className="w-14 h-14 mx-auto rounded-2xl bg-[#fce803]/10 border border-[#fce803]/30 flex items-center justify-center text-[#fce803] shadow-[0_0_20px_rgba(252,232,3,0.15)]">
                     <History className="w-7 h-7" />
                   </div>

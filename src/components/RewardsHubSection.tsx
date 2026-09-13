@@ -129,7 +129,7 @@ export const RewardsHubSection: React.FC<RewardsHubSectionProps> = ({
             </span>
           </div>
 
-          <div className="w-full bg-[#0d141e] h-2.5 rounded-full overflow-hidden p-0.5 border border-white/10">
+          <div className="w-full bg-[#0a0a0a] h-2.5 rounded-full overflow-hidden p-0.5 border border-white/10">
             <div
               className="h-full rounded-full bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-400 transition-all duration-500 shadow-[0_0_10px_rgba(251,191,36,0.5)]"
               style={{ width: `${progressPercent}%` }}
@@ -162,7 +162,7 @@ export const RewardsHubSection: React.FC<RewardsHubSectionProps> = ({
             className={`px-3 py-1.5 rounded-xl text-xs font-bold font-mono-stat uppercase tracking-wider whitespace-nowrap transition-all flex items-center gap-1.5 shrink-0 cursor-pointer ${
               selectedCategory === tab.id
                 ? 'bg-amber-400 text-black font-black shadow-[0_0_15px_rgba(251,191,36,0.4)]'
-                : 'bg-[#0d141e] text-slate-400 hover:text-white border border-white/10 hover:border-white/20'
+                : 'bg-[#0a0a0a] text-slate-400 hover:text-white border border-white/10 hover:border-white/20'
             }`}
           >
             <span>{tab.icon}</span>
@@ -172,7 +172,7 @@ export const RewardsHubSection: React.FC<RewardsHubSectionProps> = ({
       </div>
 
       {/* Status Sub-filter (Todos / Desbloqueados / Bloqueados / Equipados) */}
-      <div className="grid grid-cols-4 gap-1 p-1 bg-[#1d4ed8] border border-white/10 rounded-2xl mb-3">
+      <div className="grid grid-cols-4 gap-1 p-1 bg-[#000000] border border-white/10 rounded-2xl mb-3">
         <button
           type="button"
           onClick={() => setStatusFilter('todos')}
@@ -222,7 +222,7 @@ export const RewardsHubSection: React.FC<RewardsHubSectionProps> = ({
       {/* Rewards Grid */}
       <div className="space-y-2.5">
         {filteredItems.length === 0 ? (
-          <div className="p-6 rounded-2xl bg-[#0d141e] border border-white/10 text-center">
+          <div className="p-6 rounded-2xl bg-[#0a0a0a] border border-white/10 text-center">
             <Gift className="w-8 h-8 text-slate-600 mx-auto mb-2" />
             <p className="text-xs text-slate-400 font-bold uppercase font-mono-stat">
               Nenhum item nesta categoria com o filtro selecionado.
@@ -239,7 +239,7 @@ export const RewardsHubSection: React.FC<RewardsHubSectionProps> = ({
                   item.isEquipped
                     ? 'bg-gradient-to-r from-[#102a70] via-[#06102b] to-[#102a70] border-yellow-400/80 shadow-[0_0_20px_rgba(252,232,3,0.2)]'
                     : item.isUnlocked
-                    ? 'bg-[#0d141d] border-white/10 hover:border-white/20'
+                    ? 'bg-[#000000] border-white/10 hover:border-white/20'
                     : 'bg-[#090d12]/90 border-white/5 opacity-75'
                 }`}
               >

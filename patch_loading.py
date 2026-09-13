@@ -1,50 +1,45 @@
 import re
 
-with open("src/App.tsx", "r") as f:
+with open('src/App.tsx', 'r') as f:
     content = f.read()
 
-old_loading = """  if (authState === 'LOADING') {
-    return (
-      <div className="flex justify-center w-full h-full bg-[#05070a]">
-        <main className="relative flex flex-col items-center justify-center w-full h-full max-w-md md:max-w-lg bg-[#080B0E] border-x border-slate-800/40">
-          <div className="w-16 h-16 rounded-full border-4 border-emerald-400/20 border-t-emerald-400 animate-spin mb-4" />
-          <h2 className="text-xl font-black text-white font-display uppercase tracking-wider mb-2">Autenticando</h2>
-          <p className="text-sm text-slate-400 font-medium">Verificando identidade...</p>
-        </main>
-      </div>
-    );
-  }"""
+# 1. Update the state and timer
+old_timer = """  const [minSplashTimeElapsed, setMinSplashTimeElapsed] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setMinSplashTimeElapsed(true);
+    }, 4500);
+    return () => clearTimeout(timer);
+  }, []);"""
 
-new_loading = """  if (authState === 'LOADING') {
-    return (
-      <div className="flex justify-center w-full h-full bg-black relative overflow-hidden">
-        <div className="sparks-container">
-          {Array.from({ length: 25 }).map((_, i) => (
-            <div key={i} className="spark" style={{
-              left: `${Math.random() * 100}%`,
-              top: `${50 + Math.random() * 50}%`,
-              animationDuration: `${2 + Math.random() * 4}s`,
-              animationDelay: `${Math.random() * 3}s`
-            }} />
-          ))}
-        </div>
-        <main className="relative z-10 flex flex-col items-center justify-center w-full h-full max-w-md md:max-w-lg bg-transparent border-x border-slate-800/40 p-6">
-          <div className="relative w-40 h-40 mx-auto mb-8 flex items-center justify-center">
-            <div className="absolute inset-0 bg-[#fce803] rounded-full blur-[50px] opacity-20 animate-pulse"></div>
-            <img src="/logo-rw-dark.png" alt="The Rolling Wars" className="relative z-10 w-full h-full object-contain drop-shadow-[0_0_15px_rgba(252,232,3,0.4)]" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
-            <div className="absolute inset-0 flex items-center justify-center border-2 border-[#fce803]/30 rounded-full" style={{ zIndex: 0 }}>
-              <span className="text-[#fce803] font-black text-3xl tracking-widest opacity-50">RW</span>
-            </div>
-          </div>
-          <div className="w-16 h-16 rounded-full border-4 border-[#fce803]/20 border-t-[#fce803] animate-spin mb-4" />
-          <h2 className="text-xl font-black text-white font-display uppercase tracking-wider mb-2">Autenticando</h2>
-          <p className="text-sm text-slate-400 font-medium">Verificando identidade...</p>
-        </main>
-      </div>
-    );
-  }"""
+new_timer = """  const [minSplashTimeElapsed, setMinSplashTimeElapsed] = useState(false);
+  const [splashProgress, setSplashProgress] = useState(0);
+  useEffect(() => {
+    const pTimer = setTimeout(() => setSplashProgress(100), 100);
+    const timer = setTimeout(() => {
+      setMinSplashTimeElapsed(true);
+    }, 5000);
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(pTimer);
+    };
+  }, []);"""
 
-content = content.replace(old_loading, new_loading)
+content = content.replace(old_timer, new_timer)
 
-with open("src/App.tsx", "w") as f:
+# 2. Update the loading bar div
+old_bar = """            <div className="w-48 h-1 bg-slate-800 rounded-full overflow-hidden mb-4 border border-white/5">
+              <div className="h-full bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-yellow-400 w-full origin-left animate-pulse"></div>
+            </div>"""
+
+new_bar = """            <div className="w-48 h-1 bg-slate-800 rounded-full overflow-hidden mb-4 border border-white/5 relative">
+              <div 
+                className="absolute top-0 left-0 h-full bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-yellow-400 transition-all ease-linear"
+                style={{ width: `${splashProgress}%`, transitionDuration: '4900ms' }}
+              ></div>
+            </div>"""
+
+content = content.replace(old_bar, new_bar)
+
+with open('src/App.tsx', 'w') as f:
     f.write(content)

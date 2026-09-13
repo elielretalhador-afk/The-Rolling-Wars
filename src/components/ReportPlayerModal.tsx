@@ -137,7 +137,7 @@ export const ReportPlayerModal: React.FC<ReportPlayerModalProps> = ({
                       className={`p-2.5 rounded-xl border transition-all cursor-pointer flex items-start gap-2.5 ${
                         isSelected
                           ? 'bg-red-500/15 border-red-400/80 text-white shadow-[0_0_12px_rgba(239,68,68,0.2)]'
-                          : 'bg-[#0d141e] border-white/10 text-slate-300 hover:border-white/20'
+                          : 'bg-[#0a0a0a] border-white/10 text-slate-300 hover:border-white/20'
                       }`}
                     >
                       <div
@@ -171,7 +171,7 @@ export const ReportPlayerModal: React.FC<ReportPlayerModalProps> = ({
                 onChange={(e) => setDetails(e.target.value)}
                 placeholder="Descreva o que aconteceu ou aponte a zona/horário do ocorrido..."
                 rows={3}
-                className="w-full p-2.5 rounded-xl bg-[#0d141e] border border-white/10 text-xs text-white placeholder:text-slate-600 focus:outline-none focus:border-red-400 transition-all resize-none"
+                className="w-full p-2.5 rounded-xl bg-[#0a0a0a] border border-white/10 text-xs text-white placeholder:text-slate-600 focus:outline-none focus:border-red-400 transition-all resize-none"
               />
             </div>
 

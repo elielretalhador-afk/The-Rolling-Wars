@@ -46,7 +46,7 @@ export const RankingView: React.FC<RankingViewProps> = ({
   };
 
   return (
-    <div className="h-full w-full overflow-y-auto overscroll-contain px-4 py-4 pb-36 bg-[#080b0e]">
+    <div className="h-full w-full overflow-y-auto overscroll-contain px-4 py-4 pb-36 bg-[#050505]">
       {/* Header */}
       <div className="text-center mb-4">
         <button
@@ -72,7 +72,7 @@ export const RankingView: React.FC<RankingViewProps> = ({
 
       {/* Main Category Switch: PATINADORES vs CLÃS */}
       <div className="flex items-center justify-center gap-2 mb-3">
-        <div className="grid grid-cols-2 p-1 bg-[#0d141e] border-2 border-white/10 rounded-2xl w-full max-w-xs shadow-lg">
+        <div className="grid grid-cols-2 p-1 bg-[#0a0a0a] border-2 border-white/10 rounded-2xl w-full max-w-xs shadow-lg">
           <button
             id="tab-ranking-jogadores"
             onClick={() => setMainCategory('jogadores')}
@@ -139,7 +139,7 @@ export const RankingView: React.FC<RankingViewProps> = ({
             {top3Players[1] && (
               <div
                 onClick={() => handlePlayerClick(top3Players[1])}
-                className="p-2.5 rounded-2xl bg-[#0c131b] border-2 border-slate-600 text-center relative flex flex-col items-center shadow-lg cursor-pointer hover:border-slate-400 transition-transform active:scale-95"
+                className="p-2.5 rounded-2xl bg-[#050505] border-2 border-slate-600 text-center relative flex flex-col items-center shadow-lg cursor-pointer hover:border-slate-400 transition-transform active:scale-95"
                 title="Toque para ver perfil"
               >
                 <div className="w-5 h-5 rounded bg-slate-300 text-black font-black text-xs flex items-center justify-center absolute -top-2.5 font-mono-stat">
@@ -191,7 +191,7 @@ export const RankingView: React.FC<RankingViewProps> = ({
             {top3Players[2] && (
               <div
                 onClick={() => handlePlayerClick(top3Players[2])}
-                className="p-2.5 rounded-2xl bg-[#0c131b] border-2 border-amber-700 text-center relative flex flex-col items-center shadow-lg cursor-pointer hover:border-amber-600 transition-transform active:scale-95"
+                className="p-2.5 rounded-2xl bg-[#050505] border-2 border-amber-700 text-center relative flex flex-col items-center shadow-lg cursor-pointer hover:border-amber-600 transition-transform active:scale-95"
                 title="Toque para ver perfil"
               >
                 <div className="w-5 h-5 rounded bg-amber-600 text-black font-black text-xs flex items-center justify-center absolute -top-2.5 font-mono-stat">
@@ -224,8 +224,8 @@ export const RankingView: React.FC<RankingViewProps> = ({
                 onClick={() => handlePlayerClick(skater)}
                 className={`p-3 rounded-2xl flex items-center justify-between transition-all cursor-pointer hover:border-yellow-400/70 active:scale-[0.98] ${
                   skater.isCurrentUser
-                    ? 'bg-blue-950/50 border-2 border-yellow-400 shadow-[0_0_20px_rgba(252,232,3,0.2)]'
-                    : 'bg-[#0d141d] border-2 border-white/10'
+                    ? 'bg-neutral-900/50 border-2 border-yellow-400 shadow-[0_0_20px_rgba(252,232,3,0.2)]'
+                    : 'bg-[#000000] border-2 border-white/10'
                 }`}
               >
                 <div className="flex items-center gap-3 min-w-0">
@@ -294,7 +294,7 @@ export const RankingView: React.FC<RankingViewProps> = ({
               {/* 2nd Place */}
               <div
                 onClick={() => onSelectClan && onSelectClan(top3Clans[1])}
-                className="p-2.5 rounded-2xl bg-[#0c131b] border-2 border-slate-600 text-center relative flex flex-col items-center shadow-lg cursor-pointer hover:border-slate-400 transition-transform active:scale-95"
+                className="p-2.5 rounded-2xl bg-[#050505] border-2 border-slate-600 text-center relative flex flex-col items-center shadow-lg cursor-pointer hover:border-slate-400 transition-transform active:scale-95"
               >
                 <div className="w-5 h-5 rounded bg-slate-300 text-black font-black text-xs flex items-center justify-center absolute -top-2.5 font-mono-stat">
                   2
@@ -351,7 +351,7 @@ export const RankingView: React.FC<RankingViewProps> = ({
               {/* 3rd Place */}
               <div
                 onClick={() => onSelectClan && onSelectClan(top3Clans[2])}
-                className="p-2.5 rounded-2xl bg-[#0c131b] border-2 border-amber-700 text-center relative flex flex-col items-center shadow-lg cursor-pointer hover:border-amber-600 transition-transform active:scale-95"
+                className="p-2.5 rounded-2xl bg-[#050505] border-2 border-amber-700 text-center relative flex flex-col items-center shadow-lg cursor-pointer hover:border-amber-600 transition-transform active:scale-95"
               >
                 <div className="w-5 h-5 rounded bg-amber-600 text-black font-black text-xs flex items-center justify-center absolute -top-2.5 font-mono-stat">
                   3
@@ -387,7 +387,7 @@ export const RankingView: React.FC<RankingViewProps> = ({
                 <div
                   key={clan.id}
                   onClick={() => onSelectClan && onSelectClan(clan)}
-                  className="p-3 rounded-2xl bg-[#0d141d] border-2 border-white/10 hover:border-yellow-400/70 transition-all cursor-pointer active:scale-[0.99] flex items-center justify-between gap-3 group"
+                  className="p-3 rounded-2xl bg-[#000000] border-2 border-white/10 hover:border-yellow-400/70 transition-all cursor-pointer active:scale-[0.99] flex items-center justify-between gap-3 group"
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <span

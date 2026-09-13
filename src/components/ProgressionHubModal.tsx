@@ -159,7 +159,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
         <div className="absolute -bottom-16 -left-16 w-48 h-48 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none" />
 
         {/* Modal Header */}
-        <div className="p-4 sm:p-5 border-b border-white/10 flex items-center justify-between shrink-0 bg-[#0d141e]/90">
+        <div className="p-4 sm:p-5 border-b border-white/10 flex items-center justify-between shrink-0 bg-[#0a0a0a]/90">
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-2xl bg-yellow-400/15 border border-yellow-400/40 text-yellow-400">
               <Zap className="w-5 h-5" />
@@ -347,7 +347,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                       setActiveTab('inventario');
                       setInventoryCategory('skates');
                     }}
-                    className="p-3.5 rounded-2xl bg-[#0d141e] border border-cyan-500/30 hover:border-cyan-400 transition-all cursor-pointer group"
+                    className="p-3.5 rounded-2xl bg-[#0a0a0a] border border-cyan-500/30 hover:border-cyan-400 transition-all cursor-pointer group"
                   >
                     <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
                       🛹 SKATE / PATINS
@@ -367,7 +367,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                       setActiveTab('inventario');
                       setInventoryCategory('mascotes');
                     }}
-                    className="p-3.5 rounded-2xl bg-[#0d141e] border border-yellow-500/30 hover:border-yellow-400 transition-all cursor-pointer group"
+                    className="p-3.5 rounded-2xl bg-[#0a0a0a] border border-yellow-500/30 hover:border-yellow-400 transition-all cursor-pointer group"
                   >
                     <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
                       🐺 MASCOTE
@@ -387,7 +387,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                       setActiveTab('inventario');
                       setInventoryCategory('molduras');
                     }}
-                    className="p-3.5 rounded-2xl bg-[#0d141e] border border-purple-500/30 hover:border-purple-400 transition-all cursor-pointer group"
+                    className="p-3.5 rounded-2xl bg-[#0a0a0a] border border-purple-500/30 hover:border-purple-400 transition-all cursor-pointer group"
                   >
                     <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
                       🟢 MOLDURA DE PERFIL
@@ -407,7 +407,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                       setActiveTab('inventario');
                       setInventoryCategory('titulos');
                     }}
-                    className="p-3.5 rounded-2xl bg-[#0d141e] border border-amber-500/30 hover:border-amber-400 transition-all cursor-pointer group"
+                    className="p-3.5 rounded-2xl bg-[#0a0a0a] border border-amber-500/30 hover:border-amber-400 transition-all cursor-pointer group"
                   >
                     <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
                       👑 TÍTULO ATIVO
@@ -445,10 +445,10 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                         key={lvlDef.level}
                         className={`p-3.5 rounded-2xl border transition-all ${
                           isCurrent
-                            ? 'bg-gradient-to-r from-[#102419] to-[#0d141e] border-yellow-400 shadow-md'
+                            ? 'bg-gradient-to-r from-[#102419] to-[#0a0a0a] border-yellow-400 shadow-md'
                             : isPassed
                             ? 'bg-[#0d131a] border-white/10 opacity-80'
-                            : 'bg-[#090d13] border-white/5'
+                            : 'bg-[#050505] border-white/5'
                         }`}
                       >
                         <div className="flex items-start justify-between gap-3">
@@ -552,7 +552,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                     className={`px-3 py-1.5 rounded-xl border shrink-0 transition-all flex items-center gap-1.5 cursor-pointer active:scale-95 ${
                       inventoryCategory === cat.id
                         ? 'bg-yellow-400 text-black border-yellow-400 font-black shadow-sm'
-                        : 'bg-[#0d141e] text-slate-300 border-white/10 hover:border-white/30'
+                        : 'bg-[#0a0a0a] text-slate-300 border-white/10 hover:border-white/30'
                     }`}
                   >
                     <span>{cat.icon}</span>
@@ -624,7 +624,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                           isEquipped
                             ? 'bg-gradient-to-b from-[#11241a] to-[#081330] border-yellow-400 shadow-md ring-1 ring-yellow-400/40'
                             : isUnlocked
-                            ? 'bg-[#0d141e] border-white/10 hover:border-yellow-400/50'
+                            ? 'bg-[#0a0a0a] border-white/10 hover:border-yellow-400/50'
                             : 'bg-[#080b0f] border-white/5 opacity-75'
                         }`}
                       >
@@ -743,7 +743,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                       className={`px-3.5 py-2 rounded-2xl border shrink-0 transition-all flex items-center gap-2 cursor-pointer ${
                         selectedCollectionId === col.id
                           ? 'bg-yellow-400 text-black border-yellow-400 font-black shadow-md'
-                          : 'bg-[#0d141e] text-slate-300 border-white/10 hover:border-white/30'
+                          : 'bg-[#0a0a0a] text-slate-300 border-white/10 hover:border-white/30'
                       }`}
                     >
                       <span className="text-base">{col.icon || '🎴'}</span>
@@ -923,7 +923,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                     return (
                       <div
                         key={tx.id}
-                        className="p-3 rounded-2xl bg-[#0d141e] border border-white/10 hover:border-yellow-400/40 transition-all flex items-center justify-between gap-3"
+                        className="p-3 rounded-2xl bg-[#0a0a0a] border border-white/10 hover:border-yellow-400/40 transition-all flex items-center justify-between gap-3"
                       >
                         <div className="flex items-center gap-3 min-w-0">
                           <div className="w-9 h-9 rounded-xl bg-yellow-500/15 border border-yellow-400/30 flex items-center justify-center text-yellow-400 font-black font-mono-stat text-xs shrink-0">
@@ -969,7 +969,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
         </div>
 
         {/* Modal Footer */}
-        <div className="p-3 sm:p-4 border-t border-white/10 bg-[#1d4ed8] flex items-center justify-between shrink-0 font-mono-stat text-xs">
+        <div className="p-3 sm:p-4 border-t border-white/10 bg-[#000000] flex items-center justify-between shrink-0 font-mono-stat text-xs">
           <div className="text-slate-400 text-[11px]">
             Personalização & Cosméticos • Sem vantagens desleais de gameplay
           </div>
@@ -987,7 +987,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
       {/* Item Detail Modal */}
       {selectedItemDetail && (
         <div className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-black/80  animate-in fade-in duration-150">
-          <div className="w-full max-w-sm rounded-3xl bg-[#0e1622] border-2 border-yellow-400 shadow-2xl p-5 space-y-4 relative">
+          <div className="w-full max-w-sm rounded-3xl bg-[#050505] border-2 border-yellow-400 shadow-2xl p-5 space-y-4 relative">
             <button
               type="button"
               onClick={() => setSelectedItemDetail(null)}

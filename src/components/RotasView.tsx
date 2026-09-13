@@ -22,7 +22,7 @@ export const RotasView: React.FC<RotasViewProps> = ({ routes, onSelectRouteOnMap
   };
 
   return (
-    <div className="h-full w-full overflow-y-auto overscroll-contain px-4 py-4 pb-36 bg-[#080b0e]">
+    <div className="h-full w-full overflow-y-auto overscroll-contain px-4 py-4 pb-36 bg-[#050505]">
       {/* Header */}
       <div className="mb-4">
         <div className="flex items-center gap-2 text-yellow-400 text-xs font-bold uppercase tracking-wider font-mono-stat">
@@ -43,7 +43,7 @@ export const RotasView: React.FC<RotasViewProps> = ({ routes, onSelectRouteOnMap
           <div
             key={route.id}
             id={`route-card-${route.id}`}
-            className="p-4 rounded-2xl bg-[#0d141d] border-2 border-white/10 hover:border-yellow-500/50 transition-all shadow-md group cursor-pointer active:scale-[0.99]"
+            className="p-4 rounded-2xl bg-[#000000] border-2 border-white/10 hover:border-yellow-500/50 transition-all shadow-md group cursor-pointer active:scale-[0.99]"
             onClick={() => onSelectRouteOnMap(route)}
           >
             <div className="flex items-start justify-between gap-2">

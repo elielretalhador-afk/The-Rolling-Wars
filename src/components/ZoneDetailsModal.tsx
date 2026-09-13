@@ -82,11 +82,11 @@ export const ZoneDetailsModal: React.FC<ZoneDetailsModalProps> = ({
   return (
     <div className="absolute inset-x-0 bottom-16 sm:bottom-18 z-40 px-3 pb-2 sm:pb-3 pointer-events-none flex justify-center">
       <div
-        className="pointer-events-auto w-full max-w-md bg-[#1d4ed8]/95 border-2 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.95)] backdrop-blur-xl animate-in slide-in-from-bottom duration-300 max-h-[64vh] sm:max-h-[70vh] flex flex-col overflow-hidden"
+        className="pointer-events-auto w-full max-w-md bg-[#000000]/95 border-2 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.95)] backdrop-blur-xl animate-in slide-in-from-bottom duration-300 max-h-[64vh] sm:max-h-[70vh] flex flex-col overflow-hidden"
         style={{ borderColor: `${zoneColor}70` }}
       >
         {/* Sticky Header - Fixed at the top of the card */}
-        <div className="p-3.5 pb-2.5 bg-[#1d4ed8] border-b-2 border-white/10 flex items-start justify-between gap-2.5 shrink-0 z-10">
+        <div className="p-3.5 pb-2.5 bg-[#000000] border-b-2 border-white/10 flex items-start justify-between gap-2.5 shrink-0 z-10">
           <div className="flex-1 min-w-0 pr-1">
             <div className="flex items-center gap-1.5 mb-1 flex-wrap">
               {/* Type Badge */}
@@ -99,7 +99,7 @@ export const ZoneDetailsModal: React.FC<ZoneDetailsModalProps> = ({
 
               {/* Status Badge */}
               {isFree ? (
-                <span className="flex items-center gap-1 text-[9px] font-black uppercase text-yellow-300 bg-blue-950/80 px-2 py-0.5 rounded-md border border-yellow-500/40 font-mono-stat shrink-0">
+                <span className="flex items-center gap-1 text-[9px] font-black uppercase text-yellow-300 bg-neutral-900/80 px-2 py-0.5 rounded-md border border-yellow-500/40 font-mono-stat shrink-0">
                   <Flag className="w-3 h-3 text-yellow-400" /> ZONA LIVRE
                 </span>
               ) : isContested ? (
@@ -159,8 +159,8 @@ export const ZoneDetailsModal: React.FC<ZoneDetailsModalProps> = ({
             <div
               className={`p-2.5 rounded-xl border flex items-center justify-between gap-2.5 transition-all ${
                 isPlayerInside
-                  ? 'bg-blue-950/80 border-yellow-500/60 shadow-[0_0_15px_rgba(252,232,3,0.2)]'
-                  : 'bg-[#0f1722]/90 border-white/10'
+                  ? 'bg-neutral-900/80 border-yellow-500/60 shadow-[0_0_15px_rgba(252,232,3,0.2)]'
+                  : 'bg-[#0a0a0a]/90 border-white/10'
               }`}
             >
               <div className="flex items-center gap-2 min-w-0">
@@ -203,7 +203,7 @@ export const ZoneDetailsModal: React.FC<ZoneDetailsModalProps> = ({
 
           {/* Description */}
           {zone.description && (
-            <p className="text-xs text-slate-300 font-medium leading-relaxed bg-[#0f1722]/60 p-2.5 rounded-xl border border-white/5">
+            <p className="text-xs text-slate-300 font-medium leading-relaxed bg-[#0a0a0a]/60 p-2.5 rounded-xl border border-white/5">
               {zone.description}
             </p>
           )}
@@ -211,7 +211,7 @@ export const ZoneDetailsModal: React.FC<ZoneDetailsModalProps> = ({
           {/* Surface & Reference Point Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {zone.surface && (
-              <div className="p-2.5 rounded-xl bg-[#0f1722] border border-white/10 flex items-start gap-2">
+              <div className="p-2.5 rounded-xl bg-[#0a0a0a] border border-white/10 flex items-start gap-2">
                 <Layers className="w-4 h-4 text-yellow-400 shrink-0 mt-0.5" />
                 <div className="min-w-0">
                   <div className="text-[9px] text-slate-400 font-black uppercase font-mono-stat">QUALIDADE DO PISO</div>
@@ -221,7 +221,7 @@ export const ZoneDetailsModal: React.FC<ZoneDetailsModalProps> = ({
             )}
 
             {zone.referencePoint && (
-              <div className="p-2.5 rounded-xl bg-[#0f1722] border border-white/10 flex items-start gap-2">
+              <div className="p-2.5 rounded-xl bg-[#0a0a0a] border border-white/10 flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
                 <div className="min-w-0">
                   <div className="text-[9px] text-slate-400 font-black uppercase font-mono-stat">PONTO DE REFERÊNCIA</div>
@@ -233,7 +233,7 @@ export const ZoneDetailsModal: React.FC<ZoneDetailsModalProps> = ({
 
           {/* Rules Card */}
           {zone.rules && (
-            <div className="p-2.5 rounded-xl bg-[#0f1722] border border-white/10 flex items-start gap-2">
+            <div className="p-2.5 rounded-xl bg-[#0a0a0a] border border-white/10 flex items-start gap-2">
               <BookOpen className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
               <div className="min-w-0">
                 <div className="text-[9px] text-slate-400 font-black uppercase font-mono-stat">REQUISITOS / REGRAS</div>
@@ -243,7 +243,7 @@ export const ZoneDetailsModal: React.FC<ZoneDetailsModalProps> = ({
           )}
 
           {/* Controller / Status Card */}
-          <div className="p-3 rounded-2xl bg-[#0f1722] border-2 border-white/10">
+          <div className="p-3 rounded-2xl bg-[#0a0a0a] border-2 border-white/10">
             <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 flex items-center justify-between font-mono-stat">
               <span className="flex items-center gap-1.5">
                 <Shield className="w-3.5 h-3.5 text-yellow-400" />
@@ -302,7 +302,7 @@ export const ZoneDetailsModal: React.FC<ZoneDetailsModalProps> = ({
                   <Flag className="w-4 h-4 text-yellow-400 shrink-0" />
                   Esta zona está livre e disponível para conquista.
                 </div>
-                <div className="mt-2 p-2 rounded-lg bg-blue-950/40 border border-yellow-500/30 text-[11px] text-yellow-200/90 font-mono-stat text-left flex items-start gap-1.5">
+                <div className="mt-2 p-2 rounded-lg bg-neutral-900/40 border border-yellow-500/30 text-[11px] text-yellow-200/90 font-mono-stat text-left flex items-start gap-1.5">
                   <Award className="w-3.5 h-3.5 text-yellow-400 shrink-0 mt-0.5" />
                   <span>
                     <strong>Requisito de Conquista:</strong> Patinar no mínimo{' '}
@@ -390,25 +390,25 @@ export const ZoneDetailsModal: React.FC<ZoneDetailsModalProps> = ({
 
           {/* Quick Stats Grid with Activity & Visitors */}
           <div className="grid grid-cols-4 gap-1.5 text-center">
-            <div className="p-2 rounded-xl bg-[#0f1722] border border-white/10">
+            <div className="p-2 rounded-xl bg-[#0a0a0a] border border-white/10">
               <div className="text-[8px] text-slate-400 font-black uppercase font-mono-stat">RAIO</div>
               <div className="text-xs sm:text-sm font-black text-white mt-0.5 font-mono-stat">{zone.radius}M</div>
             </div>
-            <div className="p-2 rounded-xl bg-[#0f1722] border border-white/10">
+            <div className="p-2 rounded-xl bg-[#0a0a0a] border border-white/10">
               <div className="text-[8px] text-slate-400 font-black uppercase font-mono-stat">AGORA</div>
               <div className="text-xs sm:text-sm font-black text-yellow-400 mt-0.5 flex items-center justify-center gap-1 font-mono-stat">
                 <Users className="w-3 h-3" />
                 {skatersCountValue}
               </div>
             </div>
-            <div className="p-2 rounded-xl bg-[#0f1722] border border-white/10">
+            <div className="p-2 rounded-xl bg-[#0a0a0a] border border-white/10">
               <div className="text-[8px] text-slate-400 font-black uppercase font-mono-stat">VISITAS</div>
               <div className="text-xs sm:text-sm font-black text-cyan-300 mt-0.5 flex items-center justify-center gap-1 font-mono-stat">
                 <Activity className="w-3 h-3" />
                 {zone.totalVisitorsCount || (skatersCountValue * 12 + 18)}
               </div>
             </div>
-            <div className="p-2 rounded-xl bg-[#0f1722] border border-white/10">
+            <div className="p-2 rounded-xl bg-[#0a0a0a] border border-white/10">
               <div className="text-[8px] text-slate-400 font-black uppercase font-mono-stat">XP / HORA</div>
               <div className="text-xs sm:text-sm font-black text-amber-400 mt-0.5 flex items-center justify-center gap-1 font-mono-stat">
                 <Zap className="w-3 h-3" />
@@ -419,7 +419,7 @@ export const ZoneDetailsModal: React.FC<ZoneDetailsModalProps> = ({
 
           {/* Best Record Space (if available) */}
           {zone.bestRecord && (
-            <div className="p-2.5 rounded-xl bg-[#0f1722] border border-amber-500/30 flex items-center justify-between text-xs font-mono-stat">
+            <div className="p-2.5 rounded-xl bg-[#0a0a0a] border border-amber-500/30 flex items-center justify-between text-xs font-mono-stat">
               <div className="flex items-center gap-2 min-w-0">
                 <div className="w-7 h-7 rounded-lg bg-amber-500/20 border border-amber-400/50 flex items-center justify-center text-amber-300 shrink-0">
                   <Gauge className="w-3.5 h-3.5" />

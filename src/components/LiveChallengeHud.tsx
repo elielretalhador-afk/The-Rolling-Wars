@@ -68,7 +68,7 @@ export const LiveChallengeHud: React.FC<LiveChallengeHudProps> = ({
     >
       <div className="bg-[#090d14]/95 border-2 border-yellow-400/60 rounded-2xl shadow-[0_0_30px_rgba(252,232,3,0.25)]  overflow-hidden transition-all duration-300">
         {/* Header Compacto */}
-        <div className="px-3.5 py-2.5 bg-gradient-to-r from-blue-950/80 via-[#0b131e] to-black border-b border-yellow-400/30 flex items-center justify-between">
+        <div className="px-3.5 py-2.5 bg-gradient-to-r from-neutral-900/80 via-[#0b131e] to-black border-b border-yellow-400/30 flex items-center justify-between">
           <div className="flex items-center gap-2 min-w-0">
             <span className="w-2.5 h-2.5 rounded-full bg-yellow-400 animate-ping shrink-0" />
             <div className="flex items-center gap-1.5 min-w-0">

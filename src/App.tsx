@@ -291,11 +291,16 @@ export default function App() {
   }, []);
   const [authState, setAuthState] = useState<'LOADING' | 'AUTHENTICATED' | 'UNAUTHENTICATED' | 'ERROR'>('LOADING');
   const [minSplashTimeElapsed, setMinSplashTimeElapsed] = useState(false);
+  const [splashProgress, setSplashProgress] = useState(0);
   useEffect(() => {
+    const pTimer = setTimeout(() => setSplashProgress(100), 100);
     const timer = setTimeout(() => {
       setMinSplashTimeElapsed(true);
-    }, 4500);
-    return () => clearTimeout(timer);
+    }, 7000);
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(pTimer);
+    };
   }, []);
   const [activeTab, setActiveTab] = useState<TabType>('mapa');
   const [user, setUser] = useState<UserProfile>(() => {
@@ -2787,7 +2792,7 @@ export default function App() {
               <Zap className="w-28 h-28 text-white opacity-25" strokeWidth={1.5} />
             </div>
 
-            <div className="absolute inset-0 bg-blue-700 rounded-full blur-[60px] opacity-20 animate-pulse" style={{ transform: 'scale(1.2)' }}></div>
+            <div className="absolute inset-0 bg-neutral-800 rounded-full blur-[60px] opacity-20 animate-pulse" style={{ transform: 'scale(1.2)' }}></div>
             <div className="absolute inset-0 bg-[#fce803] rounded-full blur-[40px] opacity-20 animate-pulse"></div>
             <img src="/logo-rw-dark.png" alt="The Rolling Wars" className="relative z-10 w-full h-full object-contain drop-shadow-[0_0_15px_rgba(252,232,3,0.4)]" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
             <div className="absolute inset-0 flex items-center justify-center border-2 border-[#fce803]/30 rounded-full" style={{ zIndex: 0 }}>
@@ -2830,36 +2835,36 @@ export default function App() {
 
   if (!isDbReady || !minSplashTimeElapsed) {
     return (
-      <div className="flex justify-center w-full h-full bg-[#05070a]">
-        <main className="relative flex flex-col items-center justify-center w-full h-full max-w-md md:max-w-lg bg-[#080B0E] border-x border-slate-800/40 overflow-hidden">
-          {/* Cyberpunk grid background */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-20"></div>
-          
-          {/* Glow effects */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#fce803] rounded-full blur-[100px] opacity-10"></div>
-          <div className="absolute bottom-0 left-0 w-48 h-48 bg-fuchsia-600 rounded-full blur-[80px] opacity-20"></div>
-          <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-500 rounded-full blur-[80px] opacity-20"></div>
+      <div className="flex justify-center w-full h-full bg-black">
+        <main 
+          className="relative flex flex-col items-center justify-end w-full h-full max-w-md md:max-w-lg bg-black border-x border-slate-800/40 overflow-hidden bg-cover bg-center"
+          style={{ backgroundImage: "url('/splash-bg.png')" }}
+        >
+          {/* Bottom Bar Section (Solid bottom gradient to hide the baked-in fake bar from the image) */}
+          <div className="relative z-10 w-full px-6 pb-10 flex flex-col items-center bg-gradient-to-t from-black via-black/95 to-transparent pt-32 mt-auto animate-in fade-in duration-1000">
+            
+            {/* Main Loading Pill (Fully opaque to match image visibility) */}
+            <div className="w-full max-w-[320px] h-12 rounded-full border-2 border-yellow-500 bg-[#0a0a0a] shadow-[0_0_20px_rgba(234,179,8,0.5)] flex items-center px-1.5 relative overflow-hidden mb-4">
+              {/* Progress Fill */}
+              <div 
+                className="h-[34px] bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 rounded-full shadow-[0_0_10px_rgba(253,224,71,0.8)] transition-all ease-linear"
+                style={{ width: `${Math.max(5, splashProgress * 0.55)}%`, transitionDuration: '6900ms' }}
+              ></div>
 
-          <div className="relative z-10 flex flex-col items-center justify-center p-6 text-center w-full">
-            <div className="w-48 h-48 mb-8 relative">
-              <img src="/logo-rw-dark.png" alt="THE ROLLING WARS" className="w-full h-full object-contain drop-shadow-[0_0_25px_rgba(252,232,3,0.6)] animate-pulse" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
-              {/* Fallback if image not found */}
-              <div className="absolute inset-0 flex items-center justify-center -z-10">
-                <span className="text-4xl">⚡</span>
+              {/* Text & Spinner */}
+              <div className="absolute right-4 flex items-center gap-3">
+                <span className="text-white text-[10px] font-bold tracking-widest uppercase animate-pulse">Carregando...</span>
+                <div className="w-4 h-4 rounded-full border-2 border-yellow-500 border-t-transparent animate-spin"></div>
               </div>
             </div>
-            
-            <h1 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-fuchsia-500 to-cyan-400 font-display uppercase tracking-widest mb-4 filter drop-shadow-[0_0_10px_rgba(252,232,3,0.3)]">
-              THE ROLLING WARS
-            </h1>
-            
-            <div className="w-48 h-1 bg-slate-800 rounded-full overflow-hidden mb-4 border border-white/5">
-              <div className="h-full bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-yellow-400 w-full origin-left animate-pulse"></div>
+
+            {/* Footer Text */}
+            <div className="flex items-center gap-3 opacity-80 animate-pulse">
+              <span className="text-yellow-500 text-sm">⚡</span>
+              <span className="text-white text-[11px] font-bold tracking-[0.3em] uppercase">The Rolling Wars</span>
+              <span className="text-yellow-500 text-sm">⚡</span>
             </div>
             
-            <p className="text-xs text-slate-400 font-mono-stat uppercase tracking-widest animate-pulse">
-              Verificando integridade da conta...
-            </p>
           </div>
         </main>
       </div>
@@ -2868,8 +2873,8 @@ export default function App() {
 
   if (dbError || authState === 'ERROR') {
     return (
-      <div className="flex justify-center w-full h-full bg-[#05070a]">
-        <main className="relative flex flex-col items-center justify-center w-full h-full max-w-md md:max-w-lg bg-[#080B0E] border-x border-slate-800/40 p-6 text-center">
+      <div className="flex justify-center w-full h-full bg-black">
+        <main className="relative flex flex-col items-center justify-center w-full h-full max-w-md md:max-w-lg bg-black border-x border-slate-800/40 p-6 text-center">
           <div className="w-16 h-16 rounded-full bg-rose-500/10 flex items-center justify-center mb-4 border border-rose-500/30">
             <span className="text-rose-500 text-2xl font-black">!</span>
           </div>
@@ -2887,9 +2892,9 @@ export default function App() {
   }
 
   return (
-    <div className="flex justify-center w-full h-full bg-[#05070a]">
+    <div className="flex justify-center w-full h-full bg-black">
       {/* Mobile-first main frame */}
-      <main className="relative flex flex-col w-full h-full max-w-md md:max-w-lg bg-[#080B0E] border-x border-slate-800/40 shadow-2xl overflow-hidden">
+      <main className="relative flex flex-col w-full h-full max-w-md md:max-w-lg bg-black border-x border-slate-800/40 shadow-2xl overflow-hidden">
         {/* App Top Header */}
         <Header
           user={user}
@@ -2948,7 +2953,7 @@ export default function App() {
             
             {/* Drawing Zone Overlay */}
             {isDrawingZone && (
-              <div className="absolute top-20 inset-x-4 z-40 flex flex-col gap-2 bg-[#0d141d]/95 p-3 rounded-2xl border border-yellow-500 shadow-[0_0_20px_rgba(252,232,3,0.3)] ">
+              <div className="absolute top-20 inset-x-4 z-40 flex flex-col gap-2 bg-[#000000]/95 p-3 rounded-2xl border border-yellow-500 shadow-[0_0_20px_rgba(252,232,3,0.3)] ">
                 <div className="flex justify-between items-center">
                   <span className="text-yellow-400 text-xs font-bold font-mono-stat uppercase">Modo de Desenho</span>
                   <span className="text-slate-300 text-xs font-mono-stat">{drawnPath.length} pontos</span>
@@ -3160,7 +3165,7 @@ export default function App() {
 
           {/* Interactive Toast Notification */}
           {toastMessage && (
-            <div className="absolute top-24 inset-x-4 z-50 flex items-center gap-2.5 px-4 py-3 bg-[#1d4ed8]/95 border-2 border-yellow-400 text-white text-xs font-bold rounded-2xl shadow-[0_10px_35px_rgba(252,232,3,0.4)]  animate-in slide-in-from-top duration-200 font-mono-stat uppercase tracking-wide">
+            <div className="absolute top-24 inset-x-4 z-50 flex items-center gap-2.5 px-4 py-3 bg-[#000000]/95 border-2 border-yellow-400 text-white text-xs font-bold rounded-2xl shadow-[0_10px_35px_rgba(252,232,3,0.4)]  animate-in slide-in-from-top duration-200 font-mono-stat uppercase tracking-wide">
               <Zap className="w-4 h-4 text-yellow-400 shrink-0 stroke-[2.5]" />
               <span>{toastMessage}</span>
             </div>

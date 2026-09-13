@@ -95,14 +95,14 @@ export const SegmentDetailsModal: React.FC<{
                  {loading ? (
                     <div className="text-center text-slate-500 text-[10px] py-4 uppercase font-mono-stat">Carregando tempos...</div>
                  ) : top10.length === 0 ? (
-                    <div className="text-center p-6 bg-[#0f1722] rounded-xl border border-white/5 border-dashed">
+                    <div className="text-center p-6 bg-[#0a0a0a] rounded-xl border border-white/5 border-dashed">
                       <div className="text-yellow-400 font-black uppercase text-xs mb-1">Ninguém dominou este segmento</div>
                       <div className="text-[10px] text-slate-400 font-mono-stat">Seja o primeiro a registrar um tempo.</div>
                     </div>
                  ) : (
                     <div className="space-y-2">
                        {top10.map((attempt, idx) => (
-                          <div key={attempt.id} className="flex items-center justify-between p-3 bg-[#0f1722] rounded-xl border border-white/5">
+                          <div key={attempt.id} className="flex items-center justify-between p-3 bg-[#0a0a0a] rounded-xl border border-white/5">
                              <div className="flex items-center gap-3">
                                 <div className={`w-6 h-6 rounded-md flex items-center justify-center text-[10px] font-black font-mono-stat ${idx === 0 ? 'bg-amber-400 text-black shadow-[0_0_10px_rgba(251,191,36,0.3)]' : idx === 1 ? 'bg-slate-300 text-black' : idx === 2 ? 'bg-orange-400 text-black' : 'bg-white/10 text-slate-400'}`}>
                                   {idx + 1}

@@ -204,7 +204,7 @@ try {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85  animate-in fade-in duration-200">
-      <div className="w-full max-w-lg bg-[#1d4ed8] border-2 border-yellow-500/50 rounded-3xl p-5 shadow-[0_25px_60px_rgba(0,0,0,0.95)] max-h-[90vh] overflow-y-auto no-scrollbar">
+      <div className="w-full max-w-lg bg-[#000000] border-2 border-yellow-500/50 rounded-3xl p-5 shadow-[0_25px_60px_rgba(0,0,0,0.95)] max-h-[90vh] overflow-y-auto no-scrollbar">
         {/* Modal Header */}
         <div className="flex items-center justify-between pb-3 border-b-2 border-white/10">
           <div className="flex items-center gap-2.5">
@@ -267,7 +267,7 @@ try {
                 if (errors.name) setErrors((prev) => ({ ...prev, name: undefined }));
               }}
               placeholder="Ex: Pista Marquise Skate Park"
-              className={`w-full px-3.5 py-2.5 bg-[#0f1722] border-2 rounded-xl text-white text-sm font-bold placeholder-slate-500 focus:outline-none transition-colors ${
+              className={`w-full px-3.5 py-2.5 bg-[#0a0a0a] border-2 rounded-xl text-white text-sm font-bold placeholder-slate-500 focus:outline-none transition-colors ${
                 submitted && errors.name
                   ? 'border-rose-500 bg-rose-950/20 focus:border-rose-400'
                   : 'border-white/10 focus:border-yellow-400'
@@ -299,7 +299,7 @@ try {
                   className={`py-2 px-1 text-[11px] font-black uppercase tracking-wider rounded-xl transition-all font-mono-stat cursor-pointer flex items-center justify-center gap-1 ${
                     type === opt.id
                       ? 'bg-yellow-400 text-black shadow-[0_0_15px_rgba(252,232,3,0.5)] border-2 border-yellow-400 scale-[1.02]'
-                      : 'bg-[#0f1722] text-slate-400 border-2 border-white/10 hover:border-white/20'
+                      : 'bg-[#0a0a0a] text-slate-400 border-2 border-white/10 hover:border-white/20'
                   }`}
                 >
                   {type === opt.id && <Check className="w-3 h-3 stroke-[3]" />}
@@ -332,7 +332,7 @@ try {
                   className={`py-1.5 px-0.5 text-[10px] font-black rounded-lg transition-all font-mono-stat cursor-pointer text-center ${
                     radius === r
                       ? 'bg-yellow-400 text-black border-2 border-yellow-400'
-                      : 'bg-[#0f1722] text-slate-400 border border-white/10 hover:border-white/25'
+                      : 'bg-[#0a0a0a] text-slate-400 border border-white/10 hover:border-white/25'
                   }`}
                 >
                   {r}m
@@ -406,7 +406,7 @@ try {
                 if (errors.description) setErrors((prev) => ({ ...prev, description: undefined }));
               }}
               placeholder="Ex: Área urbana com escadarias, corrimãos e transições de concreto..."
-              className={`w-full px-3.5 py-2 bg-[#0f1722] border-2 rounded-xl text-white text-xs font-semibold placeholder-slate-500 focus:outline-none transition-colors ${
+              className={`w-full px-3.5 py-2 bg-[#0a0a0a] border-2 rounded-xl text-white text-xs font-semibold placeholder-slate-500 focus:outline-none transition-colors ${
                 submitted && errors.description
                   ? 'border-rose-500 bg-rose-950/20 focus:border-rose-400'
                   : 'border-white/10 focus:border-yellow-400'
@@ -434,7 +434,7 @@ try {
                 if (errors.rules) setErrors((prev) => ({ ...prev, rules: undefined }));
               }}
               placeholder="Ex: Conquista baseada em manobras e percurso realizado dentro da zona..."
-              className={`w-full px-3.5 py-2 bg-[#0f1722] border-2 rounded-xl text-white text-xs font-semibold placeholder-slate-500 focus:outline-none transition-colors ${
+              className={`w-full px-3.5 py-2 bg-[#0a0a0a] border-2 rounded-xl text-white text-xs font-semibold placeholder-slate-500 focus:outline-none transition-colors ${
                 submitted && errors.rules
                   ? 'border-rose-500 bg-rose-950/20 focus:border-rose-400'
                   : 'border-white/10 focus:border-yellow-400'
@@ -462,7 +462,7 @@ try {
                 if (errors.surface) setErrors((prev) => ({ ...prev, surface: undefined }));
               }}
               placeholder="Ex: Perfeito / Asfalto liso sem buracos"
-              className={`w-full px-3.5 py-2 bg-[#0f1722] border-2 rounded-xl text-white text-xs font-semibold placeholder-slate-500 focus:outline-none transition-colors ${
+              className={`w-full px-3.5 py-2 bg-[#0a0a0a] border-2 rounded-xl text-white text-xs font-semibold placeholder-slate-500 focus:outline-none transition-colors ${
                 submitted && errors.surface
                   ? 'border-rose-500 bg-rose-950/20 focus:border-rose-400'
                   : 'border-white/10 focus:border-yellow-400'
@@ -505,7 +505,7 @@ try {
                 if (errors.referencePoint) setErrors((prev) => ({ ...prev, referencePoint: undefined }));
               }}
               placeholder="Ex: Praça central / Ao lado da pista de skate"
-              className={`w-full px-3.5 py-2 bg-[#0f1722] border-2 rounded-xl text-white text-xs font-semibold placeholder-slate-500 focus:outline-none transition-colors ${
+              className={`w-full px-3.5 py-2 bg-[#0a0a0a] border-2 rounded-xl text-white text-xs font-semibold placeholder-slate-500 focus:outline-none transition-colors ${
                 submitted && errors.referencePoint
                   ? 'border-rose-500 bg-rose-950/20 focus:border-rose-400'
                   : 'border-white/10 focus:border-yellow-400'
@@ -514,7 +514,7 @@ try {
           </div>
 
           {/* Status info note */}
-          <div className="p-2.5 rounded-xl bg-blue-950/40 border border-yellow-500/30 text-[11px] text-yellow-300 font-mono-stat flex items-center gap-2">
+          <div className="p-2.5 rounded-xl bg-neutral-900/40 border border-yellow-500/30 text-[11px] text-yellow-300 font-mono-stat flex items-center gap-2">
             <Flag className="w-4 h-4 text-yellow-400 shrink-0" />
             <span>A zona será registrada no mapa como <strong>LIVRE (0% domínio)</strong> com os dados exatos informados.</span>
           </div>

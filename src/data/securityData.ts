@@ -303,7 +303,7 @@ export function getSeverityBadgeStyle(severity: SecuritySeverity): {
         label: 'BAIXO',
         bg: 'bg-blue-500/20',
         text: 'text-blue-400',
-        border: 'border-blue-500/50',
+        border: 'border-neutral-700/50',
       };
     case 'INFO':
     default:

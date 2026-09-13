@@ -161,7 +161,7 @@ export const ActivityFeedModal: React.FC<ActivityFeedModalProps> = ({
     >
       <div className="relative w-full max-w-xl max-h-[92vh] flex flex-col bg-[#070b10] border-2 border-yellow-500/40 rounded-3xl shadow-[0_0_40px_rgba(0,0,0,0.9)] overflow-hidden text-white">
         {/* Header */}
-        <div className="p-4 bg-gradient-to-r from-[#0d141e] via-[#091119] to-[#0d141e] border-b border-white/10 flex items-center justify-between shrink-0">
+        <div className="p-4 bg-gradient-to-r from-[#0a0a0a] via-[#091119] to-[#0a0a0a] border-b border-white/10 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-yellow-500/20 border border-yellow-500/50 flex items-center justify-center text-yellow-400 shadow-[0_0_15px_rgba(252,232,3,0.2)]">
               <ActivityIcon className="w-5 h-5 stroke-[2.5]" />
@@ -231,7 +231,7 @@ export const ActivityFeedModal: React.FC<ActivityFeedModalProps> = ({
                 <div
                   key={act.id}
                   id={`activity-card-${act.id}`}
-                  className={`p-3.5 rounded-2xl bg-[#0d141e] border ${style.borderColor} hover:border-yellow-400/50 transition-all shadow-md relative overflow-hidden`}
+                  className={`p-3.5 rounded-2xl bg-[#0a0a0a] border ${style.borderColor} hover:border-yellow-400/50 transition-all shadow-md relative overflow-hidden`}
                 >
                   {/* Top Bar: Author, Level & Metadata */}
                   <div className="flex items-center justify-between gap-2 mb-2">
@@ -499,7 +499,7 @@ export const ActivityFeedModal: React.FC<ActivityFeedModalProps> = ({
               );
             })
           ) : (
-            <div className="p-8 text-center bg-[#0d141e] border border-white/10 rounded-2xl space-y-2">
+            <div className="p-8 text-center bg-[#0a0a0a] border border-white/10 rounded-2xl space-y-2">
               <ActivityIcon className="w-8 h-8 text-slate-600 mx-auto" />
               <h4 className="text-sm font-bold text-slate-300 uppercase font-mono-stat">
                 Nenhuma atividade encontrada
@@ -527,7 +527,7 @@ export const ActivityFeedModal: React.FC<ActivityFeedModalProps> = ({
         </div>
 
         {/* Footer with Privacy Notice */}
-        <div className="p-3 bg-[#080d14] border-t border-white/10 flex items-center justify-between gap-2 text-[11px] text-slate-400 font-mono-stat">
+        <div className="p-3 bg-[#000000] border-t border-white/10 flex items-center justify-between gap-2 text-[11px] text-slate-400 font-mono-stat">
           <div className="flex items-center gap-1.5 text-slate-400">
             <Lock className="w-3 h-3 text-yellow-400 shrink-0" />
             <span className="truncate">

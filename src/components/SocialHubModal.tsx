@@ -390,7 +390,7 @@ export const SocialHubModal: React.FC<SocialHubModalProps> = ({
               </div>
 
               {friends.length === 0 ? (
-                <div className="p-8 text-center rounded-2xl bg-[#0d141e] border border-white/10 space-y-2">
+                <div className="p-8 text-center rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-2">
                   <UserPlus className="w-8 h-8 text-slate-500 mx-auto" />
                   <div className="text-xs font-bold text-white">Nenhum amigo adicionado ainda</div>
                   <p className="text-[11px] text-slate-400 max-w-xs mx-auto">
@@ -408,7 +408,7 @@ export const SocialHubModal: React.FC<SocialHubModalProps> = ({
                 friends.map((player) => (
                   <div
                     key={player.id}
-                    className="p-3 rounded-2xl bg-[#0d141e] border border-white/10 hover:border-yellow-500/40 transition-all flex items-center justify-between gap-3 group"
+                    className="p-3 rounded-2xl bg-[#0a0a0a] border border-white/10 hover:border-yellow-500/40 transition-all flex items-center justify-between gap-3 group"
                   >
                     {/* Player Info (Click to view profile) */}
                     <div
@@ -476,7 +476,7 @@ export const SocialHubModal: React.FC<SocialHubModalProps> = ({
           {/* TAB: JOGADORES PRÓXIMOS */}
           {activeTab === 'proximos' && (
             <div className="space-y-2.5">
-              <div className="p-3 rounded-2xl bg-gradient-to-r from-blue-950/30 via-[#0d141e] to-cyan-950/30 border border-yellow-500/30 flex items-start gap-2.5">
+              <div className="p-3 rounded-2xl bg-gradient-to-r from-neutral-900/30 via-[#0a0a0a] to-cyan-950/30 border border-yellow-500/30 flex items-start gap-2.5">
                 <Radio className="w-4 h-4 text-yellow-400 shrink-0 mt-0.5" />
                 <div className="text-xs text-slate-300">
                   <span className="font-bold text-white">Radar de Patinadores nas Proximidades:</span> Mostra distâncias aproximadas para conectar treinos e disputas sem expor coordenadas exatas.
@@ -486,7 +486,7 @@ export const SocialHubModal: React.FC<SocialHubModalProps> = ({
               {nearbyPlayers.map((player) => (
                 <div
                   key={player.id}
-                  className="p-3 rounded-2xl bg-[#0d141e] border border-white/10 hover:border-cyan-400/40 transition-all flex items-center justify-between gap-3 group"
+                  className="p-3 rounded-2xl bg-[#0a0a0a] border border-white/10 hover:border-cyan-400/40 transition-all flex items-center justify-between gap-3 group"
                 >
                   <div
                     onClick={() => onSelectPlayer(player)}
@@ -556,7 +556,7 @@ export const SocialHubModal: React.FC<SocialHubModalProps> = ({
               {suggestions.map((player) => (
                 <div
                   key={player.id}
-                  className="p-3 rounded-2xl bg-[#0d141e] border border-white/10 hover:border-yellow-500/40 transition-all flex items-center justify-between gap-3"
+                  className="p-3 rounded-2xl bg-[#0a0a0a] border border-white/10 hover:border-yellow-500/40 transition-all flex items-center justify-between gap-3"
                 >
                   <div
                     onClick={() => onSelectPlayer(player)}
@@ -616,7 +616,7 @@ export const SocialHubModal: React.FC<SocialHubModalProps> = ({
                 </div>
 
                 {receivedRequests.length === 0 ? (
-                  <div className="p-4 rounded-xl bg-[#0d141e] border border-white/5 text-center text-xs text-slate-400">
+                  <div className="p-4 rounded-xl bg-[#0a0a0a] border border-white/5 text-center text-xs text-slate-400">
                     Nenhuma solicitação de amizade pendente no momento.
                   </div>
                 ) : (
@@ -624,7 +624,7 @@ export const SocialHubModal: React.FC<SocialHubModalProps> = ({
                     {receivedRequests.map((player) => (
                       <div
                         key={player.id}
-                        className="p-3 rounded-2xl bg-[#0d141e] border border-yellow-500/40 flex items-center justify-between gap-3"
+                        className="p-3 rounded-2xl bg-[#0a0a0a] border border-yellow-500/40 flex items-center justify-between gap-3"
                       >
                         <div
                           onClick={() => onSelectPlayer(player)}
@@ -677,7 +677,7 @@ export const SocialHubModal: React.FC<SocialHubModalProps> = ({
                 </div>
 
                 {sentRequests.length === 0 ? (
-                  <div className="p-4 rounded-xl bg-[#0d141e] border border-white/5 text-center text-xs text-slate-400">
+                  <div className="p-4 rounded-xl bg-[#0a0a0a] border border-white/5 text-center text-xs text-slate-400">
                     Você não possui solicitações pendentes de resposta.
                   </div>
                 ) : (
@@ -685,7 +685,7 @@ export const SocialHubModal: React.FC<SocialHubModalProps> = ({
                     {sentRequests.map((player) => (
                       <div
                         key={player.id}
-                        className="p-3 rounded-2xl bg-[#0d141e] border border-white/10 flex items-center justify-between gap-3"
+                        className="p-3 rounded-2xl bg-[#0a0a0a] border border-white/10 flex items-center justify-between gap-3"
                       >
                         <div
                           onClick={() => onSelectPlayer(player)}
@@ -734,7 +734,7 @@ export const SocialHubModal: React.FC<SocialHubModalProps> = ({
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Buscar por nome, nickname, #tag ou crew..."
-                  className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-[#0d141e] border border-white/15 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-yellow-400 transition-all"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-[#0a0a0a] border border-white/15 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-yellow-400 transition-all"
                   autoFocus
                 />
                 {searchQuery && (
@@ -766,7 +766,7 @@ export const SocialHubModal: React.FC<SocialHubModalProps> = ({
                   {searchResults.map((player) => (
                     <div
                       key={player.id}
-                      className="p-3 rounded-2xl bg-[#0d141e] border border-white/10 hover:border-yellow-400/40 transition-all flex items-center justify-between gap-3"
+                      className="p-3 rounded-2xl bg-[#0a0a0a] border border-white/10 hover:border-yellow-400/40 transition-all flex items-center justify-between gap-3"
                     >
                       <div
                         onClick={() => onSelectPlayer(player)}
@@ -826,7 +826,7 @@ export const SocialHubModal: React.FC<SocialHubModalProps> = ({
         </div>
 
         {/* Public Activity Feed Preview Bar (Section 20 & 21) */}
-        <div className="p-3 bg-[#080c12] border-t border-white/10 flex items-center justify-between gap-2 text-xs">
+        <div className="p-3 bg-[#050505] border-t border-white/10 flex items-center justify-between gap-2 text-xs">
           <div
             onClick={onOpenActivityFeed ? onOpenActivityFeed : undefined}
             className={`flex items-center gap-2 min-w-0 flex-1 ${

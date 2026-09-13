@@ -168,7 +168,7 @@ export const DirectChallengeDetailsModal: React.FC<DirectChallengeDetailsModalPr
         <div className="absolute -bottom-12 -left-12 w-40 h-40 rounded-full bg-cyan-500/15 blur-3xl pointer-events-none" />
 
         {/* Modal Header */}
-        <div className="p-4 sm:p-5 pb-3 border-b border-white/10 bg-gradient-to-b from-blue-950/40 via-[#0a121c] to-[#090e15] flex items-center justify-between shrink-0">
+        <div className="p-4 sm:p-5 pb-3 border-b border-white/10 bg-gradient-to-b from-neutral-900/40 via-[#0a121c] to-[#090e15] flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-yellow-400 to-cyan-500 flex items-center justify-center text-black font-black shadow-[0_0_15px_rgba(252,232,3,0.4)]">
               <Swords className="w-5 h-5" />
@@ -244,7 +244,7 @@ export const DirectChallengeDetailsModal: React.FC<DirectChallengeDetailsModalPr
         <div className="p-4 sm:p-5 overflow-y-auto max-h-[calc(92vh-140px)] space-y-4">
           {/* Success Banner Alert if action taken */}
           {actionSuccessMessage && (
-            <div className="p-3 rounded-2xl bg-blue-950/60 border-2 border-yellow-400/60 text-yellow-300 text-xs font-mono-stat flex items-center gap-2 shadow-[0_0_20px_rgba(252,232,3,0.3)] animate-in fade-in">
+            <div className="p-3 rounded-2xl bg-neutral-900/60 border-2 border-yellow-400/60 text-yellow-300 text-xs font-mono-stat flex items-center gap-2 shadow-[0_0_20px_rgba(252,232,3,0.3)] animate-in fade-in">
               <CheckCircle2 className="w-4 h-4 text-yellow-400 shrink-0" />
               <span>{actionSuccessMessage}</span>
             </div>
@@ -626,7 +626,7 @@ export const DirectChallengeDetailsModal: React.FC<DirectChallengeDetailsModalPr
 
           {/* CONFIRMED BANNER */}
           {isConfirmed && (
-            <div className="p-4 rounded-2xl bg-gradient-to-r from-blue-950/60 to-[#0a121c] border-2 border-yellow-400/60 text-center space-y-3 shadow-[0_0_25px_rgba(252,232,3,0.3)]">
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-neutral-900/60 to-[#0a121c] border-2 border-yellow-400/60 text-center space-y-3 shadow-[0_0_25px_rgba(252,232,3,0.3)]">
               <div className="w-10 h-10 rounded-full bg-yellow-400/20 border border-yellow-400 flex items-center justify-center text-yellow-400 mx-auto">
                 <CheckCircle2 className="w-5 h-5" />
               </div>

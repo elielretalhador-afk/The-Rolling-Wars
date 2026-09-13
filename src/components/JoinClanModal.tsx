@@ -16,7 +16,7 @@ export const JoinClanModal: React.FC<JoinClanModalProps> = ({ isOpen, onClose, c
   
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 animate-in fade-in duration-200">
-      <div className="bg-[#080B0E] p-6 rounded-3xl w-full max-w-md border-2 border-yellow-500/40 shadow-xl max-h-[80vh] flex flex-col">
+      <div className="bg-[#050505] p-6 rounded-3xl w-full max-w-md border-2 border-yellow-500/40 shadow-xl max-h-[80vh] flex flex-col">
         <div className="flex items-center justify-between mb-4 shrink-0">
           <h2 className="text-xl font-black uppercase tracking-tight text-white font-display">Entrar em um Clã</h2>
           <button onClick={onClose} className="text-slate-400 hover:text-white p-1">

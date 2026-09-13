@@ -56,7 +56,7 @@ export const DesafiosView: React.FC<DesafiosViewProps> = ({
   const completedMissionsCount = missions.filter((m) => m.status === 'COMPLETED').length;
 
   return (
-    <div className="h-full w-full overflow-y-auto overscroll-contain px-4 py-4 pb-36 bg-[#080b0e]">
+    <div className="h-full w-full overflow-y-auto overscroll-contain px-4 py-4 pb-36 bg-[#050505]">
       {/* Header */}
       <div className="mb-4">
         <div className="flex items-center gap-2 text-yellow-400 text-xs font-bold uppercase tracking-wider font-mono-stat">

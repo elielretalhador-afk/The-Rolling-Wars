@@ -244,9 +244,9 @@ export const SocialHub: React.FC<SocialHubProps> = ({ onClose, currentUser, init
   };
 
   return (
-    <div className="fixed inset-0 z-[100] bg-[#05070a] flex flex-col font-sans">
+    <div className="fixed inset-0 z-[100] bg-[#000000] flex flex-col font-sans">
       {/* HEADER COMPACT */}
-      <div className="flex items-center justify-between px-4 py-3 bg-[#081330] border-b border-[#1d4ed8]/30 shadow-md">
+      <div className="flex items-center justify-between px-4 py-3 bg-[#081330] border-b border-[#000000]/30 shadow-md">
         <button onClick={goBack} className="p-2 -ml-2 text-slate-300 hover:text-white rounded-full">
           <ArrowLeft className="w-5 h-5" />
         </button>
@@ -282,7 +282,7 @@ export const SocialHub: React.FC<SocialHubProps> = ({ onClose, currentUser, init
         {activeTab === 'feed' && (
           <div className="p-4 max-w-lg mx-auto pb-24">
             {/* COMPOSER */}
-            <div className="bg-[#1d4ed8]/20 border border-[#1d4ed8]/50 rounded-2xl p-4 mb-6">
+            <div className="bg-[#000000]/20 border border-[#000000]/50 rounded-2xl p-4 mb-6">
               <div className="flex gap-3">
                 <img src={currentUser.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${currentUser.nickname}`} className="w-10 h-10 rounded-full border border-yellow-400/30 object-cover" />
                 <div className="flex-1">
@@ -315,7 +315,7 @@ export const SocialHub: React.FC<SocialHubProps> = ({ onClose, currentUser, init
                 <div className="text-center py-8 text-slate-500 font-mono-stat text-xs uppercase">Carregando...</div>
               ) : feedActivities.length > 0 ? (
                 feedActivities.map((act, i) => (
-                  <div key={`act-${act.id}-${i}`} className="bg-[#102a70]/30 border border-[#1d4ed8]/30 rounded-2xl p-4">
+                  <div key={`act-${act.id}-${i}`} className="bg-[#102a70]/30 border border-[#000000]/30 rounded-2xl p-4">
                     <div className="flex items-center gap-3 mb-3">
                       <img 
                         src={act.playerAvatar} 
@@ -366,7 +366,7 @@ export const SocialHub: React.FC<SocialHubProps> = ({ onClose, currentUser, init
                 <h3 className="text-xs font-black text-slate-400 uppercase tracking-wider mb-3">Solicitações de Amizade</h3>
                 <div className="space-y-2">
                   {friendRequests.map((req, i) => (
-                    <div key={`req-${req.id}-${i}`} className="flex items-center justify-between p-3 bg-[#1d4ed8]/20 rounded-xl border border-yellow-400/30">
+                    <div key={`req-${req.id}-${i}`} className="flex items-center justify-between p-3 bg-[#000000]/20 rounded-xl border border-yellow-400/30">
                       <div className="flex items-center gap-3 flex-1 cursor-pointer" onClick={() => openProfile(req)}>
                         <img src={req.avatar} className="w-10 h-10 rounded-full border border-slate-700 bg-[#090d12]" />
                         <div>
@@ -394,11 +394,11 @@ export const SocialHub: React.FC<SocialHubProps> = ({ onClose, currentUser, init
             ) : friends.length > 0 ? (
               <div className="space-y-2">
                 {friends.map((friend, i) => (
-                  <div key={`friend-${friend.id}-${i}`} className="flex items-center justify-between p-3 bg-[#1d4ed8]/10 rounded-xl border border-[#1d4ed8]/30">
+                  <div key={`friend-${friend.id}-${i}`} className="flex items-center justify-between p-3 bg-[#000000]/10 rounded-xl border border-[#000000]/30">
                     <div className="flex items-center gap-3 flex-1 cursor-pointer" onClick={() => openProfile(friend)}>
                       <div className="relative">
                         <img src={friend.avatar} className="w-10 h-10 rounded-full border border-slate-700 bg-[#090d12]" />
-                        <div className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-[#05070a] ${friend.status === 'ONLINE' ? 'bg-yellow-400 shadow-[0_0_8px_#fce803]' : 'bg-slate-500'}`} />
+                        <div className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-[#000000] ${friend.status === 'ONLINE' ? 'bg-yellow-400 shadow-[0_0_8px_#fce803]' : 'bg-slate-500'}`} />
                       </div>
                       <div>
                         <div className="font-bold text-sm text-slate-200">{friend.name}</div>
@@ -427,7 +427,7 @@ export const SocialHub: React.FC<SocialHubProps> = ({ onClose, currentUser, init
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                 placeholder="Buscar jogadores ou publicações..."
-                className="w-full bg-[#1d4ed8]/20 border border-[#1d4ed8]/50 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white focus:outline-none focus:border-yellow-400 transition-colors placeholder-slate-500"
+                className="w-full bg-[#000000]/20 border border-[#000000]/50 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white focus:outline-none focus:border-yellow-400 transition-colors placeholder-slate-500"
               />
             </div>
             
@@ -458,7 +458,7 @@ export const SocialHub: React.FC<SocialHubProps> = ({ onClose, currentUser, init
                     <h3 className="text-xs font-black text-slate-400 uppercase tracking-wider mb-3">Jogadores</h3>
                     <div className="space-y-2">
                       {searchResultsPlayers.map((p, i) => (
-                        <div key={`search-player-${p.id}-${i}`} className="flex items-center gap-3 p-3 bg-[#1d4ed8]/10 rounded-xl border border-[#1d4ed8]/30 cursor-pointer hover:border-yellow-400/50" onClick={() => openProfile(p)}>
+                        <div key={`search-player-${p.id}-${i}`} className="flex items-center gap-3 p-3 bg-[#000000]/10 rounded-xl border border-[#000000]/30 cursor-pointer hover:border-yellow-400/50" onClick={() => openProfile(p)}>
                           <img src={p.avatar} className="w-10 h-10 rounded-full border border-slate-700 bg-[#090d12]" />
                           <div>
                             <div className="font-bold text-sm text-slate-200">{p.name}</div>
@@ -475,7 +475,7 @@ export const SocialHub: React.FC<SocialHubProps> = ({ onClose, currentUser, init
                     <h3 className="text-xs font-black text-slate-400 uppercase tracking-wider mb-3">Publicações</h3>
                     <div className="space-y-3">
                       {searchResultsPosts.map((act, i) => (
-                        <div key={`act-${act.id}-${i}`} className="bg-[#1d4ed8]/10 border border-[#1d4ed8]/30 rounded-xl p-3">
+                        <div key={`act-${act.id}-${i}`} className="bg-[#000000]/10 border border-[#000000]/30 rounded-xl p-3">
                           <div className="flex items-center gap-2 mb-2">
                             <img src={act.playerAvatar} className="w-6 h-6 rounded-full" />
                             <span className="text-xs font-bold text-slate-300">{act.playerNickname}</span>
@@ -497,10 +497,10 @@ export const SocialHub: React.FC<SocialHubProps> = ({ onClose, currentUser, init
             {chats.length > 0 ? (
               <div className="space-y-2">
                 {chats.map((chat, i) => (
-                  <div key={`chat-${chat.id}-${i}`} className="flex items-center gap-3 p-3 bg-[#1d4ed8]/10 rounded-xl border border-[#1d4ed8]/30 cursor-pointer hover:border-yellow-400/50" onClick={() => openChat(chat.participant)}>
+                  <div key={`chat-${chat.id}-${i}`} className="flex items-center gap-3 p-3 bg-[#000000]/10 rounded-xl border border-[#000000]/30 cursor-pointer hover:border-yellow-400/50" onClick={() => openChat(chat.participant)}>
                     <div className="relative">
                       <img src={chat.participant.avatar} className="w-12 h-12 rounded-full border border-slate-700 bg-[#090d12]" />
-                      <div className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-[#05070a] ${chat.participant.status === 'ONLINE' ? 'bg-yellow-400 shadow-[0_0_8px_#fce803]' : 'bg-slate-500'}`} />
+                      <div className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-[#000000] ${chat.participant.status === 'ONLINE' ? 'bg-yellow-400 shadow-[0_0_8px_#fce803]' : 'bg-slate-500'}`} />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex justify-between items-center mb-0.5">
@@ -528,7 +528,7 @@ export const SocialHub: React.FC<SocialHubProps> = ({ onClose, currentUser, init
                 const isMe = msg.senderId === currentUser.authId;
                 return (
                   <div key={`msg-${msg.id}-${i}`} className={`flex flex-col max-w-[80%] ${isMe ? 'ml-auto items-end' : 'mr-auto items-start'}`}>
-                    <div className={`px-4 py-2 rounded-2xl text-sm ${isMe ? 'bg-yellow-400 text-black rounded-tr-sm' : 'bg-[#1d4ed8]/40 border border-[#1d4ed8]/50 text-white rounded-tl-sm'}`}>
+                    <div className={`px-4 py-2 rounded-2xl text-sm ${isMe ? 'bg-yellow-400 text-black rounded-tr-sm' : 'bg-[#000000]/40 border border-[#000000]/50 text-white rounded-tl-sm'}`}>
                       {msg.text}
                     </div>
                     <span className="text-[9px] text-slate-500 font-mono-stat mt-1 mx-1">
@@ -539,7 +539,7 @@ export const SocialHub: React.FC<SocialHubProps> = ({ onClose, currentUser, init
               })}
               <div ref={messagesEndRef} />
             </div>
-            <div className="p-3 bg-[#081330] border-t border-[#1d4ed8]/30">
+            <div className="p-3 bg-[#081330] border-t border-[#000000]/30">
               <div className="flex items-center gap-2 max-w-lg mx-auto">
                 <input 
                   type="text" 
@@ -547,7 +547,7 @@ export const SocialHub: React.FC<SocialHubProps> = ({ onClose, currentUser, init
                   onChange={e => setNewChatText(e.target.value)}
                   onKeyDown={e => e.key === 'Enter' && handleSendMessage()}
                   placeholder="Digite uma mensagem..."
-                  className="flex-1 bg-[#1d4ed8]/20 border border-[#1d4ed8]/50 rounded-full px-4 py-2.5 text-sm text-white focus:outline-none focus:border-yellow-400 transition-colors placeholder-slate-500"
+                  className="flex-1 bg-[#000000]/20 border border-[#000000]/50 rounded-full px-4 py-2.5 text-sm text-white focus:outline-none focus:border-yellow-400 transition-colors placeholder-slate-500"
                 />
                 <button 
                   onClick={handleSendMessage}
@@ -566,11 +566,11 @@ export const SocialHub: React.FC<SocialHubProps> = ({ onClose, currentUser, init
             {/* We can re-use PerfilView or build a lightweight social profile here */}
             {/* Because PerfilView expects currentUser and may have edit controls, we should render a read-only profile */}
             <div className="relative">
-              <div className="h-32 bg-gradient-to-b from-[#1d4ed8]/40 to-[#05070a]" />
+              <div className="h-32 bg-gradient-to-b from-[#000000]/40 to-[#000000]" />
               <div className="absolute top-16 inset-x-0 flex flex-col items-center">
                 <div className="relative">
-                  <img src={selectedPlayer.avatar} className="w-24 h-24 rounded-full border-4 border-[#05070a] bg-[#090d12] object-cover" />
-                  <div className={`absolute bottom-1 right-1 w-5 h-5 rounded-full border-2 border-[#05070a] ${selectedPlayer.status === 'ONLINE' ? 'bg-yellow-400 shadow-[0_0_10px_#fce803]' : 'bg-slate-500'}`} />
+                  <img src={selectedPlayer.avatar} className="w-24 h-24 rounded-full border-4 border-[#000000] bg-[#090d12] object-cover" />
+                  <div className={`absolute bottom-1 right-1 w-5 h-5 rounded-full border-2 border-[#000000] ${selectedPlayer.status === 'ONLINE' ? 'bg-yellow-400 shadow-[0_0_10px_#fce803]' : 'bg-slate-500'}`} />
                 </div>
                 <h2 className="text-xl font-black text-white mt-2">{selectedPlayer.name}</h2>
                 <div className="text-sm text-yellow-400 font-mono-stat font-bold">@{selectedPlayer.nickname}</div>
@@ -606,7 +606,7 @@ export const SocialHub: React.FC<SocialHubProps> = ({ onClose, currentUser, init
                 )}
                 
                 {selectedPlayer.id !== currentUser.authId && (
-                  <button onClick={() => openChat(selectedPlayer)} className="flex-1 py-2.5 rounded-xl bg-[#1d4ed8]/30 border border-[#1d4ed8]/50 text-white hover:bg-[#1d4ed8]/50 font-black uppercase tracking-wider text-xs flex justify-center items-center gap-2 transition-colors">
+                  <button onClick={() => openChat(selectedPlayer)} className="flex-1 py-2.5 rounded-xl bg-[#000000]/30 border border-[#000000]/50 text-white hover:bg-[#000000]/50 font-black uppercase tracking-wider text-xs flex justify-center items-center gap-2 transition-colors">
                     <MessageCircle className="w-4 h-4" /> Mensagem
                   </button>
                 )}
@@ -621,11 +621,11 @@ export const SocialHub: React.FC<SocialHubProps> = ({ onClose, currentUser, init
             <div className="mt-8 px-4 max-w-lg mx-auto">
               <h3 className="text-xs font-black text-slate-400 uppercase tracking-wider mb-4 border-b border-white/10 pb-2">Estatísticas</h3>
               <div className="grid grid-cols-2 gap-3">
-                <div className="bg-[#1d4ed8]/10 border border-[#1d4ed8]/30 rounded-xl p-3 text-center">
+                <div className="bg-[#000000]/10 border border-[#000000]/30 rounded-xl p-3 text-center">
                   <div className="text-2xl font-black text-white font-mono-stat">{selectedPlayer.zonesControlled || 0}</div>
                   <div className="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Zonas</div>
                 </div>
-                <div className="bg-[#1d4ed8]/10 border border-[#1d4ed8]/30 rounded-xl p-3 text-center">
+                <div className="bg-[#000000]/10 border border-[#000000]/30 rounded-xl p-3 text-center">
                   <div className="text-2xl font-black text-white font-mono-stat">{selectedPlayer.totalKm || 0}</div>
                   <div className="text-[10px] text-slate-400 uppercase tracking-wider font-bold">KM Rodados</div>
                 </div>

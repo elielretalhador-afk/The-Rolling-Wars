@@ -31,7 +31,7 @@ export const EventsHub: React.FC<EventsHubProps> = ({
   onSelectEvent,
 }) => {
   return (
-    <div className="flex-1 overflow-y-auto custom-scrollbar p-3 pb-24 bg-[#05070a] flex flex-col items-center justify-center">
+    <div className="flex-1 overflow-y-auto custom-scrollbar p-3 pb-24 bg-[#000000] flex flex-col items-center justify-center">
       <div className="text-center p-8 bg-[#0b131e] border border-white/5 rounded-2xl w-full max-w-sm shadow-xl mt-12">
         <div className="w-16 h-16 rounded-2xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 flex items-center justify-center text-3xl mx-auto mb-4">
           🚧
@@ -64,7 +64,7 @@ export const EventsHub: React.FC<EventsHubProps> = ({
       case 'SPECIAL_CHALLENGE':
         return { label: 'DESAFIO ESPECIAL', icon: Swords, color: 'text-rose-400 bg-rose-500/10 border-rose-500/30' };
       case 'MISSION':
-        return { label: 'MISSÃO', icon: Zap, color: 'text-blue-400 bg-blue-500/10 border-blue-500/30' };
+        return { label: 'MISSÃO', icon: Zap, color: 'text-blue-400 bg-blue-500/10 border-neutral-700/30' };
       default:
         return { label: 'EVENTO', icon: Sparkles, color: 'text-slate-400 bg-slate-500/10 border-slate-500/30' };
     }
@@ -202,7 +202,7 @@ export const EventsHub: React.FC<EventsHubProps> = ({
             className={`px-3 py-1.5 rounded-xl whitespace-nowrap font-bold text-xs transition-all cursor-pointer ${
               selectedTypeFilter === f.id
                 ? 'bg-yellow-400 text-black shadow-[0_0_12px_rgba(252,232,3,0.3)]'
-                : 'bg-[#0f1722] text-slate-400 hover:text-white border border-white/5'
+                : 'bg-[#0a0a0a] text-slate-400 hover:text-white border border-white/5'
             }`}
           >
             {f.label}

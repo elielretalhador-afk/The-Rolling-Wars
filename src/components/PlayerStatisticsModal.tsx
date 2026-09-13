@@ -288,7 +288,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                  ========================================== */}
               <div
                 id="stat-section-general"
-                className="p-4 rounded-3xl bg-[#0d141d] border-2 border-white/10"
+                className="p-4 rounded-3xl bg-[#000000] border-2 border-white/10"
               >
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
@@ -393,7 +393,7 @@ export const PlayerStatisticsModal: React.FC<PlayerStatisticsModalProps> = ({
                  ========================================== */}
               <div
                 id="stat-section-skating"
-                className="p-4 rounded-3xl bg-gradient-to-b from-[#0e1924] to-[#090f16] border-2 border-cyan-500/30"
+                className="p-4 rounded-3xl bg-gradient-to-b from-[#0e1924] to-[#050505] border-2 border-cyan-500/30"
               >
                 <div className="flex items-center gap-2 mb-3">
                   <div className="w-7 h-7 rounded-xl bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 flex items-center justify-center text-xs">

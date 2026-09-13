@@ -336,7 +336,7 @@ export const CreateDirectChallengeModal: React.FC<CreateDirectChallengeModalProp
         <div className="absolute -bottom-10 -left-10 w-36 h-36 rounded-full bg-cyan-500/15 blur-3xl pointer-events-none" />
 
         {/* Modal Header */}
-        <div className="p-4 sm:p-5 pb-3 border-b border-white/10 bg-gradient-to-b from-blue-950/40 via-[#0a121c] to-[#090e15] flex items-center justify-between shrink-0">
+        <div className="p-4 sm:p-5 pb-3 border-b border-white/10 bg-gradient-to-b from-neutral-900/40 via-[#0a121c] to-[#090e15] flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-yellow-400 to-cyan-500 flex items-center justify-center text-black font-black shadow-[0_0_15px_rgba(252,232,3,0.4)]">
               <Swords className="w-5 h-5" />
@@ -599,7 +599,7 @@ export const CreateDirectChallengeModal: React.FC<CreateDirectChallengeModalProp
                         onClick={() => setSelectedRouteId(route.id)}
                         className={`p-3 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between gap-3 ${
                           isSelected
-                            ? 'bg-blue-950/40 border-yellow-400 shadow-[0_0_15px_rgba(252,232,3,0.2)]'
+                            ? 'bg-neutral-900/40 border-yellow-400 shadow-[0_0_15px_rgba(252,232,3,0.2)]'
                             : 'bg-[#0c1420] border-white/10 hover:border-white/20'
                         }`}
                       >

@@ -55,7 +55,6 @@ export const FeedView: React.FC<FeedViewProps> = ({
   const [mediaFile, setMediaFile] = useState<File | null>(null);
   const [mediaPreview, setMediaPreview] = useState<string | null>(null);
   const [isPublishing, setIsPublishing] = useState(false);
-  const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   const filters: { id: ActivityFilterType; label: string; icon: React.ElementType }[] = [
     { id: 'TODAS', label: 'TODAS', icon: Layers },
@@ -165,31 +164,16 @@ export const FeedView: React.FC<FeedViewProps> = ({
     }
   };
 
-  const requestCamera = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.accept = "image/*";
-      fileInputRef.current.click();
-    }
-  };
-
-  const requestVideo = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.accept = "video/*";
-      fileInputRef.current.click();
-    }
-  };
-
   const clearMedia = () => {
     setMediaFile(null);
     setMediaPreview(null);
-    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
 
   return (
     <div className="absolute inset-0 z-50 w-full h-full flex flex-col bg-[#070b10] text-white">
       {/* Header */}
-      <div className="p-4 bg-gradient-to-r from-[#0d141e] via-[#091119] to-[#0d141e] border-b border-white/10 flex items-center justify-between shrink-0">
+      <div className="p-4 bg-gradient-to-r from-[#0a0a0a] via-[#091119] to-[#0a0a0a] border-b border-white/10 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3">
           <button onClick={() => { if (onClose) onClose(); }} className="p-1.5 -ml-1.5 mr-1 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 transition-colors cursor-pointer">
             <ChevronLeft className="w-6 h-6" />
@@ -203,7 +187,7 @@ export const FeedView: React.FC<FeedViewProps> = ({
       </div>
 
       {/* Post Creation Area */}
-      <div className="p-4 bg-[#0d141e] border-b border-white/10 flex items-center gap-3 shrink-0 cursor-pointer" onClick={() => setIsComposerOpen(true)}>
+      <div className="p-4 bg-[#0a0a0a] border-b border-white/10 flex items-center gap-3 shrink-0 cursor-pointer" onClick={() => setIsComposerOpen(true)}>
         <img src={currentUser.avatar} alt="Avatar" className="w-10 h-10 rounded-full border border-white/20 object-cover" />
         <div className="flex-1 bg-white/5 border border-white/10 rounded-full px-4 py-2.5 text-sm text-slate-400 font-medium">
           O que você está pensando?
@@ -215,7 +199,7 @@ export const FeedView: React.FC<FeedViewProps> = ({
           pagedActivities.map((act) => {
             const isOwner = act.playerId === currentUser.id;
             return (
-              <div key={act.id} className="p-3.5 rounded-2xl bg-[#0d141e] border border-white/10 hover:border-yellow-400/50 transition-all shadow-md relative overflow-hidden">
+              <div key={act.id} className="p-3.5 rounded-2xl bg-[#0a0a0a] border border-white/10 hover:border-yellow-400/50 transition-all shadow-md relative overflow-hidden">
                 {/* Top Bar: Author & Metadata */}
                 <div className="flex items-center justify-between gap-2 mb-2">
                   <div className="flex items-center gap-2.5 min-w-0 cursor-pointer" onClick={() => !isOwner && onSelectPlayer && onSelectPlayer(act.playerId)}>
@@ -298,7 +282,7 @@ export const FeedView: React.FC<FeedViewProps> = ({
             );
           })
         ) : (
-          <div className="p-8 text-center bg-[#0d141e] border border-white/10 rounded-2xl space-y-4 mt-8">
+          <div className="p-8 text-center bg-[#0a0a0a] border border-white/10 rounded-2xl space-y-4 mt-8">
             <ActivityIcon className="w-12 h-12 text-yellow-500/40 mx-auto" />
             <div>
               <h4 className="text-base font-bold text-slate-200 font-display uppercase tracking-wider">O Feed está vazio</h4>
@@ -323,7 +307,7 @@ export const FeedView: React.FC<FeedViewProps> = ({
       {/* Composer Modal */}
       {isComposerOpen && (
         <div className="fixed inset-0 z-[200] bg-black/80 flex flex-col justify-end">
-          <div className="bg-[#0d141e] rounded-t-3xl p-4 h-[90vh] flex flex-col animate-in slide-in-from-bottom-8">
+          <div className="bg-[#0a0a0a] rounded-t-3xl p-4 h-[90vh] flex flex-col animate-in slide-in-from-bottom-8">
             <div className="flex items-center justify-between mb-4 pb-4 border-b border-white/10">
               <button onClick={() => setIsComposerOpen(false)} className="text-slate-400 hover:text-white font-bold text-sm">Cancelar</button>
               <h3 className="text-sm font-bold text-white uppercase tracking-wider font-display">Nova Publicação</h3>
@@ -361,18 +345,26 @@ export const FeedView: React.FC<FeedViewProps> = ({
             </div>
 
             <div className="mt-auto border-t border-white/10 pt-4 flex gap-3">
-              <input 
-                type="file" 
-                ref={fileInputRef} 
-                onChange={handleFileSelect} 
-                className="hidden" 
-              />
-              <button disabled={isPublishing} onClick={requestCamera} className="flex items-center gap-2 text-yellow-400 bg-yellow-500/10 px-4 py-2 rounded-xl font-bold text-xs uppercase hover:bg-yellow-500/20 disabled:opacity-50">
+              <label htmlFor="image-upload" className={`flex items-center gap-2 text-yellow-400 bg-yellow-500/10 px-4 py-2 rounded-xl font-bold text-xs uppercase hover:bg-yellow-500/20 cursor-pointer ${isPublishing ? 'opacity-50 pointer-events-none' : ''}`}>
                 <Camera className="w-5 h-5" /> Foto
-              </button>
-              <button disabled={isPublishing} onClick={requestVideo} className="flex items-center gap-2 text-yellow-400 bg-yellow-500/10 px-4 py-2 rounded-xl font-bold text-xs uppercase hover:bg-yellow-500/20 disabled:opacity-50">
+                <input 
+                  id="image-upload"
+                  type="file" 
+                  accept="image/*"
+                  onChange={handleFileSelect} 
+                  className="hidden" 
+                />
+              </label>
+              <label htmlFor="video-upload" className={`flex items-center gap-2 text-yellow-400 bg-yellow-500/10 px-4 py-2 rounded-xl font-bold text-xs uppercase hover:bg-yellow-500/20 cursor-pointer ${isPublishing ? 'opacity-50 pointer-events-none' : ''}`}>
                 <Video className="w-5 h-5" /> Vídeo
-              </button>
+                <input 
+                  id="video-upload"
+                  type="file" 
+                  accept="video/*"
+                  onChange={handleFileSelect} 
+                  className="hidden" 
+                />
+              </label>
             </div>
           </div>
         </div>

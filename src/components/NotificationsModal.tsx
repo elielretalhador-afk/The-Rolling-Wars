@@ -77,7 +77,7 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({
       case 'record_beaten':
         return <Flame className="w-4 h-4 text-orange-500" />;
       case 'social_activity':
-        return <Users className="w-4 h-4 text-[#1d4ed8]" />;
+        return <Users className="w-4 h-4 text-[#000000]" />;
       case 'sistema':
       default:
         return <Info className="w-4 h-4 text-slate-300" />;
@@ -109,7 +109,7 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({
       case 'record_beaten':
         return 'bg-orange-500/20 text-orange-300 border-orange-400/40';
       case 'social_activity':
-        return 'bg-[#1d4ed8]/20 text-white border-[#1d4ed8]/30';
+        return 'bg-[#000000]/20 text-white border-[#000000]/30';
       case 'sistema':
       default:
         return 'bg-slate-700/40 text-slate-300 border-slate-600/40';
@@ -164,13 +164,13 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({
       id="modal-notifications"
       className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85  animate-in fade-in duration-200"
     >
-      <div className="w-full max-w-md h-[90vh] max-h-[640px] rounded-3xl bg-[#1d4ed8] border-2 border-yellow-500/40 shadow-[0_0_50px_rgba(252,232,3,0.25)] flex flex-col relative overflow-hidden">
+      <div className="w-full max-w-md h-[90vh] max-h-[640px] rounded-3xl bg-[#000000] border-2 border-yellow-500/40 shadow-[0_0_50px_rgba(252,232,3,0.25)] flex flex-col relative overflow-hidden">
         {/* Top Glow Decorator */}
         <div className="absolute -top-12 -left-12 w-36 h-36 rounded-full bg-yellow-500/15 blur-3xl pointer-events-none" />
         <div className="absolute -bottom-12 -right-12 w-36 h-36 rounded-full bg-cyan-500/15 blur-3xl pointer-events-none" />
 
         {/* Modal Header */}
-        <div className="p-4 pb-3 border-b border-white/10 flex items-center justify-between gap-2 shrink-0 bg-[#0c121a]">
+        <div className="p-4 pb-3 border-b border-white/10 flex items-center justify-between gap-2 shrink-0 bg-[#050505]">
           <div className="flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-xl bg-yellow-400/15 border border-yellow-400/40 flex items-center justify-center text-yellow-400 shadow-sm relative">
               <Bell className="w-5 h-5" />
@@ -210,7 +210,7 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({
         </div>
 
         {/* Action Controls & Filter Chips */}
-        <div className="px-4 py-2.5 border-b border-white/5 flex items-center justify-between gap-2 bg-[#090d13] shrink-0">
+        <div className="px-4 py-2.5 border-b border-white/5 flex items-center justify-between gap-2 bg-[#050505] shrink-0">
           <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
             <button
               type="button"
@@ -301,7 +301,7 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({
                   className={`group relative p-3 rounded-2xl border transition-all cursor-pointer text-left ${
                     notif.isRead
                       ? 'bg-[#0a0e14]/70 border-white/5 hover:border-white/20 hover:bg-[#0e141c]'
-                      : 'bg-[#0f1722] border-yellow-500/40 shadow-[0_0_15px_rgba(252,232,3,0.15)] hover:border-yellow-400'
+                      : 'bg-[#0a0a0a] border-yellow-500/40 shadow-[0_0_15px_rgba(252,232,3,0.15)] hover:border-yellow-400'
                   }`}
                 >
                   {/* Unread Accent Dot */}
@@ -372,7 +372,7 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({
         </div>
 
         {/* Modal Footer Info */}
-        <div className="p-3 bg-[#080c10] border-t border-white/5 flex items-center justify-between text-[10px] text-slate-400 font-mono-stat shrink-0">
+        <div className="p-3 bg-[#000000] border-t border-white/5 flex items-center justify-between text-[10px] text-slate-400 font-mono-stat shrink-0">
           <div className="flex items-center gap-1.5">
             <Shield className="w-3.5 h-3.5 text-yellow-400" />
             <span>Sistema THE ROLLING WARS Realtime</span>

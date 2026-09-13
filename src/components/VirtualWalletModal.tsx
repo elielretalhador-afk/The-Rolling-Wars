@@ -135,7 +135,7 @@ export const VirtualWalletModal: React.FC<VirtualWalletModalProps> = ({
         <div className="relative z-10 flex items-center justify-between p-4 sm:p-5 border-b border-white/10 bg-[#0d141f]">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 p-0.5 shadow-[0_0_15px_rgba(245,158,11,0.4)] flex items-center justify-center">
-              <div className="w-full h-full bg-[#1d4ed8] rounded-[14px] flex items-center justify-center text-amber-400">
+              <div className="w-full h-full bg-[#000000] rounded-[14px] flex items-center justify-center text-amber-400">
                 <Coins className="w-5 h-5" />
               </div>
             </div>
@@ -170,7 +170,7 @@ export const VirtualWalletModal: React.FC<VirtualWalletModalProps> = ({
           <div
             className={`relative z-20 px-4 py-2.5 mx-4 mt-3 flex items-center gap-2 rounded-2xl text-xs font-bold font-mono-stat shadow-lg transition-all animate-in slide-in-from-top-2 ${
               feedbackMessage.type === 'success'
-                ? 'bg-blue-950/90 border border-yellow-400 text-yellow-200'
+                ? 'bg-neutral-900/90 border border-yellow-400 text-yellow-200'
                 : 'bg-rose-950/90 border border-rose-400 text-rose-200'
             }`}
           >
@@ -186,7 +186,7 @@ export const VirtualWalletModal: React.FC<VirtualWalletModalProps> = ({
         {/* Body Content */}
         <div className="relative z-10 flex-1 overflow-y-auto overscroll-contain p-4 sm:p-5 space-y-4">
           {/* Main Balance Hero Card */}
-          <div className="p-5 rounded-3xl bg-gradient-to-b from-[#131c27] via-[#0f1722] to-[#0a0f15] border-2 border-amber-400/40 shadow-xl relative overflow-hidden">
+          <div className="p-5 rounded-3xl bg-gradient-to-b from-[#131c27] via-[#0a0a0a] to-[#0a0f15] border-2 border-amber-400/40 shadow-xl relative overflow-hidden">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <span className="text-[10px] font-black uppercase tracking-widest text-amber-400/90 font-mono-stat">

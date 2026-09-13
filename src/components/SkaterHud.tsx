@@ -152,7 +152,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
         <div className="flex items-center justify-between pointer-events-auto gap-2">
           {/* GPS Radar indicator & Active Session REC Tag */}
           <div className="flex items-center gap-1.5 flex-wrap">
-            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1d4ed8]/95 border-2 border-yellow-500/50 rounded-xl shadow-lg  shrink-0">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-[#000000]/95 border-2 border-yellow-500/50 rounded-xl shadow-lg  shrink-0">
               <span className="relative flex h-2 w-2">
                 <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${isGpsActive ? 'bg-yellow-400' : 'bg-amber-400'} opacity-75`}></span>
                 <span className={`relative inline-flex rounded-full h-2 w-2 ${isGpsActive ? 'bg-yellow-400' : 'bg-amber-400'}`}></span>
@@ -263,7 +263,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
                 className={`px-3 py-1 text-xs font-bold uppercase tracking-wider rounded-xl whitespace-nowrap transition-all duration-200 shadow-md ${
                   isActive
                     ? 'bg-yellow-400 text-black shadow-[0_0_15px_rgba(252,232,3,0.4)] scale-105 border-2 border-yellow-400'
-                    : 'bg-[#1e3a8a]/90 text-slate-300 border-2 border-white/10 hover:border-yellow-500/50 hover:text-white '
+                    : 'bg-[#050505]/90 text-slate-300 border-2 border-white/10 hover:border-yellow-500/50 hover:text-white '
                 }`}
               >
                 {category}
@@ -281,7 +281,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
                 <div
                   key={az.id}
                   id={`active-zone-pill-${az.id}`}
-                  className="flex items-center justify-between gap-2.5 px-3 py-2 rounded-2xl bg-[#1d4ed8]/95 border-2 shadow-[0_4px_25px_rgba(0,0,0,0.8)] "
+                  className="flex items-center justify-between gap-2.5 px-3 py-2 rounded-2xl bg-[#000000]/95 border-2 shadow-[0_4px_25px_rgba(0,0,0,0.8)] "
                   style={{ borderColor: azColor }}
                 >
                   <div className="flex items-center gap-2.5 min-w-0">
@@ -337,7 +337,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
                 <div
                   key={cp.zoneId}
                   id={`conquest-card-${cp.zoneId}`}
-                  className={`p-3 rounded-2xl bg-[#1d4ed8]/98 border-2 shadow-[0_10px_35px_rgba(0,0,0,0.9)]  transition-all duration-300 ${
+                  className={`p-3 rounded-2xl bg-[#000000]/98 border-2 shadow-[0_10px_35px_rgba(0,0,0,0.9)]  transition-all duration-300 ${
                     isConquered
                       ? 'border-yellow-400 shadow-[0_0_30px_rgba(252,232,3,0.4)]'
                       : 'border-amber-400/90 shadow-[0_0_25px_rgba(251,191,36,0.25)]'
@@ -540,10 +540,10 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
             id="btn-explore-zones"
             onClick={onOpenNearbyZones}
             title="Explorar e Ver Lista de Zonas"
-            className="group relative flex items-center justify-center w-11 h-11 rounded-2xl bg-[#1d4ed8]/95 border border-white/15 text-white shadow-[0_6px_20px_rgba(0,0,0,0.8)] transition-all duration-150 hover:border-yellow-400 hover:text-yellow-400 hover:scale-105 active:scale-95 cursor-pointer"
+            className="group relative flex items-center justify-center w-11 h-11 rounded-2xl bg-[#000000]/95 border border-white/15 text-white shadow-[0_6px_20px_rgba(0,0,0,0.8)] transition-all duration-150 hover:border-yellow-400 hover:text-yellow-400 hover:scale-105 active:scale-95 cursor-pointer"
           >
             <Compass className="w-5 h-5 transition-transform group-hover:rotate-45" />
-            <span className="absolute -top-1 -right-1 px-1.5 py-0.2 rounded-md text-[8px] font-black bg-blue-950 text-yellow-300 border border-yellow-500/40 font-mono-stat">
+            <span className="absolute -top-1 -right-1 px-1.5 py-0.2 rounded-md text-[8px] font-black bg-neutral-900 text-yellow-300 border border-yellow-500/40 font-mono-stat">
               {zones.length}
             </span>
             <span className="sr-only">Explorar Zonas</span>
@@ -555,7 +555,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
           id="btn-center-user"
           onClick={onCenterUser}
           title="Centralizar no Patinador"
-          className="group relative flex items-center justify-center w-11 h-11 rounded-2xl bg-[#1d4ed8]/95 border border-white/15 text-white shadow-[0_6px_20px_rgba(0,0,0,0.8)] transition-all duration-150 hover:border-yellow-400 hover:text-yellow-400 hover:scale-105 active:scale-95 cursor-pointer"
+          className="group relative flex items-center justify-center w-11 h-11 rounded-2xl bg-[#000000]/95 border border-white/15 text-white shadow-[0_6px_20px_rgba(0,0,0,0.8)] transition-all duration-150 hover:border-yellow-400 hover:text-yellow-400 hover:scale-105 active:scale-95 cursor-pointer"
         >
           <Crosshair className="w-5 h-5 transition-transform group-hover:rotate-45" />
           <span className="sr-only">Centralizar no Usuário</span>
@@ -582,7 +582,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
         <div className="absolute bottom-4 inset-x-3 z-30 pointer-events-auto max-w-md mx-auto">
           <div
             id="active-challenge-hud-panel"
-            className="p-4 rounded-2xl bg-[#1d4ed8]/98 border-2 border-amber-400/90 shadow-[0_15px_40px_rgba(251,191,36,0.35)]  animate-in slide-in-from-bottom duration-300"
+            className="p-4 rounded-2xl bg-[#000000]/98 border-2 border-amber-400/90 shadow-[0_15px_40px_rgba(251,191,36,0.35)]  animate-in slide-in-from-bottom duration-300"
           >
             <div className="flex items-start justify-between gap-2 mb-2">
               <div className="flex items-center gap-2 flex-wrap">
@@ -675,7 +675,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
       {/* ACTIVE CHALLENGE MINIMIZED PILL (When user clicked "Focar no alvo") */}
       {selectedChallenge && isChallengeBannerMinimized && (
         <div className="absolute bottom-20 inset-x-3 z-30 pointer-events-auto max-w-sm mx-auto animate-in slide-in-from-bottom-2 duration-200">
-          <div className="flex items-center justify-between gap-2 p-2.5 rounded-2xl bg-[#1d4ed8]/95 border-2 border-yellow-400 shadow-[0_8px_30px_rgba(252,232,3,0.3)] ">
+          <div className="flex items-center justify-between gap-2 p-2.5 rounded-2xl bg-[#000000]/95 border-2 border-yellow-400 shadow-[0_8px_30px_rgba(252,232,3,0.3)] ">
             <div className="flex items-center gap-2 min-w-0">
               <div className="p-1.5 rounded-lg bg-yellow-400 text-black font-black">
                 <Target className="w-4 h-4" />
@@ -717,7 +717,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
         <div className="absolute bottom-4 inset-x-3 z-30 pointer-events-auto max-w-md mx-auto">
           <div
             id="active-route-hud-panel"
-            className="p-4 rounded-2xl bg-[#1d4ed8]/98 border-2 border-yellow-400/90 shadow-[0_15px_40px_rgba(252,232,3,0.35)]  animate-in slide-in-from-bottom duration-300"
+            className="p-4 rounded-2xl bg-[#000000]/98 border-2 border-yellow-400/90 shadow-[0_15px_40px_rgba(252,232,3,0.35)]  animate-in slide-in-from-bottom duration-300"
           >
             <div className="flex items-start justify-between gap-2 mb-1.5">
               <div className="flex items-center gap-2 flex-wrap">
@@ -794,7 +794,7 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
       {isSessionActive && !selectedZone && (!selectedChallenge || isChallengeBannerMinimized) && !selectedRoute && (
         <div className="absolute bottom-4 inset-x-3 z-20 pointer-events-none">
           <div
-            className={`pointer-events-auto max-w-md mx-auto flex flex-col gap-2 p-3 bg-[#1d4ed8]/98 border-2 rounded-2xl  animate-in slide-in-from-bottom duration-300 ${
+            className={`pointer-events-auto max-w-md mx-auto flex flex-col gap-2 p-3 bg-[#000000]/98 border-2 rounded-2xl  animate-in slide-in-from-bottom duration-300 ${
               isSessionPaused || sessionStatus === 'PAUSED'
                 ? 'border-amber-400 shadow-[0_0_40px_rgba(251,191,36,0.3)]'
                 : 'border-[#fce803] shadow-[0_0_40px_rgba(252,232,3,0.35)]'
@@ -919,17 +919,17 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
       {/* ========================================================================= */}
       {!isSessionActive && !selectedZone && (!selectedChallenge || isChallengeBannerMinimized) && !selectedRoute && (
         <div className="absolute bottom-3 inset-x-3 z-20 pointer-events-none">
-          <div className="pointer-events-auto max-w-md mx-auto flex items-center justify-between gap-3 p-2.5 rounded-[32px] bg-[#1d4ed8]/95 border border-blue-400/30 shadow-[0_16px_40px_rgba(0,0,0,0.9)] ">
+          <div className="pointer-events-auto max-w-md mx-auto flex items-center justify-between gap-3 p-2.5 rounded-[32px] bg-[#000000]/95 border-2 border-[#fce803] shadow-[0_0_20px_rgba(252,232,3,0.3)] ">
             
             {/* LEFT: ROTA */}
             {onOpenRotas && (
               <button
                 type="button"
                 onClick={onOpenRotas}
-                className="flex flex-col items-center justify-center p-2 rounded-2xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 hover:border-yellow-400/30 transition-all active:scale-95 shrink-0 min-w-[70px] cursor-pointer"
+                className="flex flex-col items-center justify-center p-2 rounded-2xl bg-[#ea580c]/30 hover:bg-[#ea580c]/50 border border-[#ea580c]/60 hover:border-[#ea580c] transition-all active:scale-95 shrink-0 min-w-[70px] cursor-pointer"
               >
                 <Navigation className="w-5 h-5 text-white mb-1" />
-                <span className="text-[10px] font-black text-slate-300 uppercase font-mono-stat tracking-wider">Rota</span>
+                <span className="text-[10px] font-black text-slate-100 uppercase font-mono-stat tracking-wider">Rota</span>
               </button>
             )}
 
@@ -954,10 +954,10 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
               <button
                 type="button"
                 onClick={onOpenDesafios}
-                className="flex flex-col items-center justify-center p-2 rounded-2xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 hover:border-amber-400/30 transition-all active:scale-95 shrink-0 min-w-[70px] cursor-pointer"
+                className="flex flex-col items-center justify-center p-2 rounded-2xl bg-[#ea580c]/30 hover:bg-[#ea580c]/50 border border-[#ea580c]/60 hover:border-[#ea580c] transition-all active:scale-95 shrink-0 min-w-[70px] cursor-pointer"
               >
                 <Swords className="w-5 h-5 text-white mb-1" />
-                <span className="text-[10px] font-black text-slate-300 uppercase font-mono-stat tracking-wider">Desafio</span>
+                <span className="text-[10px] font-black text-slate-100 uppercase font-mono-stat tracking-wider">Desafio</span>
               </button>
             )}
 

@@ -61,10 +61,10 @@ export const ClanProfileModal: React.FC<ClanProfileModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 animate-in fade-in duration-200">
-      <div className="bg-[#080B0E] p-1 rounded-3xl w-full max-w-md border border-blue-600/30 shadow-[0_0_40px_rgba(29,78,216,0.15)] relative overflow-hidden flex flex-col max-h-[90vh]">
+      <div className="bg-[#050505] p-1 rounded-3xl w-full max-w-md border border-blue-600/30 shadow-[0_0_40px_rgba(29,78,216,0.15)] relative overflow-hidden flex flex-col max-h-[90vh]">
         
         {/* Header Banner */}
-        <div className="bg-gradient-to-br from-[#1d4ed8] to-[#0a1226] p-6 pb-8 relative shrink-0">
+        <div className="bg-gradient-to-br from-[#000000] to-[#0a1226] p-6 pb-8 relative shrink-0">
           <button onClick={onClose} className="absolute top-4 right-4 p-2 bg-black/20 rounded-full text-white/70 hover:text-white">
             <X className="w-5 h-5" />
           </button>
@@ -88,7 +88,7 @@ export const ClanProfileModal: React.FC<ClanProfileModalProps> = ({
         <div className="p-4 overflow-y-auto flex-1">
           
           {isLeader && (
-            <div className="mb-6 bg-blue-900/20 border border-blue-500/30 p-4 rounded-2xl">
+            <div className="mb-6 bg-blue-900/20 border border-neutral-700/30 p-4 rounded-2xl">
               <h3 className="text-xs font-bold text-blue-300 uppercase tracking-widest mb-3">Convidar Jogador (ID)</h3>
               <div className="flex gap-2">
                 <input 

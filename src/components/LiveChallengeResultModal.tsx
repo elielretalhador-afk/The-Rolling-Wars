@@ -42,7 +42,7 @@ export const LiveChallengeResultModal: React.FC<LiveChallengeResultModalProps> =
       id="modal-live-challenge-result"
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85  animate-fade-in"
     >
-      <div className="relative w-full max-w-md bg-[#1d4ed8] border-2 border-yellow-400/80 rounded-3xl p-5 sm:p-6 shadow-[0_0_50px_rgba(252,232,3,0.35)] overflow-hidden">
+      <div className="relative w-full max-w-md bg-[#000000] border-2 border-yellow-400/80 rounded-3xl p-5 sm:p-6 shadow-[0_0_50px_rgba(252,232,3,0.35)] overflow-hidden">
         {/* Glow de fundo */}
         <div className="absolute -top-24 -right-24 w-48 h-48 bg-yellow-500/20 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-amber-500/15 rounded-full blur-3xl pointer-events-none" />
@@ -80,7 +80,7 @@ export const LiveChallengeResultModal: React.FC<LiveChallengeResultModalProps> =
         <div
           className={`p-3 rounded-2xl border text-center mb-4 ${
             isCurrentUserWinner
-              ? 'bg-blue-950/40 border-yellow-400/60 shadow-[0_0_20px_rgba(252,232,3,0.2)]'
+              ? 'bg-neutral-900/40 border-yellow-400/60 shadow-[0_0_20px_rgba(252,232,3,0.2)]'
               : 'bg-[#101722] border-white/10'
           }`}
         >
@@ -98,7 +98,7 @@ export const LiveChallengeResultModal: React.FC<LiveChallengeResultModalProps> =
         <div className="space-y-2.5 mb-5">
           {/* 1º LUGAR */}
           {winner && (
-            <div className="p-3 rounded-2xl bg-gradient-to-r from-amber-950/30 to-[#0e1622] border-2 border-amber-400/70 shadow-[0_0_15px_rgba(251,191,36,0.2)]">
+            <div className="p-3 rounded-2xl bg-gradient-to-r from-amber-950/30 to-[#050505] border-2 border-amber-400/70 shadow-[0_0_15px_rgba(251,191,36,0.2)]">
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2.5 min-w-0">
                   <div className="w-7 h-7 rounded-xl bg-amber-400/20 border border-amber-400 flex items-center justify-center text-amber-300 font-black text-xs font-mono-stat shrink-0">

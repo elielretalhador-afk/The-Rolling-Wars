@@ -276,9 +276,9 @@ export const DirectChallengesHub: React.FC<DirectChallengesHubProps> = ({
                 key={item.id}
                 id={`direct-challenge-card-${item.id}`}
                 onClick={() => onSelectChallenge(item)}
-                className={`p-4 rounded-2xl bg-[#0d141e] border-2 transition-all cursor-pointer hover:border-yellow-500/50 hover:shadow-lg flex flex-col justify-between gap-3 ${
+                className={`p-4 rounded-2xl bg-[#0a0a0a] border-2 transition-all cursor-pointer hover:border-yellow-500/50 hover:shadow-lg flex flex-col justify-between gap-3 ${
                   needsMyResponse
-                    ? 'border-cyan-400/50 bg-gradient-to-r from-[#0c1622] to-[#0d141e] shadow-[0_0_15px_rgba(6,182,212,0.15)]'
+                    ? 'border-cyan-400/50 bg-gradient-to-r from-[#0c1622] to-[#0a0a0a] shadow-[0_0_15px_rgba(6,182,212,0.15)]'
                     : item.status === 'confirmado'
                     ? 'border-yellow-500/40'
                     : 'border-white/10'

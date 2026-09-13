@@ -60,7 +60,7 @@ export const FollowListModal: React.FC<FollowListModalProps> = ({
         <div className="absolute -top-16 -left-16 w-44 h-44 rounded-full bg-yellow-500/15 blur-3xl pointer-events-none" />
         
         {/* Header */}
-        <div className="p-4 border-b border-white/10 flex items-center justify-between shrink-0 bg-[#0c121a]">
+        <div className="p-4 border-b border-white/10 flex items-center justify-between shrink-0 bg-[#050505]">
           <h2 className="text-base font-black text-white font-display uppercase tracking-wide">
             {title}
           </h2>
@@ -86,7 +86,7 @@ export const FollowListModal: React.FC<FollowListModalProps> = ({
             players.map(player => (
               <div
                 key={player.id}
-                className="flex items-center gap-3 p-3 rounded-2xl bg-[#0c121a] border border-white/5 cursor-pointer hover:border-white/10 transition-colors"
+                className="flex items-center gap-3 p-3 rounded-2xl bg-[#050505] border border-white/5 cursor-pointer hover:border-white/10 transition-colors"
                 onClick={() => onSelectPlayer(player)}
               >
                 <img

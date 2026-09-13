@@ -108,7 +108,7 @@ export const AuthScreen: React.FC<AuthScreenProps> = ({ onLoginSuccess }) => {
               <Zap className="w-28 h-28 text-white opacity-25" strokeWidth={1.5} />
             </div>
 
-            <div className="absolute inset-0 bg-blue-700 rounded-full blur-[60px] opacity-20 animate-pulse" style={{ transform: 'scale(1.2)' }}></div>
+            <div className="absolute inset-0 bg-neutral-800 rounded-full blur-[60px] opacity-20 animate-pulse" style={{ transform: 'scale(1.2)' }}></div>
             <div className="absolute inset-0 bg-[#fce803] rounded-full blur-[40px] opacity-20 animate-pulse"></div>
             <img src="/logo-rw-dark.png" alt="The Rolling Wars" className="relative z-10 w-full h-full object-contain drop-shadow-[0_0_15px_rgba(252,232,3,0.4)]" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
             <div className="absolute inset-0 flex items-center justify-center border-2 border-[#fce803]/30 rounded-full" style={{ zIndex: 0 }}>

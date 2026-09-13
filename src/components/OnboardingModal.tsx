@@ -55,7 +55,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-[#0d141d] rounded-3xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col max-h-[85vh] animate-in zoom-in-95 duration-300">
+      <div className="w-full max-w-md bg-[#000000] rounded-3xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col max-h-[85vh] animate-in zoom-in-95 duration-300">
         
         {/* Header with Progress */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-[#121a24]">
@@ -94,7 +94,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
             <div className="animate-in fade-in slide-in-from-right-4 duration-300">
               <div className="flex justify-center mb-6">
                 <div className="w-24 h-24 bg-gradient-to-br from-cyan-400 via-fuchsia-500 to-yellow-400 rounded-3xl p-1 shadow-[0_0_30px_rgba(252,232,3,0.3)]">
-                  <div className="w-full h-full bg-[#0d141d] rounded-[22px] flex items-center justify-center">
+                  <div className="w-full h-full bg-[#000000] rounded-[22px] flex items-center justify-center">
                     <Play className="w-10 h-10 text-yellow-400 fill-yellow-400/20" />
                   </div>
                 </div>

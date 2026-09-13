@@ -33,7 +33,7 @@ export const Header: React.FC<HeaderProps> = ({
   const xpPercent = Math.min(100, Math.max(0, Math.round((currentXP / nextLevelXP) * 100)));
 
   return (
-    <header className="relative z-30 flex items-center justify-between px-3 py-2 bg-[#080d14]/95  border-b border-white/10 shadow-[0_4px_24px_rgba(0,0,0,0.85)]">
+    <header className="relative z-30 flex items-center justify-between px-3 py-2 bg-[#000000]/95  border-b border-white/10 shadow-[0_4px_24px_rgba(0,0,0,0.85)]">
       {/* Top Subtle Neon Edge Line */}
       <div className="absolute top-0 inset-x-0 h-[1.5px] bg-gradient-to-r from-transparent via-yellow-400/40 to-transparent pointer-events-none" />
 
@@ -42,7 +42,7 @@ export const Header: React.FC<HeaderProps> = ({
         type="button"
         id="btn-header-player-profile"
         onClick={onOpenProfile}
-        className="group relative flex items-center gap-2.5 px-2 py-1.5 rounded-2xl bg-gradient-to-r from-[#121a24] to-[#0d141d] border border-white/10 hover:border-yellow-400/50 shadow-[0_4px_12px_rgba(0,0,0,0.6)] active:scale-95 transition-all text-left cursor-pointer"
+        className="group relative flex items-center gap-2.5 px-2 py-1.5 rounded-2xl bg-gradient-to-r from-[#121a24] to-[#000000] border border-white/10 hover:border-yellow-400/50 shadow-[0_4px_12px_rgba(0,0,0,0.6)] active:scale-95 transition-all text-left cursor-pointer"
         title="Abrir Perfil do Jogador"
         aria-label="Ver Perfil"
       >
@@ -110,7 +110,7 @@ export const Header: React.FC<HeaderProps> = ({
             type="button"
             id="btn-open-social-header"
             onClick={onOpenSocial}
-            className="relative p-2 rounded-xl bg-blue-700 hover:bg-blue-600 border border-blue-500 hover:border-yellow-400 text-white shadow-[0_0_10px_rgba(29,78,216,0.6)] active:scale-95 transition-all cursor-pointer"
+            className="relative p-2 rounded-xl bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 hover:border-yellow-400 text-white shadow-[0_0_10px_rgba(29,78,216,0.6)] active:scale-95 transition-all cursor-pointer"
             title="Amigos e Perfil Social"
             aria-label="Abrir Amigos"
           >
