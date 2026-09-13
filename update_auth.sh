@@ -1,0 +1,17 @@
+#!/bin/bash
+cat << 'INNER' > patch.txt
+        {/* LOGO */}
+        <div className="mb-10 text-center flex flex-col items-center justify-center">
+          <div className="relative w-48 h-48 mx-auto mb-6 flex items-center justify-center">
+            {/* Raio e pulsing removidos conforme solicitado */}
+            <img src="/logo.png" alt="The Rolling Wars" className="relative z-10 w-full h-full object-contain drop-shadow-[0_0_15px_rgba(252,232,3,0.4)]" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+          </div>
+        </div>
+INNER
+sed -i '/{[/]* LOGO [*]/}/,/<\/div>/ {
+  /<\/div>/!d
+  /<\/div>/ {
+    r patch.txt
+    d
+  }
+}' src/components/AuthScreen.tsx

@@ -1,16 +1,21 @@
-import re
-
 with open('src/App.tsx', 'r') as f:
     content = f.read()
 
-# Let's check if there is a 'splashProgress' state
-if 'const [splashProgress' not in content:
-    # We need to add splash state
-    content = content.replace("const [authState, setAuthState] = useState<'LOADING' | 'UNAUTHENTICATED' | 'AUTHENTICATED' | 'ERROR'>('LOADING');", 
-                              "const [authState, setAuthState] = useState<'LOADING' | 'UNAUTHENTICATED' | 'AUTHENTICATED' | 'ERROR'>('LOADING');\n  const [splashProgress, setSplashProgress] = useState(0);")
-    
-    # We need to animate the progress when loading
-    progress_effect = """  useEffect(() => {
+old_loading = """  if (authState === 'LOADING') {
+    return (
+      <div className="flex justify-center w-full h-full bg-[#000000]">
+        <main className="relative flex flex-col items-center justify-center w-full h-full max-w-md md:max-w-lg bg-[#000000] border-x border-slate-800/40">
+          <div className="w-16 h-16 rounded-full border-4 border-emerald-400/20 border-t-emerald-400 animate-spin mb-4" />
+          <h2 className="text-xl font-black text-white font-display uppercase tracking-wider mb-2">Autenticando</h2>
+          <p className="text-sm text-slate-400 font-medium">Verificando identidade...</p>
+        </main>
+      </div>
+    );
+  }"""
+
+new_loading = """  const [splashProgress, setSplashProgress] = useState(0);
+
+  useEffect(() => {
     if (authState === 'LOADING') {
       const interval = setInterval(() => {
         setSplashProgress(p => {
@@ -20,22 +25,16 @@ if 'const [splashProgress' not in content:
           }
           return p + 2;
         });
-      }, 140); // ~7 seconds to reach 100%
+      }, 140);
       return () => clearInterval(interval);
     }
   }, [authState]);
-  
-  // =========================================="""
-    content = content.replace("// ==========================================\n  // RENDERIZAÇÃO CONDICIONAL DA ARQUITETURA", progress_effect + "\n  // RENDERIZAÇÃO CONDICIONAL DA ARQUITETURA")
 
-# Replace the Loading state UI with the requested splash bar
-loading_pattern = re.compile(r"if \(authState === 'LOADING'\) \{.*?return \(\s*<div className=\"flex justify-center w-full h-full bg-\[\#000000\] relative overflow-hidden\">\s*<main.*?<\/main>\s*<\/div>\s*\);\s*\}", re.DOTALL)
-
-replacement = '''if (authState === 'LOADING') {
+  if (authState === 'LOADING') {
     return (
       <div className="flex justify-center w-full h-full bg-[#000000] relative overflow-hidden">
         <main className="relative z-10 flex flex-col items-center justify-center w-full h-full max-w-md md:max-w-lg bg-transparent border-x border-slate-800/40 p-6">
-          <div className="relative w-48 h-48 mx-auto mb-16 flex items-center justify-center animate-pulse" style={{ animationDuration: '3s' }}>
+          <div className="relative w-56 h-56 mx-auto mb-16 flex items-center justify-center animate-pulse" style={{ animationDuration: '3s' }}>
             <img src="/logo.png" alt="The Rolling Wars" className="relative z-10 w-full h-full object-contain drop-shadow-[0_0_15px_rgba(252,232,3,0.4)]" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
           </div>
           
@@ -55,9 +54,12 @@ replacement = '''if (authState === 'LOADING') {
         </main>
       </div>
     );
-  }'''
+  }"""
 
-new_content = loading_pattern.sub(replacement, content)
+if old_loading in content:
+    content = content.replace(old_loading, new_loading)
+else:
+    print("WARNING: Old loading block not found exact match!")
 
 with open('src/App.tsx', 'w') as f:
-    f.write(new_content)
+    f.write(content)

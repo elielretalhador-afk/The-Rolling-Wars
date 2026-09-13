@@ -72,8 +72,8 @@ jobs:
           cat << 'INNER_EOF' > android/app/src/main/res/values/strings.xml
           <?xml version='1.0' encoding='utf-8'?>
           <resources>
-              <string name="app_name">Urbanozeiro</string>
-              <string name="title_activity_main">Urbanozeiro</string>
+              <string name="app_name">The Rolling Wars</string>
+              <string name="title_activity_main">The Rolling Wars</string>
               <string name="package_name">com.urbanozeiro.app</string>
               <string name="custom_url_scheme">com.urbanozeiro.app</string>
               <string name="default_web_client_id">506646024333-7hkbs8qpejlt3l7rj3ng318fv7ukqr1l.apps.googleusercontent.com</string>
@@ -219,5 +219,5 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: urbanozeiro-apk
+          name: The-Rolling-Wars-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
