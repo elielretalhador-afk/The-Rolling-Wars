@@ -2,7 +2,7 @@ import { PlayerSettings } from '../types';
 
 export const DEFAULT_PLAYER_SETTINGS: PlayerSettings = {
   account: {
-    email: 'lucas.rocha@therollingwars.com',
+    email: 'lucas.rocha@urbanozeiro.app',
     phone: '+55 (11) 98765-4321',
     registeredSince: 'Junho de 2026',
     isEmailVerified: true,
@@ -62,8 +62,8 @@ export const DEFAULT_PLAYER_SETTINGS: PlayerSettings = {
     buildNumber: '2026.08.19-rc4',
     releaseDate: 'Agosto de 2026',
     engineVersion: 'UrbanoEngine v2.1.0',
-    supportEmail: 'suporte@therollingwars.com.br',
-    termsUrl: 'https://therollingwars.com.br/termos',
-    privacyPolicyUrl: 'https://therollingwars.com.br/privacidade',
+    supportEmail: 'suporte@urbanozeiro.com.br',
+    termsUrl: 'https://urbanozeiro.com.br/termos',
+    privacyPolicyUrl: 'https://urbanozeiro.com.br/privacidade',
   },
 };

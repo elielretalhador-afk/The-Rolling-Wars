@@ -442,7 +442,7 @@ export function getActivityStyle(type: ActivityType): {
     case 'ZONE_CONQUERED':
       return {
         badgeBg: 'bg-yellow-500/20',
-        badgeText: 'text-yellow-300',
+        badgeText: 'text-emerald-300',
         borderColor: 'border-yellow-500/40',
         accentColor: 'text-yellow-400',
       };
@@ -494,7 +494,7 @@ export function getActivityStyle(type: ActivityType): {
     default:
       return {
         badgeBg: 'bg-yellow-500/15',
-        badgeText: 'text-yellow-300',
+        badgeText: 'text-emerald-300',
         borderColor: 'border-white/10',
         accentColor: 'text-yellow-400',
       };

@@ -59,22 +59,22 @@ export const ChatModal: React.FC<ChatModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/80 sm:items-center">
-      <div className="w-full h-full max-h-[85vh] sm:h-auto sm:max-h-[600px] sm:max-w-md bg-[#050505] sm:rounded-2xl border border-white/10 flex flex-col shadow-2xl overflow-hidden animate-slide-up-mobile sm:animate-zoom-in">
+      <div className="w-full h-full max-h-[85vh] sm:h-auto sm:max-h-[600px] sm:max-w-md bg-[#080c12] sm:rounded-2xl border border-white/10 flex flex-col shadow-2xl overflow-hidden animate-slide-up-mobile sm:animate-zoom-in">
         
         {/* Header */}
-        <div className="flex items-center justify-between p-4 bg-[#0a0a0a] border-b border-white/10 shrink-0">
+        <div className="flex items-center justify-between p-4 bg-[#0d141e] border-b border-white/10 shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-slate-800 border border-white/20 overflow-hidden shrink-0">
               <img src={targetUser.avatar} alt={targetUser.name} className="w-full h-full object-cover" />
             </div>
             <div>
               <h2 className="text-sm font-black text-white uppercase font-display">{targetUser.name}</h2>
-              <p className="text-[10px] text-slate-400 font-mono-stat">{targetUser.tag}</p>
+              <p className="text-[10px] text-neutral-400 font-mono-stat">{targetUser.tag}</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all"
+            className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-white transition-all"
           >
             <X className="w-5 h-5" />
           </button>
@@ -92,9 +92,9 @@ export const ChatModal: React.FC<ChatModalProps> = ({
               const isMe = msg.senderId === currentUser.id;
               return (
                 <div key={msg.id} className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[80%] rounded-2xl px-4 py-2 text-sm ${isMe ? 'bg-yellow-500/20 text-yellow-100 border border-yellow-500/30 rounded-br-sm' : 'bg-[#151f2b] text-white border border-white/10 rounded-bl-sm'}`}>
+                  <div className={`max-w-[80%] rounded-2xl px-4 py-2 text-sm ${isMe ? 'bg-yellow-500/20 text-emerald-100 border border-yellow-500/30 rounded-br-sm' : 'bg-[#151f2b] text-white border border-white/10 rounded-bl-sm'}`}>
                     {msg.text}
-                    <div className={`text-[9px] mt-1 opacity-50 ${isMe ? 'text-right text-yellow-200' : 'text-left text-slate-400'}`}>
+                    <div className={`text-[9px] mt-1 opacity-50 ${isMe ? 'text-right text-emerald-200' : 'text-left text-neutral-400'}`}>
                       {msg.createdAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </div>
                   </div>
@@ -106,7 +106,7 @@ export const ChatModal: React.FC<ChatModalProps> = ({
         </div>
 
         {/* Input */}
-        <form onSubmit={handleSend} className="p-3 bg-[#0a0a0a] border-t border-white/10 flex items-center gap-2 shrink-0">
+        <form onSubmit={handleSend} className="p-3 bg-[#0d141e] border-t border-white/10 flex items-center gap-2 shrink-0">
           <input
             type="text"
             value={text}

@@ -31,7 +31,7 @@ export const EventsHub: React.FC<EventsHubProps> = ({
   onSelectEvent,
 }) => {
   return (
-    <div className="flex-1 overflow-y-auto custom-scrollbar p-3 pb-24 bg-[#000000] flex flex-col items-center justify-center">
+    <div className="flex-1 overflow-y-auto custom-scrollbar p-3 pb-24 bg-[#05070a] flex flex-col items-center justify-center">
       <div className="text-center p-8 bg-[#0b131e] border border-white/5 rounded-2xl w-full max-w-sm shadow-xl mt-12">
         <div className="w-16 h-16 rounded-2xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 flex items-center justify-center text-3xl mx-auto mb-4">
           🚧
@@ -39,7 +39,7 @@ export const EventsHub: React.FC<EventsHubProps> = ({
         <h2 className="text-xl font-black text-white font-display uppercase tracking-tight mb-2">
           Eventos & Torneios
         </h2>
-        <p className="text-sm font-medium text-slate-400">
+        <p className="text-sm font-medium text-neutral-400">
           Em breve.
         </p>
       </div>
@@ -64,9 +64,9 @@ export const EventsHub: React.FC<EventsHubProps> = ({
       case 'SPECIAL_CHALLENGE':
         return { label: 'DESAFIO ESPECIAL', icon: Swords, color: 'text-rose-400 bg-rose-500/10 border-rose-500/30' };
       case 'MISSION':
-        return { label: 'MISSÃO', icon: Zap, color: 'text-blue-400 bg-blue-500/10 border-neutral-700/30' };
+        return { label: 'MISSÃO', icon: Zap, color: 'text-blue-400 bg-blue-500/10 border-blue-500/30' };
       default:
-        return { label: 'EVENTO', icon: Sparkles, color: 'text-slate-400 bg-slate-500/10 border-slate-500/30' };
+        return { label: 'EVENTO', icon: Sparkles, color: 'text-neutral-400 bg-slate-500/10 border-slate-500/30' };
     }
   };
 
@@ -80,7 +80,7 @@ export const EventsHub: React.FC<EventsHubProps> = ({
     if (status === 'FINISHED') {
       return {
         label: 'FINALIZADO',
-        color: 'text-slate-400 bg-slate-800/80 border-slate-700/60',
+        color: 'text-neutral-400 bg-slate-800/80 border-neutral-800/60',
       };
     }
     if (status === 'CANCELLED') {
@@ -98,7 +98,7 @@ export const EventsHub: React.FC<EventsHubProps> = ({
     if (status === 'REGISTRATION_OPEN') {
       return {
         label: 'INSCRIÇÕES ABERTAS',
-        color: 'text-yellow-400 bg-yellow-500/20 border-yellow-500/40 shadow-[0_0_10px_rgba(252,232,3,0.2)]',
+        color: 'text-yellow-400 bg-yellow-500/20 border-yellow-500/40 shadow-[0_0_10px_rgba(0,255,102,0.2)]',
       };
     }
     return {
@@ -155,7 +155,7 @@ export const EventsHub: React.FC<EventsHubProps> = ({
             <h3 className="text-lg font-black text-white uppercase font-display tracking-tight mt-0.5">
               EVENTOS & TORNEIOS
             </h3>
-            <p className="text-xs text-slate-400 mt-1 max-w-md">
+            <p className="text-xs text-neutral-400 mt-1 max-w-md">
               Participe de corridas de rua, time trials, disputas de zonas e torneios mata-mata com recompensas em XP, medalhas e títulos.
             </p>
           </div>
@@ -175,7 +175,7 @@ export const EventsHub: React.FC<EventsHubProps> = ({
 
         {/* Search input */}
         <div className="relative mt-3">
-          <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+          <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" />
           <input
             type="text"
             value={searchQuery}
@@ -201,8 +201,8 @@ export const EventsHub: React.FC<EventsHubProps> = ({
             onClick={() => setSelectedTypeFilter(f.id)}
             className={`px-3 py-1.5 rounded-xl whitespace-nowrap font-bold text-xs transition-all cursor-pointer ${
               selectedTypeFilter === f.id
-                ? 'bg-yellow-400 text-black shadow-[0_0_12px_rgba(252,232,3,0.3)]'
-                : 'bg-[#0a0a0a] text-slate-400 hover:text-white border border-white/5'
+                ? 'bg-yellow-400 text-black shadow-[0_0_12px_rgba(0,255,102,0.3)]'
+                : 'bg-[#0f1722] text-neutral-400 hover:text-white border border-white/5'
             }`}
           >
             {f.label}
@@ -211,7 +211,7 @@ export const EventsHub: React.FC<EventsHubProps> = ({
       </div>
 
       {/* Status Filter Sub-bar */}
-      <div className="flex items-center justify-between text-xs text-slate-400 px-1">
+      <div className="flex items-center justify-between text-xs text-neutral-400 px-1">
         <span className="font-bold uppercase tracking-wider text-[10px] text-slate-500 font-mono-stat">
           {filteredEvents.length} {filteredEvents.length === 1 ? 'EVENTO DISPONÍVEL' : 'EVENTOS DISPONÍVEIS'}
         </span>
@@ -229,7 +229,7 @@ export const EventsHub: React.FC<EventsHubProps> = ({
               className={`px-2 py-0.5 rounded-lg text-[10px] font-mono-stat transition-colors ${
                 selectedStatusFilter === s.id
                   ? 'text-yellow-400 font-bold bg-yellow-500/10'
-                  : 'text-slate-500 hover:text-slate-300'
+                  : 'text-slate-500 hover:text-neutral-300'
               }`}
             >
               {s.label}
@@ -257,7 +257,7 @@ export const EventsHub: React.FC<EventsHubProps> = ({
               key={ev.id}
               id={`event-card-${ev.id}`}
               onClick={() => onSelectEvent(ev)}
-              className="group relative bg-[#0d141f] hover:bg-[#111c2a] border border-white/10 hover:border-yellow-500/40 rounded-2xl p-4 transition-all duration-200 cursor-pointer shadow-lg hover:shadow-[0_4px_25px_rgba(252,232,3,0.15)]"
+              className="group relative bg-[#0d141f] hover:bg-[#111c2a] border border-white/10 hover:border-yellow-500/40 rounded-2xl p-4 transition-all duration-200 cursor-pointer shadow-lg hover:shadow-[0_4px_25px_rgba(0,255,102,0.15)]"
             >
               {/* Top Row: Type Badge + Status Pill */}
               <div className="flex items-center justify-between gap-2 mb-2.5">
@@ -268,7 +268,7 @@ export const EventsHub: React.FC<EventsHubProps> = ({
                   </span>
 
                   {ev.categoryTag && (
-                    <span className="hidden sm:inline-block text-[10px] text-slate-400 font-mono-stat px-2 py-0.5 bg-white/5 rounded-md">
+                    <span className="hidden sm:inline-block text-[10px] text-neutral-400 font-mono-stat px-2 py-0.5 bg-white/5 rounded-md">
                       {ev.categoryTag}
                     </span>
                   )}
@@ -294,12 +294,12 @@ export const EventsHub: React.FC<EventsHubProps> = ({
               </h4>
 
               {/* Event Description (Truncated) */}
-              <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+              <p className="text-xs text-neutral-400 mt-1 line-clamp-2 leading-relaxed">
                 {ev.description}
               </p>
 
               {/* Meta Grid: Date/Time + Location */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3 pt-3 border-t border-white/5 text-xs text-slate-300">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3 pt-3 border-t border-white/5 text-xs text-neutral-300">
                 <div className="flex items-center gap-1.5 font-mono-stat">
                   <Clock className="w-3.5 h-3.5 text-yellow-400 shrink-0" />
                   <span className="font-bold text-white">{ev.dateLabel}</span>
@@ -307,7 +307,7 @@ export const EventsHub: React.FC<EventsHubProps> = ({
 
                 <div className="flex items-center gap-1.5 truncate">
                   <MapPin className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-                  <span className="truncate text-slate-300">{ev.locationName}</span>
+                  <span className="truncate text-neutral-300">{ev.locationName}</span>
                 </div>
               </div>
 
@@ -315,12 +315,12 @@ export const EventsHub: React.FC<EventsHubProps> = ({
               <div className="mt-3 pt-2.5 flex items-center justify-between gap-3">
                 {/* Participants Gauge */}
                 <div className="flex-1 max-w-[200px]">
-                  <div className="flex items-center justify-between text-[10px] font-mono-stat text-slate-400 mb-1">
+                  <div className="flex items-center justify-between text-[10px] font-mono-stat text-neutral-400 mb-1">
                     <span className="flex items-center gap-1">
-                      <Users className="w-3 h-3 text-slate-400" />
+                      <Users className="w-3 h-3 text-neutral-400" />
                       <span>Participantes</span>
                     </span>
-                    <span className={`font-bold ${fillPercent >= 100 ? 'text-yellow-400' : 'text-slate-300'}`}>
+                    <span className={`font-bold ${fillPercent >= 100 ? 'text-yellow-400' : 'text-neutral-300'}`}>
                       {ev.currentParticipants}/{ev.maxParticipants}
                     </span>
                   </div>
@@ -331,7 +331,7 @@ export const EventsHub: React.FC<EventsHubProps> = ({
                           ? 'bg-yellow-400'
                           : ev.status === 'ACTIVE'
                           ? 'bg-amber-400'
-                          : 'bg-yellow-400 shadow-[0_0_8px_#fce803]'
+                          : 'bg-yellow-400 shadow-[0_0_8px_#00ff66]'
                       }`}
                       style={{ width: `${fillPercent}%` }}
                     />
@@ -343,14 +343,14 @@ export const EventsHub: React.FC<EventsHubProps> = ({
                   {ev.rewards.slice(0, 2).map((rew) => (
                     <span
                       key={rew.id}
-                      className="px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-slate-300 font-mono-stat font-bold flex items-center gap-1"
+                      className="px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-[10px] text-neutral-300 font-mono-stat font-bold flex items-center gap-1"
                     >
                       <span>{rew.icon || '🎁'}</span>
                       <span className="truncate max-w-[80px]">{rew.name}</span>
                     </span>
                   ))}
 
-                  <div className="p-1 rounded-lg bg-white/5 group-hover:bg-yellow-400/20 group-hover:text-yellow-400 text-slate-400 transition-colors">
+                  <div className="p-1 rounded-lg bg-white/5 group-hover:bg-yellow-400/20 group-hover:text-yellow-400 text-neutral-400 transition-colors">
                     <ChevronRight className="w-4 h-4" />
                   </div>
                 </div>
@@ -362,7 +362,7 @@ export const EventsHub: React.FC<EventsHubProps> = ({
         {filteredEvents.length === 0 && (
           <div className="text-center py-10 px-4 bg-[#0d141f] border border-white/5 rounded-2xl">
             <Trophy className="w-8 h-8 text-slate-600 mx-auto mb-2" />
-            <p className="text-sm font-bold text-slate-300">Nenhum evento encontrado</p>
+            <p className="text-sm font-bold text-neutral-300">Nenhum evento encontrado</p>
             <p className="text-xs text-slate-500 mt-1">
               Tente selecionar outro filtro de modalidade ou termo de busca.
             </p>

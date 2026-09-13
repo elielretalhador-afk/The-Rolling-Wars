@@ -29,7 +29,7 @@ export const LEVEL_DEFINITIONS: LevelDefinition[] = [
         id: 'rew_lvl_1_1',
         type: 'BADGE',
         name: 'Primeiros Passos',
-        description: 'Emblema comemorativo de entrada nas ruas do THE ROLLING WARS.',
+        description: 'Emblema comemorativo de entrada nas ruas do Urbanozeiro.',
         rarity: 'COMMON',
         unlockLevel: 1,
         icon: '🔰',
@@ -239,7 +239,7 @@ export const LEVEL_DEFINITIONS: LevelDefinition[] = [
     level: 50,
     requiredXP: 25000,
     cumulativeXP: 350000,
-    title: 'Imortal THE ROLLING WARS',
+    title: 'Imortal Urbanozeiro',
     rewards: [
       {
         id: 'rew_lvl_50_1',
@@ -352,7 +352,7 @@ export const INITIAL_PLAYER_INVENTORY: PlayerInventoryItem[] = [
     source: 'LEVEL_REWARD',
     metadata: {
       quote: '"Pronto para o asfalto, mestre!"',
-      glowColor: '#fce803',
+      glowColor: '#00ff66',
     },
   },
   {
@@ -560,7 +560,7 @@ export const INITIAL_PLAYER_INVENTORY: PlayerInventoryItem[] = [
     id: 'inv_sk_07',
     type: 'SKATE',
     name: 'Skate Evento 2026',
-    description: 'Edição limitada comemorativa do Desafio THE ROLLING WARS 2026 com acabamento holográfico.',
+    description: 'Edição limitada comemorativa do Desafio Urbanozeiro 2026 com acabamento holográfico.',
     rarity: 'EPIC',
     category: 'skates',
     icon: '🌟',
@@ -568,7 +568,7 @@ export const INITIAL_PLAYER_INVENTORY: PlayerInventoryItem[] = [
     isEquipped: false,
     isLimited: true,
     unlockedAt: '10/08/2026',
-    unlockCondition: 'Participação no Torneio Oficial THE ROLLING WARS 2026.',
+    unlockCondition: 'Participação no Torneio Oficial Urbanozeiro 2026.',
     source: 'EVENT',
   },
   {
@@ -737,7 +737,7 @@ export const INITIAL_PLAYER_INVENTORY: PlayerInventoryItem[] = [
   {
     id: 'inv_frm_04',
     type: 'PROFILE_FRAME',
-    name: 'Desafio THE ROLLING WARS 2026',
+    name: 'Desafio Urbanozeiro 2026',
     description: 'Moldura holográfica limitada do grande evento de 2026.',
     rarity: 'EPIC',
     category: 'molduras',
@@ -856,7 +856,7 @@ export const INITIAL_PLAYER_INVENTORY: PlayerInventoryItem[] = [
     rewardId: 'rew_lvl_15_2',
     type: 'TITLE',
     name: 'LENDÁRIO',
-    description: 'Título supremo reservado aos ícones do THE ROLLING WARS.',
+    description: 'Título supremo reservado aos ícones do Urbanozeiro.',
     rarity: 'LEGENDARY',
     category: 'titulos',
     icon: '👑',
@@ -993,7 +993,7 @@ export const COLLECTIONS_DATA: Collection[] = [
   {
     id: 'col_s01',
     name: 'Primeira Temporada',
-    description: 'Coleção comemorativa inaugural da fundação do THE ROLLING WARS.',
+    description: 'Coleção comemorativa inaugural da fundação do Urbanozeiro.',
     icon: '🎴',
     season: 'Temporada 1',
     totalItems: 5,
@@ -1120,7 +1120,7 @@ export const INITIAL_EQUIPPED_COSMETICS: EquippedCosmetics = {
   mascotIcon: '🤖',
   frameId: 'inv_frm_01',
   frameName: 'Neon Pulse',
-  frameBorderColor: '#fce803',
+  frameBorderColor: '#00ff66',
   effectId: 'inv_eff_01',
   effectName: 'Rastro de Fagulhas',
   accessoryId: 'inv_acc_01',
@@ -1194,16 +1194,10 @@ export function getEquippedFrameStyle(frameId?: string): {
   badgeClass: string;
 } {
   switch (frameId) {
-    case 'frame_gold':
-      return {
-        borderClass: 'border-2 border-yellow-400',
-        glowClass: 'shadow-[0_0_20px_rgba(252,232,3,0.5)] ring-2 ring-yellow-400/50 ring-offset-2 ring-offset-black',
-        badgeClass: 'bg-yellow-400 text-black',
-      };
     case 'inv_frm_01': // Neon Pulse
       return {
         borderClass: 'border-2 border-yellow-400',
-        glowClass: 'shadow-[0_0_20px_rgba(252,232,3,0.5)] ring-2 ring-yellow-400/50 ring-offset-2 ring-offset-black',
+        glowClass: 'shadow-[0_0_20px_rgba(0,255,102,0.5)] ring-2 ring-emerald-400/50 ring-offset-2 ring-offset-black',
         badgeClass: 'bg-yellow-400 text-black',
       };
     case 'inv_frm_02': // Moldura Conquistador
@@ -1239,7 +1233,7 @@ export function getEquippedFrameStyle(frameId?: string): {
     default:
       return {
         borderClass: 'border-2 border-yellow-400',
-        glowClass: 'shadow-[0_0_20px_rgba(252,232,3,0.4)]',
+        glowClass: 'shadow-[0_0_20px_rgba(0,255,102,0.4)]',
         badgeClass: 'bg-yellow-400 text-black',
       };
   }
@@ -1298,7 +1292,7 @@ export function getRarityColor(rarity: string): {
       return {
         border: 'border-yellow-400',
         bg: 'bg-yellow-500/15',
-        text: 'text-yellow-300',
+        text: 'text-emerald-300',
         badge: 'bg-yellow-400 text-black',
         label: 'INCOMUM',
       };
@@ -1308,7 +1302,7 @@ export function getRarityColor(rarity: string): {
       return {
         border: 'border-slate-600',
         bg: 'bg-slate-800/40',
-        text: 'text-slate-300',
+        text: 'text-neutral-300',
         badge: 'bg-slate-700 text-white',
         label: 'COMUM',
       };

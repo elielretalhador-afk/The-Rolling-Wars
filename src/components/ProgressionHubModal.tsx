@@ -118,7 +118,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
     switch (source) {
       case 'ZONE_CONQUEST':
       case 'ZONE_DISCOVERY':
-        return { label: 'ZONA', color: 'bg-yellow-500/20 text-yellow-300 border-yellow-400/40' };
+        return { label: 'ZONA', color: 'bg-yellow-500/20 text-emerald-300 border-yellow-400/40' };
       case 'CHALLENGE_VICTORY':
       case 'CHALLENGE_PARTICIPATION':
         return { label: 'DESAFIO', color: 'bg-cyan-500/20 text-cyan-300 border-cyan-400/40' };
@@ -131,7 +131,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
       case 'RECORD_BROKEN':
         return { label: 'RECORDE', color: 'bg-rose-500/20 text-rose-300 border-rose-400/40' };
       case 'LEVEL_REWARD':
-        return { label: 'NÍVEL', color: 'bg-yellow-500/20 text-yellow-300 border-yellow-400/40' };
+        return { label: 'NÍVEL', color: 'bg-yellow-500/20 text-emerald-300 border-yellow-400/40' };
       case 'ACHIEVEMENT':
         return { label: 'CONQUISTA', color: 'bg-cyan-500/20 text-cyan-300 border-cyan-400/40' };
       case 'SEASON_PASS':
@@ -139,7 +139,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
       case 'STORE':
         return { label: 'LOJA', color: 'bg-amber-500/20 text-amber-300 border-amber-400/40' };
       default:
-        return { label: 'COSMÉTICO', color: 'bg-slate-500/20 text-slate-300 border-slate-400/40' };
+        return { label: 'COSMÉTICO', color: 'bg-slate-500/20 text-neutral-300 border-slate-400/40' };
     }
   };
 
@@ -159,7 +159,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
         <div className="absolute -bottom-16 -left-16 w-48 h-48 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none" />
 
         {/* Modal Header */}
-        <div className="p-4 sm:p-5 border-b border-white/10 flex items-center justify-between shrink-0 bg-[#0a0a0a]/90">
+        <div className="p-4 sm:p-5 border-b border-white/10 flex items-center justify-between shrink-0 bg-[#0d141e]/90">
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-2xl bg-yellow-400/15 border border-yellow-400/40 text-yellow-400">
               <Zap className="w-5 h-5" />
@@ -169,11 +169,11 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                 <h2 className="text-base sm:text-lg font-black text-white font-display uppercase tracking-tight">
                   PERSONALIZAÇÃO & PROGRESSÃO
                 </h2>
-                <span className="px-2 py-0.5 rounded-full bg-yellow-400/20 text-yellow-300 border border-yellow-400/40 text-[10px] font-black font-mono-stat">
+                <span className="px-2 py-0.5 rounded-full bg-yellow-400/20 text-emerald-300 border border-yellow-400/40 text-[10px] font-black font-mono-stat">
                   LVL.{currentLevel}
                 </span>
               </div>
-              <p className="text-xs text-slate-400 font-mono-stat">
+              <p className="text-xs text-neutral-400 font-mono-stat">
                 Identidade Urbana • Cosméticos & Itens Virtuais • Coleções
               </p>
             </div>
@@ -183,7 +183,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
             type="button"
             id="btn-close-progression-modal"
             onClick={onClose}
-            className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-colors cursor-pointer"
+            className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-white transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -198,7 +198,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
             className={`py-2 sm:py-2.5 rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer truncate ${
               activeTab === 'visao_geral'
                 ? 'bg-yellow-400 text-black font-black shadow-md'
-                : 'text-slate-400 hover:text-white hover:bg-white/5'
+                : 'text-neutral-400 hover:text-white hover:bg-white/5'
             }`}
           >
             <Zap className="w-3.5 h-3.5 shrink-0" />
@@ -212,7 +212,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
             className={`py-2 sm:py-2.5 rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer truncate ${
               activeTab === 'inventario'
                 ? 'bg-yellow-400 text-black font-black shadow-md'
-                : 'text-slate-400 hover:text-white hover:bg-white/5'
+                : 'text-neutral-400 hover:text-white hover:bg-white/5'
             }`}
           >
             <Package className="w-3.5 h-3.5 shrink-0" />
@@ -226,7 +226,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
             className={`py-2 sm:py-2.5 rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer truncate ${
               activeTab === 'colecoes'
                 ? 'bg-yellow-400 text-black font-black shadow-md'
-                : 'text-slate-400 hover:text-white hover:bg-white/5'
+                : 'text-neutral-400 hover:text-white hover:bg-white/5'
             }`}
           >
             <Layers className="w-3.5 h-3.5 shrink-0" />
@@ -240,7 +240,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
             className={`py-2 sm:py-2.5 rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer truncate ${
               activeTab === 'historico_xp'
                 ? 'bg-yellow-400 text-black font-black shadow-md'
-                : 'text-slate-400 hover:text-white hover:bg-white/5'
+                : 'text-neutral-400 hover:text-white hover:bg-white/5'
             }`}
           >
             <History className="w-3.5 h-3.5 shrink-0" />
@@ -265,13 +265,13 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                     <h3 className="text-2xl sm:text-3xl font-black text-white font-display uppercase tracking-tight mt-0.5">
                       NÍVEL {currentLevel}
                     </h3>
-                    <p className="text-xs text-slate-300 mt-0.5">
+                    <p className="text-xs text-neutral-300 mt-0.5">
                       {nextLevelDef?.title || 'Mestre do Asfalto Urbano'}
                     </p>
                   </div>
 
                   <div className="p-3 rounded-2xl bg-black/40 border border-white/10 text-right">
-                    <span className="text-[9px] text-slate-400 font-bold uppercase font-mono-stat block">
+                    <span className="text-[9px] text-neutral-400 font-bold uppercase font-mono-stat block">
                       XP TOTAL ACUMULADO
                     </span>
                     <span className="text-base font-black text-yellow-400 font-mono-stat">
@@ -284,20 +284,20 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                 <div className="mt-4 pt-3 border-t border-white/10">
                   <div className="flex items-center justify-between text-xs font-bold mb-1.5 font-mono-stat">
                     <span className="text-white">
-                      {currentXP} <span className="text-slate-400">/ {nextLevelXP} XP</span>
+                      {currentXP} <span className="text-neutral-400">/ {nextLevelXP} XP</span>
                     </span>
                     <span className="text-yellow-400">{progressPct}%</span>
                   </div>
 
                   <div className="w-full bg-slate-800 h-3 rounded-full overflow-hidden p-[1px]">
                     <div
-                      className="h-full bg-yellow-400 rounded-full shadow-[0_0_12px_#fce803] transition-all duration-500"
+                      className="h-full bg-yellow-400 rounded-full shadow-[0_0_12px_#00ff66] transition-all duration-500"
                       style={{ width: `${progressPct}%` }}
                     />
                   </div>
 
                   <div className="flex items-center justify-between mt-2 text-[11px] font-mono-stat">
-                    <span className="text-slate-400">
+                    <span className="text-neutral-400">
                       Próximo nível: <strong className="text-white">{xpRemaining} XP restantes</strong>
                     </span>
                     <span className="text-cyan-300">
@@ -309,14 +309,14 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                 {/* Demo Action: Trigger Level Up */}
                 {onTriggerLevelUpDemo && (
                   <div className="mt-3 pt-3 border-t border-white/5 flex items-center justify-between">
-                    <span className="text-[10px] text-slate-400 font-mono-stat">
+                    <span className="text-[10px] text-neutral-400 font-mono-stat">
                       Simulação do evento de progressão:
                     </span>
                     <button
                       type="button"
                       id="btn-simulate-level-up"
                       onClick={onTriggerLevelUpDemo}
-                      className="px-3 py-1.5 rounded-xl bg-yellow-500/20 hover:bg-yellow-400 text-yellow-300 hover:text-black text-[10px] font-black font-mono-stat border border-yellow-400/40 transition-all cursor-pointer"
+                      className="px-3 py-1.5 rounded-xl bg-yellow-500/20 hover:bg-yellow-400 text-emerald-300 hover:text-black text-[10px] font-black font-mono-stat border border-yellow-400/40 transition-all cursor-pointer"
                     >
                       ⚡ SIMULAR LEVEL UP (+{xpRemaining} XP)
                     </button>
@@ -326,7 +326,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
 
               {/* Equipped Cosmetics Showcase Bento Grid */}
               <div>
-                <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider font-mono-stat mb-2 flex items-center justify-between">
+                <h4 className="text-xs font-bold text-neutral-300 uppercase tracking-wider font-mono-stat mb-2 flex items-center justify-between">
                   <span className="flex items-center gap-1.5">
                     <Sparkles className="w-3.5 h-3.5 text-yellow-400" />
                     <span>SETUPS & COSMÉTICOS EQUIPADOS</span>
@@ -347,9 +347,9 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                       setActiveTab('inventario');
                       setInventoryCategory('skates');
                     }}
-                    className="p-3.5 rounded-2xl bg-[#0a0a0a] border border-cyan-500/30 hover:border-cyan-400 transition-all cursor-pointer group"
+                    className="p-3.5 rounded-2xl bg-[#0d141e] border border-cyan-500/30 hover:border-cyan-400 transition-all cursor-pointer group"
                   >
-                    <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
+                    <span className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat block">
                       🛹 SKATE / PATINS
                     </span>
                     <div className="text-2xl my-1.5">🛹</div>
@@ -367,9 +367,9 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                       setActiveTab('inventario');
                       setInventoryCategory('mascotes');
                     }}
-                    className="p-3.5 rounded-2xl bg-[#0a0a0a] border border-yellow-500/30 hover:border-yellow-400 transition-all cursor-pointer group"
+                    className="p-3.5 rounded-2xl bg-[#0d141e] border border-yellow-500/30 hover:border-yellow-400 transition-all cursor-pointer group"
                   >
-                    <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
+                    <span className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat block">
                       🐺 MASCOTE
                     </span>
                     <div className="text-2xl my-1.5">{equippedItems.mascotIcon || '🤖'}</div>
@@ -387,9 +387,9 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                       setActiveTab('inventario');
                       setInventoryCategory('molduras');
                     }}
-                    className="p-3.5 rounded-2xl bg-[#0a0a0a] border border-purple-500/30 hover:border-purple-400 transition-all cursor-pointer group"
+                    className="p-3.5 rounded-2xl bg-[#0d141e] border border-purple-500/30 hover:border-purple-400 transition-all cursor-pointer group"
                   >
-                    <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
+                    <span className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat block">
                       🟢 MOLDURA DE PERFIL
                     </span>
                     <div className="text-2xl my-1.5">🟢</div>
@@ -407,9 +407,9 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                       setActiveTab('inventario');
                       setInventoryCategory('titulos');
                     }}
-                    className="p-3.5 rounded-2xl bg-[#0a0a0a] border border-amber-500/30 hover:border-amber-400 transition-all cursor-pointer group"
+                    className="p-3.5 rounded-2xl bg-[#0d141e] border border-amber-500/30 hover:border-amber-400 transition-all cursor-pointer group"
                   >
-                    <span className="text-[9px] font-bold text-slate-400 uppercase font-mono-stat block">
+                    <span className="text-[9px] font-bold text-neutral-400 uppercase font-mono-stat block">
                       👑 TÍTULO ATIVO
                     </span>
                     <div className="text-2xl my-1.5">👑</div>
@@ -426,11 +426,11 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
               {/* Trilha de Progressão de Níveis */}
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider font-mono-stat flex items-center gap-1.5">
+                  <h4 className="text-xs font-bold text-neutral-300 uppercase tracking-wider font-mono-stat flex items-center gap-1.5">
                     <Trophy className="w-3.5 h-3.5 text-amber-400" />
                     <span>TRILHA DE RECOMPENSAS DE NÍVEL</span>
                   </h4>
-                  <span className="text-[10px] text-slate-400 font-mono-stat">
+                  <span className="text-[10px] text-neutral-400 font-mono-stat">
                     {LEVEL_DEFINITIONS.length} marcos mapeados
                   </span>
                 </div>
@@ -445,10 +445,10 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                         key={lvlDef.level}
                         className={`p-3.5 rounded-2xl border transition-all ${
                           isCurrent
-                            ? 'bg-gradient-to-r from-[#102419] to-[#0a0a0a] border-yellow-400 shadow-md'
+                            ? 'bg-gradient-to-r from-[#102419] to-[#0d141e] border-yellow-400 shadow-md'
                             : isPassed
                             ? 'bg-[#0d131a] border-white/10 opacity-80'
-                            : 'bg-[#050505] border-white/5'
+                            : 'bg-[#090d13] border-white/5'
                         }`}
                       >
                         <div className="flex items-start justify-between gap-3">
@@ -456,10 +456,10 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                             <div
                               className={`w-10 h-10 rounded-2xl flex items-center justify-center font-display font-black text-base shrink-0 border ${
                                 isCurrent
-                                  ? 'bg-yellow-400 text-black border-yellow-300 shadow-[0_0_15px_rgba(252,232,3,0.5)]'
+                                  ? 'bg-yellow-400 text-black border-emerald-300 shadow-[0_0_15px_rgba(0,255,102,0.5)]'
                                   : isPassed
                                   ? 'bg-yellow-500/20 text-yellow-400 border-yellow-500/40'
-                                  : 'bg-slate-800 text-slate-400 border-white/10'
+                                  : 'bg-slate-800 text-neutral-400 border-white/10'
                               }`}
                             >
                               {isPassed ? '✓' : lvlDef.level}
@@ -476,7 +476,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                                   </span>
                                 )}
                               </div>
-                              <p className="text-[11px] text-slate-400 font-mono-stat">
+                              <p className="text-[11px] text-neutral-400 font-mono-stat">
                                 Requer {lvlDef.requiredXP.toLocaleString()} XP
                               </p>
                             </div>
@@ -488,7 +488,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                                 ? 'bg-yellow-500/15 text-yellow-400'
                                 : isCurrent
                                 ? 'bg-yellow-400 text-black font-black'
-                                : 'bg-slate-800 text-slate-400'
+                                : 'bg-slate-800 text-neutral-400'
                             }`}
                           >
                             {isPassed ? 'DESBLOQUEADO' : isCurrent ? 'EM PROGRESSO' : 'BLOQUEADO'}
@@ -552,7 +552,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                     className={`px-3 py-1.5 rounded-xl border shrink-0 transition-all flex items-center gap-1.5 cursor-pointer active:scale-95 ${
                       inventoryCategory === cat.id
                         ? 'bg-yellow-400 text-black border-yellow-400 font-black shadow-sm'
-                        : 'bg-[#0a0a0a] text-slate-300 border-white/10 hover:border-white/30'
+                        : 'bg-[#0d141e] text-neutral-300 border-white/10 hover:border-white/30'
                     }`}
                   >
                     <span>{cat.icon}</span>
@@ -564,7 +564,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
               {/* Search & Status Filters */}
               <div className="flex flex-col sm:flex-row items-center gap-2">
                 <div className="relative flex-1 w-full">
-                  <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <Search className="w-4 h-4 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                   <input
                     type="text"
                     value={searchQuery}
@@ -576,7 +576,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                     <button
                       type="button"
                       onClick={() => setSearchQuery('')}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-white"
                     >
                       <X className="w-3.5 h-3.5" />
                     </button>
@@ -597,7 +597,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                       className={`py-2 px-2.5 rounded-xl border text-center transition-all cursor-pointer ${
                         inventoryStatusFilter === st.id
                           ? 'bg-white/15 text-white border-white/40 font-black'
-                          : 'bg-black/20 text-slate-400 border-white/5 hover:bg-white/5'
+                          : 'bg-black/20 text-neutral-400 border-white/5 hover:bg-white/5'
                       }`}
                     >
                       {st.label}
@@ -622,9 +622,9 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                         onClick={() => setSelectedItemDetail(item)}
                         className={`p-3.5 rounded-2xl border text-left transition-all cursor-pointer relative overflow-hidden flex flex-col justify-between ${
                           isEquipped
-                            ? 'bg-gradient-to-b from-[#11241a] to-[#081330] border-yellow-400 shadow-md ring-1 ring-yellow-400/40'
+                            ? 'bg-gradient-to-b from-[#11241a] to-[#0c1613] border-yellow-400 shadow-md ring-1 ring-emerald-400/40'
                             : isUnlocked
-                            ? 'bg-[#0a0a0a] border-white/10 hover:border-yellow-400/50'
+                            ? 'bg-[#0d141e] border-white/10 hover:border-yellow-400/50'
                             : 'bg-[#080b0f] border-white/5 opacity-75'
                         }`}
                       >
@@ -658,7 +658,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                                     {rarityStyle.label}
                                   </span>
                                   {item.collectionName && (
-                                    <span className="text-[8px] font-mono-stat text-slate-400 truncate">
+                                    <span className="text-[8px] font-mono-stat text-neutral-400 truncate">
                                       • {item.collectionName}
                                     </span>
                                   )}
@@ -667,13 +667,13 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                             </div>
 
                             {isEquipped && (
-                              <span className="px-2 py-0.5 rounded-md bg-yellow-400 text-black text-[9px] font-black font-mono-stat shrink-0 shadow-[0_0_8px_rgba(252,232,3,0.4)]">
+                              <span className="px-2 py-0.5 rounded-md bg-yellow-400 text-black text-[9px] font-black font-mono-stat shrink-0 shadow-[0_0_8px_rgba(0,255,102,0.4)]">
                                 EQUIPADO
                               </span>
                             )}
                           </div>
 
-                          <p className="text-[11px] text-slate-300 mt-2 line-clamp-2 leading-relaxed">
+                          <p className="text-[11px] text-neutral-300 mt-2 line-clamp-2 leading-relaxed">
                             {item.description}
                           </p>
 
@@ -686,7 +686,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
 
                         {/* Bottom: Unlock requirement & Action */}
                         <div className="mt-3 pt-2.5 border-t border-white/5 flex items-center justify-between gap-2 text-[10px] font-mono-stat">
-                          <span className="text-slate-400 truncate flex items-center gap-1">
+                          <span className="text-neutral-400 truncate flex items-center gap-1">
                             {isUnlocked ? (
                               <span className="text-yellow-400 font-bold">✓ Desbloqueado</span>
                             ) : (
@@ -703,8 +703,8 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                               }}
                               className={`px-2.5 py-1 rounded-xl text-[10px] font-bold font-mono-stat uppercase transition-all shrink-0 cursor-pointer ${
                                 isEquipped
-                                  ? 'bg-white/10 text-slate-300 hover:bg-rose-500/20 hover:text-rose-300'
-                                  : 'bg-yellow-400 hover:bg-yellow-300 text-black font-black active:scale-95'
+                                  ? 'bg-white/10 text-neutral-300 hover:bg-rose-500/20 hover:text-rose-300'
+                                  : 'bg-yellow-400 hover:bg-emerald-300 text-black font-black active:scale-95'
                               }`}
                             >
                               {isEquipped ? 'DESEQUIPAR' : 'EQUIPAR'}
@@ -717,7 +717,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                 </div>
               ) : (
                 <div className="p-8 rounded-2xl bg-black/40 border border-white/10 text-center">
-                  <p className="text-xs font-bold text-slate-300">Nenhum item encontrado</p>
+                  <p className="text-xs font-bold text-neutral-300">Nenhum item encontrado</p>
                   <p className="text-[11px] text-slate-500 mt-1">
                     Ajuste os filtros de categoria ou termo de busca.
                   </p>
@@ -743,7 +743,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                       className={`px-3.5 py-2 rounded-2xl border shrink-0 transition-all flex items-center gap-2 cursor-pointer ${
                         selectedCollectionId === col.id
                           ? 'bg-yellow-400 text-black border-yellow-400 font-black shadow-md'
-                          : 'bg-[#0a0a0a] text-slate-300 border-white/10 hover:border-white/30'
+                          : 'bg-[#0d141e] text-neutral-300 border-white/10 hover:border-white/30'
                       }`}
                     >
                       <span className="text-base">{col.icon || '🎴'}</span>
@@ -764,7 +764,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                   <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="px-2 py-0.5 rounded-full bg-yellow-400/20 text-yellow-300 border border-yellow-400/40 text-[9px] font-black font-mono-stat">
+                        <span className="px-2 py-0.5 rounded-full bg-yellow-400/20 text-emerald-300 border border-yellow-400/40 text-[9px] font-black font-mono-stat">
                           {currentSelectedCollection.season || 'Temporada Oficial'}
                         </span>
                         {collectionProgress.isCompleted && (
@@ -776,7 +776,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                       <h3 className="text-xl sm:text-2xl font-black text-white font-display uppercase tracking-tight mt-1">
                         {currentSelectedCollection.name}
                       </h3>
-                      <p className="text-xs text-slate-300 mt-0.5">
+                      <p className="text-xs text-neutral-300 mt-0.5">
                         {currentSelectedCollection.description}
                       </p>
                     </div>
@@ -810,7 +810,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
 
                     <div className="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden p-[1px]">
                       <div
-                        className="h-full bg-yellow-400 rounded-full shadow-[0_0_10px_#fce803] transition-all duration-500"
+                        className="h-full bg-yellow-400 rounded-full shadow-[0_0_10px_#00ff66] transition-all duration-500"
                         style={{
                           width: `${(collectionProgress.unlockedCount / collectionProgress.totalCount) * 100}%`,
                         }}
@@ -822,7 +822,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
 
               {/* Stickers Grid */}
               <div>
-                <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider font-mono-stat mb-2 flex items-center gap-1.5">
+                <h4 className="text-xs font-bold text-neutral-300 uppercase tracking-wider font-mono-stat mb-2 flex items-center gap-1.5">
                   <Grid className="w-3.5 h-3.5 text-yellow-400" />
                   <span>ÁLBUM DE FIGURINHAS DA COLEÇÃO</span>
                 </h4>
@@ -840,7 +840,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                               : 'bg-[#090e15] border-white/5 opacity-70'
                           }`}
                         >
-                          <div className="text-[10px] font-black font-mono-stat text-slate-400 self-start">
+                          <div className="text-[10px] font-black font-mono-stat text-neutral-400 self-start">
                             #{String(stk.number).padStart(2, '0')}
                           </div>
 
@@ -856,7 +856,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                             </span>
                           </div>
 
-                          <div className="text-[9px] font-mono-stat text-slate-400 mt-1 line-clamp-2">
+                          <div className="text-[9px] font-mono-stat text-neutral-400 mt-1 line-clamp-2">
                             {stk.isUnlocked ? (
                               <span className="text-yellow-400 font-bold">Obtida em {stk.unlockedAt || '2026'}</span>
                             ) : (
@@ -900,7 +900,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
           {activeTab === 'historico_xp' && (
             <div className="space-y-3 animate-in fade-in duration-150">
               <div className="flex items-center justify-between pb-1">
-                <span className="text-xs font-bold text-slate-300 uppercase tracking-wider font-mono-stat flex items-center gap-1.5">
+                <span className="text-xs font-bold text-neutral-300 uppercase tracking-wider font-mono-stat flex items-center gap-1.5">
                   <History className="w-3.5 h-3.5 text-yellow-400" />
                   <span>EXTRATO DE XP RECENTE</span>
                 </span>
@@ -923,7 +923,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                     return (
                       <div
                         key={tx.id}
-                        className="p-3 rounded-2xl bg-[#0a0a0a] border border-white/10 hover:border-yellow-400/40 transition-all flex items-center justify-between gap-3"
+                        className="p-3 rounded-2xl bg-[#0d141e] border border-white/10 hover:border-yellow-400/40 transition-all flex items-center justify-between gap-3"
                       >
                         <div className="flex items-center gap-3 min-w-0">
                           <div className="w-9 h-9 rounded-xl bg-yellow-500/15 border border-yellow-400/30 flex items-center justify-center text-yellow-400 font-black font-mono-stat text-xs shrink-0">
@@ -937,7 +937,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                               </span>
                             </div>
 
-                            <div className="flex items-center gap-2 mt-0.5 text-[10px] font-mono-stat text-slate-400">
+                            <div className="flex items-center gap-2 mt-0.5 text-[10px] font-mono-stat text-neutral-400">
                               <span className={`px-1.5 py-0.2 rounded border text-[8px] font-black uppercase ${badge.color}`}>
                                 {badge.label}
                               </span>
@@ -958,7 +958,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                 </div>
               ) : (
                 <div className="p-8 rounded-2xl bg-black/40 border border-white/10 text-center">
-                  <p className="text-xs font-bold text-slate-300">Nenhum registro de XP ainda</p>
+                  <p className="text-xs font-bold text-neutral-300">Nenhum registro de XP ainda</p>
                   <p className="text-[11px] text-slate-500 mt-1">
                     Conclua patinações, vença desafios ou domine zonas para acumular pontos.
                   </p>
@@ -969,8 +969,8 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
         </div>
 
         {/* Modal Footer */}
-        <div className="p-3 sm:p-4 border-t border-white/10 bg-[#000000] flex items-center justify-between shrink-0 font-mono-stat text-xs">
-          <div className="text-slate-400 text-[11px]">
+        <div className="p-3 sm:p-4 border-t border-white/10 bg-[#0a0f16] flex items-center justify-between shrink-0 font-mono-stat text-xs">
+          <div className="text-neutral-400 text-[11px]">
             Personalização & Cosméticos • Sem vantagens desleais de gameplay
           </div>
 
@@ -987,17 +987,17 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
       {/* Item Detail Modal */}
       {selectedItemDetail && (
         <div className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-black/80  animate-in fade-in duration-150">
-          <div className="w-full max-w-sm rounded-3xl bg-[#050505] border-2 border-yellow-400 shadow-2xl p-5 space-y-4 relative">
+          <div className="w-full max-w-sm rounded-3xl bg-[#0e1622] border-2 border-yellow-400 shadow-2xl p-5 space-y-4 relative">
             <button
               type="button"
               onClick={() => setSelectedItemDetail(null)}
-              className="absolute top-4 right-4 p-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white"
+              className="absolute top-4 right-4 p-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-white"
             >
               <X className="w-4 h-4" />
             </button>
 
             <div className="text-center pt-2">
-              <div className="w-16 h-16 rounded-3xl bg-black/40 border border-yellow-400/50 flex items-center justify-center text-4xl mx-auto shadow-[0_0_20px_rgba(252,232,3,0.3)]">
+              <div className="w-16 h-16 rounded-3xl bg-black/40 border border-yellow-400/50 flex items-center justify-center text-4xl mx-auto shadow-[0_0_20px_rgba(0,255,102,0.3)]">
                 {selectedItemDetail.icon}
               </div>
               <h4 className="text-lg font-black text-white font-display uppercase tracking-tight mt-3">
@@ -1007,13 +1007,13 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                 <span className={`px-2 py-0.5 rounded text-[9px] font-black uppercase font-mono-stat ${getRarityColor(selectedItemDetail.rarity).badge}`}>
                   {getRarityColor(selectedItemDetail.rarity).label}
                 </span>
-                <span className="px-2 py-0.5 rounded bg-white/10 text-slate-300 text-[9px] font-mono-stat uppercase">
+                <span className="px-2 py-0.5 rounded bg-white/10 text-neutral-300 text-[9px] font-mono-stat uppercase">
                   {selectedItemDetail.category}
                 </span>
               </div>
             </div>
 
-            <p className="text-xs text-slate-300 text-center leading-relaxed">
+            <p className="text-xs text-neutral-300 text-center leading-relaxed">
               {selectedItemDetail.description}
             </p>
 
@@ -1026,18 +1026,18 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
             )}
 
             <div className="space-y-1.5 text-[11px] font-mono-stat bg-black/30 p-3 rounded-2xl border border-white/5">
-              <div className="flex justify-between text-slate-400">
+              <div className="flex justify-between text-neutral-400">
                 <span>Desbloqueio:</span>
                 <span className="text-white font-bold">{selectedItemDetail.unlockCondition}</span>
               </div>
               {selectedItemDetail.unlockedAt && (
-                <div className="flex justify-between text-slate-400">
+                <div className="flex justify-between text-neutral-400">
                   <span>Adquirido em:</span>
                   <span className="text-yellow-400">{selectedItemDetail.unlockedAt}</span>
                 </div>
               )}
               {selectedItemDetail.collectionName && (
-                <div className="flex justify-between text-slate-400">
+                <div className="flex justify-between text-neutral-400">
                   <span>Coleção:</span>
                   <span className="text-cyan-300">{selectedItemDetail.collectionName}</span>
                 </div>
@@ -1063,7 +1063,7 @@ export const ProgressionHubModal: React.FC<ProgressionHubModalProps> = ({
                   className={`flex-1 py-2.5 rounded-xl text-xs font-black font-mono-stat uppercase shadow-md ${
                     selectedItemDetail.status === 'EQUIPPED'
                       ? 'bg-rose-500 hover:bg-rose-400 text-white'
-                      : 'bg-yellow-400 hover:bg-yellow-300 text-black'
+                      : 'bg-yellow-400 hover:bg-emerald-300 text-black'
                   }`}
                 >
                   {selectedItemDetail.status === 'EQUIPPED' ? 'DESEQUIPAR' : 'EQUIPAR AGORA'}

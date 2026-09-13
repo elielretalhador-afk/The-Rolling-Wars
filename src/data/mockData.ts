@@ -1921,7 +1921,7 @@ export const INITIAL_NOTIFICATIONS: AppNotification[] = [
     id: 'notif_07',
     type: 'sistema',
     title: '🚀 Nova atualização disponível',
-    message: 'O THE ROLLING WARS recebeu a Central de Notificações e melhorias de GPS.',
+    message: 'O Urbanozeiro recebeu a Central de Notificações e melhorias de GPS.',
     timeAgo: 'Há 1 dia',
     timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
     isRead: true,
@@ -1929,7 +1929,7 @@ export const INITIAL_NOTIFICATIONS: AppNotification[] = [
 ];
 
 // ==========================================
-// TÍTULOS DO JOGADOR (THE ROLLING WARS)
+// TÍTULOS DO JOGADOR (URBANOZEIRO)
 // ==========================================
 export const MOCK_TITLES: PlayerTitle[] = [
   {
@@ -2047,7 +2047,7 @@ export const MOCK_TITLES: PlayerTitle[] = [
 ];
 
 // ==========================================
-// MEDALHAS DO JOGADOR (THE ROLLING WARS)
+// MEDALHAS DO JOGADOR (URBANOZEIRO)
 // ==========================================
 export const MOCK_MEDALS: PlayerMedal[] = [
   {
@@ -2060,7 +2060,7 @@ export const MOCK_MEDALS: PlayerMedal[] = [
     achievementId: 'ach_01',
     unlocked: true,
     unlockedAt: '12/04/2026',
-    visualGlowColor: '#fce803',
+    visualGlowColor: '#00ff66',
   },
   {
     id: 'med_02',
@@ -2156,13 +2156,13 @@ export const MOCK_MEDALS: PlayerMedal[] = [
 ];
 
 // ==========================================
-// CONQUISTAS PESSOAIS (THE ROLLING WARS)
+// CONQUISTAS PESSOAIS (URBANOZEIRO)
 // ==========================================
 export const INITIAL_ACHIEVEMENTS: Achievement[] = [
   {
     id: 'ach_01',
     name: 'Primeiro Rolê',
-    description: 'Primeira atividade registrada no asfalto com o THE ROLLING WARS.',
+    description: 'Primeira atividade registrada no asfalto com o Urbanozeiro.',
     requirement: 'Complete sua primeira sessão de patinação.',
     category: 'ATIVIDADE',
     icon: '🛼',
@@ -2441,7 +2441,7 @@ export const INITIAL_ACHIEVEMENTS: Achievement[] = [
 ];
 
 // ==========================================
-// DADOS SIMULADOS DE CLÃS (THE ROLLING WARS)
+// DADOS SIMULADOS DE CLÃS (URBANOZEIRO)
 // ==========================================
 export const INITIAL_CLANS: Clan[] = [
   {
@@ -3322,7 +3322,7 @@ export const INITIAL_DIRECT_CHALLENGES: DirectChallenge[] = [
 ];
 
 // ==========================================
-// HISTÓRICO INICIAL DE SESSÕES (THE ROLLING WARS)
+// HISTÓRICO INICIAL DE SESSÕES (URBANOZEIRO)
 // ==========================================
 export const INITIAL_SESSION_HISTORY: SkateSession[] = [
   {
@@ -3533,13 +3533,13 @@ export const MOCK_LIVE_CHALLENGE: LiveChallenge = {
 };
 
 // ==========================================
-// MOCK DATA: EVENTOS E TORNEIOS (THE ROLLING WARS)
+// MOCK DATA: EVENTOS E TORNEIOS (URBANOZEIRO)
 // ==========================================
 
 export const INITIAL_EVENTS: UrbanozeiroEvent[] = [
   {
     id: 'ev_01',
-    name: '🏁 Corrida Noturna THE ROLLING WARS Central',
+    name: '🏁 Corrida Noturna Urbanozeiro Central',
     description: 'Corrida de alta velocidade em pelotão aberto pela ciclovia da Paulista com largada em bloco na Consolação e chegada no pórtico da Praça Oswaldo Cruz.',
     type: 'RACE',
     status: 'REGISTRATION_OPEN',
@@ -3712,7 +3712,7 @@ export const INITIAL_EVENTS: UrbanozeiroEvent[] = [
   },
   {
     id: 'ev_02',
-    name: '🏆 Torneio THE ROLLING WARS Street Knockout',
+    name: '🏆 Torneio Urbanozeiro Street Knockout',
     description: 'Torneio eliminatório mata-mata de 8 patinadores no circuito fechado do Ibirapuera. Duelos diretos 1x1 passando de fase até o Grande Campeão!',
     type: 'TOURNAMENT',
     status: 'REGISTRATION_OPEN',
@@ -4130,7 +4130,7 @@ export const INITIAL_EVENTS: UrbanozeiroEvent[] = [
               roundName: 'Grande Final',
               matchIndex: 1,
               status: 'scheduled',
-              summary: 'Disputa do Título de Campeão THE ROLLING WARS',
+              summary: 'Disputa do Título de Campeão Urbanozeiro',
             },
           ],
         },

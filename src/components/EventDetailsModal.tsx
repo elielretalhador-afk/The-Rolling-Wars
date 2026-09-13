@@ -82,7 +82,7 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
       case 'SPECIAL_CHALLENGE':
         return { label: 'DESAFIO ESPECIAL', icon: Swords, color: 'text-rose-400', border: 'border-rose-500/40 bg-rose-500/10' };
       default:
-        return { label: 'EVENTO', icon: Sparkles, color: 'text-blue-400', border: 'border-neutral-700/40 bg-blue-500/10' };
+        return { label: 'EVENTO', icon: Sparkles, color: 'text-blue-400', border: 'border-blue-500/40 bg-blue-500/10' };
     }
   };
 
@@ -99,7 +99,7 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
         <div className="relative p-5 pb-4 border-b border-white/10 bg-gradient-to-b from-[#111e2e] to-[#0b121c]">
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white transition-colors z-10 cursor-pointer"
+            className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 text-neutral-300 hover:text-white transition-colors z-10 cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -117,7 +117,7 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
               </span>
             )}
             {event.status === 'FINISHED' && (
-              <span className="px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700 text-[10px] font-black font-mono-stat">
+              <span className="px-2.5 py-0.5 rounded-full bg-slate-800 text-neutral-300 border border-neutral-800 text-[10px] font-black font-mono-stat">
                 FINALIZADO
               </span>
             )}
@@ -139,7 +139,7 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
           </h2>
 
           {/* Meta Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3 pt-2 text-xs text-slate-300">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3 pt-2 text-xs text-neutral-300">
             <div className="flex items-center gap-2 font-mono-stat">
               <Clock className="w-4 h-4 text-yellow-400 shrink-0" />
               <span className="font-bold text-white">{event.dateLabel}</span>
@@ -147,19 +147,19 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
 
             <div className="flex items-center gap-2 truncate">
               <MapPin className="w-4 h-4 text-cyan-400 shrink-0" />
-              <span className="truncate text-slate-300">{event.locationName}</span>
+              <span className="truncate text-neutral-300">{event.locationName}</span>
             </div>
           </div>
         </div>
 
         {/* Tab Navigation Menu */}
-        <div className="flex items-center gap-1 overflow-x-auto px-4 py-2 bg-[#000000] border-b border-white/5 no-scrollbar text-xs font-mono-stat">
+        <div className="flex items-center gap-1 overflow-x-auto px-4 py-2 bg-[#080d14] border-b border-white/5 no-scrollbar text-xs font-mono-stat">
           <button
             onClick={() => setActiveTab('info')}
             className={`px-3 py-1.5 rounded-xl font-bold whitespace-nowrap transition-colors cursor-pointer ${
               activeTab === 'info'
                 ? 'bg-yellow-400 text-black font-black'
-                : 'text-slate-400 hover:text-white hover:bg-white/5'
+                : 'text-neutral-400 hover:text-white hover:bg-white/5'
             }`}
           >
             Visão Geral
@@ -170,7 +170,7 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
             className={`px-3 py-1.5 rounded-xl font-bold whitespace-nowrap transition-colors cursor-pointer ${
               activeTab === 'regras'
                 ? 'bg-yellow-400 text-black font-black'
-                : 'text-slate-400 hover:text-white hover:bg-white/5'
+                : 'text-neutral-400 hover:text-white hover:bg-white/5'
             }`}
           >
             Regras & Critérios
@@ -181,7 +181,7 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
             className={`px-3 py-1.5 rounded-xl font-bold whitespace-nowrap transition-colors cursor-pointer ${
               activeTab === 'participantes'
                 ? 'bg-yellow-400 text-black font-black'
-                : 'text-slate-400 hover:text-white hover:bg-white/5'
+                : 'text-neutral-400 hover:text-white hover:bg-white/5'
             }`}
           >
             Participantes ({event.currentParticipants}/{event.maxParticipants})
@@ -207,7 +207,7 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
               className={`px-3 py-1.5 rounded-xl font-bold whitespace-nowrap transition-colors cursor-pointer ${
                 activeTab === 'classificacao'
                   ? 'bg-yellow-400 text-black font-black'
-                  : 'text-slate-400 hover:text-white hover:bg-white/5'
+                  : 'text-neutral-400 hover:text-white hover:bg-white/5'
               }`}
             >
               Classificação
@@ -219,7 +219,7 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
             className={`px-3 py-1.5 rounded-xl font-bold whitespace-nowrap transition-colors cursor-pointer ${
               activeTab === 'recompensas'
                 ? 'bg-yellow-400 text-black font-black'
-                : 'text-slate-400 hover:text-white hover:bg-white/5'
+                : 'text-neutral-400 hover:text-white hover:bg-white/5'
             }`}
           >
             Recompensas ({event.rewards.length})
@@ -227,14 +227,14 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
         </div>
 
         {/* Tab Content Area */}
-        <div className="flex-1 overflow-y-auto p-5 space-y-4 text-sm text-slate-300">
+        <div className="flex-1 overflow-y-auto p-5 space-y-4 text-sm text-neutral-300">
           
           {/* TAB 1: VISÃO GERAL */}
           {activeTab === 'info' && (
             <div className="space-y-4">
               {/* Descrição */}
               <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
-                <h4 className="text-xs font-black uppercase text-slate-400 font-mono-stat mb-1.5 flex items-center gap-1.5">
+                <h4 className="text-xs font-black uppercase text-neutral-400 font-mono-stat mb-1.5 flex items-center gap-1.5">
                   <Info className="w-3.5 h-3.5 text-yellow-400" />
                   Sobre o Evento
                 </h4>
@@ -252,7 +252,7 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
                       Circuito Oficial Vinculado
                     </span>
                     <h5 className="font-bold text-white text-sm mt-0.5">{associatedRoute.name}</h5>
-                    <p className="text-xs text-slate-400 font-mono-stat mt-0.5">
+                    <p className="text-xs text-neutral-400 font-mono-stat mt-0.5">
                       {associatedRoute.distanceKm} km • Dificuldade: {associatedRoute.difficulty}
                     </p>
                   </div>
@@ -274,14 +274,14 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
 
               {/* Zona Vinculada */}
               {associatedZone && (
-                <div className="p-4 rounded-2xl bg-neutral-900/30 border border-yellow-500/30 flex items-center justify-between gap-3">
+                <div className="p-4 rounded-2xl bg-emerald-950/30 border border-yellow-500/30 flex items-center justify-between gap-3">
                   <div>
                     <span className="text-[10px] font-black uppercase text-yellow-400 font-mono-stat flex items-center gap-1">
                       <MapPin className="w-3 h-3" />
                       Zona de Domínio Vinculada
                     </span>
                     <h5 className="font-bold text-white text-sm mt-0.5">{associatedZone.name}</h5>
-                    <p className="text-xs text-slate-400 font-mono-stat mt-0.5">
+                    <p className="text-xs text-neutral-400 font-mono-stat mt-0.5">
                       Raio: {associatedZone.radius}m • Domínio Atual: {associatedZone.dominance}%
                     </p>
                   </div>
@@ -292,7 +292,7 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
                         onClose();
                         onViewZoneOnMap(associatedZone.id);
                       }}
-                      className="px-3 py-1.5 rounded-xl bg-yellow-500/20 hover:bg-yellow-500/30 text-yellow-300 border border-yellow-500/40 text-xs font-bold font-mono-stat flex items-center gap-1 transition-colors cursor-pointer"
+                      className="px-3 py-1.5 rounded-xl bg-yellow-500/20 hover:bg-yellow-500/30 text-emerald-300 border border-yellow-500/40 text-xs font-bold font-mono-stat flex items-center gap-1 transition-colors cursor-pointer"
                     >
                       <span>Ver Zona no Mapa</span>
                       <ExternalLink className="w-3.5 h-3.5" />
@@ -304,14 +304,14 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
               {/* Lotação & Estatísticas Rápidas */}
               <div className="p-4 rounded-2xl bg-white/5 border border-white/10 space-y-2">
                 <div className="flex items-center justify-between text-xs font-mono-stat">
-                  <span className="text-slate-400 font-bold uppercase">Lotação da Bateria</span>
+                  <span className="text-neutral-400 font-bold uppercase">Lotação da Bateria</span>
                   <span className="text-white font-bold">
                     {event.currentParticipants} de {event.maxParticipants} vagas preenchidas ({fillPercent}%)
                   </span>
                 </div>
                 <div className="w-full bg-white/10 h-2 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-yellow-400 rounded-full shadow-[0_0_10px_#fce803]"
+                    className="h-full bg-yellow-400 rounded-full shadow-[0_0_10px_#00ff66]"
                     style={{ width: `${fillPercent}%` }}
                   />
                 </div>
@@ -329,34 +329,34 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
                     {event.rules.title}
                   </h4>
                 </div>
-                <p className="text-sm text-slate-300 leading-relaxed">
+                <p className="text-sm text-neutral-300 leading-relaxed">
                   {event.rules.description}
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-3 border-t border-white/5 text-xs font-mono-stat">
                   {event.rules.minLevel && (
                     <div className="p-2.5 rounded-xl bg-black/30 border border-white/5">
-                      <span className="text-slate-400 text-[10px] uppercase block">Nível Mínimo</span>
+                      <span className="text-neutral-400 text-[10px] uppercase block">Nível Mínimo</span>
                       <span className="text-white font-bold text-sm">Nível {event.rules.minLevel}+</span>
                     </div>
                   )}
 
                   {event.rules.timeLimitMinutes && (
                     <div className="p-2.5 rounded-xl bg-black/30 border border-white/5">
-                      <span className="text-slate-400 text-[10px] uppercase block">Tempo Limite</span>
+                      <span className="text-neutral-400 text-[10px] uppercase block">Tempo Limite</span>
                       <span className="text-white font-bold text-sm">{event.rules.timeLimitMinutes} minutos</span>
                     </div>
                   )}
 
                   {event.rules.requiredDistanceKm && (
                     <div className="p-2.5 rounded-xl bg-black/30 border border-white/5">
-                      <span className="text-slate-400 text-[10px] uppercase block">Distância Oficial</span>
+                      <span className="text-neutral-400 text-[10px] uppercase block">Distância Oficial</span>
                       <span className="text-white font-bold text-sm">{event.rules.requiredDistanceKm} km</span>
                     </div>
                   )}
 
                   <div className="p-2.5 rounded-xl bg-black/30 border border-white/5">
-                    <span className="text-slate-400 text-[10px] uppercase block">Critério de Vitória</span>
+                    <span className="text-neutral-400 text-[10px] uppercase block">Critério de Vitória</span>
                     <span className="text-yellow-400 font-bold text-xs uppercase">
                       {event.rules.criteria === 'first_to_finish' && 'Primeiro a Cruzar o Pórtico'}
                       {event.rules.criteria === 'lowest_time' && 'Menor Tempo Cronometrado'}
@@ -368,7 +368,7 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
                 </div>
 
                 {event.rules.scoringFormula && (
-                  <div className="p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20 text-xs text-yellow-300 font-mono-stat">
+                  <div className="p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20 text-xs text-emerald-300 font-mono-stat">
                     <span className="font-bold block mb-0.5">Pontuação Oficial:</span>
                     <span>{event.rules.scoringFormula}</span>
                   </div>
@@ -381,7 +381,7 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
           {activeTab === 'participantes' && (
             <div className="space-y-3">
               <div className="flex items-center justify-between text-xs font-mono-stat px-1">
-                <span className="text-slate-400 font-bold uppercase">
+                <span className="text-neutral-400 font-bold uppercase">
                   Patinadores Confirmados ({event.participants.length})
                 </span>
                 <span className="text-yellow-400 font-bold">
@@ -410,7 +410,7 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
                             </span>
                           )}
                         </div>
-                        <span className="text-[10px] text-slate-400 font-mono-stat">
+                        <span className="text-[10px] text-neutral-400 font-mono-stat">
                           Nv. {p.level} {p.crew ? `• ${p.crew}` : ''}
                         </span>
                       </div>
@@ -442,7 +442,7 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
                     <Trophy className="w-4 h-4" />
                     Chaveamento Eliminatório Simples (Mata-Mata)
                   </h4>
-                  <p className="text-xs text-slate-300 mt-0.5">
+                  <p className="text-xs text-neutral-300 mt-0.5">
                     8 Competidores • Quartas de Final → Semifinal → Grande Final
                   </p>
                 </div>
@@ -525,7 +525,7 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
           {/* TAB 5: CLASSIFICAÇÃO / LEADERBOARD */}
           {activeTab === 'classificacao' && (
             <div className="space-y-3">
-              <div className="text-xs font-mono-stat text-slate-400 px-1 font-bold uppercase flex items-center justify-between">
+              <div className="text-xs font-mono-stat text-neutral-400 px-1 font-bold uppercase flex items-center justify-between">
                 <span>Tabela Oficial do Evento</span>
                 <span>Pontuação & Tempos</span>
               </div>
@@ -541,7 +541,7 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
                       key={entry.playerId}
                       className={`p-3 rounded-xl border flex items-center justify-between gap-2 transition-all ${
                         entry.isCurrentUser
-                          ? 'bg-yellow-500/10 border-yellow-500/40 shadow-[0_0_15px_rgba(252,232,3,0.15)]'
+                          ? 'bg-yellow-500/10 border-yellow-500/40 shadow-[0_0_15px_rgba(0,255,102,0.15)]'
                           : isTop1
                           ? 'bg-amber-500/10 border-amber-500/30'
                           : 'bg-white/5 border-white/5'
@@ -557,7 +557,7 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
                               ? 'bg-slate-300 text-black'
                               : isTop3
                               ? 'bg-amber-700 text-white'
-                              : 'bg-white/10 text-slate-400'
+                              : 'bg-white/10 text-neutral-400'
                           }`}
                         >
                           {entry.position}º
@@ -573,12 +573,12 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
                           <div className="flex items-center gap-1.5">
                             <span className="font-bold text-white text-xs truncate">{entry.nickname}</span>
                             {entry.clanTag && (
-                              <span className="px-1 py-0.2 rounded bg-white/10 text-slate-300 text-[9px] font-mono-stat">
+                              <span className="px-1 py-0.2 rounded bg-white/10 text-neutral-300 text-[9px] font-mono-stat">
                                 [{entry.clanTag}]
                               </span>
                             )}
                           </div>
-                          <span className="text-[10px] text-slate-400 font-mono-stat">
+                          <span className="text-[10px] text-neutral-400 font-mono-stat">
                             {entry.crew || 'Patinador Urbano'}
                           </span>
                         </div>
@@ -590,7 +590,7 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
                           {entry.points} pts
                         </span>
                         {entry.timeFormatted && (
-                          <span className="text-[10px] text-slate-400">
+                          <span className="text-[10px] text-neutral-400">
                             ⏱️ {entry.timeFormatted}
                           </span>
                         )}
@@ -611,7 +611,7 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
           {/* TAB 6: RECOMPENSAS */}
           {activeTab === 'recompensas' && (
             <div className="space-y-3">
-              <div className="text-xs font-mono-stat text-slate-400 px-1 font-bold uppercase">
+              <div className="text-xs font-mono-stat text-neutral-400 px-1 font-bold uppercase">
                 Prêmios e Conquistas do Evento
               </div>
 
@@ -633,12 +633,12 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
                               ? 'bg-amber-500/20 text-amber-400 border border-amber-500/40'
                               : rew.rarity === 'epico'
                               ? 'bg-purple-500/20 text-purple-400 border border-purple-500/40'
-                              : 'bg-blue-500/20 text-blue-400 border border-neutral-700/40'
+                              : 'bg-blue-500/20 text-blue-400 border border-blue-500/40'
                           }`}>
                             {rew.rarity}
                           </span>
                         </div>
-                        <p className="text-xs text-slate-400 mt-0.5">{rew.description}</p>
+                        <p className="text-xs text-neutral-400 mt-0.5">{rew.description}</p>
                       </div>
                     </div>
 
@@ -656,8 +656,8 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
         </div>
 
         {/* Footer com Ações Dinâmicas */}
-        <div className="p-4 bg-[#000000] border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="text-xs font-mono-stat text-slate-400">
+        <div className="p-4 bg-[#080d14] border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="text-xs font-mono-stat text-neutral-400">
             {isUserRegistered ? (
               <span className="text-yellow-400 font-bold flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4" />
@@ -669,7 +669,7 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
                 Vagas esgotadas • Inscrições na lista de espera
               </span>
             ) : (
-              <span>Inscrição 100% gratuita no THE ROLLING WARS</span>
+              <span>Inscrição 100% gratuita no Urbanozeiro</span>
             )}
           </div>
 
@@ -701,7 +701,7 @@ export const EventDetailsModal: React.FC<EventDetailsModalProps> = ({
               <button
                 id="btn-register-event"
                 onClick={() => onRegister(event.id)}
-                className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-black font-black text-xs font-mono-stat uppercase tracking-wider shadow-[0_0_20px_rgba(252,232,3,0.4)] transition-all cursor-pointer flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-yellow-400 hover:bg-emerald-300 text-black font-black text-xs font-mono-stat uppercase tracking-wider shadow-[0_0_20px_rgba(0,255,102,0.4)] transition-all cursor-pointer flex items-center justify-center gap-2"
               >
                 <UserCheck className="w-4 h-4" />
                 <span>PARTICIPAR DO EVENTO</span>

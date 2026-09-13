@@ -112,7 +112,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
       <div
         id="settings-modal"
-        className="w-full max-w-lg max-h-[92vh] flex flex-col rounded-3xl bg-[#000000] border-2 border-yellow-500/40 shadow-[0_15px_60px_rgba(252,232,3,0.25)] overflow-hidden text-white font-sans relative"
+        className="w-full max-w-lg max-h-[92vh] flex flex-col rounded-3xl bg-[#080d14] border-2 border-yellow-500/40 shadow-[0_15px_60px_rgba(0,255,102,0.25)] overflow-hidden text-white font-sans relative"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Glow Superior */}
@@ -128,11 +128,11 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               <div>
                 <h2 className="text-base font-black uppercase tracking-tight font-display text-white flex items-center gap-1.5">
                   CONFIGURAÇÕES
-                  <span className="px-1.5 py-0.2 rounded-md bg-yellow-400/20 text-yellow-300 border border-yellow-400/30 text-[9px] font-mono-stat font-black">
+                  <span className="px-1.5 py-0.2 rounded-md bg-yellow-400/20 text-emerald-300 border border-yellow-400/30 text-[9px] font-mono-stat font-black">
                     PREFERÊNCIAS
                   </span>
                 </h2>
-                <p className="text-[10px] text-slate-400 font-mono-stat">
+                <p className="text-[10px] text-neutral-400 font-mono-stat">
                   Controle sua experiência, privacidade e mapa
                 </p>
               </div>
@@ -142,7 +142,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               type="button"
               id="btn-close-settings-modal"
               onClick={onClose}
-              className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-colors cursor-pointer"
+              className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-white transition-colors cursor-pointer"
               title="Fechar Configurações"
             >
               <X className="w-5 h-5" />
@@ -162,8 +162,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                   onClick={() => setActiveCategory(cat.id)}
                   className={`px-3 py-1.5 rounded-xl font-black uppercase tracking-wider transition-all flex items-center gap-1.5 shrink-0 cursor-pointer ${
                     isActive
-                      ? 'bg-yellow-400 text-black shadow-[0_0_10px_rgba(252,232,3,0.4)]'
-                      : 'bg-[#121a24] text-slate-400 hover:text-white border border-white/10'
+                      ? 'bg-yellow-400 text-black shadow-[0_0_10px_rgba(0,255,102,0.4)]'
+                      : 'bg-[#121a24] text-neutral-400 hover:text-white border border-white/10'
                   }`}
                 >
                   <Icon className="w-3.5 h-3.5" />
@@ -176,7 +176,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
 
         {/* TOAST DE FEEDBACK DE SALVAMENTO */}
         {saveToast && (
-          <div className="px-4 py-1.5 bg-yellow-500/20 border-b border-yellow-500/30 text-yellow-300 text-[10px] font-bold font-mono-stat flex items-center justify-center gap-1.5 animate-in fade-in">
+          <div className="px-4 py-1.5 bg-yellow-500/20 border-b border-yellow-500/30 text-emerald-300 text-[10px] font-bold font-mono-stat flex items-center justify-center gap-1.5 animate-in fade-in">
             <Check className="w-3.5 h-3.5 text-yellow-400" />
             <span>{saveToast}</span>
           </div>
@@ -206,7 +206,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                         L{user.level}
                       </span>
                     </div>
-                    <p className="text-xs text-slate-400 font-mono-stat">{user.name}</p>
+                    <p className="text-xs text-neutral-400 font-mono-stat">{user.name}</p>
                     <p className="text-[10px] text-yellow-400 font-mono-stat mt-0.5">
                       Clã: {user.crew || 'Sem Clã'} • {user.tag || '#042'}
                     </p>
@@ -215,25 +215,25 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               </div>
 
               {/* Informações Básicas da Conta */}
-              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-3">
-                <h4 className="text-xs font-black uppercase text-slate-300 tracking-wider font-mono-stat flex items-center gap-1.5">
+              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-3">
+                <h4 className="text-xs font-black uppercase text-neutral-300 tracking-wider font-mono-stat flex items-center gap-1.5">
                   <User className="w-3.5 h-3.5 text-yellow-400" />
                   DADOS DO CADASTRO
                 </h4>
 
                 <div className="space-y-2 text-xs font-mono-stat">
                   <div className="flex items-center justify-between p-2.5 rounded-xl bg-black/40 border border-white/5">
-                    <span className="text-slate-400">E-mail</span>
+                    <span className="text-neutral-400">E-mail</span>
                     <span className="text-white font-bold">{settings.account.email}</span>
                   </div>
 
                   <div className="flex items-center justify-between p-2.5 rounded-xl bg-black/40 border border-white/5">
-                    <span className="text-slate-400">Telefone</span>
+                    <span className="text-neutral-400">Telefone</span>
                     <span className="text-white font-bold">{settings.account.phone}</span>
                   </div>
 
                   <div className="flex items-center justify-between p-2.5 rounded-xl bg-black/40 border border-white/5">
-                    <span className="text-slate-400">Membro desde</span>
+                    <span className="text-neutral-400">Membro desde</span>
                     <span className="text-yellow-400 font-bold">
                       {settings.account.registeredSince}
                     </span>
@@ -245,18 +245,18 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                   onClick={() =>
                     triggerFeedback('A alteração de dados de cadastro estará disponível na próxima atualização.')
                   }
-                  className="w-full py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-slate-300 font-mono-stat uppercase tracking-wider transition-colors cursor-pointer"
+                  className="w-full py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-neutral-300 font-mono-stat uppercase tracking-wider transition-colors cursor-pointer"
                 >
                   Editar Dados Cadastrais
                 </button>
               </div>
 
               {/* Gerenciamento de Sessão */}
-              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-2">
-                <h4 className="text-xs font-black uppercase text-slate-300 tracking-wider font-mono-stat">
+              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-2">
+                <h4 className="text-xs font-black uppercase text-neutral-300 tracking-wider font-mono-stat">
                   SESSÃO & ACESSO
                 </h4>
-                <p className="text-[11px] text-slate-400 leading-relaxed">
+                <p className="text-[11px] text-neutral-400 leading-relaxed">
                   Você está conectado como <strong className="text-white">{user.nickname}</strong>.
                 </p>
                 <button
@@ -276,8 +276,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
              ========================================== */}
           {activeCategory === 'PRIVACIDADE' && (
             <div className="space-y-4 animate-in fade-in">
-              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-3">
-                <h4 className="text-xs font-black uppercase text-slate-300 tracking-wider font-mono-stat flex items-center gap-1.5">
+              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-3">
+                <h4 className="text-xs font-black uppercase text-neutral-300 tracking-wider font-mono-stat flex items-center gap-1.5">
                   <Eye className="w-3.5 h-3.5 text-cyan-400" />
                   VISIBILIDADE SOCIAL
                 </h4>
@@ -289,7 +289,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       <div className="text-xs font-bold text-white font-display">
                         Perfil Público
                       </div>
-                      <div className="text-[10px] text-slate-400 font-mono-stat">
+                      <div className="text-[10px] text-neutral-400 font-mono-stat">
                         Outros patinadores podem ver seu avatar, nível e títulos
                       </div>
                     </div>
@@ -299,7 +299,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       onChange={(e) =>
                         updateSetting('privacy', 'isProfilePublic', e.target.checked, 'Preferência de perfil público atualizada')
                       }
-                      className="w-5 h-5 accent-yellow-400 rounded cursor-pointer"
+                      className="w-5 h-5 accent-emerald-400 rounded cursor-pointer"
                     />
                   </label>
 
@@ -309,7 +309,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       <div className="text-xs font-bold text-white font-display">
                         Publicar Atividades no Feed
                       </div>
-                      <div className="text-[10px] text-slate-400 font-mono-stat">
+                      <div className="text-[10px] text-neutral-400 font-mono-stat">
                         Conquistas de zonas e recordes aparecem no Feed Urbano
                       </div>
                     </div>
@@ -319,7 +319,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       onChange={(e) =>
                         updateSetting('privacy', 'showActivityInFeed', e.target.checked, 'Visibilidade de feed atualizada')
                       }
-                      className="w-5 h-5 accent-yellow-400 rounded cursor-pointer"
+                      className="w-5 h-5 accent-emerald-400 rounded cursor-pointer"
                     />
                   </label>
 
@@ -329,7 +329,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       <div className="text-xs font-bold text-white font-display">
                         Exibir Estatísticas
                       </div>
-                      <div className="text-[10px] text-slate-400 font-mono-stat">
+                      <div className="text-[10px] text-neutral-400 font-mono-stat">
                         Mostrar quilometragem total e zonas no seu perfil
                       </div>
                     </div>
@@ -339,7 +339,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       onChange={(e) =>
                         updateSetting('privacy', 'showStatsOnProfile', e.target.checked, 'Exibição de estatísticas atualizada')
                       }
-                      className="w-5 h-5 accent-yellow-400 rounded cursor-pointer"
+                      className="w-5 h-5 accent-emerald-400 rounded cursor-pointer"
                     />
                   </label>
 
@@ -349,7 +349,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       <div className="text-xs font-bold text-white font-display">
                         Aparecer no Radar
                       </div>
-                      <div className="text-[10px] text-slate-400 font-mono-stat">
+                      <div className="text-[10px] text-neutral-400 font-mono-stat">
                         Aparecer para outros skaters na busca de próximos
                       </div>
                     </div>
@@ -359,7 +359,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       onChange={(e) =>
                         updateSetting('privacy', 'appearInNearbyRadar', e.target.checked, 'Preferência de radar atualizada')
                       }
-                      className="w-5 h-5 accent-yellow-400 rounded cursor-pointer"
+                      className="w-5 h-5 accent-emerald-400 rounded cursor-pointer"
                     />
                   </label>
 
@@ -369,7 +369,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       <div className="text-xs font-bold text-white font-display">
                         Permitir Pedidos de Amizade
                       </div>
-                      <div className="text-[10px] text-slate-400 font-mono-stat">
+                      <div className="text-[10px] text-neutral-400 font-mono-stat">
                         Receber solicitações de amizade de novos skaters
                       </div>
                     </div>
@@ -379,15 +379,15 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       onChange={(e) =>
                         updateSetting('privacy', 'allowFriendRequests', e.target.checked, 'Pedidos de amizade atualizados')
                       }
-                      className="w-5 h-5 accent-yellow-400 rounded cursor-pointer"
+                      className="w-5 h-5 accent-emerald-400 rounded cursor-pointer"
                     />
                   </label>
                 </div>
               </div>
 
               {/* Permissão de Desafios Diretos */}
-              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-2">
-                <h4 className="text-xs font-black uppercase text-slate-300 tracking-wider font-mono-stat">
+              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-2">
+                <h4 className="text-xs font-black uppercase text-neutral-300 tracking-wider font-mono-stat">
                   QUEM PODE ENVIAR DESAFIOS X1/X2?
                 </h4>
                 <div className="grid grid-cols-3 gap-1.5 font-mono-stat text-[10px]">
@@ -401,7 +401,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       className={`p-2 rounded-xl font-bold uppercase transition-all cursor-pointer ${
                         settings.privacy.challengePermission === perm
                           ? 'bg-yellow-400 text-black shadow-md'
-                          : 'bg-black/40 text-slate-400 hover:text-white border border-white/5'
+                          : 'bg-black/40 text-neutral-400 hover:text-white border border-white/5'
                       }`}
                     >
                       {perm === 'EVERYONE'
@@ -421,14 +421,14 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
              ========================================== */}
           {activeCategory === 'NOTIFICACOES' && (
             <div className="space-y-4 animate-in fade-in">
-              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-3">
+              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-3">
                 <div className="flex items-center justify-between pb-2 border-b border-white/10">
                   <div>
                     <h4 className="text-xs font-black uppercase text-white tracking-wider font-display flex items-center gap-1.5">
                       <Bell className="w-3.5 h-3.5 text-amber-400" />
                       NOTIFICAÇÕES PUSH
                     </h4>
-                    <p className="text-[10px] text-slate-400 font-mono-stat">
+                    <p className="text-[10px] text-neutral-400 font-mono-stat">
                       Alertas no dispositivo e na Central de Notificações
                     </p>
                   </div>
@@ -438,14 +438,14 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     onChange={(e) =>
                       updateSetting('notifications', 'enablePushNotifications', e.target.checked, 'Notificações push atualizadas')
                     }
-                    className="w-5 h-5 accent-yellow-400 rounded cursor-pointer"
+                    className="w-5 h-5 accent-emerald-400 rounded cursor-pointer"
                   />
                 </div>
 
                 {/* Subcategorias de Notificações */}
                 <div className="space-y-2 pt-1">
                   <label className="flex items-center justify-between p-2.5 rounded-xl bg-black/40 border border-white/5 cursor-pointer">
-                    <span className="text-xs text-slate-300 font-mono-stat">
+                    <span className="text-xs text-neutral-300 font-mono-stat">
                       ⚔️ Desafios & Duelos X1
                     </span>
                     <input
@@ -455,12 +455,12 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       onChange={(e) =>
                         updateSetting('notifications', 'notifyDirectChallenges', e.target.checked)
                       }
-                      className="w-4 h-4 accent-yellow-400 rounded cursor-pointer"
+                      className="w-4 h-4 accent-emerald-400 rounded cursor-pointer"
                     />
                   </label>
 
                   <label className="flex items-center justify-between p-2.5 rounded-xl bg-black/40 border border-white/5 cursor-pointer">
-                    <span className="text-xs text-slate-300 font-mono-stat">
+                    <span className="text-xs text-neutral-300 font-mono-stat">
                       🚩 Domínio & Ataques a Zonas
                     </span>
                     <input
@@ -470,12 +470,12 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       onChange={(e) =>
                         updateSetting('notifications', 'notifyZoneConquest', e.target.checked)
                       }
-                      className="w-4 h-4 accent-yellow-400 rounded cursor-pointer"
+                      className="w-4 h-4 accent-emerald-400 rounded cursor-pointer"
                     />
                   </label>
 
                   <label className="flex items-center justify-between p-2.5 rounded-xl bg-black/40 border border-white/5 cursor-pointer">
-                    <span className="text-xs text-slate-300 font-mono-stat">
+                    <span className="text-xs text-neutral-300 font-mono-stat">
                       🏆 Conquistas, Medalhas & Nível
                     </span>
                     <input
@@ -485,12 +485,12 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       onChange={(e) =>
                         updateSetting('notifications', 'notifyAchievements', e.target.checked)
                       }
-                      className="w-4 h-4 accent-yellow-400 rounded cursor-pointer"
+                      className="w-4 h-4 accent-emerald-400 rounded cursor-pointer"
                     />
                   </label>
 
                   <label className="flex items-center justify-between p-2.5 rounded-xl bg-black/40 border border-white/5 cursor-pointer">
-                    <span className="text-xs text-slate-300 font-mono-stat">
+                    <span className="text-xs text-neutral-300 font-mono-stat">
                       🏁 Eventos & Torneios Urbanos
                     </span>
                     <input
@@ -500,12 +500,12 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       onChange={(e) =>
                         updateSetting('notifications', 'notifyEvents', e.target.checked)
                       }
-                      className="w-4 h-4 accent-yellow-400 rounded cursor-pointer"
+                      className="w-4 h-4 accent-emerald-400 rounded cursor-pointer"
                     />
                   </label>
 
                   <label className="flex items-center justify-between p-2.5 rounded-xl bg-black/40 border border-white/5 cursor-pointer">
-                    <span className="text-xs text-slate-300 font-mono-stat">
+                    <span className="text-xs text-neutral-300 font-mono-stat">
                       📜 Novas Missões & Objetivos
                     </span>
                     <input
@@ -515,12 +515,12 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       onChange={(e) =>
                         updateSetting('notifications', 'notifyMissions', e.target.checked)
                       }
-                      className="w-4 h-4 accent-yellow-400 rounded cursor-pointer"
+                      className="w-4 h-4 accent-emerald-400 rounded cursor-pointer"
                     />
                   </label>
 
                   <label className="flex items-center justify-between p-2.5 rounded-xl bg-black/40 border border-white/5 cursor-pointer">
-                    <span className="text-xs text-slate-300 font-mono-stat">
+                    <span className="text-xs text-neutral-300 font-mono-stat">
                       👥 Atividades Sociais & Amigos
                     </span>
                     <input
@@ -530,7 +530,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       onChange={(e) =>
                         updateSetting('notifications', 'notifySocialActivities', e.target.checked)
                       }
-                      className="w-4 h-4 accent-yellow-400 rounded cursor-pointer"
+                      className="w-4 h-4 accent-emerald-400 rounded cursor-pointer"
                     />
                   </label>
                 </div>
@@ -543,8 +543,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
              ========================================== */}
           {activeCategory === 'JOGO' && (
             <div className="space-y-4 animate-in fade-in">
-              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-3">
-                <h4 className="text-xs font-black uppercase text-slate-300 tracking-wider font-mono-stat flex items-center gap-1.5">
+              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-3">
+                <h4 className="text-xs font-black uppercase text-neutral-300 tracking-wider font-mono-stat flex items-center gap-1.5">
                   <Gamepad2 className="w-3.5 h-3.5 text-yellow-400" />
                   PREFERÊNCIAS DE PATINAÇÃO & HUD
                 </h4>
@@ -555,7 +555,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       <div className="text-xs font-bold text-white font-display">
                         Confirmar Antes de Conquistar
                       </div>
-                      <div className="text-[10px] text-slate-400 font-mono-stat">
+                      <div className="text-[10px] text-neutral-400 font-mono-stat">
                         Exibir prompt de confirmação ao entrar no raio de uma zona livre
                       </div>
                     </div>
@@ -565,7 +565,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       onChange={(e) =>
                         updateSetting('gameplay', 'confirmBeforeZoneCapture', e.target.checked, 'Preferência de confirmação salva')
                       }
-                      className="w-5 h-5 accent-yellow-400 rounded cursor-pointer"
+                      className="w-5 h-5 accent-emerald-400 rounded cursor-pointer"
                     />
                   </label>
 
@@ -574,7 +574,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       <div className="text-xs font-bold text-white font-display">
                         Alertas Visuais de Proximidade
                       </div>
-                      <div className="text-[10px] text-slate-400 font-mono-stat">
+                      <div className="text-[10px] text-neutral-400 font-mono-stat">
                         Banners luminosos quando estiver a 100m de um ponto de interesse
                       </div>
                     </div>
@@ -584,7 +584,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       onChange={(e) =>
                         updateSetting('gameplay', 'showProximityAlerts', e.target.checked)
                       }
-                      className="w-5 h-5 accent-yellow-400 rounded cursor-pointer"
+                      className="w-5 h-5 accent-emerald-400 rounded cursor-pointer"
                     />
                   </label>
 
@@ -593,7 +593,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       <div className="text-xs font-bold text-white font-display">
                         Dicas & Tutoriais Rápidos
                       </div>
-                      <div className="text-[10px] text-slate-400 font-mono-stat">
+                      <div className="text-[10px] text-neutral-400 font-mono-stat">
                         Exibir lembretes estratégicos durante sessões ativas
                       </div>
                     </div>
@@ -603,7 +603,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       onChange={(e) =>
                         updateSetting('gameplay', 'showInGameTutorialTips', e.target.checked)
                       }
-                      className="w-5 h-5 accent-yellow-400 rounded cursor-pointer"
+                      className="w-5 h-5 accent-emerald-400 rounded cursor-pointer"
                     />
                   </label>
 
@@ -612,7 +612,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       <div className="text-xs font-bold text-white font-display">
                         Efeitos de Interface & Animações
                       </div>
-                      <div className="text-[10px] text-slate-400 font-mono-stat">
+                      <div className="text-[10px] text-neutral-400 font-mono-stat">
                         Glows neon e partículas visuais durante conquistas
                       </div>
                     </div>
@@ -622,7 +622,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       onChange={(e) =>
                         updateSetting('gameplay', 'enableInterfaceEffects', e.target.checked)
                       }
-                      className="w-5 h-5 accent-yellow-400 rounded cursor-pointer"
+                      className="w-5 h-5 accent-emerald-400 rounded cursor-pointer"
                     />
                   </label>
 
@@ -631,7 +631,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       <div className="text-xs font-bold text-white font-display">
                         Auto-Recentralizar Mapa
                       </div>
-                      <div className="text-[10px] text-slate-400 font-mono-stat">
+                      <div className="text-[10px] text-neutral-400 font-mono-stat">
                         Acompanhar a posição do patinador em tempo real
                       </div>
                     </div>
@@ -641,7 +641,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       onChange={(e) =>
                         updateSetting('gameplay', 'autoRecenterMap', e.target.checked)
                       }
-                      className="w-5 h-5 accent-yellow-400 rounded cursor-pointer"
+                      className="w-5 h-5 accent-emerald-400 rounded cursor-pointer"
                     />
                   </label>
                 </div>
@@ -655,8 +655,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           {activeCategory === 'MAPA' && (
             <div className="space-y-4 animate-in fade-in">
               {/* Estilo do Mapa */}
-              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-3">
-                <h4 className="text-xs font-black uppercase text-slate-300 tracking-wider font-mono-stat flex items-center gap-1.5">
+              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-3">
+                <h4 className="text-xs font-black uppercase text-neutral-300 tracking-wider font-mono-stat flex items-center gap-1.5">
                   <MapPin className="w-3.5 h-3.5 text-cyan-400" />
                   TEMA DO MAPA GPS
                 </h4>
@@ -667,8 +667,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     onClick={() => updateSetting('map', 'mapTheme', 'DARK', 'Mapa definido para Modo Escuro')}
                     className={`p-3 rounded-2xl flex flex-col items-center gap-1.5 border transition-all cursor-pointer ${
                       settings.map.mapTheme === 'DARK'
-                        ? 'bg-[#0a0a0a] border-yellow-400 text-white shadow-[0_0_12px_rgba(252,232,3,0.3)]'
-                        : 'bg-black/40 border-white/5 text-slate-400 hover:text-white'
+                        ? 'bg-slate-900 border-yellow-400 text-white shadow-[0_0_12px_rgba(0,255,102,0.3)]'
+                        : 'bg-black/40 border-white/5 text-neutral-400 hover:text-white'
                     }`}
                   >
                     <Moon className="w-4 h-4 text-cyan-400" />
@@ -680,8 +680,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     onClick={() => updateSetting('map', 'mapTheme', 'LIGHT', 'Mapa definido para Modo Claro')}
                     className={`p-3 rounded-2xl flex flex-col items-center gap-1.5 border transition-all cursor-pointer ${
                       settings.map.mapTheme === 'LIGHT'
-                        ? 'bg-slate-800 border-yellow-400 text-white shadow-[0_0_12px_rgba(252,232,3,0.3)]'
-                        : 'bg-black/40 border-white/5 text-slate-400 hover:text-white'
+                        ? 'bg-slate-800 border-yellow-400 text-white shadow-[0_0_12px_rgba(0,255,102,0.3)]'
+                        : 'bg-black/40 border-white/5 text-neutral-400 hover:text-white'
                     }`}
                   >
                     <Sun className="w-4 h-4 text-amber-400" />
@@ -693,8 +693,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     onClick={() => updateSetting('map', 'mapTheme', 'AUTO', 'Mapa definido para Modo Automático')}
                     className={`p-3 rounded-2xl flex flex-col items-center gap-1.5 border transition-all cursor-pointer ${
                       settings.map.mapTheme === 'AUTO'
-                        ? 'bg-[#0a0a0a] border-yellow-400 text-white shadow-[0_0_12px_rgba(252,232,3,0.3)]'
-                        : 'bg-black/40 border-white/5 text-slate-400 hover:text-white'
+                        ? 'bg-slate-900 border-yellow-400 text-white shadow-[0_0_12px_rgba(0,255,102,0.3)]'
+                        : 'bg-black/40 border-white/5 text-neutral-400 hover:text-white'
                     }`}
                   >
                     <Sparkles className="w-4 h-4 text-yellow-400" />
@@ -704,38 +704,38 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               </div>
 
               {/* Elementos Visíveis no Mapa */}
-              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-3">
-                <h4 className="text-xs font-black uppercase text-slate-300 tracking-wider font-mono-stat">
+              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-3">
+                <h4 className="text-xs font-black uppercase text-neutral-300 tracking-wider font-mono-stat">
                   CAMADAS & ELEMENTOS VISÍVEIS
                 </h4>
 
                 <div className="space-y-2">
                   <label className="flex items-center justify-between p-2.5 rounded-xl bg-black/40 border border-white/5 cursor-pointer">
-                    <span className="text-xs text-slate-300 font-mono-stat">
+                    <span className="text-xs text-neutral-300 font-mono-stat">
                       🚩 Zonas Territoriais & Polígonos
                     </span>
                     <input
                       type="checkbox"
                       checked={settings.map.showZonesOnMap}
                       onChange={(e) => updateSetting('map', 'showZonesOnMap', e.target.checked)}
-                      className="w-4 h-4 accent-yellow-400 rounded cursor-pointer"
+                      className="w-4 h-4 accent-emerald-400 rounded cursor-pointer"
                     />
                   </label>
 
                   <label className="flex items-center justify-between p-2.5 rounded-xl bg-black/40 border border-white/5 cursor-pointer">
-                    <span className="text-xs text-slate-300 font-mono-stat">
+                    <span className="text-xs text-neutral-300 font-mono-stat">
                       🧭 Rotas & Circuitos Patináveis
                     </span>
                     <input
                       type="checkbox"
                       checked={settings.map.showRoutesOnMap}
                       onChange={(e) => updateSetting('map', 'showRoutesOnMap', e.target.checked)}
-                      className="w-4 h-4 accent-yellow-400 rounded cursor-pointer"
+                      className="w-4 h-4 accent-emerald-400 rounded cursor-pointer"
                     />
                   </label>
 
                   <label className="flex items-center justify-between p-2.5 rounded-xl bg-black/40 border border-white/5 cursor-pointer">
-                    <span className="text-xs text-slate-300 font-mono-stat">
+                    <span className="text-xs text-neutral-300 font-mono-stat">
                       👥 Outros Skaters no Radar
                     </span>
                     <input
@@ -744,19 +744,19 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       onChange={(e) =>
                         updateSetting('map', 'showOtherSkatersOnMap', e.target.checked)
                       }
-                      className="w-4 h-4 accent-yellow-400 rounded cursor-pointer"
+                      className="w-4 h-4 accent-emerald-400 rounded cursor-pointer"
                     />
                   </label>
 
                   <label className="flex items-center justify-between p-2.5 rounded-xl bg-black/40 border border-white/5 cursor-pointer">
-                    <span className="text-xs text-slate-300 font-mono-stat">
+                    <span className="text-xs text-neutral-300 font-mono-stat">
                       🔥 Trilhas de Calor (Heatmap)
                     </span>
                     <input
                       type="checkbox"
                       checked={settings.map.showHeatmapTrails}
                       onChange={(e) => updateSetting('map', 'showHeatmapTrails', e.target.checked)}
-                      className="w-4 h-4 accent-yellow-400 rounded cursor-pointer"
+                      className="w-4 h-4 accent-emerald-400 rounded cursor-pointer"
                     />
                   </label>
                 </div>
@@ -769,8 +769,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
              ========================================== */}
           {activeCategory === 'APARENCIA' && (
             <div className="space-y-4 animate-in fade-in">
-              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-3">
-                <h4 className="text-xs font-black uppercase text-slate-300 tracking-wider font-mono-stat flex items-center gap-1.5">
+              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-3">
+                <h4 className="text-xs font-black uppercase text-neutral-300 tracking-wider font-mono-stat flex items-center gap-1.5">
                   <Palette className="w-3.5 h-3.5 text-purple-400" />
                   TEMA DO APLICATIVO
                 </h4>
@@ -781,8 +781,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     onClick={() => updateSetting('appearance', 'appTheme', 'DARK', 'Tema Escuro selecionado')}
                     className={`p-3 rounded-2xl flex flex-col items-center gap-1.5 border transition-all cursor-pointer ${
                       settings.appearance.appTheme === 'DARK'
-                        ? 'bg-[#0a0a0a] border-yellow-400 text-white shadow-[0_0_12px_rgba(252,232,3,0.3)]'
-                        : 'bg-black/40 border-white/5 text-slate-400 hover:text-white'
+                        ? 'bg-slate-900 border-yellow-400 text-white shadow-[0_0_12px_rgba(0,255,102,0.3)]'
+                        : 'bg-black/40 border-white/5 text-neutral-400 hover:text-white'
                     }`}
                   >
                     <Moon className="w-4 h-4 text-yellow-400" />
@@ -794,8 +794,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     onClick={() => updateSetting('appearance', 'appTheme', 'LIGHT', 'Tema Claro selecionado')}
                     className={`p-3 rounded-2xl flex flex-col items-center gap-1.5 border transition-all cursor-pointer ${
                       settings.appearance.appTheme === 'LIGHT'
-                        ? 'bg-slate-800 border-yellow-400 text-white shadow-[0_0_12px_rgba(252,232,3,0.3)]'
-                        : 'bg-black/40 border-white/5 text-slate-400 hover:text-white'
+                        ? 'bg-slate-800 border-yellow-400 text-white shadow-[0_0_12px_rgba(0,255,102,0.3)]'
+                        : 'bg-black/40 border-white/5 text-neutral-400 hover:text-white'
                     }`}
                   >
                     <Sun className="w-4 h-4 text-amber-400" />
@@ -807,8 +807,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     onClick={() => updateSetting('appearance', 'appTheme', 'SYSTEM', 'Tema do Sistema selecionado')}
                     className={`p-3 rounded-2xl flex flex-col items-center gap-1.5 border transition-all cursor-pointer ${
                       settings.appearance.appTheme === 'SYSTEM'
-                        ? 'bg-[#0a0a0a] border-yellow-400 text-white shadow-[0_0_12px_rgba(252,232,3,0.3)]'
-                        : 'bg-black/40 border-white/5 text-slate-400 hover:text-white'
+                        ? 'bg-slate-900 border-yellow-400 text-white shadow-[0_0_12px_rgba(0,255,102,0.3)]'
+                        : 'bg-black/40 border-white/5 text-neutral-400 hover:text-white'
                     }`}
                   >
                     <Smartphone className="w-4 h-4 text-cyan-400" />
@@ -818,13 +818,13 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               </div>
 
               {/* Modo Compacto */}
-              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-2">
+              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-2">
                 <label className="flex items-center justify-between cursor-pointer">
                   <div>
                     <div className="text-xs font-bold text-white font-display">
                       Modo Compacto de Interface
                     </div>
-                    <div className="text-[10px] text-slate-400 font-mono-stat">
+                    <div className="text-[10px] text-neutral-400 font-mono-stat">
                       Reduz espaçamentos para exibir mais informações na tela
                     </div>
                   </div>
@@ -832,7 +832,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     type="checkbox"
                     checked={settings.appearance.compactMode}
                     onChange={(e) => updateSetting('appearance', 'compactMode', e.target.checked)}
-                    className="w-5 h-5 accent-yellow-400 rounded cursor-pointer"
+                    className="w-5 h-5 accent-emerald-400 rounded cursor-pointer"
                   />
                 </label>
               </div>
@@ -844,8 +844,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
              ========================================== */}
           {activeCategory === 'SOM_E_VIBRACAO' && (
             <div className="space-y-4 animate-in fade-in">
-              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-3">
-                <h4 className="text-xs font-black uppercase text-slate-300 tracking-wider font-mono-stat flex items-center gap-1.5">
+              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-3">
+                <h4 className="text-xs font-black uppercase text-neutral-300 tracking-wider font-mono-stat flex items-center gap-1.5">
                   <Volume2 className="w-3.5 h-3.5 text-yellow-400" />
                   EFEITOS SONOROS
                 </h4>
@@ -856,7 +856,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       <div className="text-xs font-bold text-white font-display">
                         Sons de Ação & Interface
                       </div>
-                      <div className="text-[10px] text-slate-400 font-mono-stat">
+                      <div className="text-[10px] text-neutral-400 font-mono-stat">
                         Sons ao iniciar sessões, conquistar e subir de nível
                       </div>
                     </div>
@@ -866,14 +866,14 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       onChange={(e) =>
                         updateSetting('audioHaptics', 'soundEffectsEnabled', e.target.checked, 'Configuração de som alterada')
                       }
-                      className="w-5 h-5 accent-yellow-400 rounded cursor-pointer"
+                      className="w-5 h-5 accent-emerald-400 rounded cursor-pointer"
                     />
                   </label>
 
                   {/* Volume Slider */}
                   <div className="p-3 rounded-xl bg-black/40 border border-white/5 space-y-1.5">
                     <div className="flex items-center justify-between text-xs font-mono-stat">
-                      <span className="text-slate-400">Volume dos Efeitos</span>
+                      <span className="text-neutral-400">Volume dos Efeitos</span>
                       <span className="text-yellow-400 font-bold">
                         {settings.audioHaptics.soundVolume}%
                       </span>
@@ -887,15 +887,15 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       onChange={(e) =>
                         updateSetting('audioHaptics', 'soundVolume', parseInt(e.target.value, 10))
                       }
-                      className="w-full accent-yellow-400 cursor-pointer"
+                      className="w-full accent-emerald-400 cursor-pointer"
                     />
                   </div>
                 </div>
               </div>
 
               {/* Feedback Tátil / Vibração */}
-              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-3">
-                <h4 className="text-xs font-black uppercase text-slate-300 tracking-wider font-mono-stat flex items-center gap-1.5">
+              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-3">
+                <h4 className="text-xs font-black uppercase text-neutral-300 tracking-wider font-mono-stat flex items-center gap-1.5">
                   <Vibrate className="w-3.5 h-3.5 text-cyan-400" />
                   FEEDBACK TÁTIL (VIBRAÇÃO)
                 </h4>
@@ -906,7 +906,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       <div className="text-xs font-bold text-white font-display">
                         Ativar Vibração Geral
                       </div>
-                      <div className="text-[10px] text-slate-400 font-mono-stat">
+                      <div className="text-[10px] text-neutral-400 font-mono-stat">
                         Feedback tátil em eventos importantes do aplicativo
                       </div>
                     </div>
@@ -916,12 +916,12 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       onChange={(e) =>
                         updateSetting('audioHaptics', 'vibrationEnabled', e.target.checked, 'Vibração tátil atualizada')
                       }
-                      className="w-5 h-5 accent-yellow-400 rounded cursor-pointer"
+                      className="w-5 h-5 accent-emerald-400 rounded cursor-pointer"
                     />
                   </label>
 
                   <label className="flex items-center justify-between p-2.5 rounded-xl bg-black/40 border border-white/5 cursor-pointer">
-                    <span className="text-xs text-slate-300 font-mono-stat">
+                    <span className="text-xs text-neutral-300 font-mono-stat">
                       🚩 Vibrar ao Entrar em Zona Conquistável
                     </span>
                     <input
@@ -931,12 +931,12 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       onChange={(e) =>
                         updateSetting('audioHaptics', 'vibrateOnZoneEntry', e.target.checked)
                       }
-                      className="w-4 h-4 accent-yellow-400 rounded cursor-pointer"
+                      className="w-4 h-4 accent-emerald-400 rounded cursor-pointer"
                     />
                   </label>
 
                   <label className="flex items-center justify-between p-2.5 rounded-xl bg-black/40 border border-white/5 cursor-pointer">
-                    <span className="text-xs text-slate-300 font-mono-stat">
+                    <span className="text-xs text-neutral-300 font-mono-stat">
                       🏆 Vibrar ao Desbloquear Conquistas
                     </span>
                     <input
@@ -946,7 +946,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       onChange={(e) =>
                         updateSetting('audioHaptics', 'vibrateOnAchievement', e.target.checked)
                       }
-                      className="w-4 h-4 accent-yellow-400 rounded cursor-pointer"
+                      className="w-4 h-4 accent-emerald-400 rounded cursor-pointer"
                     />
                   </label>
                 </div>
@@ -960,32 +960,32 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           {activeCategory === 'SEGURANCA' && (
             <div className="space-y-4 animate-in fade-in">
               {/* Status de Integridade */}
-              <div className="p-4 rounded-2xl bg-gradient-to-br from-[#0b1b42] to-[#081330] border border-yellow-500/30 space-y-2">
+              <div className="p-4 rounded-2xl bg-gradient-to-br from-[#101c18] to-[#0c1613] border border-yellow-500/30 space-y-2">
                 <div className="flex items-center justify-between">
                   <h4 className="text-xs font-black uppercase text-yellow-400 tracking-wider font-mono-stat flex items-center gap-1.5">
                     <Shield className="w-4 h-4" />
                     INTEGRIDADE DA CONTA
                   </h4>
-                  <span className="px-2 py-0.5 rounded-full bg-yellow-500/20 text-yellow-300 border border-yellow-400/30 text-[9px] font-black font-mono-stat">
+                  <span className="px-2 py-0.5 rounded-full bg-yellow-500/20 text-emerald-300 border border-yellow-400/30 text-[9px] font-black font-mono-stat">
                     PROTEGIDA
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-300 leading-relaxed font-sans">
-                  Sua conta está operando em conformidade total com o protocolo Fair Play do THE ROLLING WARS.
+                <p className="text-[11px] text-neutral-300 leading-relaxed font-sans">
+                  Sua conta está operando em conformidade total com o protocolo Fair Play do Urbanozeiro.
                 </p>
               </div>
 
               {/* Gerenciamento de Jogadores Bloqueados */}
-              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-3">
+              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-3">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-xs font-black uppercase text-slate-300 tracking-wider font-mono-stat">
+                  <h4 className="text-xs font-black uppercase text-neutral-300 tracking-wider font-mono-stat">
                     JOGADORES BLOQUEADOS
                   </h4>
-                  <span className="text-xs font-bold text-slate-400 font-mono-stat">
+                  <span className="text-xs font-bold text-neutral-400 font-mono-stat">
                     {blockedPlayersCount} bloqueado(s)
                   </span>
                 </div>
-                <p className="text-[10px] text-slate-400 leading-relaxed font-mono-stat">
+                <p className="text-[10px] text-neutral-400 leading-relaxed font-mono-stat">
                   Jogadores bloqueados não podem interagir, desafiar ou enviar mensagens a você.
                 </p>
                 {onOpenSocialHubBlocked && (
@@ -995,7 +995,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                       onClose();
                       onOpenSocialHubBlocked();
                     }}
-                    className="w-full py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-slate-300 font-mono-stat uppercase tracking-wider transition-colors cursor-pointer"
+                    className="w-full py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-neutral-300 font-mono-stat uppercase tracking-wider transition-colors cursor-pointer"
                   >
                     Gerenciar Bloqueios no Hub Social
                   </button>
@@ -1003,11 +1003,11 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               </div>
 
               {/* Atalho para Moderação e Denúncias */}
-              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-2">
-                <h4 className="text-xs font-black uppercase text-slate-300 tracking-wider font-mono-stat">
+              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-2">
+                <h4 className="text-xs font-black uppercase text-neutral-300 tracking-wider font-mono-stat">
                   MODERAÇÃO & DENÚNCIAS
                 </h4>
-                <p className="text-[10px] text-slate-400 leading-relaxed font-mono-stat">
+                <p className="text-[10px] text-neutral-400 leading-relaxed font-mono-stat">
                   Presenciou conduta antidesportiva ou spoofing de GPS? Reporte para a equipe de moderação.
                 </p>
                 {onOpenReportModal && (
@@ -1033,23 +1033,23 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           {activeCategory === 'SOBRE' && (
             <div className="space-y-4 animate-in fade-in">
               <div className="p-5 rounded-2xl bg-gradient-to-br from-[#121c2a] to-[#0c1420] border border-yellow-500/30 text-center space-y-2">
-                <div className="w-12 h-12 rounded-2xl bg-yellow-400/20 border border-yellow-400/40 flex items-center justify-center mx-auto text-yellow-400 shadow-[0_0_15px_rgba(252,232,3,0.3)]">
+                <div className="w-12 h-12 rounded-2xl bg-yellow-400/20 border border-yellow-400/40 flex items-center justify-center mx-auto text-yellow-400 shadow-[0_0_15px_rgba(0,255,102,0.3)]">
                   <Flame className="w-6 h-6 stroke-[2.2]" />
                 </div>
                 <h3 className="text-base font-black text-white font-display uppercase tracking-tight">
-                  THE ROLLING WARS
+                  URBANOZEIRO
                 </h3>
                 <p className="text-xs text-yellow-400 font-mono-stat font-bold">
                   Versão {settings.about.appVersion}
                 </p>
-                <p className="text-[10px] text-slate-400 font-mono-stat">
+                <p className="text-[10px] text-neutral-400 font-mono-stat">
                   Build {settings.about.buildNumber} • {settings.about.engineVersion}
                 </p>
               </div>
 
               {/* Links e Políticas */}
-              <div className="p-4 rounded-2xl bg-[#0a0a0a] border border-white/10 space-y-2">
-                <h4 className="text-xs font-black uppercase text-slate-300 tracking-wider font-mono-stat mb-2">
+              <div className="p-4 rounded-2xl bg-[#0c131c] border border-white/10 space-y-2">
+                <h4 className="text-xs font-black uppercase text-neutral-300 tracking-wider font-mono-stat mb-2">
                   INFORMAÇÕES LEGAIS & SUPORTE
                 </h4>
 
@@ -1074,7 +1074,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     e.preventDefault();
                     triggerFeedback('Termos de Uso exibidos com sucesso.');
                   }}
-                  className="flex items-center justify-between p-3 rounded-xl bg-black/40 hover:bg-black/60 border border-white/5 text-xs text-slate-300 font-mono-stat transition-colors cursor-pointer"
+                  className="flex items-center justify-between p-3 rounded-xl bg-black/40 hover:bg-black/60 border border-white/5 text-xs text-neutral-300 font-mono-stat transition-colors cursor-pointer"
                 >
                   <span>Termos de Uso do Serviço</span>
                   <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
@@ -1086,14 +1086,14 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     e.preventDefault();
                     triggerFeedback('Política de Privacidade exibida com sucesso.');
                   }}
-                  className="flex items-center justify-between p-3 rounded-xl bg-black/40 hover:bg-black/60 border border-white/5 text-xs text-slate-300 font-mono-stat transition-colors cursor-pointer"
+                  className="flex items-center justify-between p-3 rounded-xl bg-black/40 hover:bg-black/60 border border-white/5 text-xs text-neutral-300 font-mono-stat transition-colors cursor-pointer"
                 >
                   <span>Política de Privacidade e Dados</span>
                   <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
                 </a>
 
                 <div className="p-3 rounded-xl bg-black/40 border border-white/5 flex items-center justify-between text-xs font-mono-stat">
-                  <span className="text-slate-400">Canal de Suporte</span>
+                  <span className="text-neutral-400">Canal de Suporte</span>
                   <span className="text-yellow-400 font-bold">{settings.about.supportEmail}</span>
                 </div>
               </div>
@@ -1107,7 +1107,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
         </div>
 
         {/* FOOTER */}
-        <div className="p-3 bg-[#000000] border-t border-white/10 flex items-center justify-between text-[10px] font-mono-stat text-slate-400 shrink-0">
+        <div className="p-3 bg-[#080d14] border-t border-white/10 flex items-center justify-between text-[10px] font-mono-stat text-neutral-400 shrink-0">
           <span className="flex items-center gap-1">
             <Radio className="w-3 h-3 text-yellow-400" />
             Preferências Salvas Automaticamente
@@ -1116,7 +1116,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             type="button"
             id="btn-close-settings-footer"
             onClick={onClose}
-            className="px-4 py-2 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-black font-black uppercase tracking-wider transition-colors cursor-pointer shadow-[0_0_10px_rgba(252,232,3,0.4)]"
+            className="px-4 py-2 rounded-xl bg-yellow-400 hover:bg-emerald-300 text-black font-black uppercase tracking-wider transition-colors cursor-pointer shadow-[0_0_10px_rgba(0,255,102,0.4)]"
           >
             Concluir
           </button>

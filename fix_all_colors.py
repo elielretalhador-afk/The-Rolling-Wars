@@ -1,29 +1,39 @@
 import os
 import re
 
-def replace_in_file(filepath):
-    try:
-        with open(filepath, 'r') as f:
-            content = f.read()
-    except:
-        return
+def replace_colors_in_file(filepath):
+    if not os.path.exists(filepath): return
+    with open(filepath, 'r') as f:
+        content = f.read()
+
+    # Base replacements to transform dark blues to pure black and gold accents
+    replacements = {
+        'bg-[#080B0E]': 'bg-[#000000]',
+        'bg-[#111822]': 'bg-[#0a0a0a]',
+        'bg-[#1A2332]': 'bg-[#121212]',
+        'border-slate-800': 'border-neutral-900',
+        'border-slate-700': 'border-neutral-800',
+        'text-slate-400': 'text-neutral-400',
+        'text-slate-300': 'text-neutral-300',
+        'text-emerald-500': 'text-yellow-500',
+        'text-emerald-400': 'text-yellow-400',
+        'bg-emerald-500': 'bg-yellow-500',
+        'bg-emerald-400': 'bg-yellow-400',
+        'border-emerald-500': 'border-yellow-500',
+        'border-emerald-400': 'border-yellow-400',
+        'from-emerald-500': 'from-yellow-500',
+        'to-emerald-400': 'to-yellow-400',
+        'shadow-emerald-500': 'shadow-yellow-500',
+    }
     
-    # Replace blueish backgrounds
-    old_content = content
-    content = re.sub(r'bg-\[#080B0E\]', 'bg-[#000000]', content)
-    content = re.sub(r'bg-\[#05070a\]', 'bg-[#000000]', content)
-    content = re.sub(r'bg-\[#111822\]', 'bg-[#050505]', content)
-    content = re.sub(r'bg-\[#0c131c\]', 'bg-[#050505]', content)
-    content = re.sub(r'bg-slate-900', 'bg-[#0a0a0a]', content)
-    content = re.sub(r'bg-\[#0d141d\]', 'bg-[#050505]', content)
-    content = re.sub(r'bg-\[#0a0f15\]', 'bg-[#050505]', content)
-    
-    if content != old_content:
-        with open(filepath, 'w') as f:
-            f.write(content)
-        print(f"Updated {filepath}")
+    for k, v in replacements.items():
+        content = content.replace(k, v)
+
+    with open(filepath, 'w') as f:
+        f.write(content)
 
 for root, _, files in os.walk('src'):
     for file in files:
-        if file.endswith(('.tsx', '.ts', '.css')):
-            replace_in_file(os.path.join(root, file))
+        if file.endswith(('.tsx', '.ts')):
+            replace_colors_in_file(os.path.join(root, file))
+

@@ -126,7 +126,7 @@ export const DirectChallengesHub: React.FC<DirectChallengesHubProps> = ({
         );
       case 'confirmado':
         return (
-          <span className="px-2 py-0.5 rounded-full bg-yellow-500/20 border border-yellow-400/50 text-yellow-300 text-[9px] font-black uppercase font-mono-stat">
+          <span className="px-2 py-0.5 rounded-full bg-yellow-500/20 border border-yellow-400/50 text-emerald-300 text-[9px] font-black uppercase font-mono-stat">
             🟢 CONFIRMADO
           </span>
         );
@@ -138,7 +138,7 @@ export const DirectChallengesHub: React.FC<DirectChallengesHubProps> = ({
         );
       case 'cancelado':
         return (
-          <span className="px-2 py-0.5 rounded-full bg-slate-700/40 border border-slate-600/50 text-slate-300 text-[9px] font-black uppercase font-mono-stat">
+          <span className="px-2 py-0.5 rounded-full bg-slate-700/40 border border-slate-600/50 text-neutral-300 text-[9px] font-black uppercase font-mono-stat">
             ⚪ CANCELADO
           </span>
         );
@@ -163,8 +163,8 @@ export const DirectChallengesHub: React.FC<DirectChallengesHubProps> = ({
           onClick={() => setActiveSubTab('recebidos')}
           className={`py-2 px-2 rounded-xl text-xs font-bold uppercase font-mono-stat tracking-wider transition-all relative flex items-center justify-center gap-1.5 cursor-pointer ${
             activeSubTab === 'recebidos'
-              ? 'bg-yellow-400 text-black font-black shadow-[0_0_12px_rgba(252,232,3,0.4)]'
-              : 'text-slate-400 hover:text-white'
+              ? 'bg-yellow-400 text-black font-black shadow-[0_0_12px_rgba(0,255,102,0.4)]'
+              : 'text-neutral-400 hover:text-white'
           }`}
         >
           <span>Recebidos</span>
@@ -185,8 +185,8 @@ export const DirectChallengesHub: React.FC<DirectChallengesHubProps> = ({
           onClick={() => setActiveSubTab('enviados')}
           className={`py-2 px-2 rounded-xl text-xs font-bold uppercase font-mono-stat tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
             activeSubTab === 'enviados'
-              ? 'bg-yellow-400 text-black font-black shadow-[0_0_12px_rgba(252,232,3,0.4)]'
-              : 'text-slate-400 hover:text-white'
+              ? 'bg-yellow-400 text-black font-black shadow-[0_0_12px_rgba(0,255,102,0.4)]'
+              : 'text-neutral-400 hover:text-white'
           }`}
         >
           <span>Enviados</span>
@@ -201,8 +201,8 @@ export const DirectChallengesHub: React.FC<DirectChallengesHubProps> = ({
           onClick={() => setActiveSubTab('confirmados')}
           className={`py-2 px-2 rounded-xl text-xs font-bold uppercase font-mono-stat tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
             activeSubTab === 'confirmados'
-              ? 'bg-yellow-400 text-black font-black shadow-[0_0_12px_rgba(252,232,3,0.4)]'
-              : 'text-slate-400 hover:text-white'
+              ? 'bg-yellow-400 text-black font-black shadow-[0_0_12px_rgba(0,255,102,0.4)]'
+              : 'text-neutral-400 hover:text-white'
           }`}
         >
           <span>Confirmados</span>
@@ -217,8 +217,8 @@ export const DirectChallengesHub: React.FC<DirectChallengesHubProps> = ({
           onClick={() => setActiveSubTab('historico')}
           className={`py-2 px-2 rounded-xl text-xs font-bold uppercase font-mono-stat tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
             activeSubTab === 'historico'
-              ? 'bg-yellow-400 text-black font-black shadow-[0_0_12px_rgba(252,232,3,0.4)]'
-              : 'text-slate-400 hover:text-white'
+              ? 'bg-yellow-400 text-black font-black shadow-[0_0_12px_rgba(0,255,102,0.4)]'
+              : 'text-neutral-400 hover:text-white'
           }`}
         >
           <span>Histórico</span>
@@ -239,7 +239,7 @@ export const DirectChallengesHub: React.FC<DirectChallengesHubProps> = ({
               <h4 className="text-sm font-bold text-white uppercase font-display">
                 NENHUM DESAFIO NESTA ABA
               </h4>
-              <p className="text-xs text-slate-400 font-mono-stat mt-1 max-w-xs mx-auto">
+              <p className="text-xs text-neutral-400 font-mono-stat mt-1 max-w-xs mx-auto">
                 {activeSubTab === 'recebidos'
                   ? 'Você não tem propostas de desafio pendentes de resposta.'
                   : activeSubTab === 'enviados'
@@ -276,9 +276,9 @@ export const DirectChallengesHub: React.FC<DirectChallengesHubProps> = ({
                 key={item.id}
                 id={`direct-challenge-card-${item.id}`}
                 onClick={() => onSelectChallenge(item)}
-                className={`p-4 rounded-2xl bg-[#0a0a0a] border-2 transition-all cursor-pointer hover:border-yellow-500/50 hover:shadow-lg flex flex-col justify-between gap-3 ${
+                className={`p-4 rounded-2xl bg-[#0d141e] border-2 transition-all cursor-pointer hover:border-yellow-500/50 hover:shadow-lg flex flex-col justify-between gap-3 ${
                   needsMyResponse
-                    ? 'border-cyan-400/50 bg-gradient-to-r from-[#0c1622] to-[#0a0a0a] shadow-[0_0_15px_rgba(6,182,212,0.15)]'
+                    ? 'border-cyan-400/50 bg-gradient-to-r from-[#0c1622] to-[#0d141e] shadow-[0_0_15px_rgba(6,182,212,0.15)]'
                     : item.status === 'confirmado'
                     ? 'border-yellow-500/40'
                     : 'border-white/10'
@@ -322,7 +322,7 @@ export const DirectChallengesHub: React.FC<DirectChallengesHubProps> = ({
                         >
                           🎯 {mode.toUpperCase()}
                         </span>
-                        <span className="text-xs font-bold text-slate-400 uppercase font-mono-stat">
+                        <span className="text-xs font-bold text-neutral-400 uppercase font-mono-stat">
                           {isChallenger ? 'Desafio enviado para' : 'Desafio recebido de'}
                         </span>
                       </div>
@@ -333,7 +333,7 @@ export const DirectChallengesHub: React.FC<DirectChallengesHubProps> = ({
                           : challenger.nickname}
                       </h3>
 
-                      <p className="text-[11px] text-slate-400 font-mono-stat truncate">
+                      <p className="text-[11px] text-neutral-400 font-mono-stat truncate">
                         {isChallenger
                           ? `${opponents.length} adversário(s) no confronto`
                           : challenger.crew || 'Patinador Urbano'}
@@ -359,7 +359,7 @@ export const DirectChallengesHub: React.FC<DirectChallengesHubProps> = ({
                       <span className="font-bold text-white truncate block">
                         {item.routeName}
                       </span>
-                      <span className="text-[10px] text-slate-400">
+                      <span className="text-[10px] text-neutral-400">
                         {item.challengeTypeLabel} • {item.routeDistanceKm.toFixed(1)} km
                       </span>
                     </div>
@@ -369,7 +369,7 @@ export const DirectChallengesHub: React.FC<DirectChallengesHubProps> = ({
                     <span className="text-amber-400 font-bold block">
                       📅 {item.proposedDate}
                     </span>
-                    <span className="text-slate-300 text-[11px]">
+                    <span className="text-neutral-300 text-[11px]">
                       ⏰ {item.proposedTime}
                     </span>
                   </div>
@@ -377,7 +377,7 @@ export const DirectChallengesHub: React.FC<DirectChallengesHubProps> = ({
 
                 {/* Card Bottom: Action CTA */}
                 <div className="flex items-center justify-between pt-1 text-xs font-mono-stat">
-                  <span className="text-slate-400 text-[11px]">
+                  <span className="text-neutral-400 text-[11px]">
                     {item.status === 'confirmado'
                       ? '⚡ Desafio agendado e pronto'
                       : needsMyResponse
@@ -393,7 +393,7 @@ export const DirectChallengesHub: React.FC<DirectChallengesHubProps> = ({
                           e.stopPropagation();
                           onStartLiveChallenge(item.id);
                         }}
-                        className="px-2.5 py-1 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-black text-[10px] font-black uppercase font-mono-stat shadow-[0_0_10px_rgba(252,232,3,0.4)] flex items-center gap-1 cursor-pointer transition-all"
+                        className="px-2.5 py-1 rounded-lg bg-yellow-400 hover:bg-emerald-300 text-black text-[10px] font-black uppercase font-mono-stat shadow-[0_0_10px_rgba(0,255,102,0.4)] flex items-center gap-1 cursor-pointer transition-all"
                       >
                         <Swords className="w-3 h-3 stroke-[2.5]" />
                         <span>DISPUTA AO VIVO</span>

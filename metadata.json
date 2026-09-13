@@ -1,6 +1,10 @@
 {
   "name": "The Rolling Wars",
-  "description": "Aplicativo de patins baseado em localização e gamificação. Patine. Conquiste. Desafie.",
-  "requestFramePermissions": ["geolocation"],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "description": "Aplicativo de patins baseado em localiza\u00e7\u00e3o e gamifica\u00e7\u00e3o. Patine. Conquiste. Desafie.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

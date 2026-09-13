@@ -10,7 +10,7 @@ import {
 
 /**
  * =========================================================================
- * ESQUELETO DE SEGURANÇA, MODERAÇÃO E INTEGRIDADE DO JOGO (THE ROLLING WARS)
+ * ESQUELETO DE SEGURANÇA, MODERAÇÃO E INTEGRIDADE DO JOGO (URBANOZEIRO)
  * =========================================================================
  * 
  * DIRETRIZES FUNDAMENTAIS DE SEGURANÇA & FAIR PLAY:
@@ -303,7 +303,7 @@ export function getSeverityBadgeStyle(severity: SecuritySeverity): {
         label: 'BAIXO',
         bg: 'bg-blue-500/20',
         text: 'text-blue-400',
-        border: 'border-neutral-700/50',
+        border: 'border-blue-500/50',
       };
     case 'INFO':
     default:

@@ -22,9 +22,6 @@ export interface ZoneController {
   level: number;
   clan?: string;
   crew?: string;
-  clanId?: string;
-  clanName?: string;
-  clanIcon?: string;
 }
 
 export interface ZoneRecord {
@@ -107,7 +104,6 @@ export interface Zone {
   contested?: boolean;
   lastConquered?: string;
   conqueredAtUnix?: number;
-  clanCooldowns?: Record<string, number>;
 }
 
 export interface PublicProfile {
@@ -161,7 +157,6 @@ export interface UserProfile {
   activeTitleId?: string;
   progression?: PlayerProgression;
   equippedCosmetics?: EquippedCosmetics;
-  profileCosmetics?: ProfileCosmetics;
   totalXP?: number;
   unlockedAchievementsCount?: number;
   unlockedMedalsCount?: number;
@@ -209,7 +204,7 @@ export interface SkateRoute {
 }
 
 // ==========================================
-// SISTEMA DE MISSÕES (THE ROLLING WARS)
+// SISTEMA DE MISSÕES (URBANOZEIRO)
 // ==========================================
 export type MissionType =
   | 'DISTANCE'
@@ -684,12 +679,6 @@ export interface ConquestResultModalData {
   xpEarned: number; // e.g. 320
   player: UserProfile;
   trackPoints: ActivityTrackPoint[];
-  isPending?: boolean;
-  clanWar?: {
-    points: number;
-    result: string;
-    clanName: string;
-  };
 }
 
 export interface ZoneConquestProgress {
@@ -785,12 +774,7 @@ export type AppNotificationType =
   | 'evento'
   | 'patrocinador'
   | 'mensagem'
-  | 'social'
-  | 'friend_request'
-  | 'friend_accept'
-  | 'new_record'
-  | 'record_beaten'
-  | 'social_activity';
+  | 'social';
 
 export interface AppNotification {
   id: string;
@@ -801,7 +785,7 @@ export interface AppNotification {
   timeAgo: string;
   timestamp?: string; // ISO string
   isRead: boolean;
-  actionType?: 'open_clan_profile' | 'open_zone' | 'open_challenge' | 'open_ranking' | 'open_routes' | 'open_profile' | 'open_direct_challenge' | 'open_event' | 'open_progression' | 'open_social_hub';
+  actionType?: 'open_zone' | 'open_challenge' | 'open_ranking' | 'open_routes' | 'open_profile' | 'open_direct_challenge' | 'open_event' | 'open_progression' | 'open_social_hub';
   actionPayload?: {
     zoneId?: string;
     challengeId?: string;
@@ -818,7 +802,7 @@ export interface AppNotification {
 }
 
 // ==========================================
-// CONQUISTAS, MEDALHAS E TÍTULOS (THE ROLLING WARS)
+// CONQUISTAS, MEDALHAS E TÍTULOS (URBANOZEIRO)
 // ==========================================
 export type AchievementCategory =
   | 'ATIVIDADE'
@@ -940,7 +924,7 @@ export interface PlayerTitle {
 }
 
 // ==========================================
-// SISTEMA DE CLÃS (THE ROLLING WARS)
+// SISTEMA DE CLÃS (URBANOZEIRO)
 // ==========================================
 export type ClanRole = 'lider' | 'vice_lider' | 'veterano' | 'membro' | 'recruta';
 
@@ -983,49 +967,26 @@ export interface ClanControlledZone {
   xpPerHour: number;
 }
 
-
-export type ClanMissionType = 'EXPANSION' | 'WAR' | 'DOMINANCE';
-
-export interface ClanMission {
-  id: string;
-  type: ClanMissionType;
-  title: string;
-  description: string;
-  target: number;
-  progress: number;
-  rewardXp: number;
-  status: 'active' | 'completed' | 'expired';
-  createdAt: number;
-  expiresAt: number;
-}
-
 export interface Clan {
-  missions?: ClanMission[];
   id: string;
   authId?: string;
   name: string;
-  tag?: string; // Ex: "SR", "NR", "SW"
-  description?: string;
-  symbol?: string; // Emoji or glyph, ex: "🐺", "⚡", "🦅"
-  icon?: string;
-  color?: string; // Hex color code, ex: "#00FF66"
-  level?: number;
-  xp?: number;
-  nextLevelXp?: number;
-  membersCount?: number;
-  memberCount?: number;
-  memberIds?: string[];
-  maxMembers?: number;
-  controlledZonesCount?: number;
-  territoryScore?: number;
-  zonesControlledCount?: number;
-  zonesContestedCount?: number;
-  rankPosition?: number;
-  totalKm?: number;
+  tag: string; // Ex: "SR", "NR", "SW"
+  description: string;
+  symbol: string; // Emoji or glyph, ex: "🐺", "⚡", "🦅"
+  color: string; // Hex color code, ex: "#00FF66"
+  level: number;
+  xp: number;
+  nextLevelXp: number;
+  membersCount: number;
+  maxMembers: number;
+  controlledZonesCount: number;
+  rankPosition: number;
+  totalKm: number;
   leaderId: string;
-  leaderName?: string;
-  createdAt: any;
-  members?: ClanMember[];
+  leaderName: string;
+  createdAt: string;
+  members: ClanMember[];
   controlledZones?: ClanControlledZone[];
   // Future extensions
   isRecruiting?: boolean;
@@ -1034,10 +995,10 @@ export interface Clan {
 
 export interface ClanCreationInput {
   name: string;
-  tag?: string;
-  description?: string;
-  symbol?: string;
-  color?: string;
+  tag: string;
+  description: string;
+  symbol: string;
+  color: string;
 }
 
 // ==========================================
@@ -1199,7 +1160,7 @@ export interface DirectChallenge {
 }
 
 // ==========================================
-// ESTRUTURA DE EVENTOS E TORNEIOS (THE ROLLING WARS)
+// ESTRUTURA DE EVENTOS E TORNEIOS (URBANOZEIRO)
 // ==========================================
 
 export type EventType =
@@ -1380,7 +1341,7 @@ export interface UrbanozeiroEvent {
 export type Event = UrbanozeiroEvent;
 
 // ==========================================
-// SISTEMA DE PROGRESSÃO DO JOGADOR (THE ROLLING WARS)
+// SISTEMA DE PROGRESSÃO DO JOGADOR (URBANOZEIRO)
 // ==========================================
 
 export type RewardType =
@@ -1676,7 +1637,7 @@ export interface PlayerProgression {
 }
 
 // ==========================================
-// SISTEMA SOCIAL DE JOGADORES (THE ROLLING WARS)
+// SISTEMA SOCIAL DE JOGADORES (URBANOZEIRO)
 // ==========================================
 
 export type PlayerRelationshipType = 'FOLLOW' | 'FRIEND' | 'BLOCK' | 'REQUEST';
@@ -1782,7 +1743,7 @@ export interface PlayerPublicActivity {
 }
 
 // ==========================================
-// ECONOMIA VIRTUAL INTERNA DO JOGO (THE ROLLING WARS VIRTUAL ECONOMY)
+// ECONOMIA VIRTUAL INTERNA DO JOGO (URBANOZEIRO VIRTUAL ECONOMY)
 // ==========================================
 
 export type CurrencyTransactionType =
@@ -1982,7 +1943,7 @@ export interface Activity {
 }
 
 // ==========================================
-// SISTEMA DE ESTATÍSTICAS DO JOGADOR (THE ROLLING WARS)
+// SISTEMA DE ESTATÍSTICAS DO JOGADOR (URBANOZEIRO)
 // ==========================================
 export type StatPeriod = 'TOTAL' | 'HOJE' | 'SEMANA' | 'MES' | 'TEMPORADA';
 
@@ -2063,7 +2024,7 @@ export interface PlayerFullStatistics {
 }
 
 // ==========================================
-// SISTEMA DE BUSCA E DESCOBERTA (THE ROLLING WARS)
+// SISTEMA DE BUSCA E DESCOBERTA (URBANOZEIRO)
 // ==========================================
 export type SearchFilterType = 'TODOS' | 'JOGADORES' | 'ZONAS' | 'ROTAS';
 
@@ -2149,7 +2110,7 @@ export interface SearchResultsAggregated {
 }
 
 // ==========================================
-// SISTEMA DE CONFIGURAÇÕES DO JOGADOR (THE ROLLING WARS)
+// SISTEMA DE CONFIGURAÇÕES DO JOGADOR (URBANOZEIRO)
 // ==========================================
 export type SettingsCategory =
   | 'CONTA'
@@ -2306,7 +2267,6 @@ export interface SegmentAttempt {
   startPointIndex: number;
   trackPoints: ActivityTrackPoint[];
   distanceCovered: number;
-  durationMs?: number;
 }
 
 export interface SegmentOperation {
@@ -2324,74 +2284,4 @@ export interface SegmentOperation {
   trackPoints: ActivityTrackPoint[];
   retryCount: number;
   syncStatus: 'pending' | 'error' | 'synced';
-  validationStatus?: 'pending_validation' | 'validated' | 'rejected';
-  validation?: any;
-}
-
-export type ChestStatus = 'locked' | 'available' | 'opened';
-export type ChestType = 'bronze' | 'silver' | 'gold' | 'epic' | 'legendary';
-
-export interface ChestReward {
-  type: 'currency' | 'seasonXp' | 'clanXp' | 'cosmeticUnlock' | 'chest';
-  amount?: number;
-  cosmeticId?: string;
-  name?: string;
-}
-
-export interface Chest {
-  id: string;
-  userId: string;
-  type: ChestType;
-  source: string;
-  sourceId: string;
-  seasonId?: string;
-  status: ChestStatus;
-  createdAt: string;
-  openedAt?: string;
-  rewardTransactionId?: string;
-  rewards?: ChestReward[];
-}
-
-
-export type CosmeticCategory = 'avatar_frame' | 'avatar_effect' | 'profile_badge' | 'trail_cosmetic' | 'clan_emblem' | 'title';
-export type CosmeticRarity = 'common' | 'rare' | 'epic' | 'legendary';
-
-export interface ShopItem {
-  id: string;
-  name: string;
-  description: string;
-  category: CosmeticCategory;
-  price: number;
-  rarity: CosmeticRarity;
-  seasonId?: string;
-  isActive: boolean;
-  visualKey: string;
-}
-
-export interface InventoryItem {
-  itemId: string;
-  acquiredAt: string;
-  source: string;
-  seasonId?: string;
-  purchaseId?: string;
-}
-
-export interface OfficialTitle {
-  id: string;
-  name: string;
-  description: string;
-  rarity: CosmeticRarity;
-  seasonId?: string;
-  requirementType: string;
-  requirementValue: number;
-  isActive: boolean;
-}
-
-export interface ProfileCosmetics {
-  avatar_frame?: string;
-  avatar_effect?: string;
-  profile_badge?: string;
-  trail_cosmetic?: string;
-  clan_emblem?: string;
-  title?: string;
 }
