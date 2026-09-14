@@ -46,7 +46,7 @@ jobs:
         run: npm install
         
       - name: Build web
-        run: npm run build
+        run: sed -i 's/logo-rw-dark.png/Icone-oficial.png/g' scripts/generate_icons.cjs && npm run build
         
       - name: Add Android Platform
         run: |
@@ -54,7 +54,7 @@ jobs:
           # Ensure a completely fresh Capacitor environment
           rm -rf android
           npm install
-          npm run build
+          sed -i 's/logo-rw-dark.png/Icone-oficial.png/g' scripts/generate_icons.cjs && npm run build
           npx cap add android || true
           npx cap sync android
         
@@ -72,8 +72,8 @@ jobs:
           cat << 'INNER_EOF' > android/app/src/main/res/values/strings.xml
           <?xml version='1.0' encoding='utf-8'?>
           <resources>
-              <string name="app_name">Urbanozeiro</string>
-              <string name="title_activity_main">Urbanozeiro</string>
+              <string name="app_name">THE ROLLING WARS</string>
+              <string name="title_activity_main">THE ROLLING WARS</string>
               <string name="package_name">com.urbanozeiro.app</string>
               <string name="custom_url_scheme">com.urbanozeiro.app</string>
               <string name="default_web_client_id">506646024333-7hkbs8qpejlt3l7rj3ng318fv7ukqr1l.apps.googleusercontent.com</string>
