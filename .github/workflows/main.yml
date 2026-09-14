@@ -69,6 +69,7 @@ jobs:
               
       - name: Fix Android Files Directly
         run: |
+          node scripts/generate_icons.cjs
           cat << 'INNER_EOF' > android/app/src/main/res/values/strings.xml
           <?xml version='1.0' encoding='utf-8'?>
           <resources>

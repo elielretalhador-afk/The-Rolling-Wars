@@ -74,6 +74,8 @@ function generateIconsForRes(resDir) {
   }
 
   // Remove default vector foreground in drawable-v24 so adaptive icons use the actual raster logo
+  const drawableBg = path.join(resDir, "drawable", "ic_launcher_background.xml");
+  if (fs.existsSync(drawableBg)) { try { fs.unlinkSync(drawableBg); } catch (_) {} }
   const drawableV24 = path.join(resDir, 'drawable-v24', 'ic_launcher_foreground.xml');
   if (fs.existsSync(drawableV24)) {
     try {
