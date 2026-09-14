@@ -70,6 +70,8 @@ jobs:
       - name: Fix Android Files Directly
         run: |
           node scripts/generate_icons.cjs
+          rm -f android/app/src/main/res/drawable/ic_launcher_background.xml || true
+          rm -f android/app/src/main/res/drawable-v24/ic_launcher_foreground.xml || true
           cat << 'INNER_EOF' > android/app/src/main/res/values/strings.xml
           <?xml version='1.0' encoding='utf-8'?>
           <resources>
