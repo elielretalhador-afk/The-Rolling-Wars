@@ -1,15 +1,17 @@
 import React from 'react';
 import { Bell, Flame, Activity, Users, Shield, Zap, Search, Settings } from 'lucide-react';
-import { UserProfile, VirtualWallet } from '../types';
+import { UserProfile, VirtualWallet, UserEnergy } from '../types';
 
 interface HeaderProps {
   user: UserProfile;
   activeTab: string;
   unreadNotificationsCount?: number;
   wallet?: VirtualWallet;
+  energy?: UserEnergy;
   onOpenNotifications?: () => void;
   onOpenSocial?: () => void;
   onOpenWallet?: () => void;
+  onOpenEnergy?: () => void;
   onOpenActivityFeed?: () => void;
   onOpenProfile?: () => void;
   onOpenSearch?: () => void;
@@ -20,9 +22,11 @@ export const Header: React.FC<HeaderProps> = ({
   user,
   unreadNotificationsCount = 0,
   wallet,
+  energy,
   onOpenNotifications,
   onOpenSocial,
   onOpenWallet,
+  onOpenEnergy,
   onOpenActivityFeed,
   onOpenProfile,
   onOpenSearch,
@@ -87,6 +91,23 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* RIGHT: Resources & Quick Game Controls */}
       <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        {/* Indicador de Energia do Jogador (100% = 90 min) */}
+        {onOpenEnergy && (
+          <button
+            type="button"
+            id="btn-open-energy-header"
+            onClick={onOpenEnergy}
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-[#111822] hover:bg-[#182330] border border-yellow-400/40 hover:border-yellow-400 text-yellow-400 shadow-[0_0_10px_rgba(252,232,3,0.15)] active:scale-95 transition-all cursor-pointer select-none"
+            title="Energia do Patinador (Tempo de Atividade)"
+            aria-label="Abrir Painel de Energia"
+          >
+            <Zap className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
+            <span className="text-xs font-black font-mono-stat tracking-tight text-white">
+              {Math.round(energy?.current ?? 100)}%
+            </span>
+          </button>
+        )}
+
         {/* Busca & Descoberta Global */}
         {onOpenSearch && (
           <button

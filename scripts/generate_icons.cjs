@@ -3,7 +3,7 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 const rootDir = path.resolve(__dirname, '..');
-const logoPath = path.join(rootDir, 'public', 'Icone-oficial.png');
+const logoPath = path.join(rootDir, 'public', 'logo-rw-dark.png');
 
 if (!fs.existsSync(logoPath)) {
   console.error('Logo file not found:', logoPath);
@@ -74,8 +74,6 @@ function generateIconsForRes(resDir) {
   }
 
   // Remove default vector foreground in drawable-v24 so adaptive icons use the actual raster logo
-  const drawableBg = path.join(resDir, "drawable", "ic_launcher_background.xml");
-  if (fs.existsSync(drawableBg)) { try { fs.unlinkSync(drawableBg); } catch (_) {} }
   const drawableV24 = path.join(resDir, 'drawable-v24', 'ic_launcher_foreground.xml');
   if (fs.existsSync(drawableV24)) {
     try {

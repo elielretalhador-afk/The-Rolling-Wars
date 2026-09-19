@@ -976,3 +976,300 @@ export const onClanInviteCreated = functions.firestore.onDocumentCreated(
     }
   }
 );
+
+// ======================================================================
+// SISTEMA DE ENERGIA 1.0 (SERVER-AUTHORITATIVE) - THE ROLLING WARS
+// ======================================================================
+
+const MAX_ENERGY = 100;
+const FULL_DURATION_SECONDS = 5400; // 90 minutos = 5400 segundos
+const MAX_DAILY_REWARDED_ADS = 5;
+const REWARDED_AD_ENERGY_BOOST = 20;
+
+function getServerDailyPeriodKey(): string {
+    return new Date().toISOString().split('T')[0]; // UTC 'YYYY-MM-DD'
+}
+
+/**
+ * Consulta autoritativa da Energia do jogador, aplicando rollover diário automático se mudou o dia.
+ */
+export const getUserEnergy = functions.https.onCall(async (request: any) => {
+    const context = { auth: request.auth };
+    if (!context.auth) throw new functions.https.HttpsError('unauthenticated', 'User must be authenticated.');
+    const userId = context.auth.uid;
+    const today = getServerDailyPeriodKey();
+
+    try {
+        const energyRef = db.collection('users').doc(userId).collection('energy').doc('main');
+        const result = await db.runTransaction(async (transaction: any) => {
+            const snap = await transaction.get(energyRef);
+            if (!snap.exists) {
+                const initialEnergy = {
+                    current: MAX_ENERGY,
+                    max: MAX_ENERGY,
+                    dailyFreeRechargeUsed: false,
+                    dailyRewardedAdsUsed: 0,
+                    dailyPeriodKey: today,
+                    version: 1,
+                    lastUpdatedServerTime: admin.firestore.FieldValue.serverTimestamp()
+                };
+                transaction.set(energyRef, initialEnergy);
+                return initialEnergy;
+            }
+
+            const data = snap.data() || {};
+            // Rollover diário autoritativo: ao mudar o dia, Energy reseta para 100% e anúncios resetam para 0/5
+            if (data.dailyPeriodKey !== today) {
+                const previousBalance = typeof data.current === 'number' ? data.current : 0;
+                const updatedData = {
+                    ...data,
+                    current: MAX_ENERGY,
+                    max: MAX_ENERGY,
+                    dailyFreeRechargeUsed: false,
+                    dailyRewardedAdsUsed: 0,
+                    dailyPeriodKey: today,
+                    version: (data.version || 1) + 1,
+                    lastUpdatedServerTime: admin.firestore.FieldValue.serverTimestamp()
+                };
+                transaction.set(energyRef, updatedData);
+
+                const txId = uuidv4();
+                const txRef = db.collection('users').doc(userId).collection('energyTransactions').doc(txId);
+                transaction.set(txRef, {
+                    id: txId,
+                    playerId: userId,
+                    type: 'DAILY_FREE_RECHARGE',
+                    amount: Math.max(0, MAX_ENERGY - previousBalance),
+                    balanceAfter: MAX_ENERGY,
+                    sourceId: `daily_reset_${today}`,
+                    description: 'Reset Automático Diário (100% / 90 min)',
+                    createdAt: admin.firestore.FieldValue.serverTimestamp()
+                });
+
+                return updatedData;
+            }
+
+            return data;
+        });
+
+        return { success: true, energy: result };
+    } catch (e: any) {
+        console.error('Error in getUserEnergy:', e);
+        throw new functions.https.HttpsError('internal', e.message || 'Erro ao buscar energia.');
+    }
+});
+
+/**
+ * Recarga diária gratuita (100%).
+ * Mantida por compatibilidade e idempotência: o próprio rollover diário concede os 100%.
+ */
+export const claimDailyFreeRecharge = functions.https.onCall(async (request: any) => {
+    const context = { auth: request.auth };
+    if (!context.auth) throw new functions.https.HttpsError('unauthenticated', 'User must be authenticated.');
+    const userId = context.auth.uid;
+    const today = getServerDailyPeriodKey();
+
+    try {
+        const energyRef = db.collection('users').doc(userId).collection('energy').doc('main');
+        const result = await db.runTransaction(async (transaction: any) => {
+            const snap = await transaction.get(energyRef);
+            let currentEnergy = snap.exists ? snap.data() : {
+                current: MAX_ENERGY,
+                max: MAX_ENERGY,
+                dailyFreeRechargeUsed: false,
+                dailyRewardedAdsUsed: 0,
+                dailyPeriodKey: today,
+                version: 1
+            };
+
+            const updatedEnergy = {
+                ...currentEnergy,
+                current: MAX_ENERGY,
+                max: MAX_ENERGY,
+                dailyFreeRechargeUsed: true,
+                dailyPeriodKey: today,
+                version: (currentEnergy.version || 1) + 1,
+                lastUpdatedServerTime: admin.firestore.FieldValue.serverTimestamp()
+            };
+
+            transaction.set(energyRef, updatedEnergy);
+            return updatedEnergy;
+        });
+
+        return { success: true, energy: result };
+    } catch (e: any) {
+        console.error('Error in claimDailyFreeRecharge:', e);
+        throw new functions.https.HttpsError('internal', e.message || 'Erro ao sincronizar recarga diária.');
+    }
+});
+
+/**
+ * Concessão de energia via Rewarded Ads (+20% / 18 min).
+ * Limite estrito de 5 concessões por período diário. Teto estrito de 100%.
+ * Não desperdiça anúncio se já estiver em 100%.
+ */
+export const claimRewardedAdEnergy = functions.https.onCall(async (request: any) => {
+    const context = { auth: request.auth };
+    if (!context.auth) throw new functions.https.HttpsError('unauthenticated', 'User must be authenticated.');
+    const userId = context.auth.uid;
+    const today = getServerDailyPeriodKey();
+
+    try {
+        const energyRef = db.collection('users').doc(userId).collection('energy').doc('main');
+        const result = await db.runTransaction(async (transaction: any) => {
+            const snap = await transaction.get(energyRef);
+            let currentEnergy = snap.exists ? snap.data() : {
+                current: MAX_ENERGY,
+                max: MAX_ENERGY,
+                dailyFreeRechargeUsed: false,
+                dailyRewardedAdsUsed: 0,
+                dailyPeriodKey: today,
+                version: 1
+            };
+
+            let adsUsed = currentEnergy.dailyRewardedAdsUsed || 0;
+            let current = typeof currentEnergy.current === 'number' ? currentEnergy.current : MAX_ENERGY;
+
+            // Rollover automático de novo dia se o período mudou
+            if (currentEnergy.dailyPeriodKey !== today) {
+                current = MAX_ENERGY;
+                adsUsed = 0;
+                currentEnergy.dailyPeriodKey = today;
+                currentEnergy.dailyRewardedAdsUsed = 0;
+                currentEnergy.current = MAX_ENERGY;
+            }
+
+            if (current >= MAX_ENERGY) {
+                throw new Error('Sua energia já está na capacidade máxima (100%). O anúncio não foi consumido.');
+            }
+
+            if (adsUsed >= MAX_DAILY_REWARDED_ADS) {
+                throw new Error('Limite diário de 5 anúncios recompensados já atingido.');
+            }
+
+            const amountAdded = Math.min(REWARDED_AD_ENERGY_BOOST, MAX_ENERGY - current);
+            const newBalance = Math.min(MAX_ENERGY, current + REWARDED_AD_ENERGY_BOOST);
+
+            const updatedEnergy = {
+                ...currentEnergy,
+                current: newBalance,
+                max: MAX_ENERGY,
+                dailyRewardedAdsUsed: adsUsed + 1,
+                dailyPeriodKey: today,
+                version: (currentEnergy.version || 1) + 1,
+                lastUpdatedServerTime: admin.firestore.FieldValue.serverTimestamp()
+            };
+
+            transaction.set(energyRef, updatedEnergy);
+
+            const txId = uuidv4();
+            const txRef = db.collection('users').doc(userId).collection('energyTransactions').doc(txId);
+            transaction.set(txRef, {
+                id: txId,
+                playerId: userId,
+                type: 'REWARDED_AD_RECHARGE',
+                amount: amountAdded,
+                balanceAfter: newBalance,
+                sourceId: `ad_${txId}`,
+                description: `Recompensa por Anúncio (+${amountAdded}%)`,
+                createdAt: admin.firestore.FieldValue.serverTimestamp()
+            });
+
+            return updatedEnergy;
+        });
+
+        return { success: true, energy: result };
+    } catch (e: any) {
+        console.error('Error in claimRewardedAdEnergy:', e);
+        throw new functions.https.HttpsError('failed-precondition', e.message || 'Erro ao resgatar anúncio.');
+    }
+});
+
+/**
+ * Finalização e Débito de Energia de Sessão de Patinação.
+ * IDEMPOTÊNCIA ESTRITA: A mesma sessão (sessionId) jamais é debitada duas vezes.
+ * Regra definitiva: Tolerância após 0%. Nunca gera saldo negativo nem dívida de energia.
+ * Fórmula: energiaConsumida = minutosAtivos / 90 * 100 = (durationSeconds / 5400) * 100
+ */
+export const finalizeSessionEnergy = functions.https.onCall(async (request: any) => {
+    const context = { auth: request.auth };
+    if (!context.auth) throw new functions.https.HttpsError('unauthenticated', 'User must be authenticated.');
+    const userId = context.auth.uid;
+    const { sessionId, durationSeconds } = request.data || {};
+
+    if (!sessionId || typeof sessionId !== 'string') {
+        throw new functions.https.HttpsError('invalid-argument', 'sessionId é obrigatório.');
+    }
+
+    const duration = typeof durationSeconds === 'number' ? Math.max(0, durationSeconds) : 0;
+    const today = getServerDailyPeriodKey();
+
+    try {
+        const energyRef = db.collection('users').doc(userId).collection('energy').doc('main');
+        const sessionTxRef = db.collection('users').doc(userId).collection('energyTransactions').doc(`session_${sessionId}`);
+
+        const result = await db.runTransaction(async (transaction: any) => {
+            // IDEMPOTÊNCIA: Checa se a transação desta sessão já existe
+            const txSnap = await transaction.get(sessionTxRef);
+            if (txSnap.exists) {
+                console.log(`[Energy] Sessão ${sessionId} já processada previamente. Retornando saldo atual por idempotência.`);
+                const energySnap = await transaction.get(energyRef);
+                return {
+                    idempotent: true,
+                    energy: energySnap.exists ? energySnap.data() : { current: MAX_ENERGY }
+                };
+            }
+
+            const snap = await transaction.get(energyRef);
+            let energyData = snap.exists ? snap.data() : {
+                current: MAX_ENERGY,
+                max: MAX_ENERGY,
+                dailyFreeRechargeUsed: false,
+                dailyRewardedAdsUsed: 0,
+                dailyPeriodKey: today,
+                version: 1
+            };
+
+            // Cálculo do consumo: (duration / 5400) * 100
+            const rawConsumed = (duration / FULL_DURATION_SECONDS) * 100;
+            const consumed = Math.round(rawConsumed * 10) / 10; // 1 casa decimal
+
+            const current = typeof energyData.current === 'number' ? energyData.current : MAX_ENERGY;
+            // Saldo nunca é inferior a 0 (sem saldo negativo e sem dívida de energia)
+            const newBalance = Math.max(0, Math.min(MAX_ENERGY, Math.round((current - consumed) * 10) / 10));
+            const actualDeducted = Math.round((current - newBalance) * 10) / 10;
+
+            const updatedEnergy = {
+                ...energyData,
+                current: newBalance,
+                max: MAX_ENERGY,
+                version: (energyData.version || 1) + 1,
+                lastUpdatedServerTime: admin.firestore.FieldValue.serverTimestamp()
+            };
+
+            transaction.set(energyRef, updatedEnergy);
+
+            transaction.set(sessionTxRef, {
+                id: `session_${sessionId}`,
+                playerId: userId,
+                type: 'CONSUMPTION_SESSION',
+                amount: -actualDeducted,
+                balanceAfter: newBalance,
+                sourceId: sessionId,
+                description: `Consumo da Sessão (${Math.floor(duration / 60)} min ${duration % 60} s)`,
+                createdAt: admin.firestore.FieldValue.serverTimestamp()
+            });
+
+            return {
+                idempotent: false,
+                consumed: actualDeducted,
+                energy: updatedEnergy
+            };
+        });
+
+        return { success: true, ...result };
+    } catch (e: any) {
+        console.error('Error in finalizeSessionEnergy:', e);
+        throw new functions.https.HttpsError('internal', e.message || 'Erro ao finalizar energia da sessão.');
+    }
+});

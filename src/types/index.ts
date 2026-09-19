@@ -1848,6 +1848,45 @@ export interface WalletOperationResult {
 }
 
 // ==========================================
+// SISTEMA DE ENERGIA 1.0 (THE ROLLING WARS)
+// ==========================================
+
+export type ActiveEnergySourceType =
+  | 'CONSUMPTION_SESSION'
+  | 'DAILY_FREE_RECHARGE'
+  | 'REWARDED_AD_RECHARGE';
+
+// Fontes futuras reservadas na arquitetura (permanecem estritamente DESATIVADAS na Energia 1.0)
+export type FutureEnergySourceType =
+  | 'REST_ZONE_RECHARGE'
+  | 'CLAN_BONUS'
+  | 'ENERGY_ITEM'
+  | 'SPONSOR_REWARD';
+
+export type EnergyTransactionType = ActiveEnergySourceType | FutureEnergySourceType;
+
+export interface UserEnergy {
+  current: number; // 0 a 100
+  max: number; // Capacidade máxima oficial da versão 1.0: 100% (90 minutos)
+  dailyFreeRechargeUsed: boolean;
+  dailyRewardedAdsUsed: number; // 0 a 5 por período diário
+  dailyPeriodKey: string; // Formato 'YYYY-MM-DD' gerado autoritativamente no servidor
+  lastUpdatedServerTime?: any;
+  version: number;
+}
+
+export interface EnergyTransaction {
+  id: string;
+  playerId: string;
+  type: EnergyTransactionType;
+  amount: number; // Negativo para consumo (-X) ou positivo para recarga (+X)
+  balanceAfter: number;
+  sourceId?: string; // sessionId ou ID do evento de anúncio / recarga diária
+  description?: string;
+  createdAt: any;
+}
+
+// ==========================================
 // SEGURANÇA, MODERAÇÃO E INTEGRIDADE DO JOGO (SECURITY & INTEGRITY)
 // ==========================================
 

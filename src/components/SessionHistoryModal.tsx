@@ -84,12 +84,6 @@ export const SessionHistoryModal: React.FC<SessionHistoryModalProps> = ({
     }
   }, [selectedSession]);
 
-  useEffect(() => {
-    return () => {
-      if (animationRef.current) cancelAnimationFrame(animationRef.current);
-    };
-  }, []);
-
   // Initialize and update embedded detail map when selectedSession changes
   useEffect(() => {
     if (!isOpen || !selectedSession || !detailMapContainerRef.current) return;
@@ -223,6 +217,12 @@ export const SessionHistoryModal: React.FC<SessionHistoryModalProps> = ({
   }, [isOpen, selectedSession?.id]);
 
   if (!isOpen) return null;
+
+  useEffect(() => {
+    return () => {
+      if (animationRef.current) cancelAnimationFrame(animationRef.current);
+    };
+  }, []);
 
   const handleTogglePlayback = () => {
     if (!selectedSession || !detailMapInstanceRef.current || !detailMapLayersRef.current.skaterMarker) return;

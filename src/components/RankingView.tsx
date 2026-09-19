@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Trophy, Crown, Shield, Calendar, Flame, Users, Zap, ArrowRight } from 'lucide-react';
 import { Clan, RankPlayer, RankingPeriod, UserProfile } from '../types';
-import { MOCK_WEEKLY_LEADERBOARD, MOCK_MONTHLY_LEADERBOARD } from '../data/mockData';
 import { PublicProfileModal } from './PublicProfileModal';
 
 interface RankingViewProps {
@@ -15,6 +14,7 @@ interface RankingViewProps {
 }
 
 export const RankingView: React.FC<RankingViewProps> = ({
+  leaderboard = [],
   clans = [],
   currentUser,
   onSelectClan,
@@ -26,8 +26,8 @@ export const RankingView: React.FC<RankingViewProps> = ({
   const [period, setPeriod] = useState<RankingPeriod>('semanal');
   const [selectedPlayer, setSelectedPlayer] = useState<RankPlayer | null>(null);
 
-  const currentLeaderboard =
-    period === 'semanal' ? MOCK_WEEKLY_LEADERBOARD : MOCK_MONTHLY_LEADERBOARD;
+  // Utilizar exclusivamente ranking real de jogadores (zero fallback fictício)
+  const currentLeaderboard = Array.isArray(leaderboard) ? leaderboard : [];
 
   const top3Players = currentLeaderboard.slice(0, 3);
   const sortedClans = [...clans].sort((a, b) => {
@@ -133,8 +133,22 @@ export const RankingView: React.FC<RankingViewProps> = ({
             </div>
           </div>
 
-          {/* Top 3 Podium Cards */}
-          <div className="grid grid-cols-3 gap-2 items-end mb-6 pt-4">
+          {/* Top 3 Podium Cards & Leaderboard Table */}
+          {currentLeaderboard.length === 0 ? (
+            <div className="text-center py-14 px-6 bg-[#0a0a0a] rounded-3xl border border-white/10 mt-4 max-w-md mx-auto shadow-2xl">
+              <div className="w-16 h-16 rounded-2xl bg-yellow-400/10 border border-yellow-400/30 flex items-center justify-center mx-auto mb-4 text-yellow-400 shadow-[0_0_25px_rgba(252,232,3,0.15)]">
+                <Trophy className="w-8 h-8 stroke-[2]" />
+              </div>
+              <h3 className="text-base font-black text-white uppercase font-display tracking-tight">
+                Nenhum jogador pontuou nesta temporada ainda.
+              </h3>
+              <p className="text-xs text-slate-400 mt-2 font-medium max-w-xs mx-auto leading-relaxed">
+                Realize atividades de patinação e conquiste territórios urbanos para inaugurar o ranking oficial.
+              </p>
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-3 gap-2 items-end mb-6 pt-4">
             {/* 2nd Place */}
             {top3Players[1] && (
               <div
@@ -283,7 +297,9 @@ export const RankingView: React.FC<RankingViewProps> = ({
             ))}
           </div>
         </>
-      ) : (
+      )}
+    </>
+  ) : (
         <>
         {/* CLÃS VIEW */}
         <div className="mb-3 flex items-center justify-between"><h2 className="text-sm font-black text-yellow-400 uppercase tracking-widest">GUERRA TERRITORIAL</h2></div>

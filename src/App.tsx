@@ -13,8 +13,10 @@ import {
   distanceToSegmentStart,
   distanceToSegmentEnd
 } from './utils/segmentMath';
-import { SegmentAttempt, SegmentOperation } from './types';
-import React, { useState, useEffect, useRef } from 'react';
+import { SegmentAttempt, SegmentOperation, UserEnergy } from './types';
+import { EnergyService, DEFAULT_USER_ENERGY } from './services/energyService';
+import { EnergyModal } from './components/EnergyModal';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Geolocation } from '@capacitor/geolocation';
 import { Capacitor } from '@capacitor/core';
 import { ForegroundService } from '@capawesome-team/capacitor-android-foreground-service';
@@ -326,12 +328,11 @@ export default function App() {
           TelemetryService.logEvent({ eventName: 'auth_success', category: 'AUTH', details: { uid: firebaseUser.uid } });
           return updated;
         });
-        setAuthState('AUTHENTICATED');
         // Dispara fila de sincronização agora que temos o Firebase Auth
         DatabaseService.processSyncQueue().catch(console.error);
         // Atualiza as zonas no mapa
         DatabaseService.getZonesInRegion(null).then(z => setZones(z));
-      } else {
+} else {
         // User is logged out
         setAuthState('UNAUTHENTICATED');
         if (localStorage.getItem('urbanozeiro_user')) {
@@ -477,6 +478,67 @@ export default function App() {
   const [completedSession, setCompletedSession] = useState<ActivitySession | null>(null);
   const [viewedHistoricalSession, setViewedHistoricalSession] = useState<ActivitySession | null>(null);
 
+  // =========================================================================
+  // SISTEMA DE ENERGIA 1.0 (TEMPO DE ATIVIDADE DO PATINADOR)
+  // =========================================================================
+  const [userEnergy, setUserEnergy] = useState<UserEnergy>(DEFAULT_USER_ENERGY);
+  const [isEnergyModalOpen, setIsEnergyModalOpen] = useState<boolean>(false);
+  const [isOutOfEnergyTrigger, setIsOutOfEnergyTrigger] = useState<boolean>(false);
+  const sessionStartEnergyRef = useRef<number | null>(null);
+  const sessionDurationAtRechargeRef = useRef<number>(0);
+  const hasAlertedZeroEnergyInSessionRef = useRef<boolean>(false);
+
+  // Inscrição em tempo real na Energia (Firestore + Cache local Offline-First)
+  useEffect(() => {
+    const userId = user?.authId || user?.id || 'usr_me';
+    const unsubscribe = EnergyService.subscribeToEnergy(userId, (energy) => {
+      setUserEnergy(energy);
+    });
+    return () => unsubscribe();
+  }, [user?.authId, user?.id]);
+
+  // Consumo dinâmico sincronizado estritamente ao cronômetro da sessão única (sem segundo timer)
+  const currentEffectiveEnergy = useMemo<UserEnergy>(() => {
+    if (sessionStatus === 'ACTIVE' && sessionStartEnergyRef.current !== null) {
+      const activeDuration = Math.max(0, sessionDuration - sessionDurationAtRechargeRef.current);
+      const consumed = EnergyService.calculateConsumption(activeDuration);
+      const remaining = Math.max(0, Math.round((sessionStartEnergyRef.current - consumed) * 10) / 10);
+      return { ...userEnergy, current: remaining };
+    }
+    return userEnergy;
+  }, [userEnergy, sessionStatus, sessionDuration]);
+
+  const handleClaimDailyFreeEnergy = async (): Promise<boolean> => {
+    const res = await EnergyService.claimDailyFreeRecharge();
+    if (res.success && res.energy) {
+      setUserEnergy(res.energy);
+      if (sessionStartEnergyRef.current !== null) {
+        sessionStartEnergyRef.current = res.energy.current;
+        sessionDurationAtRechargeRef.current = sessionDuration;
+      }
+      showToast('⚡ Recarga Gratuita Diária de 100% aplicada!');
+      return true;
+    }
+    showToast(res.error || 'Falha ao aplicar recarga diária.');
+    return false;
+  };
+
+  const handleClaimRewardedAdEnergy = async (): Promise<boolean> => {
+    const res = await EnergyService.claimRewardedAdEnergy();
+    if (res.success && res.energy) {
+      setUserEnergy(res.energy);
+      if (sessionStartEnergyRef.current !== null) {
+        sessionStartEnergyRef.current = res.energy.current;
+        sessionDurationAtRechargeRef.current = sessionDuration;
+        hasAlertedZeroEnergyInSessionRef.current = false;
+      }
+      showToast('⚡ +20% de Energia (18 minutos) creditados com sucesso!');
+      return true;
+    }
+    showToast(res.error || 'Falha ao processar anúncio de recompensa.');
+    return false;
+  };
+
   // --- Recovery of Ongoing Session ---
   useEffect(() => {
     idbGet('urb_db_ongoing_session').then((data: any) => {
@@ -549,7 +611,7 @@ export default function App() {
         }
       } catch (e: any) {
         console.error('Error loading sessions via Service', e);
-        setSessionHistory(INITIAL_SESSION_HISTORY);
+        setSessionHistory([]);
       }
     };
     if (user) {
@@ -636,7 +698,11 @@ export default function App() {
   const [challenges, setChallenges] = useState<any[]>([]);
   const [directChallenges, setDirectChallenges] = useState<any[]>([]);
   const [events, setEvents] = useState<any[]>([]);
-
+  useEffect(() => {
+    AuthService.getCurrentUser().then(session => {
+      setAuthState(session ? 'AUTHENTICATED' : 'UNAUTHENTICATED');
+    }).catch(() => setAuthState('UNAUTHENTICATED'));
+  }, []);
   const [isDbReady, setIsDbReady] = useState<boolean>(true);
   const [dbError, setDbError] = useState<any>(null);
   
@@ -1079,19 +1145,36 @@ export default function App() {
       timerInterval = setInterval(() => {
         setSessionDuration((prev) => {
           const newDur = prev + 1;
+
+          // Notificação sutil e não-bloqueante ao esgotar energia (a sessão permanece ACTIVE, sem pausa forçada)
+          if (sessionStartEnergyRef.current !== null) {
+            const activeDuration = Math.max(0, newDur - sessionDurationAtRechargeRef.current);
+            const consumed = EnergyService.calculateConsumption(activeDuration);
+            if (sessionStartEnergyRef.current - consumed <= 0 && !hasAlertedZeroEnergyInSessionRef.current) {
+              hasAlertedZeroEnergyInSessionRef.current = true;
+              setTimeout(() => {
+                showToast('Energy esgotada. Você pode continuar patinando até encerrar a sessão.', 4500);
+              }, 0);
+            }
+          }
+
           // Atualiza notificação persistente a cada 5 segundos
           if (newDur % 5 === 0) {
              const m = Math.floor(newDur / 60);
              const s = newDur % 60;
              const ds = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+             const isEnergyZero = (currentEffectiveEnergy?.current ?? 100) <= 0;
+             const body = isEnergyZero
+               ? `Energia: 0%\nTempo: ${ds}\nDistância: ${sessionDistanceRef.current.toFixed(2)} km`
+               : `Tempo: ${ds}\nDistância: ${sessionDistanceRef.current.toFixed(2)} km`;
              if (Capacitor.isNativePlatform()) ForegroundService.updateForegroundService({
                 id: 111,
                 title: 'THE ROLLING WARS',
-                body: `Patinação em andamento\nTempo: ${ds}\nDistância: ${sessionDistanceRef.current.toFixed(2)} km`,
+                body,
                 smallIcon: 'ic_stat_name',
                 buttons: [
                   { id: 1, title: 'PAUSAR' },
-                  { id: 2, title: 'FINALIZAR' }
+                  { id: 2, title: 'ENCERRAR' }
                 ]
              }).catch(()=>{});
           }
@@ -1677,6 +1760,18 @@ export default function App() {
   // Start Skating Activity Session
   const handleStartSession = () => {
     if (sessionStatusRef.current === 'ACTIVE' || sessionStatusRef.current === 'PAUSED') return;
+
+    // Regra de Energia 1.0: Bloqueia início de NOVA sessão se energia estiver zerada
+    if ((userEnergy?.current ?? 100) <= 0) {
+      showToast('⚠️ Você está sem Energia! Recarregue para iniciar uma nova sessão.', 4500);
+      setIsOutOfEnergyTrigger(true);
+      setIsEnergyModalOpen(true);
+      return;
+    }
+
+    hasAlertedZeroEnergyInSessionRef.current = false;
+    sessionStartEnergyRef.current = userEnergy?.current ?? 100;
+    sessionDurationAtRechargeRef.current = 0;
     TelemetryService.logEvent({ eventName: 'activity_started', category: 'ACTIVITY' });
     const now = Date.now();
     const sessionId = `session_${now}`;
@@ -1726,7 +1821,7 @@ export default function App() {
             serviceType: 8, // Location
             buttons: [
               { id: 1, title: 'PAUSAR' },
-              { id: 2, title: 'FINALIZAR' }
+              { id: 2, title: 'ENCERRAR' }
             ]
           });
         } catch(e) {}
@@ -1824,14 +1919,17 @@ export default function App() {
     showToast('⏸️ Sessão de patinação PAUSADA. Cronômetro e rastro suspensos.');
     
     try {
+      const m = Math.floor(sessionDuration / 60);
+      const s = sessionDuration % 60;
+      const timeStr = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
       if (Capacitor.isNativePlatform()) ForegroundService.updateForegroundService({
          id: 111,
          title: 'THE ROLLING WARS',
-         body: `Sessão pausada\nDistância: ${sessionDistanceRef.current.toFixed(2)} km`,
+         body: `Status: Pausado\nTempo: ${timeStr}\nDistância: ${sessionDistanceRef.current.toFixed(2)} km`,
          smallIcon: 'ic_stat_name',
          buttons: [
            { id: 3, title: 'CONTINUAR' },
-           { id: 2, title: 'FINALIZAR' }
+           { id: 2, title: 'ENCERRAR' }
          ]
       }).catch(()=>{});
     } catch(e) {}
@@ -1840,19 +1938,28 @@ export default function App() {
   // Resume Skating Activity Session
   const handleResumeSession = () => {
     if (sessionStatusRef.current !== 'PAUSED') return;
+
+    // Regra definitiva Energia 1.0: Sessão em andamento pode ser retomada mesmo com Energy em 0%
     setSessionStatus('ACTIVE');
     isSessionPausedRef.current = false;
     showToast('▶️ Sessão de patinação RETOMADA!');
     
     try {
+      const m = Math.floor(sessionDuration / 60);
+      const s = sessionDuration % 60;
+      const timeStr = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+      const isEnergyZero = (currentEffectiveEnergy?.current ?? 100) <= 0;
+      const body = isEnergyZero
+        ? `Energia: 0%\nTempo: ${timeStr}\nDistância: ${sessionDistanceRef.current.toFixed(2)} km`
+        : `Tempo: ${timeStr}\nDistância: ${sessionDistanceRef.current.toFixed(2)} km`;
       if (Capacitor.isNativePlatform()) ForegroundService.updateForegroundService({
          id: 111,
          title: 'THE ROLLING WARS',
-         body: `Patinação em andamento\nDistância: ${sessionDistanceRef.current.toFixed(2)} km`,
+         body,
          smallIcon: 'ic_stat_name',
          buttons: [
            { id: 1, title: 'PAUSAR' },
-           { id: 2, title: 'FINALIZAR' }
+           { id: 2, title: 'ENCERRAR' }
          ]
       }).catch(()=>{});
     } catch(e) {}
@@ -1965,6 +2072,21 @@ export default function App() {
       handleGainXP(calculatedXp, 'SESSION_COMPLETED', `Patinação #${nextSessionNum} finalizada (${distance.toFixed(1)} km)`, finishedSession.id);
     }
 
+    // Finalização autoritativa do consumo de Energia da sessão (idempotente)
+    if (finishedSession.id && duration > 0) {
+      EnergyService.finalizeSessionEnergy(finishedSession.id, duration)
+        .then((res) => {
+          if (res.success && res.energy) {
+            setUserEnergy(res.energy);
+          }
+        })
+        .catch((err) => {
+          console.warn('[Energy] Falha na sincronização online de energia:', err);
+        });
+    }
+    sessionStartEnergyRef.current = null;
+    sessionDurationAtRechargeRef.current = 0;
+
     showToast('🏁 Sessão de Patinação ENCERRADA!');
   };
 
@@ -2051,7 +2173,7 @@ export default function App() {
             serviceType: 8, // Location
             buttons: [
               { id: 1, title: 'PAUSAR' },
-              { id: 2, title: 'FINALIZAR' }
+              { id: 2, title: 'ENCERRAR' }
             ]
           });
         } catch(e) {}
@@ -2921,6 +3043,8 @@ export default function App() {
           activeTab={activeTab}
           unreadNotificationsCount={unreadNotificationsCount}
           wallet={wallet}
+          energy={currentEffectiveEnergy}
+          onOpenEnergy={() => setIsEnergyModalOpen(true)}
           onOpenNotifications={() => setIsNotificationsModalOpen(true)}
           onOpenSocial={() => handleOpenSocialHub('amigos')}
           onOpenWallet={() => setIsWalletModalOpen(true)}
@@ -3039,6 +3163,8 @@ export default function App() {
               onOpenNearbyZones={() => setIsNearbyZonesDrawerOpen(true)}
               onOpenRotas={() => setActiveTab('rotas')}
               onOpenDesafios={() => setActiveTab('desafios')}
+              energy={currentEffectiveEnergy}
+              onOpenEnergy={() => setIsEnergyModalOpen(true)}
             />
 
             {/* Bottom Sheet Details for selected circular zone or segment */}
@@ -3087,8 +3213,21 @@ export default function App() {
           {/* Tab 2: ROTAS */}
           {activeTab === 'rotas' as any && (
             <RotasView
+              sessions={sessionHistory}
               routes={routes}
+              onSelectSessionOnMap={(session) => {
+                handleSelectHistoricalSession(session);
+                setActiveTab('mapa');
+              }}
               onSelectRouteOnMap={handleSelectRouteOnMap}
+              onRedoSession={(session) => {
+                handleStartRedoRoute(session);
+              }}
+              onStartNewSession={() => {
+                setActiveTab('mapa');
+                handleStartSession();
+              }}
+              onBackToMap={() => setActiveTab('mapa')}
             />
           )}
 
@@ -3170,7 +3309,7 @@ export default function App() {
               onOpenJoinClan={() => setIsClanLeaderboardModalOpen(true)}
               onOpenClanLeaderboard={() => setIsClanLeaderboardModalOpen(true)}
               friendsCount={(socialPlayers || []).filter((p) => p.isFriend).length}
-              followersCount={128}
+              followersCount={(socialPlayers || []).filter((p) => p.isFollowing).length}
               followingCount={(socialPlayers || []).filter((p) => p.isFollowing).length}
               nearbyPlayersCount={(socialPlayers || []).filter((p) => p.isNearby).length}
               onOpenSocialHub={handleOpenSocialHub}
@@ -3647,6 +3786,20 @@ export default function App() {
           isOpen={isWalletModalOpen}
           onClose={() => setIsWalletModalOpen(false)}
           wallet={wallet}
+        />
+
+        {/* Modal: Sistema de Energia 1.0 (Tempo de Atividade) */}
+        <EnergyModal
+          isOpen={isEnergyModalOpen}
+          onClose={() => {
+            setIsEnergyModalOpen(false);
+            setIsOutOfEnergyTrigger(false);
+          }}
+          energy={currentEffectiveEnergy}
+          sessionStatus={sessionStatus}
+          isOutOfEnergyTrigger={isOutOfEnergyTrigger}
+          onClaimDailyFree={handleClaimDailyFreeEnergy}
+          onClaimRewardedAd={handleClaimRewardedAdEnergy}
         />
 
         {/* Bottom Fixed Navigation Bar */}

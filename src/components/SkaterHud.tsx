@@ -21,8 +21,10 @@ import {
   History,
   RotateCcw,
   Swords,
+  ZapOff,
 } from 'lucide-react';
-import { ActivitySession, Challenge, SessionStatus, SkateRoute, UserProfile, Zone, ZoneConquestProgress } from '../types';
+import { ActivitySession, Challenge, SessionStatus, SkateRoute, UserProfile, Zone, ZoneConquestProgress, UserEnergy } from '../types';
+import { EnergyService } from '../services/energyService';
 
 interface SkaterHudProps {
   user: UserProfile;
@@ -61,6 +63,8 @@ interface SkaterHudProps {
   onOpenRotas?: () => void;
   onOpenDesafios?: () => void;
   onOpenNearbyZones?: () => void;
+  energy?: UserEnergy;
+  onOpenEnergy?: () => void;
 }
 
 export const SkaterHud: React.FC<SkaterHudProps> = ({
@@ -100,6 +104,8 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
   onOpenRotas,
   onOpenDesafios,
   onOpenNearbyZones,
+  energy,
+  onOpenEnergy,
 }) => {
   const [isChallengeBannerMinimized, setIsChallengeBannerMinimized] = React.useState(false);
 
@@ -910,6 +916,46 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
                 <div className="text-[8px] text-slate-400 font-bold mt-0.5">KM/H</div>
               </div>
             </div>
+
+            {/* Live Energy & Remaining Time Sub-strip */}
+            {onOpenEnergy && (
+              <button
+                type="button"
+                id="btn-hud-live-energy"
+                onClick={onOpenEnergy}
+                className="w-full mt-2 pt-2 border-t border-white/10 flex items-center justify-between text-left cursor-pointer group select-none"
+                title="Energia do Patinador (Toque para detalhes)"
+              >
+                <div className="flex items-center gap-1.5">
+                  <Zap className={`w-3.5 h-3.5 ${
+                    (energy?.current ?? 100) <= 0
+                      ? 'text-red-400'
+                      : isSessionPaused
+                      ? 'text-cyan-400'
+                      : 'text-yellow-400 fill-yellow-400 animate-pulse'
+                  }`} />
+                  <span className="text-[10px] font-mono-stat font-black text-slate-300 group-hover:text-yellow-400 transition-colors">
+                    ENERGIA: <strong className={(energy?.current ?? 100) <= 0 ? 'text-red-400' : 'text-white'}>{Math.round(Math.max(0, energy?.current ?? 100))}%</strong>
+                  </span>
+                  {(energy?.current ?? 100) <= 0 ? (
+                    <span className="text-[9px] font-mono-stat font-bold px-1.5 py-0.2 rounded bg-red-950/80 text-red-400 border border-red-500/40">
+                      ESGOTADA
+                    </span>
+                  ) : isSessionPaused ? (
+                    <span className="text-[9px] font-mono-stat font-bold px-1.5 py-0.2 rounded bg-cyan-950/80 text-cyan-300 border border-cyan-500/30">
+                      CONGELADA
+                    </span>
+                  ) : null}
+                </div>
+                <span className={`text-[10px] font-mono-stat transition-colors ${
+                  (energy?.current ?? 100) <= 0
+                    ? 'text-red-400 font-bold'
+                    : 'text-slate-400 group-hover:text-white'
+                }`}>
+                  {EnergyService.formatRemainingTime(energy?.current ?? 100)}
+                </span>
+              </button>
+            )}
           </div>
         </div>
       )}
@@ -933,20 +979,35 @@ export const SkaterHud: React.FC<SkaterHudProps> = ({
               </button>
             )}
 
-            {/* CENTER: INICIAR */}
+            {/* CENTER: INICIAR / SEM ENERGIA */}
             {onStartSession && (
-              <button
-                type="button"
-                id="btn-start-skate-session"
-                onClick={onStartSession}
-                className="flex-1 py-3 px-4 rounded-2xl bg-[#fce803] text-black font-black text-lg uppercase font-display tracking-widest flex items-center justify-center cursor-pointer select-none active:scale-95 shadow-[0_0_20px_rgba(252,232,3,0.4)] transition-all"
-                style={{ borderBottom: '4px solid #c4b502' }}
-              >
-                <div className="flex items-center gap-2">
-                  <Play className="w-5 h-5 fill-current stroke-[3]" />
-                  <span className="mt-0.5">INICIAR</span>
-                </div>
-              </button>
+              energy && energy.current <= 0 ? (
+                <button
+                  type="button"
+                  id="btn-start-skate-session-empty"
+                  onClick={onOpenEnergy || onStartSession}
+                  className="flex-1 py-3 px-4 rounded-2xl bg-red-950/60 border-2 border-red-500/80 text-red-300 font-black text-base uppercase font-display tracking-wider flex items-center justify-center cursor-pointer select-none active:scale-95 shadow-[0_0_15px_rgba(239,68,68,0.3)] transition-all"
+                  title="Você está sem energia. Toque para recarregar."
+                >
+                  <div className="flex items-center gap-2">
+                    <ZapOff className="w-5 h-5 text-red-400" />
+                    <span className="mt-0.5">SEM ENERGIA</span>
+                  </div>
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  id="btn-start-skate-session"
+                  onClick={onStartSession}
+                  className="flex-1 py-3 px-4 rounded-2xl bg-[#fce803] text-black font-black text-lg uppercase font-display tracking-widest flex items-center justify-center cursor-pointer select-none active:scale-95 shadow-[0_0_20px_rgba(252,232,3,0.4)] transition-all"
+                  style={{ borderBottom: '4px solid #c4b502' }}
+                >
+                  <div className="flex items-center gap-2">
+                    <Play className="w-5 h-5 fill-current stroke-[3]" />
+                    <span className="mt-0.5">INICIAR</span>
+                  </div>
+                </button>
+              )
             )}
 
             {/* RIGHT: DESAFIO */}

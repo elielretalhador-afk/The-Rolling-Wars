@@ -1,6 +1,7 @@
 import { TelemetryService } from './telemetry';
-import { db, auth } from "../lib/firebase";
+import { db, auth, functions } from "../lib/firebase";
 import { collection, getDocs, doc, runTransaction, setDoc } from "firebase/firestore";
+import { httpsCallable } from "firebase/functions";
 import { get as idbGet, set as idbSet } from 'idb-keyval';
 import { CacheManager } from './cache';
 import { PaginatedResult } from '../types';
@@ -16,7 +17,8 @@ import {
   PlayerSettings,
   TutorialState,
   Clan,
-  PlayerPublicActivity
+  PlayerPublicActivity,
+  UserEnergy
 } from '../types';
 import { 
   CURRENT_USER, 
@@ -51,7 +53,8 @@ export const KEYS = {
   ROUTES: 'urb_db_routes',
   CHALLENGES: 'urb_db_challenges',
   DIRECT_CHALLENGES: 'urb_db_direct_challenges',
-  EVENTS: 'urb_db_events'
+  EVENTS: 'urb_db_events',
+  ENERGY: 'urb_db_energy'
 };
 
 // Simulador de delay de rede
@@ -136,16 +139,25 @@ export const DatabaseService = {
       console.warn("Dispositivo offline, carregando cache local.");
     }
 
+    const loadedSessions = await loadIdb<ActivitySession[]>(KEYS.SESSIONS, []);
+    const realSessions = loadedSessions.filter((s) => s && s.id && !s.id.startsWith('session_mock_') && !s.id.startsWith('mock_'));
+
+    const loadedActivities = await loadIdb<PlayerPublicActivity[]>(KEYS.ACTIVITIES, []);
+    const realActivities = loadedActivities.filter((a) => a && a.id && !a.id.startsWith('act_mock_') && !a.id.startsWith('mock_'));
+
+    const loadedRoutes = await loadIdb<any[]>(KEYS.ROUTES, []);
+    const realRoutes = loadedRoutes.filter((r) => r && r.id && !r.id.startsWith('route_mock_') && !r.id.startsWith('mock_'));
+
     return {
       user: loadLocal<UserProfile>(KEYS.USER, CURRENT_USER),
       zones: await loadIdb<Zone[]>(KEYS.ZONES, INITIAL_ZONES),
-      sessions: await loadIdb<ActivitySession[]>(KEYS.SESSIONS, INITIAL_SESSION_HISTORY),
+      sessions: realSessions,
       notifications: loadLocal<AppNotification[]>(KEYS.NOTIFICATIONS, INITIAL_NOTIFICATIONS),
       achievements: loadLocal<Achievement[]>(KEYS.ACHIEVEMENTS, INITIAL_ACHIEVEMENTS),
       settings: loadLocal<PlayerSettings>(KEYS.SETTINGS, DEFAULT_PLAYER_SETTINGS),
       tutorial: loadLocal<TutorialState>(KEYS.TUTORIAL, { isCompleted: false, isSkipped: false, currentStep: 0 }),
-      activities: await loadIdb<PlayerPublicActivity[]>(KEYS.ACTIVITIES, INITIAL_ACTIVITIES as any),
-      routes: await loadIdb<any[]>(KEYS.ROUTES, MOCK_ROUTES),
+      activities: realActivities,
+      routes: realRoutes,
       challenges: await loadIdb<any[]>(KEYS.CHALLENGES, MOCK_CHALLENGES),
       directChallenges: await loadIdb<any[]>(KEYS.DIRECT_CHALLENGES, INITIAL_DIRECT_CHALLENGES),
       events: await loadIdb<any[]>(KEYS.EVENTS, INITIAL_EVENTS)
@@ -222,6 +234,17 @@ activity: PlayerPublicActivity): Promise<void> {
           if (auth.currentUser) cleanSession.playerId = auth.currentUser.uid;
           await setDoc(sessionRef, cleanSession);
           successfulSessionIds.add(s.id);
+
+          // Consolidar consumo de energia autoritativamente no backend (idempotente)
+          const dur = s.durationSeconds || s.duration || 0;
+          if (dur > 0) {
+            try {
+              const fn = httpsCallable(functions, 'finalizeSessionEnergy');
+              await fn({ sessionId: s.id, durationSeconds: dur });
+            } catch (e) {
+              console.warn('[SyncQueue] Aviso ao consolidar energia da sessão:', e);
+            }
+          }
         } catch (error) {
           console.error(`[SyncQueue] Falha ao enviar sessão ${s.id}:`, error);
           TelemetryService.logEvent({ eventName: 'outbox_sync_failure', category: 'SYNC', details: { type: 'session', id: s.id }, error });
@@ -673,6 +696,23 @@ activity: PlayerPublicActivity): Promise<void> {
       }
     } finally {
       release();
+    }
+  },
+
+  // Cache de Energia Offline-First
+  async getEnergyCache(defaultEnergy: UserEnergy): Promise<UserEnergy> {
+    try {
+      return await loadIdb<UserEnergy>(KEYS.ENERGY, defaultEnergy);
+    } catch {
+      return defaultEnergy;
+    }
+  },
+
+  async saveEnergyCache(energy: UserEnergy): Promise<void> {
+    try {
+      await saveIdb(KEYS.ENERGY, energy);
+    } catch (e) {
+      console.warn('[DatabaseService] Falha ao salvar cache de energia:', e);
     }
   }
 };

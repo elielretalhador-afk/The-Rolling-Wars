@@ -122,21 +122,6 @@ service cloud.firestore {
       allow write: if false; // Server-authoritative
     }
 
-    match /seasons/{seasonId} {
-      allow read: if true;
-      allow write: if false; // Server-authoritative
-    }
-
-    match /seasonScores/{scoreId} {
-      allow read: if true;
-      allow write: if false; // Server-authoritative
-    }
-
-    match /seasonClanScores/{scoreId} {
-      allow read: if true;
-      allow write: if false; // Server-authoritative
-    }
-
     match /officialTitles/{titleId} {
       allow read: if request.auth != null;
       allow write: if false; // Server-authoritative
@@ -164,7 +149,8 @@ service cloud.firestore {
         && (!request.resource.data.diff(resource.data).affectedKeys().hasAny([
           'xp', 'level', 'nextLevelXp', 'globalRank', 'weeklyRank', 'monthlyRank',
           'wins', 'victories', 'losses', 'seasonPoints', 'coins', 'gems', 'rewards',
-          'totalXP', 'achievementsCount', 'weeklyXp', 'monthlyXp', 'weeklyKm', 'monthlyKm'
+          'totalXP', 'achievementsCount', 'weeklyXp', 'monthlyXp', 'weeklyKm', 'monthlyKm',
+          'energy', 'energyTransactions'
         ]));
 
       match /devices/{deviceId} {
@@ -184,6 +170,14 @@ service cloud.firestore {
       match /walletTransactions/{transactionId} {
         allow read: if request.auth != null && request.auth.uid == userId;
         allow write: if false;
+      }
+      match /energy/main {
+        allow read: if request.auth != null && request.auth.uid == userId;
+        allow write: if false; // Server-authoritative (Cloud Functions only)
+      }
+      match /energyTransactions/{transactionId} {
+        allow read: if request.auth != null && request.auth.uid == userId;
+        allow write: if false; // Server-authoritative (Cloud Functions only)
       }
       match /chests/{chestId} {
         allow read: if request.auth != null && request.auth.uid == userId;

@@ -3,11 +3,17 @@ import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { getToken, onMessage } from 'firebase/messaging';
 import { PushNotifications } from '@capacitor/push-notifications';
 import { LocalNotifications } from '@capacitor/local-notifications';
+import { ForegroundService } from '@capawesome-team/capacitor-android-foreground-service';
 import { Device } from '@capacitor/device';
 import { Capacitor } from '@capacitor/core';
 import { NotificationPreferences } from '../types';
 
+export const SESSION_NOTIFICATION_ID = 8888;
+export const FOREGROUND_SERVICE_ID = 111;
+
 export class NotificationService {
+  private static actionsRegistered = false;
+
   static async initPushNotifications(userId: string) {
     if (Capacitor.isNativePlatform()) {
       let permStatus = await PushNotifications.checkPermissions();
@@ -47,7 +53,7 @@ export class NotificationService {
             const swRegistration = await navigator.serviceWorker.ready;
             const token = await getToken(messaging, { 
               serviceWorkerRegistration: swRegistration,
-              vapidKey: 'YOUR_PUBLIC_VAPID_KEY_HERE' // This might be required, but usually we can omit if configured in Firebase Console, but let's just get the token.
+              vapidKey: 'YOUR_PUBLIC_VAPID_KEY_HERE'
             });
             if (token) {
               await this.registerDevice(userId, token, 'web');
@@ -55,7 +61,6 @@ export class NotificationService {
             
             onMessage(messaging, (payload) => {
               console.log('Message received. ', payload);
-              // Podemo exibir Local Notification no PWA? Sim, mas o PWA pode apenas usar a UI in-app (Toasts)
               const event = new CustomEvent('app_push_received', { detail: payload });
               window.dispatchEvent(event);
             });
@@ -65,6 +70,116 @@ export class NotificationService {
         }
       }
     }
+  }
+
+  /**
+   * Registra os tipos de ações interativas da notificação de sessão (Android Local Notifications & Foreground)
+   */
+  static async registerSessionNotificationActionTypes() {
+    if (!Capacitor.isNativePlatform() || this.actionsRegistered) return;
+    try {
+      await LocalNotifications.registerActionTypes({
+        types: [
+          {
+            id: 'SESSION_ACTIVE_ACTIONS',
+            actions: [
+              { id: 'PAUSE', title: 'PAUSAR' },
+              { id: 'FINISH', title: 'ENCERRAR', destructive: true },
+            ],
+          },
+          {
+            id: 'SESSION_PAUSED_ACTIONS',
+            actions: [
+              { id: 'RESUME', title: 'CONTINUAR' },
+              { id: 'FINISH', title: 'ENCERRAR', destructive: true },
+            ],
+          },
+        ],
+      });
+      this.actionsRegistered = true;
+    } catch (err) {
+      console.warn('Erro ao registrar action types de notificação:', err);
+    }
+  }
+
+  /**
+   * Sincroniza a notificação persistente da sessão oficial (ACTIVE ou PAUSED)
+   */
+  static async syncSessionNotification(params: {
+    sessionStatus: 'ACTIVE' | 'PAUSED' | 'IDLE' | 'COMPLETED';
+    durationSeconds: number;
+    distanceKm: number;
+    energyPercent: number;
+  }) {
+    if (!Capacitor.isNativePlatform()) return;
+    const { sessionStatus, durationSeconds, distanceKm, energyPercent } = params;
+
+    if (sessionStatus === 'IDLE' || sessionStatus === 'COMPLETED') {
+      await this.clearSessionNotification();
+      return;
+    }
+
+    const formatTime = (secs: number) => {
+      const h = Math.floor(secs / 3600);
+      const m = Math.floor((secs % 3600) / 60);
+      const s = secs % 60;
+      if (h > 0) {
+        return `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+      }
+      return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    };
+
+    const distStr = distanceKm.toFixed(2).replace('.', ',');
+    const timeStr = formatTime(durationSeconds);
+
+    if (sessionStatus === 'ACTIVE') {
+      const body = energyPercent <= 0
+        ? `🛼 Patinação em andamento\nEnergia: 0%\nTempo: ${timeStr}\nDistância: ${distStr} km`
+        : `🛼 Patinação em andamento\nTempo: ${timeStr}\nDistância: ${distStr} km`;
+
+      try {
+        await ForegroundService.updateForegroundService({
+          id: FOREGROUND_SERVICE_ID,
+          title: 'THE ROLLING WARS',
+          body,
+          smallIcon: 'ic_stat_name',
+          buttons: [
+            { id: 1, title: 'PAUSAR' },
+            { id: 2, title: 'ENCERRAR' },
+          ],
+        });
+      } catch (_) {}
+    } else if (sessionStatus === 'PAUSED') {
+      const body = `⏸️ Patinação pausada\nTempo: ${timeStr}\nDistância: ${distStr} km`;
+
+      try {
+        await ForegroundService.updateForegroundService({
+          id: FOREGROUND_SERVICE_ID,
+          title: 'THE ROLLING WARS',
+          body,
+          smallIcon: 'ic_stat_name',
+          buttons: [
+            { id: 3, title: 'CONTINUAR' },
+            { id: 2, title: 'ENCERRAR' },
+          ],
+        });
+      } catch (_) {}
+    }
+  }
+
+  /**
+   * Limpa as notificações persistentes e encerra o serviço foreground ao finalizar sessão
+   */
+  static async clearSessionNotification() {
+    if (!Capacitor.isNativePlatform()) return;
+    try {
+      await ForegroundService.stopForegroundService();
+    } catch (_) {}
+    try {
+      await LocalNotifications.cancel({
+        notifications: [{ id: SESSION_NOTIFICATION_ID }],
+      });
+    } catch (_) {}
   }
 
   static async registerDevice(userId: string, pushToken: string, platform: string) {
